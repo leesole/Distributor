@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Distributor.Models;
+using Distributor.Helpers;
 
 namespace Distributor.Controllers
 {
@@ -151,12 +152,15 @@ namespace Distributor.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //Create a new AppUser then write here
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, model.UserRole);
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AppUserId = appUser.AppUserId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -165,6 +169,9 @@ namespace Distributor.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
+                //Delete the appUser account as this has not gone through
+                AppUserHelpers.DeleteAppUser(appUser.AppUserId);
                 AddErrors(result);
             }
 

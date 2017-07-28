@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Models
 {
@@ -64,6 +65,18 @@ namespace Distributor.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Role of user")]
+        public UserRole UserRole { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
