@@ -155,7 +155,7 @@ namespace Distributor.Controllers
                 //Create a new AppUser then write here
                 AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, model.UserRole);
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AppUserId = appUser.AppUserId, FullName = model.FirstName + " " + model.LastName };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AppUserId = appUser.AppUserId, FullName = model.FirstName + " " + model.LastName, CurrentUserRole = model.UserRole };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

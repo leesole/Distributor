@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Models
 {
@@ -13,6 +14,7 @@ namespace Distributor.Models
         //Additional fields
         public Guid AppUserId { get; set; }
         public string FullName { get; set; }
+        public UserRole CurrentUserRole { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -21,6 +23,7 @@ namespace Distributor.Models
             // Add custom user claims here
             userIdentity.AddClaim(new Claim("AppUserId", this.AppUserId.ToString()));
             userIdentity.AddClaim(new Claim("FullName", this.FullName));
+            userIdentity.AddClaim(new Claim("CurrentUserRole", this.CurrentUserRole.ToString()));
 
             return userIdentity;
         }

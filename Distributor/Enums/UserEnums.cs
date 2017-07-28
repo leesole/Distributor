@@ -11,7 +11,8 @@ namespace Distributor.Enums
         {
             Admin = 0,
             Manager = 1,
-            User = 2
+            User = 2,
+            SuperUser = 3 //used as the top level of security for admin of system
         }
     }
 }
