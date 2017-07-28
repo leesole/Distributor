@@ -1,4 +1,5 @@
-﻿using Distributor.Models;
+﻿using Distributor.Extenstions;
+using Distributor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,20 @@ namespace Distributor.Helpers
         public static AppUser GetAppUser(ApplicationDbContext db, Guid appUserId)
         {
             return db.AppUsers.Find(appUserId);
+        }
+
+        public static AppUser GetAppUser(System.Security.Principal.IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetAppUser(db, user);
+        }
+
+        public static AppUser GetAppUser(ApplicationDbContext db, System.Security.Principal.IPrincipal user)
+        {
+            Guid appUserId;
+            Guid.TryParse(user.Identity.GetAppUserId(), out appUserId);
+
+            return db.AppUsers.Find(GetAppUser(db, appUserId));
         }
 
         #endregion

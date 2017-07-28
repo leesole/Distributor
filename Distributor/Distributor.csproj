@@ -192,6 +192,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Enums\UserEnums.cs" />
+    <Compile Include="Extenstions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -200,6 +201,10 @@
     <Compile Include="Migrations\201707271720127_1st.cs" />
     <Compile Include="Migrations\201707271720127_1st.Designer.cs">
       <DependentUpon>201707271720127_1st.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707280717255_2nd.cs" />
+    <Compile Include="Migrations\201707280717255_2nd.Designer.cs">
+      <DependentUpon>201707280717255_2nd.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -289,6 +294,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201707271720127_1st.resx">
       <DependentUpon>201707271720127_1st.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707280717255_2nd.resx">
+      <DependentUpon>201707280717255_2nd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
