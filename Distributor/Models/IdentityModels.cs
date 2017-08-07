@@ -38,6 +38,9 @@ namespace Distributor.Models
 
         //dbset list of tables
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Branch> Branches { get; set; }
+        public DbSet<BranchUser> BranchUsers { get; set; }
 
         public static ApplicationDbContext Create()
         {

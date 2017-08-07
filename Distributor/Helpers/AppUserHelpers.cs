@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static Distributor.Enums.UserEnums;
+using static Distributor.Enums.EntityEnums;
 
 namespace Distributor.Helpers
 {
@@ -41,20 +41,20 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AppUser CreateAppUser(string firstName, string lastName, UserRole userRole)
+        public static AppUser CreateAppUser(string firstName, string lastName)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateAppUser(db, firstName, lastName, userRole);
+            return CreateAppUser(db, firstName, lastName);
         }
 
-        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, UserRole userRole)
+        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName)
         {
             AppUser appUser = new AppUser()
             {
                 AppUserId = Guid.NewGuid(),
                 FirstName = firstName,
                 LastName = lastName,
-                Role = userRole
+                EntityStatus = EntityStatus.Active
             };
             db.AppUsers.Add(appUser);
             db.SaveChanges();

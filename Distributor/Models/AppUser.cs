@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using static Distributor.Enums.UserEnums;
+using static Distributor.Enums.EntityEnums;
 
 namespace Distributor.Models
 {
@@ -20,8 +20,7 @@ namespace Distributor.Models
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Required]
-        [Display(Name = "User role")]
-        public UserRole Role { get; set; }
+        [Display(Name = "Status")]
+        public EntityStatus EntityStatus { get; set; }
     }
 }
