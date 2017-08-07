@@ -10,15 +10,15 @@ namespace Distributor.Models
     public class Company
     {
         [Key]
-        public Guid ComapnyId { get; set; }
+        public Guid CompanyId { get; set; }
 
         public Guid HeadOfficeBranchId { get; set; }
 
         [Required]
-        [Display(Name = "Comapny name")]
+        [Display(Name = "Company name")]
         public string CompanyName { get; set; }
 
-        [Display(Name = "Comapny registration details")]
+        [Display(Name = "Company registration details")]
         public string CompanyRegistrationDetails { get; set; }
 
         [Display(Name = "Charity registration details")]

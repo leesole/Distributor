@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static Distributor.Enums.EntityEnums;
 using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Models
@@ -88,6 +89,53 @@ namespace Distributor.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        //BranchUser
+        public EntityStatus EntityStatus { get; set; }
+
+        //Company
+        [Display(Name = "Comapny name")]
+        public string CompanyName { get; set; }
+
+        [Display(Name = "Comapny registration details")]
+        public string CompanyRegistrationDetails { get; set; }
+
+        [Display(Name = "Charity registration details")]
+        public string CharityRegistrationDetails { get; set; }
+
+        [Display(Name = "VAT registration details")]
+        public string VATRegistrationDetails { get; set; }
+
+        //Branch
+        [Display(Name = "Branch name")]
+        public string BranchName { get; set; }
+
+        [Display(Name = "Address line 1")]
+        public string BranchAddressLine1 { get; set; }
+
+        [Display(Name = "Address line 2")]
+        public string BranchAddressLine2 { get; set; }
+
+        [Display(Name = "Address line 3")]
+        public string BranchAddressLine3 { get; set; }
+
+        [Display(Name = "Address town/city")]
+        public string BranchAddressTownCity { get; set; }
+
+        [Display(Name = "Address county")]
+        public string BranchAddressCounty { get; set; }
+
+        [Display(Name = "Address postcode")]
+        public string BranchAddressPostcode { get; set; }
+
+        [Display(Name = "Telephone number")]
+        public string BranchTelephoneNumber { get; set; }
+
+        [Display(Name = "Email")]
+        public string BranchEmail { get; set; }
+
+        [Display(Name = "Contact name")]
+        public string BranchContactName { get; set; }
     }
 
     public class ResetPasswordViewModel

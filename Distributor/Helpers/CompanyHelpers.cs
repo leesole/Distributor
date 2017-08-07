@@ -36,7 +36,7 @@ namespace Distributor.Helpers
         {
             Company company = new Company()
             {
-                ComapnyId = Guid.NewGuid(),
+                CompanyId = Guid.NewGuid(),
                 HeadOfficeBranchId = headOfficeBranchId,
                 CompanyName = companyName,
                 CompanyRegistrationDetails = companyRegistrationDetails,
