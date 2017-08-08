@@ -11,6 +11,18 @@ namespace Distributor.Helpers
     {
         #region Get
 
+        public static List<Company> GetAllCompanies()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetAllCompanies(db);
+        }
+
+        public static List<Company> GetAllCompanies(ApplicationDbContext db)
+        {
+            
+            return db.Companies.OrderBy(x => x.CompanyName).ToList(); 
+        }
+
         public static Company GetCompany(Guid companyId)
         {
             ApplicationDbContext db = new ApplicationDbContext();

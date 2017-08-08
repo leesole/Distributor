@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Distributor.Models;
 using Distributor.Helpers;
 using static Distributor.Enums.UserEnums;
+using System.Collections.Generic;
 
 namespace Distributor.Controllers
 {
@@ -141,6 +142,9 @@ namespace Distributor.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            //DropDown
+            ViewBag.CompanyList = ControlHelpers.AllCompaniesListDropDown();
+
             return View();
         }
 

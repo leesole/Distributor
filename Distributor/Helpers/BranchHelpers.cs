@@ -22,6 +22,22 @@ namespace Distributor.Helpers
             return db.Branches.Find(branchId);
         }
 
+        public static List<Branch> GetBranchesForCompany(Guid companyId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetBranchesForCompany(db, companyId);
+        }
+
+        public static List<Branch> GetBranchesForCompany(ApplicationDbContext db, Guid companyId)
+        {
+            List<Branch> branchesForCompany = (from b in db.Branches
+                                               where b.CompanyId == companyId
+                                               orderby b.BranchName
+                                               select b).ToList();
+
+            return branchesForCompany;
+        }
+
         #endregion
 
         #region Create

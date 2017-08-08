@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.WebPages.Html;
 using static Distributor.Enums.EntityEnums;
 using static Distributor.Enums.UserEnums;
 
@@ -94,10 +96,14 @@ namespace Distributor.Models
         public EntityStatus EntityStatus { get; set; }
 
         //Company
-        [Display(Name = "Comapny name")]
+        //public Company Company { get; set; }
+
+        public Guid? SelectedCompanyId { get; set; }
+
+        [Display(Name = "Company name")]
         public string CompanyName { get; set; }
 
-        [Display(Name = "Comapny registration details")]
+        [Display(Name = "Company registration details")]
         public string CompanyRegistrationDetails { get; set; }
 
         [Display(Name = "Charity registration details")]
@@ -107,6 +113,8 @@ namespace Distributor.Models
         public string VATRegistrationDetails { get; set; }
 
         //Branch
+        public Guid? SelectedBranchId { get; set; }
+
         [Display(Name = "Branch name")]
         public string BranchName { get; set; }
 

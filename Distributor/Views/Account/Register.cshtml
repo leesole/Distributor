@@ -43,7 +43,105 @@
                                         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm password" })
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <input type="submit" class="btn btn-lg btn-success btn-block" value="Register" />
+                                        @Html.DropDownListFor(m => m.SelectedCompanyId, (SelectList)ViewBag.CompanyList, "Add new company", new { @class = "form-control", @id = "companydropdown", onchange = "javascipt:DisplayHideCompanyDetails(this.value);" })
+                                        @Html.ValidationMessageFor(m => m.SelectedCompanyId, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div id="companydetails">
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchAddressLine1, new { @class = "form-control", placeholder = "Address line 1" })
+                                            @Html.ValidationMessageFor(m => m.BranchAddressLine1, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchAddressLine2, new { @class = "form-control", placeholder = "Address line 2" })
+                                            @Html.ValidationMessageFor(m => m.BranchAddressLine2, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchAddressLine3, new { @class = "form-control", placeholder = "Address line 3" })
+                                            @Html.ValidationMessageFor(m => m.BranchAddressLine3, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchAddressTownCity, new { @class = "form-control", placeholder = "Address town/city" })
+                                            @Html.ValidationMessageFor(m => m.BranchAddressTownCity, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchAddressCounty, new { @class = "form-control", placeholder = "Address county" })
+                                            @Html.ValidationMessageFor(m => m.BranchAddressCounty, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchAddressPostcode, new { @class = "form-control", placeholder = "Address postcode" })
+                                            @Html.ValidationMessageFor(m => m.BranchAddressPostcode, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchTelephoneNumber, new { @class = "form-control", placeholder = "Contact telephone number" })
+                                            @Html.ValidationMessageFor(m => m.BranchTelephoneNumber, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchEmail, new { @class = "form-control", placeholder = "Contact email" })
+                                            @Html.ValidationMessageFor(m => m.BranchEmail, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.BranchContactName, new { @class = "form-control", placeholder = "Contact person" })
+                                            @Html.ValidationMessageFor(m => m.BranchContactName, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.CompanyRegistrationDetails, new { @class = "form-control", placeholder = "Company registration details" })
+                                            @Html.ValidationMessageFor(m => m.CompanyRegistrationDetails, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.CharityRegistrationDetails, new { @class = "form-control", placeholder = "Charity registration details" })
+                                            @Html.ValidationMessageFor(m => m.CharityRegistrationDetails, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            @Html.TextBoxFor(m => m.VATRegistrationDetails, new { @class = "form-control", placeholder = "VAT registration details" })
+                                            @Html.ValidationMessageFor(m => m.VATRegistrationDetails, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div id="branchselection">
+                                        <div class="form-group col-md-12">
+                                            @Html.DropDownListFor(m => m.SelectedBranchId, new SelectList(Enumerable.Empty<SelectListItem>(), "BranchId", "BranchName"), "Add new branch", new { @class = "form-control", @id = "branchdropdown", onchange = "javascipt:DisplayHideBranchDetails();" })
+                                            @Html.ValidationMessageFor(m => m.SelectedBranchId, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div id="branchdetails">
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchAddressLine1, new { @class = "form-control", placeholder = "Address line 1..." })
+                                                @Html.ValidationMessageFor(m => m.BranchAddressLine1, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchAddressLine2, new { @class = "form-control", placeholder = "Address line 2" })
+                                                @Html.ValidationMessageFor(m => m.BranchAddressLine2, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchAddressLine3, new { @class = "form-control", placeholder = "Address line 3" })
+                                                @Html.ValidationMessageFor(m => m.BranchAddressLine3, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchAddressTownCity, new { @class = "form-control", placeholder = "Address town/city" })
+                                                @Html.ValidationMessageFor(m => m.BranchAddressTownCity, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchAddressCounty, new { @class = "form-control", placeholder = "Address county" })
+                                                @Html.ValidationMessageFor(m => m.BranchAddressCounty, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchAddressPostcode, new { @class = "form-control", placeholder = "Address postcode" })
+                                                @Html.ValidationMessageFor(m => m.BranchAddressPostcode, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchTelephoneNumber, new { @class = "form-control", placeholder = "Contact telephone number" })
+                                                @Html.ValidationMessageFor(m => m.BranchTelephoneNumber, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchEmail, new { @class = "form-control", placeholder = "Contact email" })
+                                                @Html.ValidationMessageFor(m => m.BranchEmail, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.TextBoxFor(m => m.BranchContactName, new { @class = "form-control", placeholder = "Contact person" })
+                                                @Html.ValidationMessageFor(m => m.BranchContactName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <input type="submit" id="submitbutton" class="btn btn-lg btn-success btn-block" value="Register" />
                                     </div>
                                 </fieldset>
                             </form>
@@ -57,4 +155,63 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        //This will hide/display company details depending if the company has been selected or not
+        function GetBranchesForCompany(companyId) {
+            var url = "/Data/GetBranchByCompany";
+
+            $.ajax({
+                url: url,
+                data: { companyId: companyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    $("#branchdropdown").html("");
+                    var markup = "<option value='0'>Add new branch</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value = " + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#branchdropdown").html(markup).show();
+                },
+                error: function (response) {
+                    alert("error : " + response);
+                }
+            });
+        };
+
+        //set what fields to display depending on selection of company
+        function DisplayHideCompanyDetails(companyId) {
+            var companyDropDownValue = $("#companydropdown option:selected").text();
+            var companyDetails = document.getElementById("companydetails");
+            var branchSelection = document.getElementById("branchselection");
+
+            if (companyDropDownValue == "Add new company") {
+                companyDetails.style.display = "block";
+                branchSelection.style.display = "none";
+            } else {
+                GetBranchesForCompany(companyId);
+                companyDetails.style.display = "none";
+                branchSelection.style.display = "block";
+            }
+        };
+
+        //set what fields to display depending on selection of branch
+        function DisplayHideBranchDetails() {
+            var branchDropDownValue = $("#branchdropdown option:selected").text();
+            var branchDetails = document.getElementById("branchdetails");
+
+            alert(branchDropDownValue);
+
+            if (branchDropDownValue == "Add new branch") {
+                branchDetails.style.display = "block";
+            } else {
+                branchDetails.style.display = "none";
+            }
+        };
+
+        $("#submitbutton").click(function (event) {
+            //event.preventDefault();
+        });
+    </script>
 }

@@ -189,6 +189,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Helpers\BranchHelpers.cs" />
     <Compile Include="Helpers\BranchUserHelpers.cs" />
     <Compile Include="Helpers\CompanyHelpers.cs" />
+    <Compile Include="Helpers\ControlHelpers.cs" />
     <Compile Include="Helpers\EnumHelpers.cs" />
     <Compile Include="Migrations\201707271720127_1st.cs" />
     <Compile Include="Migrations\201707271720127_1st.Designer.cs">
@@ -221,6 +223,10 @@
     <Compile Include="Migrations\201708071552206_5th.cs" />
     <Compile Include="Migrations\201708071552206_5th.Designer.cs">
       <DependentUpon>201708071552206_5th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708071938452_6th.cs" />
+    <Compile Include="Migrations\201708071938452_6th.Designer.cs">
+      <DependentUpon>201708071938452_6th.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -303,6 +309,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -334,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708071552206_5th.resx">
       <DependentUpon>201708071552206_5th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708071938452_6th.resx">
+      <DependentUpon>201708071938452_6th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
