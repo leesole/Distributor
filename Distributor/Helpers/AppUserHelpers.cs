@@ -64,6 +64,9 @@ namespace Distributor.Helpers
 
         #endregion
 
+        #region Update
+        #endregion
+
         #region Delete
 
         public static void DeleteAppUser(Guid appUserId)
@@ -77,6 +80,27 @@ namespace Distributor.Helpers
             AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
             db.AppUsers.Remove(appUser);
             db.SaveChanges();
+        }
+
+        #endregion
+
+        #region Processes
+
+        public static bool IsAppUserActive(ApplicationUser user)
+        {
+            AppUser appUser = GetAppUser(user.AppUserId);
+
+            if (appUser.EntityStatus == EntityStatusEnum.Active)
+                return true;
+            else
+                return false;
+        }
+
+        public static EntityStatusEnum GetAppUserEntityStatus(ApplicationUser user)
+        {
+            AppUser appUser = GetAppUser(user.AppUserId);
+
+            return appUser.EntityStatus;
         }
 
         #endregion

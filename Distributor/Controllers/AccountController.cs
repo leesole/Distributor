@@ -84,7 +84,27 @@ namespace Distributor.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    ApplicationUser user = UserManager.FindByEmail(model.Email);
+                    //validate the user is not on-hold
+                    if (!AppUserHelpers.IsAppUserActive(user))
+                    {
+                        EntityStatusEnum appUserStatus = AppUserHelpers.GetAppUserEntityStatus(user);
+                        switch (appUserStatus)
+                        {
+                            case EntityStatusEnum.Inactive:
+                                ModelState.AddModelError("", "This user is currently inactive.  You will need to re-register or contact your account administrator");
+                                break;
+                            case EntityStatusEnum.OnHold:
+                                ModelState.AddModelError("", "This user is currently on hold.  You will need to contact your account administrator to active your account");
+                                break;
+                        }
+                        return View(model);
+                    }
+                    else
+                    {
+                        //LSLSLS Here we need to put in the checks for current company/branch etc. ready for admin screen if necessary
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
