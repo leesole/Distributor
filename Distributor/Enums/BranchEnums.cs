@@ -10,30 +10,30 @@ namespace Distributor.Enums
     {
         public enum BusinessTypeEnum
         {
-            [Description("Producer")]
-            Producer = 0,
+            [Description("Caterer")]
+            Caterer = 1,
+            [Description("Charity")]
+            Charity = 2,
+            [Description("Church")]
+            Church = 3,
             [Description("Distributor")]
-            Distributor = 1,
-            [Description("Retailer")]
-            Retailer = 2,
-            [Description("Supplier")]
-            Supplier = 3,
-            [Description("Trader")]
-            Trader = 4,
+            Distributor = 4,
             [Description("Food bank")]
             FoodBank = 5,
-            [Description("Church")]
-            Church = 6,
-            [Description("Restaurant")]
-            Restaurant = 7,
-            [Description("Takeaway")]
-            Takeaway = 8,
-            [Description("Caterer")]
-            Caterer = 9,
             [Description("Hotelier/hostelry")]
-            HotelierHostelry = 10,
-            [Description("Charity")]
-            Charity = 11
+            HotelierHostelry = 6,
+            [Description("Producer")]
+            Producer = 7,
+            [Description("Restaurant")]
+            Restaurant = 8,
+            [Description("Retailer")]
+            Retailer = 9,
+            [Description("Supplier")]
+            Supplier = 10,
+            [Description("Takeaway")]
+            Takeaway = 11,
+            [Description("Trader")]
+            Trader = 12
         }
     }
 }

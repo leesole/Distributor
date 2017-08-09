@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.WebPages.Html;
+using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
 using static Distributor.Enums.UserEnums;
 
@@ -114,6 +115,9 @@ namespace Distributor.Models
 
         //Branch
         public Guid? SelectedBranchId { get; set; }
+
+        [Display(Name = "Business type")]
+        public BusinessTypeEnum BusinessType { get; set; }
 
         [Display(Name = "Branch name")]
         public string BranchName { get; set; }

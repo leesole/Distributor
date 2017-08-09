@@ -198,7 +198,7 @@ namespace Distributor.Controllers
                         if (!model.SelectedCompanyId.HasValue)
                             branchName = "Head Office";
 
-                        branch = BranchHelpers.CreateBranch(company.CompanyId, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, statusForUser);
+                        branch = BranchHelpers.CreateBranch(company.CompanyId, model.BusinessType, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, statusForUser);
 
                         //Company - set head office branch as the newly created branch for this new company (defaults to 'Head Office')
                         if (!model.SelectedCompanyId.HasValue)

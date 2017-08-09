@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
 
 namespace Distributor.Helpers
@@ -42,18 +43,19 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static Branch CreateBranch(Guid companyId, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
+        public static Branch CreateBranch(Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateBranch(db, companyId, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
+            return CreateBranch(db, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
         }
 
-        public static Branch CreateBranch(ApplicationDbContext db, Guid companyId, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
+        public static Branch CreateBranch(ApplicationDbContext db, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
         {
             Branch branch = new Branch()
             {
                 BranchId = Guid.NewGuid(),
                 CompanyId = companyId,
+                BusinessType = businessType,
                 BranchName = branchName,
                 AddressLine1 = addressLine1,
                 AddressLine2 = addressLine2,

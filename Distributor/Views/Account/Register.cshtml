@@ -56,6 +56,10 @@
                                             @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger", @id = "companynameerror" })
                                         </div>
                                         <div class="form-group col-md-12">
+                                            @Html.EnumDropDownListFor(m => m.BusinessType, new { @class = "form-control", @id = "companybusinesstype" })
+                                            @Html.ValidationMessageFor(m => m.BusinessType, "", new { @class = "text-danger", @id = "companybusinesstypeerror" })
+                                        </div>
+                                        <div class="form-group col-md-12">
                                             @Html.TextBoxFor(m => m.BranchAddressLine1, new { @class = "form-control", @id = "companyaddressline1", placeholder = "Address line 1" })
                                             @Html.ValidationMessageFor(m => m.BranchAddressLine1, "", new { @class = "text-danger", @id = "companyaddressline1error" })
                                         </div>
@@ -114,6 +118,10 @@
                                             <div class="form-group col-md-12">
                                                 @Html.TextBoxFor(m => m.BranchName, new { @class = "form-control", @id = "branchname", placeholder = "Branch name" })
                                                 @Html.ValidationMessageFor(m => m.BranchName, "", new { @class = "text-danger", @id = "branchnameerror" })
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                @Html.EnumDropDownListFor(m => m.BusinessType, new { @class = "form-control", @id = "branchbusinesstype" })
+                                                @Html.ValidationMessageFor(m => m.BusinessType, "", new { @class = "text-danger", @id = "branchbusinesstypeerror" })
                                             </div>
                                             <div class="form-group col-md-12">
                                                 @Html.TextBoxFor(m => m.BranchAddressLine1, new { @class = "form-control", @id = "branchaddressline1", placeholder = "Address line 1" })
@@ -195,6 +203,7 @@
 
         function ClearCompanyDetailFields() {
             $('#companyname').val('');
+            $('#companybusinesstype').val('');
             $('#companyaddressline1').val('');
             $('#companyaddressline2').val('');
             $('#companyaddressline3').val('');
@@ -211,6 +220,7 @@
 
         function ClearBranchDetailFields() {
             $('#branchname').val('');
+            $('#branchbusinesstype').val('');
             $('#branchaddressline1').val('');
             $('#branchaddressline2').val('');
             $('#branchaddressline3').val('');
@@ -302,6 +312,10 @@
                     error = true;
                     $("#companynameerror").html("The company name field is required");
                 }
+                if ($("#companybusinesstype").val() == "") {
+                    error = true;
+                    $("#companybusinesstypeerror").html("The business type field is required");
+                }
                 if ($("#companyaddressline1").val() == "") {
                     error = true;
                     $("#companyaddressline1error").html("The company address line 1 field is required");
@@ -331,6 +345,10 @@
                 if ($("#branchname").val() == "") {
                     error = true;
                     $("#branchnameerror").html("The branch name field is required");
+                }
+                if ($("#branchbusinesstype").val() == "") {
+                    error = true;
+                    $("#branchbusinesstypeerror").html("The business type field is required");
                 }
                 if ($("#branchaddressline1").val() == "") {
                     error = true;
