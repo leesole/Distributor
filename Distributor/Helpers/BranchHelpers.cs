@@ -42,13 +42,13 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static Branch CreateBranch(Guid companyId, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatus entityStatus)
+        public static Branch CreateBranch(Guid companyId, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             return CreateBranch(db, companyId, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
         }
 
-        public static Branch CreateBranch(ApplicationDbContext db, Guid companyId, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatus entityStatus)
+        public static Branch CreateBranch(ApplicationDbContext db, Guid companyId, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
         {
             Branch branch = new Branch()
             {

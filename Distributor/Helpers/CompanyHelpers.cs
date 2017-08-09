@@ -38,13 +38,13 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatus entityStatus)
+        public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             return CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
         }
 
-        public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatus entityStatus)
+        public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
         {
             Company company = new Company()
             {

@@ -7,7 +7,7 @@ namespace Distributor.Enums
 {
     public static class EntityEnums
     {
-        public enum EntityStatus
+        public enum EntityStatusEnum
         {
             Inactive = 0,
             Active = 1,

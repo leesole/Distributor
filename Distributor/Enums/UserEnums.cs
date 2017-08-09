@@ -7,7 +7,7 @@ namespace Distributor.Enums
 {
     public static class UserEnums
     {
-        public enum UserRole
+        public enum UserRoleEnum
         {
             Admin = 0,
             Manager = 1,

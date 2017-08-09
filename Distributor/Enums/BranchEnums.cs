@@ -8,7 +8,7 @@ namespace Distributor.Enums
 {
     public static class BranchEnums
     {
-        public enum BusinessType
+        public enum BusinessTypeEnum
         {
             [Description("Producer")]
             Producer = 0,

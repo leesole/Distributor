@@ -27,13 +27,13 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static BranchUser CreateBranchUser(Guid userId, Guid branchId, Guid companyId, UserRole userRole)
+        public static BranchUser CreateBranchUser(Guid userId, Guid branchId, Guid companyId, UserRoleEnum userRole, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateBranchUser(db, userId, branchId, companyId, userRole);
+            return CreateBranchUser(db, userId, branchId, companyId, userRole, entityStatus);
         }
 
-        public static BranchUser CreateBranchUser(ApplicationDbContext db, Guid userId, Guid branchId, Guid companyId, UserRole userRole)
+        public static BranchUser CreateBranchUser(ApplicationDbContext db, Guid userId, Guid branchId, Guid companyId, UserRoleEnum userRole, EntityStatusEnum entityStatus)
         {
             BranchUser branchUser = new BranchUser()
             {
@@ -42,7 +42,7 @@ namespace Distributor.Helpers
                 BranchId = branchId,
                 CompanyId = companyId,
                 UserRole = userRole,
-                EntityStatus = EntityStatus.Active
+                EntityStatus = entityStatus
             };
             db.BranchUsers.Add(branchUser);
             db.SaveChanges();

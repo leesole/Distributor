@@ -41,20 +41,20 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AppUser CreateAppUser(string firstName, string lastName, EntityStatus entityStatus)
+        public static AppUser CreateAppUser(string firstName, string lastName, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             return CreateAppUser(db, firstName, lastName, entityStatus);
         }
 
-        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, EntityStatus entityStatus)
+        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, EntityStatusEnum entityStatus)
         {
             AppUser appUser = new AppUser()
             {
                 AppUserId = Guid.NewGuid(),
                 FirstName = firstName,
                 LastName = lastName,
-                EntityStatus = EntityStatus.Active
+                EntityStatus = entityStatus
             };
             db.AppUsers.Add(appUser);
             db.SaveChanges();

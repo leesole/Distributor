@@ -28,6 +28,6 @@ namespace Distributor.Models
         public string VATRegistrationDetails { get; set; }
 
         [Display(Name = "Status")]
-        public EntityStatus EntityStatus { get; set; }
+        public EntityStatusEnum EntityStatus { get; set; }
     }
 }

@@ -160,13 +160,13 @@ namespace Distributor.Controllers
             if (ModelState.IsValid)
             {
                 //If this is a new user and company then set to ACTIVE and an ADMIN role, else set to ON-HOLD and USER role and await activating by admin for branch/company of user and/or new branch details.
-                EntityStatus statusForUser = EntityStatus.Active;
-                UserRole userRoleForUser = UserRole.Admin;
+                EntityStatusEnum statusForUser = EntityStatusEnum.Active;
+                UserRoleEnum userRoleForUser = UserRoleEnum.Admin;
 
                 if (model.SelectedCompanyId.HasValue)
                 {
-                    statusForUser = EntityStatus.OnHold;
-                    userRoleForUser = UserRole.User;
+                    statusForUser = EntityStatusEnum.OnHold;
+                    userRoleForUser = UserRoleEnum.User;
                 }
 
                 //Create a new AppUser then write here
@@ -206,7 +206,7 @@ namespace Distributor.Controllers
                     }
 
                     //BranchUser
-                    branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser);
+                    branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser, statusForUser);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

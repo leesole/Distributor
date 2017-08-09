@@ -14,7 +14,7 @@ namespace Distributor.Models
         //Additional fields
         public Guid AppUserId { get; set; }
         public string FullName { get; set; }
-        public UserRole CurrentUserRole { get; set; }
+        public UserRoleEnum CurrentUserRole { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

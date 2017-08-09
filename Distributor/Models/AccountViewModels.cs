@@ -93,7 +93,7 @@ namespace Distributor.Models
         public string ConfirmPassword { get; set; }
 
         //BranchUser
-        public EntityStatus EntityStatus { get; set; }
+        public EntityStatusEnum EntityStatus { get; set; }
 
         //Company
         //public Company Company { get; set; }

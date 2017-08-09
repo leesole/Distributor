@@ -16,8 +16,8 @@ namespace Distributor.Models
         public Guid UserId { get; set; }
         public Guid BranchId { get; set; }
         public Guid CompanyId { get; set; }
-        public UserRole UserRole { get; set; } // this allows the user role to be branch specific for the user
+        public UserRoleEnum UserRole { get; set; } // this allows the user role to be branch specific for the user
 
-        public EntityStatus EntityStatus { get; set; }
+        public EntityStatusEnum EntityStatus { get; set; }
     }
 }

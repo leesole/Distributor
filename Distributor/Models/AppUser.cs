@@ -21,6 +21,6 @@ namespace Distributor.Models
         public string LastName { get; set; }
 
         [Display(Name = "Status")]
-        public EntityStatus EntityStatus { get; set; }
+        public EntityStatusEnum EntityStatus { get; set; }
     }
 }

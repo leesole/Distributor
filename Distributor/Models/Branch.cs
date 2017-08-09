@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
 
 namespace Distributor.Models
@@ -17,6 +18,10 @@ namespace Distributor.Models
         [Required]
         [Display(Name = "Branch name")]
         public string BranchName { get; set; }
+
+        [Required]
+        [Display(Name = "Business type")]
+        public BusinessTypeEnum BusinessType { get; set; }
 
         [Required]
         [Display(Name = "Address line 1")]
@@ -52,6 +57,6 @@ namespace Distributor.Models
         public string ContactName { get; set; }
 
         [Display(Name = "Status")]
-        public EntityStatus EntityStatus { get; set; }
+        public EntityStatusEnum EntityStatus { get; set; }
     }
 }
