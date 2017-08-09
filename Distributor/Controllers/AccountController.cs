@@ -13,6 +13,7 @@ using Distributor.Helpers;
 using static Distributor.Enums.UserEnums;
 using System.Collections.Generic;
 using static Distributor.Enums.EntityEnums;
+using System.Data.Entity.Core.Metadata.Edm;
 
 namespace Distributor.Controllers
 {
@@ -158,15 +159,54 @@ namespace Distributor.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Create a new AppUser then write here
-                
-                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, EntityStatus.Active);
+                //If this is a new user and company then set to ACTIVE and an ADMIN role, else set to ON-HOLD and USER role and await activating by admin for branch/company of user and/or new branch details.
+                EntityStatus statusForUser = EntityStatus.Active;
+                UserRole userRoleForUser = UserRole.Admin;
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AppUserId = appUser.AppUserId, FullName = model.FirstName + " " + model.LastName, CurrentUserRole = UserRole.User };
+                if (model.SelectedCompanyId.HasValue)
+                {
+                    statusForUser = EntityStatus.OnHold;
+                    userRoleForUser = UserRole.User;
+                }
+
+                //Create a new AppUser then write here
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, statusForUser);
+
+                Company company = null;
+                Branch branch = null;
+                BranchUser branchUser = null;
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AppUserId = appUser.AppUserId, FullName = model.FirstName + " " + model.LastName, CurrentUserRole = userRoleForUser };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                    //Now Update related entities
+                    //Company                    
+                    if (model.SelectedCompanyId.HasValue)
+                        company = CompanyHelpers.GetCompany(model.SelectedCompanyId.Value);
+                    else
+                        company = CompanyHelpers.CreateCompany(Guid.Empty, model.CompanyName, model.CompanyRegistrationDetails, model.CharityRegistrationDetails, model.VATRegistrationDetails, statusForUser);
+
+                    //Branch
+                    if (model.SelectedBranchId.HasValue)
+                        branch = BranchHelpers.GetBranch(model.SelectedBranchId.Value);
+                    else
+                    {
+                        string branchName = model.BranchName;
+                        if (!model.SelectedCompanyId.HasValue)
+                            branchName = "Head Office";
+
+                        branch = BranchHelpers.CreateBranch(company.CompanyId, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, statusForUser);
+
+                        //Company - set head office branch as the newly created branch for this new company (defaults to 'Head Office')
+                        if (!model.SelectedCompanyId.HasValue)
+                            company = CompanyHelpers.UpdateCompanyHeadOffice(company.CompanyId, branch.BranchId);
+                    }
+
+                    //BranchUser
+                    branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -182,7 +222,7 @@ namespace Distributor.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
+            // If we got this far, something failed, redisplay form - set up the drop downs dependant on what was there originally from the model
             if (model.SelectedCompanyId.HasValue)
             {
                 ViewBag.CompanyList = ControlHelpers.AllCompaniesListDropDown(model.SelectedCompanyId.Value);

@@ -38,13 +38,13 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails)
+        public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatus entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails);
+            return CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
         }
 
-        public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails)
+        public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatus entityStatus)
         {
             Company company = new Company()
             {
@@ -54,9 +54,30 @@ namespace Distributor.Helpers
                 CompanyRegistrationDetails = companyRegistrationDetails,
                 CharityRegistrationDetails = charityRegistrationDetails,
                 VATRegistrationDetails = vatRegistrationDetails,
-                EntityStatus = EntityStatus.Active
+                EntityStatus = entityStatus
             };
             db.Companies.Add(company);
+            db.SaveChanges();
+
+            return company;
+        }
+
+        #endregion
+
+        #region Update
+
+        public static Company UpdateCompanyHeadOffice(Guid companyId, Guid headOfficeBranchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateCompanyHeadOffice(db, companyId, headOfficeBranchId);
+        }
+
+        public static Company UpdateCompanyHeadOffice(ApplicationDbContext db, Guid companyId, Guid headOfficeBranchId)
+        {
+            Company company = GetCompany(db, companyId);
+
+            company.HeadOfficeBranchId = headOfficeBranchId;
+
             db.SaveChanges();
 
             return company;
