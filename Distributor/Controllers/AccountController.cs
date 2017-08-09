@@ -12,6 +12,7 @@ using Distributor.Models;
 using Distributor.Helpers;
 using static Distributor.Enums.UserEnums;
 using System.Collections.Generic;
+using static Distributor.Enums.EntityEnums;
 
 namespace Distributor.Controllers
 {
@@ -144,7 +145,7 @@ namespace Distributor.Controllers
         {
             //DropDown
             ViewBag.CompanyList = ControlHelpers.AllCompaniesListDropDown();
-
+            ViewBag.BranchList = new SelectList(Enumerable.Empty<SelectListItem>(), "BranchId", "BranchName");
             return View();
         }
 
@@ -158,7 +159,8 @@ namespace Distributor.Controllers
             if (ModelState.IsValid)
             {
                 //Create a new AppUser then write here
-                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName);
+                
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, EntityStatus.Active);
 
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AppUserId = appUser.AppUserId, FullName = model.FirstName + " " + model.LastName, CurrentUserRole = UserRole.User };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -181,6 +183,22 @@ namespace Distributor.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            if (model.SelectedCompanyId.HasValue)
+            {
+                ViewBag.CompanyList = ControlHelpers.AllCompaniesListDropDown(model.SelectedCompanyId.Value);
+                if (model.SelectedBranchId.HasValue)
+                    ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(model.SelectedCompanyId.Value, model.SelectedBranchId.Value);
+                else
+                    ViewBag.BranchList = new SelectList(Enumerable.Empty<SelectListItem>(), "BranchId", "BranchName");
+            }
+            else
+            {
+                ViewBag.CompanyList = ControlHelpers.AllCompaniesListDropDown();
+                ViewBag.BranchList = new SelectList(Enumerable.Empty<SelectListItem>(), "BranchId", "BranchName");
+            }
+
+            
+
             return View(model);
         }
 

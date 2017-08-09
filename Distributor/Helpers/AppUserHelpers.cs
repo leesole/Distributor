@@ -41,13 +41,13 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AppUser CreateAppUser(string firstName, string lastName)
+        public static AppUser CreateAppUser(string firstName, string lastName, EntityStatus entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateAppUser(db, firstName, lastName);
+            return CreateAppUser(db, firstName, lastName, entityStatus);
         }
 
-        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName)
+        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, EntityStatus entityStatus)
         {
             AppUser appUser = new AppUser()
             {
