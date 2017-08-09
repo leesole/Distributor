@@ -22,5 +22,8 @@ namespace Distributor.Models
 
         [Display(Name = "Status")]
         public EntityStatusEnum EntityStatus { get; set; }
+
+        [Display(Name = "Current branch")]
+        public Guid CurrentBranchId { get; set; }
     }
 }

@@ -41,19 +41,20 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AppUser CreateAppUser(string firstName, string lastName, EntityStatusEnum entityStatus)
+        public static AppUser CreateAppUser(string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateAppUser(db, firstName, lastName, entityStatus);
+            return CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus);
         }
 
-        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, EntityStatusEnum entityStatus)
+        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus)
         {
             AppUser appUser = new AppUser()
             {
                 AppUserId = Guid.NewGuid(),
                 FirstName = firstName,
                 LastName = lastName,
+                CurrentBranchId = currentBranchId,
                 EntityStatus = entityStatus
             };
             db.AppUsers.Add(appUser);
@@ -65,11 +66,27 @@ namespace Distributor.Helpers
         #endregion
 
         #region Update
-        #endregion
 
-        #region Delete
+        public static AppUser UpdateCurrentBranchId(Guid appUserId, Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateCurrentBranchId(db, appUserId, branchId);
+        }
 
-        public static void DeleteAppUser(Guid appUserId)
+        public static AppUser UpdateCurrentBranchId(ApplicationDbContext db, Guid appUserId, Guid branchId)
+        {
+            AppUser appUser = GetAppUser(db, appUserId);
+            appUser.CurrentBranchId = branchId;
+            db.SaveChanges();
+
+            return appUser;
+        }
+
+    #endregion
+
+    #region Delete
+
+    public static void DeleteAppUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             DeleteAppUser(db, appUserId);

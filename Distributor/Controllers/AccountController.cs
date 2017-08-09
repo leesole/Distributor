@@ -190,7 +190,7 @@ namespace Distributor.Controllers
                 }
 
                 //Create a new AppUser then write here
-                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, statusForUser);
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, Guid.Empty, statusForUser);
 
                 Company company = null;
                 Branch branch = null;
@@ -227,6 +227,9 @@ namespace Distributor.Controllers
 
                     //BranchUser
                     branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser, statusForUser);
+
+                    //Update AppUser
+                    appUser = AppUserHelpers.UpdateCurrentBranchId(appUser.AppUserId, branch.BranchId);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
