@@ -2,6 +2,7 @@
 using Distributor.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
@@ -77,6 +78,7 @@ namespace Distributor.Helpers
         {
             AppUser appUser = GetAppUser(db, appUserId);
             appUser.CurrentBranchId = branchId;
+            db.Entry(appUser).State = EntityState.Modified;
             db.SaveChanges();
 
             return appUser;

@@ -1,6 +1,7 @@
 ﻿using Distributor.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
@@ -19,7 +20,6 @@ namespace Distributor.Helpers
 
         public static List<Company> GetAllCompanies(ApplicationDbContext db)
         {
-            
             return db.Companies.OrderBy(x => x.CompanyName).ToList(); 
         }
 
@@ -77,7 +77,7 @@ namespace Distributor.Helpers
             Company company = GetCompany(db, companyId);
 
             company.HeadOfficeBranchId = headOfficeBranchId;
-
+            db.Entry(company).State = EntityState.Modified;
             db.SaveChanges();
 
             return company;

@@ -56,7 +56,7 @@
                                             @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger", @id = "companynameerror" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.EnumDropDownListFor(m => m.BusinessType, new { @class = "form-control", @id = "companybusinesstype" })
+                                            @Html.EnumDropDownListFor(m => m.BusinessType, "Select business type", new { @class = "form-control", @id = "companybusinesstype" })
                                             @Html.ValidationMessageFor(m => m.BusinessType, "", new { @class = "text-danger", @id = "companybusinesstypeerror" })
                                         </div>
                                         <div class="form-group col-md-12">
@@ -120,7 +120,7 @@
                                                 @Html.ValidationMessageFor(m => m.BranchName, "", new { @class = "text-danger", @id = "branchnameerror" })
                                             </div>
                                             <div class="form-group col-md-12">
-                                                @Html.EnumDropDownListFor(m => m.BusinessType, new { @class = "form-control", @id = "branchbusinesstype" })
+                                                @Html.EnumDropDownListFor(m => m.BusinessType, "Select business type", new { @class = "form-control", @id = "branchbusinesstype" })
                                                 @Html.ValidationMessageFor(m => m.BusinessType, "", new { @class = "text-danger", @id = "branchbusinesstypeerror" })
                                             </div>
                                             <div class="form-group col-md-12">
@@ -312,7 +312,7 @@
                     error = true;
                     $("#companynameerror").html("The company name field is required");
                 }
-                if ($("#companybusinesstype").val() == "") {
+                if ($("#companybusinesstype").val() == "" || $("#companybusinesstype").val() == "0") {
                     error = true;
                     $("#companybusinesstypeerror").html("The business type field is required");
                 }
@@ -346,7 +346,7 @@
                     error = true;
                     $("#branchnameerror").html("The branch name field is required");
                 }
-                if ($("#branchbusinesstype").val() == "") {
+                if ($("#branchbusinesstype").val() == "" || $("#companybusinesstype").val() == "0") {
                     error = true;
                     $("#branchbusinesstypeerror").html("The business type field is required");
                 }

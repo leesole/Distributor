@@ -11,29 +11,29 @@ namespace Distributor.Enums
         public enum BusinessTypeEnum
         {
             [Description("Caterer")]
-            Caterer = 0,
+            Caterer = 1,
             [Description("Charity")]
-            Charity = 1,
+            Charity = 2,
             [Description("Church")]
-            Church = 2,
+            Church = 3,
             [Description("Distributor")]
-            Distributor = 3,
+            Distributor = 4,
             [Description("Food bank")]
-            FoodBank = 4,
+            FoodBank = 5,
             [Description("Hotelier/hostelry")]
-            HotelierHostelry = 5,
+            HotelierHostelry = 6,
             [Description("Producer")]
-            Producer = 6,
+            Producer = 7,
             [Description("Restaurant")]
-            Restaurant = 7,
+            Restaurant = 8,
             [Description("Retailer")]
-            Retailer = 8,
+            Retailer = 9,
             [Description("Supplier")]
-            Supplier = 9,
+            Supplier = 10,
             [Description("Takeaway")]
-            Takeaway = 10,
+            Takeaway = 11,
             [Description("Trader")]
-            Trader = 11
+            Trader = 12
         }
     }
 }

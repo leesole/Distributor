@@ -182,7 +182,7 @@ namespace Distributor.Controllers
                 //If this is a new user and company then set to ACTIVE and an ADMIN role, else set to ON-HOLD and USER role and await activating by admin for branch/company of user and/or new branch details.
                 EntityStatusEnum statusForUser = EntityStatusEnum.Active;
                 UserRoleEnum userRoleForUser = UserRoleEnum.Admin;
-
+                
                 if (model.SelectedCompanyId.HasValue)
                 {
                     statusForUser = EntityStatusEnum.OnHold;
@@ -200,7 +200,9 @@ namespace Distributor.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //only log in if this user is not set to on-hold
+                    if (!model.SelectedCompanyId.HasValue)
+                        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     //Now Update related entities
                     //Company                    
@@ -228,7 +230,7 @@ namespace Distributor.Controllers
                     //BranchUser
                     branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser, statusForUser);
 
-                    //Update AppUser
+                    //Update AppUser with the branch we are adding/using to set as current branch for new user
                     appUser = AppUserHelpers.UpdateCurrentBranchId(appUser.AppUserId, branch.BranchId);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -237,7 +239,10 @@ namespace Distributor.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    if (model.SelectedCompanyId.HasValue)
+                        return RedirectToAction("Confirmation");
+                    else
+                        return RedirectToAction("Index", "Home");
                 }
 
                 //Delete the appUser account as this has not gone through
@@ -263,6 +268,12 @@ namespace Distributor.Controllers
             
 
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Confirmation()
+        {
+            return View();
         }
 
         //
