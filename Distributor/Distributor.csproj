@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Enums\BranchEnums.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
+    <Compile Include="Enums\UserTaskEnums.cs" />
     <Compile Include="Enums\UserEnums.cs" />
     <Compile Include="Extenstions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -206,6 +207,7 @@
     <Compile Include="Helpers\CompanyHelpers.cs" />
     <Compile Include="Helpers\ControlHelpers.cs" />
     <Compile Include="Helpers\EnumHelpers.cs" />
+    <Compile Include="Helpers\UserTaskHelpers.cs" />
     <Compile Include="Migrations\201707271720127_1st.cs" />
     <Compile Include="Migrations\201707271720127_1st.Designer.cs">
       <DependentUpon>201707271720127_1st.cs</DependentUpon>
@@ -238,6 +240,22 @@
     <Compile Include="Migrations\201708100646263_8th.Designer.cs">
       <DependentUpon>201708100646263_8th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708100915115_9th.cs" />
+    <Compile Include="Migrations\201708100915115_9th.Designer.cs">
+      <DependentUpon>201708100915115_9th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708100933470_10th.cs" />
+    <Compile Include="Migrations\201708100933470_10th.Designer.cs">
+      <DependentUpon>201708100933470_10th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708101002419_11th.cs" />
+    <Compile Include="Migrations\201708101002419_11th.Designer.cs">
+      <DependentUpon>201708101002419_11th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708101134365_12th.cs" />
+    <Compile Include="Migrations\201708101134365_12th.Designer.cs">
+      <DependentUpon>201708101134365_12th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -246,8 +264,10 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\UserTaskViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -324,7 +344,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -366,6 +385,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708100646263_8th.resx">
       <DependentUpon>201708100646263_8th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708100915115_9th.resx">
+      <DependentUpon>201708100915115_9th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708100933470_10th.resx">
+      <DependentUpon>201708100933470_10th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708101002419_11th.resx">
+      <DependentUpon>201708101002419_11th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708101134365_12th.resx">
+      <DependentUpon>201708101134365_12th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

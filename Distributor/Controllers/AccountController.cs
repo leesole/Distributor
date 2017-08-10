@@ -14,6 +14,7 @@ using static Distributor.Enums.UserEnums;
 using System.Collections.Generic;
 using static Distributor.Enums.EntityEnums;
 using System.Data.Entity.Core.Metadata.Edm;
+using static Distributor.Enums.UserTaskEnums;
 
 namespace Distributor.Controllers
 {
@@ -182,6 +183,10 @@ namespace Distributor.Controllers
                 //If this is a new user and company then set to ACTIVE and an ADMIN role, else set to ON-HOLD and USER role and await activating by admin for branch/company of user and/or new branch details.
                 EntityStatusEnum statusForUser = EntityStatusEnum.Active;
                 UserRoleEnum userRoleForUser = UserRoleEnum.Admin;
+
+                //initialise the task creation flags
+                bool createUserOnHoldTask = false;
+                bool createBranchOnHoldTask = false;
                 
                 if (model.SelectedCompanyId.HasValue)
                 {
@@ -202,8 +207,10 @@ namespace Distributor.Controllers
                 {
                     //only log in if this user is not set to on-hold
                     if (!model.SelectedCompanyId.HasValue)
-                        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    else  //we will need to create a task for the branch
+                        createUserOnHoldTask = true;
+                    
                     //Now Update related entities
                     //Company                    
                     if (model.SelectedCompanyId.HasValue)
@@ -221,6 +228,7 @@ namespace Distributor.Controllers
                             branchName = "Head Office";
 
                         branch = BranchHelpers.CreateBranch(company.CompanyId, model.BusinessType, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, statusForUser);
+                        createBranchOnHoldTask = true;
 
                         //Company - set head office branch as the newly created branch for this new company (defaults to 'Head Office')
                         if (!model.SelectedCompanyId.HasValue)
@@ -238,6 +246,14 @@ namespace Distributor.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    //Task creation
+                    if (createUserOnHoldTask)
+                        UserTaskHelpers.CreateUserTask(TaskTypeEnum.UserOnHold, "New user on hold, awaiting administrator/manager activation", appUser.AppUserId, appUser.AppUserId, EntityStatusEnum.Active);
+
+                    if (createBranchOnHoldTask)
+                        UserTaskHelpers.CreateUserTask(TaskTypeEnum.BranchOnHold, "New branch on hold, awaiting administrator activation", branch.BranchId, appUser.AppUserId, EntityStatusEnum.Active);
+
 
                     if (model.SelectedCompanyId.HasValue)
                         return RedirectToAction("Confirmation");
