@@ -103,8 +103,6 @@ namespace Distributor.Controllers
                     }
                     else
                     {
-                        //LSLSLS Here we need to put in the checks for current company/branch etc. ready for admin screen if necessary
-                        //return RedirectToLocal(returnUrl);
                         return RedirectToAction("Dashboard", "Home");
                     }
                 case SignInStatus.LockedOut:

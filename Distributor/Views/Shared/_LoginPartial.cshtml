@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Distributor.Extenstions
+@using Distributor.Helpers
 
 @{ 
     var userRole = User.Identity.GetCurrentUserRole();
@@ -12,10 +13,16 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(User.Identity.GetFullName(), "Edit", "AppUsers", new { id = AppUserHelpers.GetAppUser(User).AppUserId }, "")</li>
         @if (userRole == "Admin" || userRole == "SuperUser")
         {
-            <li>@Html.ActionLink("Admin", "Index", "Home")</li>
+            <li>@Html.ActionLink("Admin", "Admin", "Home")</li>
         }
+        @if (userRole == "Manager")
+        {
+            <li>@Html.ActionLink("Manager", "Admin", "Home")</li>
+        }
+        <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }

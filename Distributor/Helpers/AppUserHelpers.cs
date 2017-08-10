@@ -36,7 +36,7 @@ namespace Distributor.Helpers
             Guid appUserId;
             Guid.TryParse(user.Identity.GetAppUserId(), out appUserId);
 
-            return db.AppUsers.Find(GetAppUser(db, appUserId));
+            return GetAppUser(db, appUserId);
         }
 
         #endregion
@@ -87,9 +87,9 @@ namespace Distributor.Helpers
 
     #endregion
 
-    #region Delete
+        #region Delete
 
-    public static void DeleteAppUser(Guid appUserId)
+        public static void DeleteAppUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             DeleteAppUser(db, appUserId);

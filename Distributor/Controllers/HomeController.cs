@@ -18,15 +18,11 @@ namespace Distributor.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
@@ -34,9 +30,13 @@ namespace Distributor.Controllers
         public ActionResult Dashboard()
         {
             ViewBag.UserName = User.Identity.GetFullName();
-            
             ViewBag.BranchName = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId())).BranchName;
 
+            return View();
+        }
+
+        public ActionResult Admin()
+        {
             return View();
         }
     }
