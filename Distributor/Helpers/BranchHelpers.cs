@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
@@ -37,6 +38,22 @@ namespace Distributor.Helpers
                                                select b).ToList();
 
             return branchesForCompany;
+        }
+
+        public static Branch GetCurrentBranchForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetCurrentBranchForUser(db, appUserId);
+        }
+
+        public static Branch GetCurrentBranchForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = (from b in db.Branches
+                             where b.BranchId == appUser.CurrentBranchId
+                             select b).FirstOrDefault();
+
+            return branch;
         }
 
         #endregion

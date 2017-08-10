@@ -104,7 +104,8 @@ namespace Distributor.Controllers
                     else
                     {
                         //LSLSLS Here we need to put in the checks for current company/branch etc. ready for admin screen if necessary
-                        return RedirectToLocal(returnUrl);
+                        //return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Dashboard", "Home");
                     }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -258,7 +259,7 @@ namespace Distributor.Controllers
                     if (model.SelectedCompanyId.HasValue)
                         return RedirectToAction("Confirmation");
                     else
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Dashboard", "Home");
                 }
 
                 //Delete the appUser account as this has not gone through
@@ -279,9 +280,7 @@ namespace Distributor.Controllers
             {
                 ViewBag.CompanyList = ControlHelpers.AllCompaniesListDropDown();
                 ViewBag.BranchList = new SelectList(Enumerable.Empty<SelectListItem>(), "BranchId", "BranchName");
-            }
-
-            
+            }            
 
             return View(model);
         }

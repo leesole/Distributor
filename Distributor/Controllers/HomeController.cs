@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Distributor.Extenstions;
+using Distributor.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,6 +26,16 @@ namespace Distributor.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Dashboard()
+        {
+            ViewBag.UserName = User.Identity.GetFullName();
+            
+            ViewBag.BranchName = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId())).BranchName;
 
             return View();
         }

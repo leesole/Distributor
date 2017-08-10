@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
 
@@ -24,13 +25,13 @@ namespace Distributor.Helpers
             return db.AppUsers.Find(appUserId);
         }
 
-        public static AppUser GetAppUser(System.Security.Principal.IPrincipal user)
+        public static AppUser GetAppUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             return GetAppUser(db, user);
         }
 
-        public static AppUser GetAppUser(ApplicationDbContext db, System.Security.Principal.IPrincipal user)
+        public static AppUser GetAppUser(ApplicationDbContext db, IPrincipal user)
         {
             Guid appUserId;
             Guid.TryParse(user.Identity.GetAppUserId(), out appUserId);
@@ -120,6 +121,15 @@ namespace Distributor.Helpers
             AppUser appUser = GetAppUser(user.AppUserId);
 
             return appUser.EntityStatus;
+        }
+
+        //User.Identity.GetAppUserId returns Guid as a string, this converts that string back to a Guid
+        public static Guid GetGuidFromUserGetAppUserId(string getAppUserId)
+        {
+            Guid appUserId;
+            Guid.TryParse(getAppUserId, out appUserId);
+
+            return appUserId;
         }
 
         #endregion
