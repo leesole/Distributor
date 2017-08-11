@@ -1,8 +1,13 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Distributor.Extenstions
+@using Distributor.Helpers
+
+@model IEnumerable<Distributor.ViewModels.UserTaskView>
 
 @{
     var userRole = User.Identity.GetCurrentUserRole();
+    var taskTypeDescription = "";
+    var referenceDescription = "";
 }
 
 <nav class="navbar navbar-default">
@@ -24,7 +29,10 @@
                 <li class="active">@Html.ActionLink("Tasks", "Tasks", "Admin")</li>
                 <li>@Html.ActionLink("User Admin", "UserAdmin", "Admin")</li>
                 <li>@Html.ActionLink("Branch Admin", "BranchAdmin", "Admin")</li>
-                <li>@Html.ActionLink("Company Admin", "CompanyAdmin", "Admin")</li>
+                @if (userRole == "Admin" || userRole == "SuperUser")
+                {
+                    <li>@Html.ActionLink("Company Admin", "CompanyAdmin", "Admin")</li>
+                }
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -37,6 +45,65 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li class="active">Tasks</li>
         </ol>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
+        <p>Your current active tasks.</p>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th colspan="2">Actions</th>
+                    <th>Task type</th>
+                    <th>Description</th>
+                    <th>Reference details</th>
+                    <th>Created</th>
+                    <th>Created by</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+            {
+                taskTypeDescription = EnumHelpers.GetDescription(item.TaskType);
+                if (item.AppUserReference != null)
+                {
+                    referenceDescription = item.AppUserReference.FirstName + " " + item.AppUserReference.LastName;
+                }
+                if (item.BranchReference != null)
+                {
+                    referenceDescription = item.BranchReference.BranchName + ", " + item.BranchReference.AddressLine1 + ", " + item.BranchReference.AddressTownCity;
+                }
+
+                <tr>
+                    <td>
+                        <input type="button" value="Approve" class="btn btn-sm btn-success btn-block" />
+                    </td>
+                    <td>
+                        <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block" />
+                    </td>
+                    <td>
+                        @taskTypeDescription
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaskDescription)
+                    </td>
+                    <td>
+                        @referenceDescription
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    <td>
+                        @(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)
+                    </td>
+                    <td>
+                        <input type="button" value="Details" class="btn btn-sm btn-info btn-block" />
+                    </td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.BranchId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.BranchId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BranchId })*@
+
+                </tr>
+                }
+
+            </table>
+
+        </div>
     </div>
 </div>

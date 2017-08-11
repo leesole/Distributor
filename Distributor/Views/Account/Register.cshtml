@@ -56,44 +56,44 @@
                                             @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger", @id = "companynameerror" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.EnumDropDownListFor(m => m.BusinessType, "Select business type", new { @class = "form-control", @id = "companybusinesstype" })
-                                            @Html.ValidationMessageFor(m => m.BusinessType, "", new { @class = "text-danger", @id = "companybusinesstypeerror" })
+                                            @Html.DropDownListFor(m => m.CompanyBusinessType, (SelectList)ViewBag.BusinessTypeList, "Select business type", new { @class = "form-control", @id = "companybusinesstype" })
+                                            @Html.ValidationMessageFor(m => m.CompanyBusinessType, "", new { @class = "text-danger", @id = "companybusinesstypeerror" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchAddressLine1, new { @class = "form-control", @id = "companyaddressline1", placeholder = "Address line 1" })
-                                            @Html.ValidationMessageFor(m => m.BranchAddressLine1, "", new { @class = "text-danger", @id = "companyaddressline1error" })
+                                            @Html.TextBoxFor(m => m.CompanyAddressLine1, new { @class = "form-control", @id = "companyaddressline1", placeholder = "Address line 1" })
+                                            @Html.ValidationMessageFor(m => m.CompanyAddressLine1, "", new { @class = "text-danger", @id = "companyaddressline1error" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchAddressLine2, new { @class = "form-control", @id = "companyaddressline2", placeholder = "Address line 2" })
-                                            @Html.ValidationMessageFor(m => m.BranchAddressLine2, "", new { @class = "text-danger" })
+                                            @Html.TextBoxFor(m => m.CompanyAddressLine2, new { @class = "form-control", @id = "companyaddressline2", placeholder = "Address line 2" })
+                                            @Html.ValidationMessageFor(m => m.CompanyAddressLine2, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchAddressLine3, new { @class = "form-control", @id = "companyaddressline3", placeholder = "Address line 3" })
-                                            @Html.ValidationMessageFor(m => m.BranchAddressLine3, "", new { @class = "text-danger" })
+                                            @Html.TextBoxFor(m => m.CompanyAddressLine3, new { @class = "form-control", @id = "companyaddressline3", placeholder = "Address line 3" })
+                                            @Html.ValidationMessageFor(m => m.CompanyAddressLine3, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchAddressTownCity, new { @class = "form-control", @id = "companyaddresstowncity", placeholder = "Address town/city" })
-                                            @Html.ValidationMessageFor(m => m.BranchAddressTownCity, "", new { @class = "text-danger", @id = "companyaddresstowncityerror" })
+                                            @Html.TextBoxFor(m => m.CompanyAddressTownCity, new { @class = "form-control", @id = "companyaddresstowncity", placeholder = "Address town/city" })
+                                            @Html.ValidationMessageFor(m => m.CompanyAddressTownCity, "", new { @class = "text-danger", @id = "companyaddresstowncityerror" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchAddressCounty, new { @class = "form-control", @id = "companyaddresscounty", placeholder = "Address county" })
-                                            @Html.ValidationMessageFor(m => m.BranchAddressCounty, "", new { @class = "text-danger" })
+                                            @Html.TextBoxFor(m => m.CompanyAddressCounty, new { @class = "form-control", @id = "companyaddresscounty", placeholder = "Address county" })
+                                            @Html.ValidationMessageFor(m => m.CompanyAddressCounty, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchAddressPostcode, new { @class = "form-control", @id = "companyaddresspostcode", placeholder = "Address postcode" })
-                                            @Html.ValidationMessageFor(m => m.BranchAddressPostcode, "", new { @class = "text-danger", @id = "companyaddresspostcodeerror" })
+                                            @Html.TextBoxFor(m => m.CompanyAddressPostcode, new { @class = "form-control", @id = "companyaddresspostcode", placeholder = "Address postcode" })
+                                            @Html.ValidationMessageFor(m => m.CompanyAddressPostcode, "", new { @class = "text-danger", @id = "companyaddresspostcodeerror" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchTelephoneNumber, new { @class = "form-control", @id = "companytelephonenumber", placeholder = "Contact telephone number" })
-                                            @Html.ValidationMessageFor(m => m.BranchTelephoneNumber, "", new { @class = "text-danger", @id = "companytelephonenumbererror" })
+                                            @Html.TextBoxFor(m => m.CompanyTelephoneNumber, new { @class = "form-control", @id = "companytelephonenumber", placeholder = "Contact telephone number" })
+                                            @Html.ValidationMessageFor(m => m.CompanyTelephoneNumber, "", new { @class = "text-danger", @id = "companytelephonenumbererror" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchEmail, new { @class = "form-control", @id = "companyemail", placeholder = "Contact email" })
-                                            @Html.ValidationMessageFor(m => m.BranchEmail, "", new { @class = "text-danger", @id = "companyemailerror" })
+                                            @Html.TextBoxFor(m => m.CompanyEmail, new { @class = "form-control", @id = "companyemail", placeholder = "Contact email" })
+                                            @Html.ValidationMessageFor(m => m.CompanyEmail, "", new { @class = "text-danger", @id = "companyemailerror" })
                                         </div>
                                         <div class="form-group col-md-12">
-                                            @Html.TextBoxFor(m => m.BranchContactName, new { @class = "form-control", @id = "companycontactname", placeholder = "Contact person" })
-                                            @Html.ValidationMessageFor(m => m.BranchContactName, "", new { @class = "text-danger", @id = "companycontactnameerror" })
+                                            @Html.TextBoxFor(m => m.CompanyContactName, new { @class = "form-control", @id = "companycontactname", placeholder = "Contact person" })
+                                            @Html.ValidationMessageFor(m => m.CompanyContactName, "", new { @class = "text-danger", @id = "companycontactnameerror" })
                                         </div>
                                         <div class="form-group col-md-12">
                                             @Html.TextBoxFor(m => m.CompanyRegistrationDetails, new { @class = "form-control", @id = "companyregistrationdetails", placeholder = "Company registration details" })
@@ -120,8 +120,8 @@
                                                 @Html.ValidationMessageFor(m => m.BranchName, "", new { @class = "text-danger", @id = "branchnameerror" })
                                             </div>
                                             <div class="form-group col-md-12">
-                                                @Html.EnumDropDownListFor(m => m.BusinessType, "Select business type", new { @class = "form-control", @id = "branchbusinesstype" })
-                                                @Html.ValidationMessageFor(m => m.BusinessType, "", new { @class = "text-danger", @id = "branchbusinesstypeerror" })
+                                                @Html.DropDownListFor(m => m.BranchBusinessType, (SelectList)ViewBag.BusinessTypeList, "Select business type", new { @class = "form-control", @id = "branchbusinesstype" })
+                                                @Html.ValidationMessageFor(m => m.BranchBusinessType, "", new { @class = "text-danger", @id = "branchbusinesstypeerror" })
                                             </div>
                                             <div class="form-group col-md-12">
                                                 @Html.TextBoxFor(m => m.BranchAddressLine1, new { @class = "form-control", @id = "branchaddressline1", placeholder = "Address line 1" })

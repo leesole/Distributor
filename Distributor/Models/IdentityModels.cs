@@ -42,8 +42,8 @@ namespace Distributor.Models
         public DbSet<Branch> Branches { get; set; }
         public DbSet<BranchUser> BranchUsers { get; set; }
         public DbSet<UserTask> UserTasks { get; set; }
-        public DbSet<UserTaskAdmin> UserTaskAdmins { get; set; }
-        public DbSet<UserTaskManager> UserTaskManagers { get; set; }
+        public DbSet<UserTaskAssignment> UserTaskAssignments { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

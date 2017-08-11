@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.UserEnums;
 using static Distributor.Enums.UserTaskEnums;
 
 namespace Distributor.Models
@@ -30,25 +31,16 @@ namespace Distributor.Models
         public EntityStatusEnum EntityStatus { get; set; }
     }
 
-    public class UserTaskAdmin
+    public class UserTaskAssignment
     {
         [Key]
-        public Guid UserTaskAdminId { get; set; }
+        public Guid UserTaskAssignmentId { get; set; }
 
         public Guid UserTaskId { get; set; }
 
         public Guid AppUserId { get; set; }  //who task is assigned to
 
-    }
-
-    public class UserTaskManager
-    {
-        [Key]
-        public Guid UserTaskManagerId { get; set; }
-
-        public Guid UserTaskId { get; set; }
-
-        public Guid AppUserId { get; set; }  //who task is assigned to
+        public UserRoleEnum UserRole { get; set; }
 
     }
 }

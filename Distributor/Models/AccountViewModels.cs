@@ -101,8 +101,38 @@ namespace Distributor.Models
 
         public Guid? SelectedCompanyId { get; set; }
 
+        [Display(Name = "Business type")]
+        public BusinessTypeEnum? CompanyBusinessType { get; set; }
+
         [Display(Name = "Company name")]
         public string CompanyName { get; set; }
+
+        [Display(Name = "Address line 1")]
+        public string CompanyAddressLine1 { get; set; }
+
+        [Display(Name = "Address line 2")]
+        public string CompanyAddressLine2 { get; set; }
+
+        [Display(Name = "Address line 3")]
+        public string CompanyAddressLine3 { get; set; }
+
+        [Display(Name = "Address town/city")]
+        public string CompanyAddressTownCity { get; set; }
+
+        [Display(Name = "Address county")]
+        public string CompanyAddressCounty { get; set; }
+
+        [Display(Name = "Address postcode")]
+        public string CompanyAddressPostcode { get; set; }
+
+        [Display(Name = "Telephone number")]
+        public string CompanyTelephoneNumber { get; set; }
+
+        [Display(Name = "Email")]
+        public string CompanyEmail { get; set; }
+
+        [Display(Name = "Contact name")]
+        public string CompanyContactName { get; set; }
 
         [Display(Name = "Company registration details")]
         public string CompanyRegistrationDetails { get; set; }
@@ -117,7 +147,7 @@ namespace Distributor.Models
         public Guid? SelectedBranchId { get; set; }
 
         [Display(Name = "Business type")]
-        public BusinessTypeEnum BusinessType { get; set; }
+        public BusinessTypeEnum? BranchBusinessType { get; set; }
 
         [Display(Name = "Branch name")]
         public string BranchName { get; set; }

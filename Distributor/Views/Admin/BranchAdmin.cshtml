@@ -24,7 +24,10 @@
                 <li>@Html.ActionLink("Tasks", "Tasks", "Admin")</li>
                 <li>@Html.ActionLink("User Admin", "UserAdmin", "Admin")</li>
                 <li class="active">@Html.ActionLink("Branch Admin", "BranchAdmin", "Admin")</li>
-                <li>@Html.ActionLink("Company Admin", "CompanyAdmin", "Admin")</li>
+                @if (userRole == "Admin" || userRole == "SuperUser")
+                {
+                    <li>@Html.ActionLink("Company Admin", "CompanyAdmin", "Admin")</li>
+                }
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

@@ -1,4 +1,5 @@
 ﻿using Distributor.Models;
+using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,12 @@ namespace Distributor.Helpers
 
         public static List<UserTask> GetUserTasksForUser(ApplicationDbContext db, Guid appUserId)
         {
-            List<UserTask> userTasksForUser = (from t in db.UserTasks
-                                       //where (t.AdminAppUserId == appUserId || t.ManagerAppUserId == appUserId)
-                                       //orderby t.CreatedOn ascending
-                                       select t).ToList();
+            List<UserTask> userTasksForUser = new List<UserTask>();
+            
+            userTasksForUser = (from t in db.UserTasks
+                                join a in db.UserTaskAssignments on t.UserTaskId equals a.UserTaskId
+                                where (a.AppUserId == appUserId && t.EntityStatus == EntityStatusEnum.Active)
+                                select t).ToList();
 
             return userTasksForUser;
         }
@@ -72,9 +75,9 @@ namespace Distributor.Helpers
             return userTask;
         }
 
-        public static List<UserTaskAdmin> CreateAdminListForTask(ApplicationDbContext db, UserTask userTask)
+        public static List<UserTaskAssignment> CreateAdminListForTask(ApplicationDbContext db, UserTask userTask)
         {
-            List<UserTaskAdmin> userTaskAdminList = new List<UserTaskAdmin>();
+            List<UserTaskAssignment> userTaskAdminList = new List<UserTaskAssignment>();
             Guid companyId = Guid.Empty;
 
             //Find the company related to this Task depending on Task Type
@@ -101,14 +104,15 @@ namespace Distributor.Helpers
             //Add new User Task Admin records for this task
             foreach (AppUser user in usersForCompany)
             {
-                UserTaskAdmin userTaskAdmin = new UserTaskAdmin()
+                UserTaskAssignment userTaskAdmin = new UserTaskAssignment()
                 {
-                    UserTaskAdminId = Guid.NewGuid(),
+                    UserTaskAssignmentId = Guid.NewGuid(),
                     UserTaskId = userTask.UserTaskId,
-                    AppUserId = user.AppUserId
+                    AppUserId = user.AppUserId,
+                    UserRole = UserRoleEnum.Admin
                 };
 
-                db.UserTaskAdmins.Add(userTaskAdmin);
+                db.UserTaskAssignments.Add(userTaskAdmin);
                 userTaskAdminList.Add(userTaskAdmin);
             }
 
@@ -116,9 +120,9 @@ namespace Distributor.Helpers
             return userTaskAdminList;
         }
 
-        public static List<UserTaskManager> CreateManagerListForTask(ApplicationDbContext db, UserTask userTask)
+        public static List<UserTaskAssignment> CreateManagerListForTask(ApplicationDbContext db, UserTask userTask)
         {
-            List<UserTaskManager> userTaskManagerList = new List<UserTaskManager>();
+            List<UserTaskAssignment> userTaskManagerList = new List<UserTaskAssignment>();
             Guid branchId = Guid.Empty;
 
             //Find the company related to this Task depending on Task Type
@@ -145,21 +149,72 @@ namespace Distributor.Helpers
             //Add new User Task Admin records for this task
             foreach (AppUser user in usersForBranch)
             {
-                UserTaskManager userTaskManager = new UserTaskManager()
+                UserTaskAssignment userTaskManager = new UserTaskAssignment()
                 {
-                    UserTaskManagerId = Guid.NewGuid(),
+                    UserTaskAssignmentId = Guid.NewGuid(),
                     UserTaskId = userTask.UserTaskId,
-                    AppUserId = user.AppUserId
+                    AppUserId = user.AppUserId,
+                    UserRole = UserRoleEnum.Manager
                 };
 
-                db.UserTaskManagers.Add(userTaskManager);
+                db.UserTaskAssignments.Add(userTaskManager);
                 userTaskManagerList.Add(userTaskManager);
             }
-
 
             return userTaskManagerList;
         }
 
+        #endregion
+    }
+
+    public static class UserTaskViewHelpers
+    {
+        #region Get
+
+        public static List<UserTaskView> GetUserTasksForUserView(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetUserTasksForUserView(db, appUserId);
+        }
+        public static List<UserTaskView> GetUserTasksForUserView(ApplicationDbContext db, Guid appUserId)
+        {
+            List<UserTaskView> userTasksForUserView = new List<UserTaskView>();
+
+            List<UserTask> userTasksForUser = UserTaskHelpers.GetUserTasksForUser(db, appUserId);
+
+            foreach (UserTask userTaskForUser in userTasksForUser)
+            {
+                AppUser appUser = null;
+                Branch branch = null;
+
+                switch (userTaskForUser.TaskType)
+                {
+                    case TaskTypeEnum.UserOnHold:
+                        appUser = AppUserHelpers.GetAppUser(db, userTaskForUser.ReferenceKey);
+                        break;
+                    case TaskTypeEnum.BranchOnHold:
+                        branch = BranchHelpers.GetBranch(db, userTaskForUser.ReferenceKey);
+                        break;
+                }
+
+                UserTaskView userTaskForUserView = new UserTaskView()
+                {
+                    UserTaskId = userTaskForUser.UserTaskId,
+                    TaskType = userTaskForUser.TaskType,
+                    TaskDescription = userTaskForUser.TaskDescription,
+                    AppUserReference = appUser,
+                    BranchReference = branch,
+                    CreatedOn = userTaskForUser.CreatedOn,
+                    CreatedBy = AppUserHelpers.GetAppUser(db, userTaskForUser.CreatedBy),
+                    EntityStatus = userTaskForUser.EntityStatus
+                };
+
+                userTasksForUserView.Add(userTaskForUserView);
+            }
+
+            return userTasksForUserView;
+        }
+        
         #endregion
     }
 }

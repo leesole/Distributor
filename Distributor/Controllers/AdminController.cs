@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Distributor.Extenstions;
+using Distributor.Helpers;
+using Distributor.Models;
+using Distributor.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +15,11 @@ namespace Distributor.Controllers
     {
         public ActionResult Tasks()
         {
-            return View();
+            AppUser appUser = AppUserHelpers.GetAppUser(User);
+            
+            List<UserTaskView> userTasksForUserView = UserTaskViewHelpers.GetUserTasksForUserView(appUser.AppUserId);
+
+            return View(userTasksForUserView);
         }
 
         public ActionResult UserAdmin()
@@ -25,7 +33,11 @@ namespace Distributor.Controllers
         }
         public ActionResult CompanyAdmin()
         {
-            return View();
+            //validate that you cannot manually get into here without the right level, iei ADMIN, SuperAdmin
+            if (User.Identity.GetCurrentUserRole() != "Admin" || User.Identity.GetCurrentUserRole() != "SuperUser")
+                return Redirect(Request.QueryString["redirect"]);
+            else
+                return View();
         }
     }
 }

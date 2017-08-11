@@ -167,6 +167,7 @@ namespace Distributor.Controllers
             //DropDown
             ViewBag.CompanyList = ControlHelpers.AllCompaniesListDropDown();
             ViewBag.BranchList = new SelectList(Enumerable.Empty<SelectListItem>(), "BranchId", "BranchName");
+            ViewBag.BusinessTypeList = ControlHelpers.BusinessTypeEnumListDropDown();
             return View();
         }
 
@@ -209,31 +210,48 @@ namespace Distributor.Controllers
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     else  //we will need to create a task for the branch
                         createUserOnHoldTask = true;
-                    
+
                     //Now Update related entities
-                    //Company                    
+                    //Company                 
+                    bool createCompany = true;
+
                     if (model.SelectedCompanyId.HasValue)
-                        company = CompanyHelpers.GetCompany(model.SelectedCompanyId.Value);
-                    else
+                        if (model.SelectedCompanyId.Value != Guid.Empty)
+                            createCompany = false;
+
+                    if (createCompany)
                         company = CompanyHelpers.CreateCompany(Guid.Empty, model.CompanyName, model.CompanyRegistrationDetails, model.CharityRegistrationDetails, model.VATRegistrationDetails, statusForUser);
+                    else
+                        company = CompanyHelpers.GetCompany(model.SelectedCompanyId.Value);
+                    
 
                     //Branch
+                    bool createBranch = true;
+
                     if (model.SelectedBranchId.HasValue)
-                        branch = BranchHelpers.GetBranch(model.SelectedBranchId.Value);
-                    else
+                        if (model.SelectedBranchId.Value != Guid.Empty)
+                            createBranch = false;
+
+                    if (createBranch)
                     {
                         string branchName = model.BranchName;
                         if (!model.SelectedCompanyId.HasValue)
                             branchName = "Head Office";
 
-                        branch = BranchHelpers.CreateBranch(company.CompanyId, model.BusinessType, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, statusForUser);
+                        if (createCompany) //use details stored against company part of model
+                            branch = BranchHelpers.CreateBranch(company.CompanyId, model.CompanyBusinessType.Value, branchName, model.CompanyAddressLine1, model.CompanyAddressLine2, model.CompanyAddressLine3, model.CompanyAddressTownCity, model.CompanyAddressCounty, model.CompanyAddressPostcode, model.CompanyTelephoneNumber, model.CompanyEmail, model.CompanyContactName, statusForUser);
+                        else
+                            branch = BranchHelpers.CreateBranch(company.CompanyId, model.BranchBusinessType.Value, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, statusForUser);
+
                         createBranchOnHoldTask = true;
 
                         //Company - set head office branch as the newly created branch for this new company (defaults to 'Head Office')
                         if (!model.SelectedCompanyId.HasValue)
                             company = CompanyHelpers.UpdateCompanyHeadOffice(company.CompanyId, branch.BranchId);
                     }
-
+                    else
+                        branch = BranchHelpers.GetBranch(model.SelectedBranchId.Value);
+                    
                     //BranchUser
                     branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser, statusForUser);
 
