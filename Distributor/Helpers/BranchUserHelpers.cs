@@ -23,6 +23,21 @@ namespace Distributor.Helpers
             return db.BranchUsers.Find(branchUserId);
         }
 
+        public static BranchUser GetBranchUser(Guid appUserId, Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetBranchUser(db, appUserId, branchId);
+        }
+
+        public static BranchUser GetBranchUser(ApplicationDbContext db, Guid appUserId, Guid branchId)
+        {
+            BranchUser branchUser = (from b in db.BranchUsers
+                                     where (b.BranchId == branchId && b.UserId == appUserId)
+                                     select b).FirstOrDefault();
+
+            return branchUser;
+        }
+
         #endregion
 
         #region Create

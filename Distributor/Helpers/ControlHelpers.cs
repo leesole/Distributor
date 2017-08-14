@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using static Distributor.Enums.BranchEnums;
+using static Distributor.Enums.EntityEnums;
 
 namespace Distributor.Helpers
 {
@@ -42,6 +43,18 @@ namespace Distributor.Helpers
                                         });
 
             return new SelectList(businessTypeEnumList, "Id", "Name");
+        }
+
+        public static SelectList EntityStatusEnumListDropDown()
+        {
+            var entityStatusEnumList = (from EntityStatusEnum es in Enum.GetValues(typeof(EntityStatusEnum))
+                                        select new
+                                        {
+                                            Id = es,
+                                            Name = EnumHelpers.GetDescription((EntityStatusEnum)es)
+                                        });
+
+            return new SelectList(entityStatusEnumList, "Id", "Name");
         }
 
         #endregion

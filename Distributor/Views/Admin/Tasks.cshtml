@@ -40,14 +40,14 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">@userRole <small>Tasks</small></h1>
+        <h1 class="page-header" style="margin: 10px 0px 10px">@userRole <small>Tasks</small></h1>
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li class="active">Tasks</li>
         </ol>
         <p>Your current active tasks.</p>
         <div class="table-responsive">
-            <table class="table">
+            <table class="table table-hover">
                 <tr>
                     <th colspan="2">Actions</th>
                     <th>Task type</th>
@@ -55,51 +55,43 @@
                     <th>Reference details</th>
                     <th>Created</th>
                     <th>Created by</th>
-                    <th></th>
                 </tr>
 
                 @foreach (var item in Model)
-            {
-                taskTypeDescription = EnumHelpers.GetDescription(item.TaskType);
-                if (item.AppUserReference != null)
                 {
-                    referenceDescription = item.AppUserReference.FirstName + " " + item.AppUserReference.LastName;
-                }
-                if (item.BranchReference != null)
-                {
-                    referenceDescription = item.BranchReference.BranchName + ", " + item.BranchReference.AddressLine1 + ", " + item.BranchReference.AddressTownCity;
-                }
+                    taskTypeDescription = EnumHelpers.GetDescription(item.TaskType);
+                    if (item.AppUserReference != null)
+                    {
+                        referenceDescription = item.AppUserReference.FirstName + " " + item.AppUserReference.LastName;
+                    }
+                    if (item.BranchReference != null)
+                    {
+                        referenceDescription = item.BranchReference.BranchName + ", " + item.BranchReference.AddressLine1 + ", " + item.BranchReference.AddressTownCity;
+                    }
 
-                <tr>
-                    <td>
-                        <input type="button" value="Approve" class="btn btn-sm btn-success btn-block" />
-                    </td>
-                    <td>
-                        <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block" />
-                    </td>
-                    <td>
-                        @taskTypeDescription
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TaskDescription)
-                    </td>
-                    <td>
-                        @referenceDescription
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                    </td>
-                    <td>
-                        @(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)
-                    </td>
-                    <td>
-                        <input type="button" value="Details" class="btn btn-sm btn-info btn-block" />
-                    </td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.BranchId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.BranchId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BranchId })*@
-
-                </tr>
+                    <tr onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId, userTaskObject = item })'">
+                        <td>
+                            <input type="button" value="Approve" class="btn btn-sm btn-success btn-block" />
+                        </td>
+                        <td>
+                            <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirm" />
+                        </td>
+                        <td>
+                            @taskTypeDescription
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaskDescription)
+                        </td>
+                        <td>
+                            @referenceDescription
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        <td>
+                            @(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)
+                        </td>
+                    </tr>
                 }
 
             </table>
@@ -107,3 +99,19 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(function () {
+            //confirm the accept/cancel of tasks
+            $('.confirm').click(function (e) {
+                if (window.confirm("Are you sure?")) {
+                    alert('here');
+                }
+            });
+        });
+    </script>
+}

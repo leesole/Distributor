@@ -195,6 +195,7 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Enums\BranchEnums.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
     <Compile Include="Enums\UserTaskEnums.cs" />
@@ -357,6 +358,7 @@
     <Content Include="Views\Admin\UserAdmin.cshtml" />
     <Content Include="Views\Admin\BranchAdmin.cshtml" />
     <Content Include="Views\Admin\CompanyAdmin.cshtml" />
+    <Content Include="Views\Task\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

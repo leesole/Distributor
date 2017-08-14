@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.UserEnums;
 using static Distributor.Enums.UserTaskEnums;
 
 namespace Distributor.ViewModels
@@ -30,5 +32,17 @@ namespace Distributor.ViewModels
 
         [Display(Name = "Status")]
         public EntityStatusEnum EntityStatus { get; set; }
+    }
+
+    public class UserTaskFullView
+    {
+        public UserTaskView UserTaskView { get; set; }
+
+        //to be used for the new User
+        public UserRoleEnum? BranchUserUserRole { get; set; }
+
+        public AppUser CreatedByAppUser { get; set; }
+
+        public Branch CreatedByAppUserCurrentBranch { get; set; }
     }
 }

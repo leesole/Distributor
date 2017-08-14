@@ -38,6 +38,7 @@ namespace Distributor.Helpers
             userTasksForUser = (from t in db.UserTasks
                                 join a in db.UserTaskAssignments on t.UserTaskId equals a.UserTaskId
                                 where (a.AppUserId == appUserId && t.EntityStatus == EntityStatusEnum.Active)
+                                orderby t.CreatedOn ascending
                                 select t).ToList();
 
             return userTasksForUser;
@@ -214,7 +215,24 @@ namespace Distributor.Helpers
 
             return userTasksForUserView;
         }
-        
+
+        public static UserTaskView GetUserTaskForUserView(Guid appUserId, Guid userTaskId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetUserTaskForUserView(db, appUserId, userTaskId);
+        }
+
+        public static UserTaskView GetUserTaskForUserView(ApplicationDbContext db, Guid appUserId, Guid userTaskId)
+        {
+            List<UserTaskView> userTasksForUserView = UserTaskViewHelpers.GetUserTasksForUserView(db, appUserId);
+
+            UserTaskView userTaskForUserView = (from u in userTasksForUserView
+                                                where u.UserTaskId == userTaskId
+                                                select u).FirstOrDefault();
+
+            return userTaskForUserView;
+        }
+
         #endregion
     }
 }

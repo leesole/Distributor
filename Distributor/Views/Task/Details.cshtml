@@ -1,0 +1,428 @@
+﻿@using Microsoft.AspNet.Identity
+@using Distributor.Extenstions
+@using Distributor.Helpers
+
+@model Distributor.ViewModels.UserTaskFullView
+
+@{
+    var userRole = User.Identity.GetCurrentUserRole();
+    var taskDescription = Model.UserTaskView.TaskDescription;
+    var previousScreen = Request.UrlReferrer.ToString();
+    var taskTypeDescription = "";
+    var referenceDescription = "";
+
+    var entityStatusUserRole = ViewBag.EntityStatusUserRole;
+    var entityStatusBranchStatus = ViewBag.EntityStatusBranchStatus;
+    var entityStatusCreatedByUserRole = ViewBag.EntityStatusCreatedByUserRole;
+    var entityStatusCreatedByUserBranchStatus = ViewBag.EntityStatusCreatedByUserBranchStatus;
+}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*<a class="navbar-brand" href="#">Brand</a>*@
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active">@Html.ActionLink("Tasks", "Tasks", "Admin")</li>
+                <li>@Html.ActionLink("User Admin", "UserAdmin", "Admin")</li>
+                <li>@Html.ActionLink("Branch Admin", "BranchAdmin", "Admin")</li>
+                @if (userRole == "Admin" || userRole == "SuperUser")
+                {
+                    <li>@Html.ActionLink("Company Admin", "CompanyAdmin", "Admin")</li>
+                }
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">@userRole <small>Task - @taskDescription</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li><a href="@previousScreen">Tasks</a></li>
+            <li class="active">Selected task</li>
+        </ol>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th colspan="2">Actions</th>
+                    <th>Task type</th>
+                    <th>Description</th>
+                    <th>Reference details</th>
+                    <th>Created</th>
+                    <th>Created by</th>
+                </tr>
+                @{taskTypeDescription = EnumHelpers.GetDescription(Model.UserTaskView.TaskType);
+                    if (Model.UserTaskView.AppUserReference != null)
+                    {
+                        referenceDescription = Model.UserTaskView.AppUserReference.FirstName + " " + Model.UserTaskView.AppUserReference.LastName;
+                    }
+                    if (Model.UserTaskView.BranchReference != null)
+                    {
+                        referenceDescription = Model.UserTaskView.BranchReference.BranchName + ", " + Model.UserTaskView.BranchReference.AddressLine1 + ", " + Model.UserTaskView.BranchReference.AddressTownCity;
+                    }
+                }
+                <tr class="active">
+                    <td>
+                        <input type="button" value="Approve" class="btn btn-sm btn-success btn-block" />
+                    </td>
+                    <td>
+                        <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirm" />
+                    </td>
+                    <td>
+                        @taskTypeDescription
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.UserTaskView.TaskDescription)
+                    </td>
+                    <td>
+                        @referenceDescription
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.UserTaskView.CreatedOn)
+                    </td>
+                    <td>
+                        @(Model.UserTaskView.CreatedBy.FirstName + " " + Model.UserTaskView.CreatedBy.LastName)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+@if (Model.UserTaskView.AppUserReference != null)
+{ 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="login-panel panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User details</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.AppUserReference.FirstName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.AppUserReference.FirstName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.AppUserReference.LastName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.AppUserReference.LastName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.AppUserReference.EntityStatus)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => entityStatusUserRole)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Associated branch</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.BranchName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.BranchName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.BusinessType)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.BusinessType)
+                        </dd>
+
+                        <dt>
+                            Address
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressLine1)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressLine2)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressLine3)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressTownCity)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressCounty)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressPostcode)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.TelephoneNumber)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.TelephoneNumber)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.Email)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.Email)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.ContactName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.ContactName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.EntityStatus)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => entityStatusCreatedByUserBranchStatus)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.UserTaskView.BranchReference != null)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="login-panel panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Branch details</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.BranchReference.BranchName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.BranchName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.BranchReference.BusinessType)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.BusinessType)
+                        </dd>
+
+                        <dt>
+                            Address
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.AddressLine1)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.AddressLine2)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.AddressLine3)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.AddressTownCity)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.AddressCounty)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.AddressPostcode)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.BranchReference.TelephoneNumber)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.TelephoneNumber)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.BranchReference.Email)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.Email)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.BranchReference.ContactName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserTaskView.BranchReference.ContactName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UserTaskView.BranchReference.EntityStatus)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => entityStatusBranchStatus)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Task created by</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUser.FirstName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUser.FirstName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUser.LastName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUser.LastName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUser.EntityStatus)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => entityStatusCreatedByUserRole)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Default branch for </h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.BranchName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.BranchName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.BusinessType)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.BusinessType)
+                        </dd>
+
+                        <dt>
+                            Address
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressLine1)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressLine2)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressLine3)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressTownCity)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressCounty)
+                        </dd>
+
+                        <dt></dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.AddressPostcode)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.TelephoneNumber)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.TelephoneNumber)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.Email)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.Email)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.ContactName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedByAppUserCurrentBranch.ContactName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedByAppUserCurrentBranch.EntityStatus)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => entityStatusCreatedByUserBranchStatus)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+}
