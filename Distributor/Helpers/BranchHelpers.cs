@@ -1,6 +1,7 @@
 ﻿using Distributor.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -86,6 +87,26 @@ namespace Distributor.Helpers
                 EntityStatus = entityStatus
             };
             db.Branches.Add(branch);
+            db.SaveChanges();
+
+            return branch;
+        }
+
+        #endregion
+
+        #region Update
+                
+        public static Branch UpdateEntityStatus(Guid branchId, EntityStatusEnum entityStatus)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateEntityStatus(db, branchId, entityStatus);
+        }
+
+        public static Branch UpdateEntityStatus(ApplicationDbContext db, Guid branchId, EntityStatusEnum entityStatus)
+        {
+            Branch branch = BranchHelpers.GetBranch(db, branchId);
+            branch.EntityStatus = entityStatus;
+            db.Entry(branch).State = EntityState.Modified;
             db.SaveChanges();
 
             return branch;

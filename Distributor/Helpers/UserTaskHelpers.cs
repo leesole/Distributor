@@ -2,6 +2,7 @@
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
@@ -163,6 +164,26 @@ namespace Distributor.Helpers
             }
 
             return userTaskManagerList;
+        }
+
+        #endregion
+
+        #region Update
+
+        public static UserTask UpdateEntityStatus(Guid userTaskId, EntityStatusEnum entityStatus)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateEntityStatus(db, userTaskId, entityStatus);
+        }
+
+        public static UserTask UpdateEntityStatus(ApplicationDbContext db, Guid userTaskId, EntityStatusEnum entityStatus)
+        {
+            UserTask userTask = GetUserTask(db, userTaskId);
+            userTask.EntityStatus = entityStatus;
+            db.Entry(userTask).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return userTask;
         }
 
         #endregion

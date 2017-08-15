@@ -85,6 +85,22 @@ namespace Distributor.Helpers
             return appUser;
         }
 
+        public static AppUser UpdateEntityStatus(Guid appUserId, EntityStatusEnum entityStatus)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateEntityStatus(db, appUserId, entityStatus);
+        }
+
+        public static AppUser UpdateEntityStatus(ApplicationDbContext db, Guid appUserId, EntityStatusEnum entityStatus)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            appUser.EntityStatus = entityStatus;
+            db.Entry(appUser).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return appUser;
+        }
+
     #endregion
 
         #region Delete

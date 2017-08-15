@@ -99,6 +99,7 @@ namespace Distributor.Controllers
                                 ModelState.AddModelError("", "This user is currently on hold.  You will need to contact your account administrator to active your account");
                                 break;
                         }
+                        AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                         return View(model);
                     }
                     else

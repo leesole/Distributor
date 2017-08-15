@@ -69,26 +69,26 @@
                         referenceDescription = item.BranchReference.BranchName + ", " + item.BranchReference.AddressLine1 + ", " + item.BranchReference.AddressTownCity;
                     }
 
-                    <tr onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId, userTaskObject = item })'">
+                    <tr id=@item.UserTaskId>
                         <td>
-                            <input type="button" value="Approve" class="btn btn-sm btn-success btn-block" />
+                            <input type="button" value="Approve" class="btn btn-sm btn-success btn-block confirmapprove" />
                         </td>
                         <td>
-                            <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirm" />
+                            <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirmcancel" />
                         </td>
-                        <td>
+                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId, redirect = ViewBag.Redirect })'">
                             @taskTypeDescription
                         </td>
-                        <td>
+                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
                             @Html.DisplayFor(modelItem => item.TaskDescription)
                         </td>
-                        <td>
+                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
                             @referenceDescription
                         </td>
-                        <td>
+                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
                             @Html.DisplayFor(modelItem => item.CreatedOn)
                         </td>
-                        <td>
+                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
                             @(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)
                         </td>
                     </tr>
@@ -106,12 +106,43 @@
     <script type="text/javascript">
 
         $(function () {
-            //confirm the accept/cancel of tasks
-            $('.confirm').click(function (e) {
+            //confirm the approve of tasks
+            $('.confirmapprove').click(function (e) {
+                trid = $(this).closest('tr').attr('id');
                 if (window.confirm("Are you sure?")) {
-                    alert('here');
+                    var url = "/Task/ApproveTask";
+
+                    $.ajax({
+                        url: url,
+                        data: { userTaskId: trid },
+                        cache: false,
+                        type: "POST",
+                        success: function (result) {
+                            location.reload(true);
+                        }
+                    });
                 }
             });
         });
+
+        $(function () {
+            //confirm the cancel of tasks
+            $('.confirmcancel').click(function (e) {
+                if (window.confirm("Are you sure?")) {
+                    var url = "/Task/CancelTask";
+
+                    $.ajax({
+                        url: url,
+                        data: { userTaskId: trid },
+                        cache: false,
+                        type: "POST",
+                        success: function (result) {
+                            location.reload(true);
+                        }
+                    });
+                }
+            });
+        });
+
     </script>
 }

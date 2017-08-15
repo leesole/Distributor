@@ -19,6 +19,8 @@ namespace Distributor.Controllers
             
             List<UserTaskView> userTasksForUserView = UserTaskViewHelpers.GetUserTasksForUserView(appUser.AppUserId);
 
+            ViewBag.Redirect = Request.QueryString["redirect"];
+
             return View(userTasksForUserView);
         }
 
