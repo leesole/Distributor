@@ -39,6 +39,7 @@ namespace Distributor.ViewModels
         public UserTaskView UserTaskView { get; set; }
 
         //to be used for the new User
+        [Display(Name ="User branch role")]
         public UserRoleEnum? BranchUserUserRole { get; set; }
 
         public AppUser CreatedByAppUser { get; set; }

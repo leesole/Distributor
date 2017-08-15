@@ -242,9 +242,10 @@ namespace Distributor.Controllers
                         if (createCompany) //use details stored against company part of model
                             branch = BranchHelpers.CreateBranch(company.CompanyId, model.CompanyBusinessType.Value, branchName, model.CompanyAddressLine1, model.CompanyAddressLine2, model.CompanyAddressLine3, model.CompanyAddressTownCity, model.CompanyAddressCounty, model.CompanyAddressPostcode, model.CompanyTelephoneNumber, model.CompanyEmail, model.CompanyContactName, statusForUser);
                         else
+                        {
                             branch = BranchHelpers.CreateBranch(company.CompanyId, model.BranchBusinessType.Value, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, statusForUser);
-
-                        createBranchOnHoldTask = true;
+                            createBranchOnHoldTask = true;
+                        }
 
                         //Company - set head office branch as the newly created branch for this new company (defaults to 'Head Office')
                         if (!model.SelectedCompanyId.HasValue)
