@@ -1,9 +1,35 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Distributor.Extenstions
 
+@model IEnumerable<Distributor.ViewModels.UserAdminView>
+
 @{
     var userRole = User.Identity.GetCurrentUserRole();
+    var appUserId = Guid.Empty;
 }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(function () {
+            //show/hide branches
+            $('.showhidebranch').click(function () {
+                //trid = $(this).closest('tr').attr('id');
+                //var tridstring = trid.toString();
+
+                //$(this)
+                //    .closest('tbody')
+                //    .next(tridstring)
+                //    .toggle();
+
+
+                $(this).closest('tbody').next('tbody').toggle();
+            });
+        });
+    </script>
+}
+
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -40,6 +66,78 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li class="active">User Admin</li>
         </ol>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
+        <p>Your current user list</p>
+        
+        <!-- The table -->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <th>Details</th>
+                    <th>Status</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    appUserId = item.AppUserId;
+
+                    
+                        <tr id=@appUserId>
+                            <td>
+                                <input type="button" value="Branches" class="btn btn-sm btn-success btn-block showhidebranch" />
+                            </td>
+                            <td>
+                                status
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LoginEmail)
+                            </td>
+                        </tr>
+                    
+                    <tbody id=@appUserId style="display:none">
+                        <tr>
+                            <th>Current</th>
+                            <th>User role</th>
+                            <th>Branch name</th>
+                            <th colspan="4">Address</th>
+                        </tr>
+
+                        @foreach (var branch in item.RelatedBranches)
+                        {
+                            <tr>
+                                <td>
+                                    @*<radio button on each row to select current branch*@
+                                </td>
+                                <td>
+                                    @*<dropdown to show user role and change here*@
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.AddressLine1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.AddressTownCity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.AddressCounty)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.AddressPostcode)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+            <!-- table end -->
+        </div>
     </div>
 </div>
+

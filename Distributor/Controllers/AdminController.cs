@@ -19,14 +19,14 @@ namespace Distributor.Controllers
             
             List<UserTaskView> userTasksForUserView = UserTaskViewHelpers.GetUserTasksForUserView(appUser.AppUserId);
 
-            ViewBag.Redirect = Request.QueryString["redirect"];
-
             return View(userTasksForUserView);
         }
 
         public ActionResult UserAdmin()
         {
-            return View();
+            List<UserAdminView> userAdminViewForUser = UserAdminHelpers.GetUserAdminViewListForUser(User);
+
+            return View(userAdminViewForUser);
         }
 
         public ActionResult BranchAdmin()

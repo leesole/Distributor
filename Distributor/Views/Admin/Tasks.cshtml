@@ -76,7 +76,7 @@
                         <td>
                             <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirmcancel" />
                         </td>
-                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId, redirect = ViewBag.Redirect })'">
+                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
                             @taskTypeDescription
                         </td>
                         <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">

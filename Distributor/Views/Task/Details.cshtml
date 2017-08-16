@@ -492,6 +492,7 @@ else
         $(function () {
             //confirm the cancel of tasks
             $('.confirmcancel').click(function (e) {
+                trid = $(this).closest('tr').attr('id');
                 if (window.confirm("Are you sure?")) {
                     var url = "/Task/CancelTask";
 
