@@ -6,6 +6,7 @@
 @{
     var userRole = User.Identity.GetCurrentUserRole();
     var appUserId = Guid.Empty;
+    var branchAddress = "";
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -66,14 +67,14 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li class="active">User Admin</li>
         </ol>
-        <p>Your current user list</p>
+        <p class="lead">Your current user list.</p>
         
         <!-- The table -->
         <div class="table-responsive">
             <table class="table table-hover">
-                <tr>
-                    <th>Details</th>
-                    <th>Status</th>
+                <tr class="info">
+                    <th style="width:90px">Branches</th>
+                    <th style="width:120px">Status</th>
                     <th>First name</th>
                     <th>Last name</th>
                     <th>Email</th>
@@ -82,14 +83,13 @@
                 @foreach (var item in Model)
                 {
                     appUserId = item.AppUserId;
-
                     
-                        <tr id=@appUserId>
+                        <tr id=@appUserId class="active">
                             <td>
-                                <input type="button" value="Branches" class="btn btn-sm btn-success btn-block showhidebranch" />
+                                <input type="button" value="Branches" class="btn btn-sm btn-primary btn-block showhidebranch" />
                             </td>
                             <td>
-                                status
+                                @Html.EnumDropDownListFor(modelItem => item.AppUserEntityStatus, "", new { @class = "form-control" })                                    
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -103,33 +103,37 @@
                         </tr>
                     
                     <tbody id=@appUserId style="display:none">
-                        <tr>
+                        <tr class="info">
+                            <th></th>
                             <th>Current</th>
                             <th>User role</th>
                             <th>Branch name</th>
-                            <th colspan="4">Address</th>
+                            <th>Address</th>
                         </tr>
 
                         @foreach (var branch in item.RelatedBranches)
                         {
+                            branchAddress = branch.BranchDetails.AddressLine1 + ", " + branch.BranchDetails.AddressTownCity + ", " + branch.BranchDetails.AddressCounty + ", " + branch.BranchDetails.AddressPostcode;
                             <tr>
+                                <td></td>
                                 <td>
-                                    @*<radio button on each row to select current branch*@
+                                    @if (branch.BranchId == item.CurrentBranchId)
+                                    {
+                                        @Html.RadioButton(appUserId.ToString(), "")
+                                    }
+                                    else
+                                    {
+                                        @Html.RadioButton(appUserId.ToString(), "1")
+                                    }
                                 </td>
                                 <td>
-                                    @*<dropdown to show user role and change here*@
+                                    @Html.EnumDropDownListFor(modelBranch => branch.BranchUserDetails.UserRole, "", new { @class = "form-control" })   
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.AddressLine1)
+                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.BranchName)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.AddressTownCity)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.AddressCounty)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.AddressPostcode)
+                                    @branchAddress;
                                 </td>
                             </tr>
                         }

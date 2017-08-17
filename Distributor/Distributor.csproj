@@ -205,8 +205,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AppUserHelpers.cs" />
+    <Compile Include="Helpers\BranchAdminHelpers.cs" />
     <Compile Include="Helpers\BranchHelpers.cs" />
     <Compile Include="Helpers\BranchUserHelpers.cs" />
+    <Compile Include="Helpers\CompanyAdminHelpers.cs" />
     <Compile Include="Helpers\CompanyHelpers.cs" />
     <Compile Include="Helpers\ControlHelpers.cs" />
     <Compile Include="Helpers\EnumHelpers.cs" />
@@ -275,6 +277,8 @@
     <Compile Include="Models\UserTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BranchAdminView.cs" />
+    <Compile Include="ViewModels\CompanyAdminView.cs" />
     <Compile Include="ViewModels\UserAdminView.cs" />
     <Compile Include="ViewModels\UserTaskView.cs" />
   </ItemGroup>

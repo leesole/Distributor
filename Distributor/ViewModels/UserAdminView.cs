@@ -37,6 +37,8 @@ namespace Distributor.ViewModels
         public Guid BranchId { get; set; }
         public Guid BranchUserId { get; set; }
 
+        public BranchUser BranchUserDetails { get; set; }
+
         public Branch BranchDetails { get; set; }
     }
 }

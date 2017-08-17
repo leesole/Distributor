@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
 
@@ -32,6 +33,31 @@ namespace Distributor.Helpers
         public static Company GetCompany(ApplicationDbContext db, Guid companyId)
         {
             return db.Companies.Find(companyId);
+        }
+
+        public static Company GetCompanyForUser(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetCompanyForUser(db, user);
+        }
+
+        public static Company GetCompanyForUser(ApplicationDbContext db, IPrincipal user)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            return GetCompanyForUser(db, appUser);
+        }
+
+        public static Company GetCompanyForUser(AppUser appUser)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetCompanyForUser(db, appUser);
+        }
+
+        public static Company GetCompanyForUser(ApplicationDbContext db, AppUser appUser)
+        {
+            BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, appUser.AppUserId, appUser.CurrentBranchId);
+            Company company = GetCompany(db, branchUser.CompanyId);
+            return company;
         }
 
         #endregion

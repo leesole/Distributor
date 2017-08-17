@@ -47,6 +47,7 @@ namespace Distributor.Helpers
                         relatedBranch.AppUserId = branchUserForCompany.AppUserId;
                         relatedBranch.BranchId = branchUserForCompany.BranchId;
                         relatedBranch.BranchUserId = branchUserForCompany.BranchUserId;
+                        relatedBranch.BranchUserDetails = BranchUserHelpers.GetBranchUser(db, branchUserForCompany.BranchUserId);
                         relatedBranch.BranchDetails = BranchHelpers.GetBranch(db, branchUserForCompany.BranchId);
 
                         relatedBranches.Add(relatedBranch);
@@ -90,6 +91,7 @@ namespace Distributor.Helpers
                         relatedBranch.AppUserId = branchUserForBranch.AppUserId;
                         relatedBranch.BranchId = branchUserForBranch.BranchId;
                         relatedBranch.BranchUserId = branchUserForBranch.BranchUserId;
+                        relatedBranch.BranchUserDetails = BranchUserHelpers.GetBranchUser(db, branchUserForBranch.BranchUserId);
                         relatedBranch.BranchDetails = BranchHelpers.GetBranch(db, branchUserForBranch.BranchId);
 
                         relatedBranches.Add(relatedBranch);

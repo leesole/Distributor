@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Distributor.Extenstions
 
+@model Distributor.ViewModels.CompanyAdminView
+
 @{
     var userRole = User.Identity.GetCurrentUserRole();
 }
@@ -37,6 +39,103 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li class="active">Company Admin</li>
         </ol>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
+        <p class="lead">Your current company details.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyDetails.CompanyName, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.CompanyDetails.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CompanyDetails.CompanyName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyDetails.CompanyRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.CompanyDetails.CompanyRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CompanyDetails.CompanyRegistrationDetails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyDetails.CharityRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.CompanyDetails.CharityRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CompanyDetails.CharityRegistrationDetails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyDetails.EntityStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EnumDropDownListFor(model => model.CompanyDetails.EntityStatus, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CompanyDetails.EntityStatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyDetails.VATRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.CompanyDetails.VATRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CompanyDetails.VATRegistrationDetails, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table for the list of branches  -->
+<div class="row">
+    <div class="col-lg-12">
+        <h2><small>Associated branch details.</small></h2>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr class="info">
+                    <th>Status</th>
+                    <th>Branch name</th>
+                    <th colspan="4">Address</th>
+                    <th>Business type</th>
+                </tr>
+
+                @foreach (var branch in Model.RelatedBranches)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelBranch => branch.EntityStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelBranch => branch.BranchName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelBranch => branch.AddressLine1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelBranch => branch.AddressTownCity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelBranch => branch.AddressCounty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelBranch => branch.AddressPostcode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelBranch => branch.BusinessType)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
 </div>

@@ -18,28 +18,31 @@ namespace Distributor.Controllers
             AppUser appUser = AppUserHelpers.GetAppUser(User);
             
             List<UserTaskView> userTasksForUserView = UserTaskViewHelpers.GetUserTasksForUserView(appUser.AppUserId);
-
             return View(userTasksForUserView);
         }
 
         public ActionResult UserAdmin()
         {
             List<UserAdminView> userAdminViewForUser = UserAdminHelpers.GetUserAdminViewListForUser(User);
-
             return View(userAdminViewForUser);
         }
 
         public ActionResult BranchAdmin()
         {
-            return View();
+            List<BranchAdminView> branchAdminView = BranchAdminHelpers.GetBranchAdminViewList(User);
+            return View(branchAdminView);
         }
+
         public ActionResult CompanyAdmin()
         {
-            //validate that you cannot manually get into here without the right level, iei ADMIN, SuperAdmin
-            if (User.Identity.GetCurrentUserRole() != "Admin" || User.Identity.GetCurrentUserRole() != "SuperUser")
-                return Redirect(Request.QueryString["redirect"]);
+            //validate that you cannot manually get into here without the right level, ie ADMIN, SuperAdmin
+            if (User.Identity.GetCurrentUserRole() != "Admin" && User.Identity.GetCurrentUserRole() != "SuperUser")
+                return RedirectToAction("Index", "Home");
             else
-                return View();
+            {
+                CompanyAdminView companyAdminView = CompanyAdminHelpers.GetCompanyAdminView(User);
+                return View(companyAdminView);
+            }
         }
     }
 }
