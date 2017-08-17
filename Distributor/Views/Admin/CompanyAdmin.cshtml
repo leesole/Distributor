@@ -7,6 +7,19 @@
     var userRole = User.Identity.GetCurrentUserRole();
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        //update the hiddenfield of HeadOfficeBranchId with the value of the branchId of checked office in list
+        function holdCurrentHeadOffice(id) {
+            $("#headofficebranch").val(id);
+        }
+
+    </script>
+}
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -42,100 +55,137 @@
         <p class="lead">Your current company details.</p>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompanyDetails.CompanyName, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.CompanyDetails.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CompanyDetails.CompanyName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompanyDetails.CompanyRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.CompanyDetails.CompanyRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CompanyDetails.CompanyRegistrationDetails, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompanyDetails.CharityRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.CompanyDetails.CharityRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CompanyDetails.CharityRegistrationDetails, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompanyDetails.EntityStatus, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EnumDropDownListFor(model => model.CompanyDetails.EntityStatus, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CompanyDetails.EntityStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompanyDetails.VATRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.CompanyDetails.VATRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CompanyDetails.VATRegistrationDetails, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Table for the list of branches  -->
-<div class="row">
-    <div class="col-lg-12">
-        <h2><small>Associated branch details.</small></h2>
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <tr class="info">
-                    <th>Status</th>
-                    <th>Branch name</th>
-                    <th colspan="4">Address</th>
-                    <th>Business type</th>
-                </tr>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-                @foreach (var branch in Model.RelatedBranches)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.EntityStatus)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.BranchName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.AddressLine1)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.AddressTownCity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.AddressCounty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.AddressPostcode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.BusinessType)
-                        </td>
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CompanyDetails.CompanyId)
+        @Html.HiddenFor(model => model.CompanyDetails.HeadOfficeBranchId, new { id="headofficebranch" })
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyDetails.CompanyName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CompanyDetails.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CompanyDetails.CompanyName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyDetails.CompanyRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CompanyDetails.CompanyRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CompanyDetails.CompanyRegistrationDetails, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyDetails.CharityRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CompanyDetails.CharityRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CompanyDetails.CharityRegistrationDetails, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyDetails.EntityStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EnumDropDownListFor(model => model.CompanyDetails.EntityStatus, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CompanyDetails.EntityStatus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyDetails.VATRegistrationDetails, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CompanyDetails.VATRegistrationDetails, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CompanyDetails.VATRegistrationDetails, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table for the list of branches  -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h2><small>Associated branch details.</small></h2>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr class="info">
+                        <th>Head office</th>
+                        <th>Branch name</th>
+                        <th colspan="4">Address</th>
+                        <th>Business type</th>
+                        <th>Status</th>
                     </tr>
-                }
-            </table>
+
+                    @foreach (var branch in Model.RelatedBranches)
+                    {
+                        @Html.HiddenFor(model => branch.BranchId)
+                        <tr>
+                            <td>
+                                @if (branch.EntityStatus != Distributor.Enums.EntityEnums.EntityStatusEnum.Active)
+                                { }
+                                else
+                                {
+                                    if (branch.BranchId == Model.CompanyDetails.HeadOfficeBranchId)
+                                    {
+                                    @Html.RadioButton("headoffice", "", new { id = branch.BranchId, @onclick = "holdCurrentHeadOffice(id)" })
+                                    }
+                                    else
+                                    {
+                                    @Html.RadioButton("headoffice", "1", new { id = branch.BranchId, @onclick = "holdCurrentHeadOffice(id)" })
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelBranch => branch.BranchName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelBranch => branch.AddressLine1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelBranch => branch.AddressTownCity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelBranch => branch.AddressCounty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelBranch => branch.AddressPostcode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelBranch => branch.BusinessType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelBranch => branch.EntityStatus)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div class="form-group">
+                <div class="pull-right">
+                    <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+                    <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
+                </div>
+            </div>
+
         </div>
     </div>
-</div>
+}

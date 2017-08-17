@@ -44,5 +44,23 @@ namespace Distributor.Controllers
                 return View(companyAdminView);
             }
         }
+
+        // POST: CompanyAdmin
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CompanyAdmin(CompanyAdminView companyAdminView)
+        {
+            if (ModelState.IsValid)
+            {
+                //If the 'Submit' button pressed then update tables, else leave as are so that on reload it takes original values once again.
+                if (Request.Form["submitbutton"] != null)
+                {
+                    CompanyAdminHelpers.UpdateCompanyFromCompanyAdminView(companyAdminView);
+                }
+
+                return RedirectToAction("CompanyAdmin");
+            }
+            return View(companyAdminView);
+        }
     }
 }

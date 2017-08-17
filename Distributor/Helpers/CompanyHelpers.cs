@@ -92,6 +92,28 @@ namespace Distributor.Helpers
 
         #region Update
 
+        public static Company UpdateCompany(Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateCompany(db, companyId, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
+        }
+
+        public static Company UpdateCompany(ApplicationDbContext db, Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
+        {
+            Company company = CompanyHelpers.GetCompany(companyId);
+            company.HeadOfficeBranchId = headOfficeBranchId;
+            company.CompanyName = companyName;
+            company.CompanyRegistrationDetails = companyRegistrationDetails;
+            company.CharityRegistrationDetails = charityRegistrationDetails;
+            company.VATRegistrationDetails = vatRegistrationDetails;
+            company.EntityStatus = entityStatus;
+
+            db.Entry(company).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return company;
+        }
+
         public static Company UpdateCompanyHeadOffice(Guid companyId, Guid headOfficeBranchId)
         {
             ApplicationDbContext db = new ApplicationDbContext();

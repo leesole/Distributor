@@ -26,13 +26,13 @@ namespace Distributor.Controllers
             return View();
         }
 
-        [Authorize]
-        public ActionResult Dashboard()
-        {
-            ViewBag.UserName = User.Identity.GetFullName();
-            ViewBag.BranchName = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId())).BranchName;
+        //[Authorize]
+        //public ActionResult Dashboard()
+        //{
+        //    ViewBag.UserName = User.Identity.GetFullName();
+        //    ViewBag.BranchName = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId())).BranchName;
 
-            return View();
-        }
+        //    return View();
+        //}
     }
 }

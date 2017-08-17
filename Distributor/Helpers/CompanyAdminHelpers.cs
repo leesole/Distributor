@@ -36,6 +36,39 @@ namespace Distributor.Helpers
             return companyAdminView;
         }
 
-            #endregion
+        #endregion
+
+        #region Update
+
+        public static bool UpdateCompanyFromCompanyAdminView(CompanyAdminView companyAdminView)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateCompanyFromCompanyAdminView(db, companyAdminView);
         }
+
+        public static bool UpdateCompanyFromCompanyAdminView(ApplicationDbContext db, CompanyAdminView companyAdminView)
+        {
+            try
+            {
+                Company company = CompanyHelpers.UpdateCompany(db, 
+                    companyAdminView.CompanyDetails.CompanyId, 
+                    companyAdminView.CompanyDetails.HeadOfficeBranchId, 
+                    companyAdminView.CompanyDetails.CompanyName, 
+                    companyAdminView.CompanyDetails.CompanyRegistrationDetails, 
+                    companyAdminView.CompanyDetails.CharityRegistrationDetails, 
+                    companyAdminView.CompanyDetails.VATRegistrationDetails, 
+                    companyAdminView.CompanyDetails.EntityStatus
+                    );
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+                return false;
+            }
+        }
+
+        #endregion
+    }
 }

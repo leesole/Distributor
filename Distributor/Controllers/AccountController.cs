@@ -104,7 +104,7 @@ namespace Distributor.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Dashboard", "Home");
+                        return RedirectToAction("Index", "Home");
                     }
                 case SignInStatus.LockedOut:
                     return View("Lockout");

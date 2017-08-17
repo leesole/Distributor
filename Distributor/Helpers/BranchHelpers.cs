@@ -35,7 +35,7 @@ namespace Distributor.Helpers
         {
             List<Branch> branchesForCompany = (from b in db.Branches
                                                where b.CompanyId == companyId
-                                               orderby b.BranchName
+                                               orderby b.EntityStatus, b.BranchName
                                                select b).ToList();
 
             return branchesForCompany;

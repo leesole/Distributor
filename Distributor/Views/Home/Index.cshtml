@@ -11,79 +11,24 @@
     <div class="row">
         <div class="col-md-2 col-sm-3 sidebar">
             <ul class="nav nav-stacked nav-pills">
-                <li>
-                    @Html.ActionLink("Home", "Index", "Home")
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-                <li class="disabled">
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">1 Column Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">2 Column Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">3 Column Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">4 Column Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">Single Portfolio Item</a>
-                </li>
-                <li class="disabled">
-                    <a href="#">Blog</a>
-                </li>
-                <li>
-                    <a href="#">Blog Home 1</a>
-                </li>
-                <li>
-                    <a href="#">Blog Home 2</a>
-                </li>
-                <li>
-                    <a href="#">Blog Post</a>
-                </li>
-                <li class="disabled">
-                    <a href="#">Blog</a>
-                </li>
-                <li>
-                    <a href="#">Full Width Page</a>
-                </li>
-                <li class="active">
-                    <a href="#">Sidebar Page</a>
-                </li>
-                <li>
-                    <a href="#">FAQ</a>
-                </li>
-                <li>
-                    <a href="#">404</a>
-                </li>
-                <li>
-                    <a href="#">Pricing Table</a>
-                </li>
+                <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li class="disabled">General Info</li>
+                <li><a href="#">Campaigns</a></li>
+                <li><a href="#">Requests</a></li>
+                <li><a href="#">Available</a></li>
+                <li><br /></li>
+                <li class="disabled">Your Listings</li>
+                <li><a href="#">Campaigns</a></li>
+                <li><a href="#">Requests</a></li>
+                <li><a href="#">Available</a></li>
+                <li><a href="#">Orders</a></li>
+                <li><a href="#"></a></li>
             </ul>
         </div>
         <div class="col-md-10 col-sm-9">
-            <h1 class="page-header" style="margin: 10px 0px 10px">
-                Sidebar Page
-                <small>For Deeper Customization</small>
-            </h1>
+            <h1 class="page-header" style="margin: 10px 0px 10px">Home <small>Dashboard</small></h1>
             <ol class="breadcrumb">
-                <li>
-                    @Html.ActionLink("Home", "Index", "Home")
-
-                </li>
-                <li class="active">Sidebar Page</li>
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
             </ol>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
         </div>
@@ -100,23 +45,21 @@ else
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Current Campaigns</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            What current campaigns are being run?  Who needs what?  What is happening in your area?
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">See campaigns &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Lastest Requests</h2>
+        <p>Food banks and charities always need food and other items.  What are the latest requests in your area?</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">See requests &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>About Us</h2>
+        <p>What is the point of this website?  What is it we plan to achieve? There are lots of charities that all are out to help those less fortunate, what is it that we do to help that happen?</p>
+        <p><a class="btn btn-default" href=@Url.Action("About", "Home")>Learn more &raquo;</a></p>
     </div>
 </div>
 }
