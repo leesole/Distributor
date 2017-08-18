@@ -6,6 +6,7 @@
 @{
     var userRole = User.Identity.GetCurrentUserRole();
     var branchId = Guid.Empty;
+    var companyUserListId = Guid.Empty;
 }
 
 @section Scripts {
@@ -17,6 +18,11 @@
             //show/hide branch details to edit
             $('.showhidebranch').click(function () {
                 $(this).closest('tbody').next('tbody').toggle();
+            });
+
+            //show/hide users details to edit
+            $('.showhideusers').click(function () {
+                $(this).closest('tbody').next('tbody').next('tbody').toggle();
             });
         });
     </script>
@@ -51,152 +57,208 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header" style="margin: 10px 0px 10px">@userRole <small>Branch Administration</small></h1>
-        <ol class="breadcrumb">
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li class="active">Branch Admin</li>
-        </ol>
-        <p class="lead">Your current branch list.</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-        <!-- The table -->
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <tr class="info">
-                    <th style="width:90px"></th>
-                    <th>Status</th>
-                    <th>Branch name</th>
-                    <th colspan="4">Address</th>
-                    <th>Business type</th>
-                </tr>
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                @foreach (var branch in Model)
-                {
-                    branchId = branch.BranchId;
-                    
-                    <tr id=@branchId class="active">
-                        <td>
-                            <input type="button" value="Edit" class="btn btn-sm btn-primary btn-block showhidebranch" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.EntityStatus)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.BranchName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.AddressLine1)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.AddressTownCity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.AddressCounty)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.AddressPostcode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelBranch => branch.BusinessType)
-                        </td>
-                    </tr>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" style="margin: 10px 0px 10px">@userRole <small>Branch Administration</small></h1>
+                    <ol class="breadcrumb">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li class="active">Branch Admin</li>
+                    </ol>
+                    <p class="lead">Your current branch list.</p>
 
-                    <tbody id=@branchId style="display:none">
-                        <tr class="info">
-                            <th></th>
-                            <th>Branch details</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Branch name</td>
-                            <td>@Html.EditorFor(modelBranch => branch.BranchName, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Address line 1</td>
-                            <td>@Html.EditorFor(modelBranch => branch.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td>Business type</td>
-                            <td>@Html.EnumDropDownListFor(modelBranch => branch.BusinessType, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Address line 2</td>
-                            <td>@Html.EditorFor(modelBranch => branch.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td>Contact telephone</td>
-                            <td>@Html.EditorFor(modelBranch => branch.TelephoneNumber, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Address line 3</td>
-                            <td>@Html.EditorFor(modelBranch => branch.AddressLine3, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td>Contact email</td>
-                            <td>@Html.EditorFor(modelBranch => branch.Email, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Address town/city</td>
-                            <td>@Html.EditorFor(modelBranch => branch.AddressTownCity, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td>Contact name</td>
-                            <td>@Html.EditorFor(modelBranch => branch.ContactName, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Address county</td>
-                            <td>@Html.EditorFor(modelBranch => branch.AddressCounty, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Address postcode</td>
-                            <td>@Html.EditorFor(modelBranch => branch.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td>Branch status</td>
-                            <td>@Html.EnumDropDownListFor(modelBranch => branch.EntityStatus, new { htmlAttributes = new { @class = "form-control" } })</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="button" value="Save" class="btn btn-sm btn-success btn-block showhidebranch" /></td>
-                            <td><input style="width:80px" type="button" value="Reset" class="btn btn-sm btn-danger btn-block showhidebranch" /></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                }
-            </table>
-            <!-- table end -->
+                    <!-- The table -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tr class="info">
+                                <th style="width:70px"></th>
+                                <th style="width:70px"></th>
+                                <th>Status</th>
+                                <th>Branch name</th>
+                                <th colspan="4">Address</th>
+                                <th>Business type</th>
+                            </tr>
+
+                            @foreach (var branch in Model)
+                            {
+                                branchId = branch.BranchId;
+
+                                <tr id=@branchId class="active">
+                                    <td><input style="width:70px" type="button" value="Edit" class="btn btn-sm btn-primary btn-block showhidebranch" /></td>
+                                    <td><input style="width:70px" type="button" value="Users" class="btn btn-sm btn-primary btn-block showhideusers" /></td>
+                                    <td>@Html.DisplayFor(modelBranch => branch.EntityStatus)</td>
+                                    <td>@Html.DisplayFor(modelBranch => branch.BranchName)</td>
+                                    <td>@Html.DisplayFor(modelBranch => branch.AddressLine1)</td>
+                                    <td>@Html.DisplayFor(modelBranch => branch.AddressTownCity)</td>
+                                    <td>@Html.DisplayFor(modelBranch => branch.AddressCounty)</td>
+                                    <td>@Html.DisplayFor(modelBranch => branch.AddressPostcode)</td>
+                                    <td>@Html.DisplayFor(modelBranch => branch.BusinessType)</td>
+                                </tr>
+
+                                <tbody id=@branchId style="display:none">
+                                    <tr class="info">
+                                        <th></th>
+                                        <th></th>
+                                        <th>Branch details</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <th></th>
+                                        <td>Branch name</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.BranchName, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <th></th>
+                                        <td>Address line 1</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td>Business type</td>
+                                        <td>@Html.EnumDropDownListFor(modelBranch => branch.BusinessType, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <th></th>
+                                        <td>Address line 2</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td>Contact telephone</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.TelephoneNumber, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <th></th>
+                                        <td>Address line 3</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.AddressLine3, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td>Contact email</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.Email, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <th></th>
+                                        <td>Address town/city</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.AddressTownCity, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td>Contact name</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.ContactName, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <th></th>
+                                        <td>Address county</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.AddressCounty, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <th></th>
+                                        <td>Address postcode</td>
+                                        <td>@Html.EditorFor(modelBranch => branch.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td>Branch status</td>
+                                        <td>@Html.EnumDropDownListFor(modelBranch => branch.EntityStatus, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input style="width:70px" type="submit" value="Save" class="btn btn-sm btn-success btn-block" /></td>
+                                        <td><input style="width:70px" type="submit" value="Reset" class="btn btn-sm btn-danger btn-block" /></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+
+                                companyUserListId = branch.CompanyUserListId;
+
+                                <tbody id=@companyUserListId style="display:none">
+                                    <tr class="info">
+                                        <th></th>
+                                        <th></th>
+                                        <th>Users on branch</th>
+                                        <th>Current</th>
+                                        <th>First name</th>
+                                        <th>Surname</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+
+                                    @foreach (var user in branch.RelatedCompanyUsers)
+                                    {
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>@Html.CheckBoxFor(modelUser => user.LinkedToThisBranch)</td>
+                                            @if (user.AppUserDetails.CurrentBranchId == branchId)
+                                            {
+                                                <td><span class="glyphicon glyphicon-ok"></span></td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                            <td>@Html.DisplayFor(modelUser => user.AppUserDetails.FirstName)</td>
+                                            <td>@Html.DisplayFor(modelUser => user.AppUserDetails.LastName)</td>
+                                            <td>@Html.DisplayFor(modelUser => user.AppUserDetails.EntityStatus)</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    }
+
+                                    <tr>
+                                        <td><input style="width:70px" type="submit" value="Save" class="btn btn-sm btn-success btn-block" /></td>
+                                        <td><input style="width:70px" type="submit" value="Reset" class="btn btn-sm btn-danger btn-block" /></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                        <!-- table end -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+}

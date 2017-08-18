@@ -33,6 +33,16 @@ namespace Distributor.Controllers
             return View(branchAdminView);
         }
 
+        // POST: CompanyAdmin
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BranchAdmin(List<BranchAdminView> branchAdminView)
+        {
+            if (ModelState.IsValid)
+            {
+            }
+        }
+
         public ActionResult CompanyAdmin()
         {
             //validate that you cannot manually get into here without the right level, ie ADMIN, SuperAdmin

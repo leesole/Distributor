@@ -39,20 +39,22 @@ namespace Distributor.Helpers
                 List<AppUser> allUsersForCompany = (from bu in db.BranchUsers
                                                     join au in db.AppUsers on bu.UserId equals au.AppUserId
                                                     select au).ToList();
+                var allUsersForCompanyDistinct = allUsersForCompany.Distinct();
 
                 //Build a list of all users for this branch
                 List<AppUser> allUsersForThisBranch = (from bu in db.BranchUsers
                                                        join au in db.AppUsers on bu.UserId equals au.AppUserId
                                                        where bu.BranchId == branch.BranchId
                                                        select au).ToList();
+                var allUsersForThisBranchDistinct = allUsersForThisBranch.Distinct();
 
                 //Add all company users to the 'RelatedCompanyUsers' and set the flag to true if the user appears in the branch list
                 List<BranchAdminViewCompanyUser> relatedCompanyUsers = new List<BranchAdminViewCompanyUser>();
-                foreach (AppUser userForCompany in allUsersForCompany)
+                foreach (AppUser userForCompany in allUsersForCompanyDistinct)
                 {
                     //If the user appears in branchlist then set the 'linked' flag
                     bool found = false;
-                    AppUser foundUser = allUsersForThisBranch.FirstOrDefault(x => x.AppUserId == userForCompany.AppUserId);
+                    AppUser foundUser = allUsersForThisBranchDistinct.FirstOrDefault(x => x.AppUserId == userForCompany.AppUserId);
                     if (foundUser != null)
                         found = true;
 
