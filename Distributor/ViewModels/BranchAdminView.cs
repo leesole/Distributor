@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Distributor.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -49,5 +50,19 @@ namespace Distributor.ViewModels
 
         [Display(Name = "Status")]
         public EntityStatusEnum EntityStatus { get; set; }
+
+        public Guid CompanyUserListId { get; set; }
+
+        public List<BranchAdminViewCompanyUser> RelatedCompanyUsers { get; set; }
+    }
+
+    //holds a list of all the users for a company.  This will then have a flag set if this user is linked to the branch it is attached to.
+    //All users that are not flagged will be available to a drop down for addition to the branch.
+    public class BranchAdminViewCompanyUser
+    {
+        public AppUser AppUserDetails { get; set; }
+
+        //Will flag if this is user is linked to the branch this whole record is on
+        public bool LinkedToThisBranch { get; set; }
     }
 }
