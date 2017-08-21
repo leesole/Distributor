@@ -60,7 +60,11 @@ namespace Distributor.ViewModels
     //All users that are not flagged will be available to a drop down for addition to the branch.
     public class BranchAdminViewCompanyUser
     {
-        public AppUser AppUserDetails { get; set; }
+        public Guid AppUserId { get; set; }
+        public Guid CurrentBranchId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public EntityStatusEnum EntityStatus { get; set; }
 
         //Will flag if this is user is linked to the branch this whole record is on
         public bool LinkedToThisBranch { get; set; }

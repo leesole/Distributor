@@ -60,7 +60,11 @@ namespace Distributor.Helpers
 
                     BranchAdminViewCompanyUser branchAdminCompanyUser = new BranchAdminViewCompanyUser()
                     {
-                        AppUserDetails = userForCompany,
+                        AppUserId = userForCompany.AppUserId,
+                        CurrentBranchId = userForCompany.CurrentBranchId,
+                        FirstName = userForCompany.FirstName,
+                        LastName = userForCompany.LastName,
+                        EntityStatus = userForCompany.EntityStatus,
                         LinkedToThisBranch = found
                     };
 
@@ -93,6 +97,21 @@ namespace Distributor.Helpers
             }
             
             return branchAdminViewList;
+        }
+
+        #endregion
+
+        #region Update
+
+        public static bool UpdateBranchesFromBranchAdminView(BranchAdminView branchAdminView)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateBranchesFromBranchAdminView(db, branchAdminView);
+        }
+
+        public static bool UpdateBranchesFromBranchAdminView(ApplicationDbContext db, BranchAdminView branchAdminView)
+        {
+            return false;
         }
 
         #endregion

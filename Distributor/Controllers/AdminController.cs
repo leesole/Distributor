@@ -40,7 +40,17 @@ namespace Distributor.Controllers
         {
             if (ModelState.IsValid)
             {
+                //If the 'Submit' button pressed then update tables, else leave as are so that on reload it takes original values once again.
+                if (Request.Form["submitbutton"] != null)
+                {
+                    //Update tables
+                    //BranchAdminHelpers.UpdateBranchesFromBranchAdminView(branchAdminView);
+                }
+
+                return RedirectToAction("BranchAdmin");
             }
+
+            return View(branchAdminView);
         }
 
         public ActionResult CompanyAdmin()

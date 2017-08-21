@@ -1,0 +1,31 @@
+﻿@model Distributor.ViewModels.BranchAdminViewCompanyUser
+
+@{ 
+    var branchId = ViewBag.BranchId;
+}
+
+@Html.HiddenFor(modelUser => modelUser.AppUserId)
+@Html.HiddenFor(modelUser => modelUser.CurrentBranchId)
+@Html.HiddenFor(modelUser => modelUser.FirstName)
+@Html.HiddenFor(modelUser => modelUser.LastName)
+@Html.HiddenFor(modelUser => modelUser.EntityStatus)
+@*@Html.HiddenFor(modelUser => modelUser.AppUserDetails)*@
+
+<tr>
+    <td></td>
+    <td></td>
+    <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch)</td>
+    @if (Model.CurrentBranchId == branchId)
+    {
+        <td><span class="glyphicon glyphicon-ok"></span></td>
+    }
+    else
+    {
+        <td></td>
+    }
+    <td>@Html.DisplayFor(modelUser => modelUser.FirstName)</td>
+    <td>@Html.DisplayFor(modelUser => modelUser.LastName)</td>
+    <td>@Html.DisplayFor(modelUser => modelUser.EntityStatus)</td>
+    <td></td>
+    <td></td>
+</tr>

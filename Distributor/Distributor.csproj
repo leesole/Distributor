@@ -365,6 +365,9 @@
     <Content Include="Views\Admin\BranchAdmin.cshtml" />
     <Content Include="Views\Admin\CompanyAdmin.cshtml" />
     <Content Include="Views\Task\Details.cshtml" />
+    <Content Include="Views\Admin\_BranchAdminBranches.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\BranchAdminView.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\BranchAdminViewCompanyUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
