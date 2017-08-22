@@ -254,8 +254,8 @@ namespace Distributor.Controllers
                     else
                         branch = BranchHelpers.GetBranch(model.SelectedBranchId.Value);
                     
-                    //BranchUser
-                    branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser, statusForUser);
+                    //BranchUser - set the status as ACTIVE as the link is active even though the entities linked are not.
+                    branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser, EntityStatusEnum.Active);
 
                     //Update AppUser with the branch we are adding/using to set as current branch for new user
                     appUser = AppUserHelpers.UpdateCurrentBranchId(appUser.AppUserId, branch.BranchId);

@@ -1,0 +1,37 @@
+﻿@model Distributor.ViewModels.UserAdminRelatedBranchesView
+
+@{ 
+    var branchAddress = Model.AddressLine1 + ", " + Model.AddressTownCity + ", " + Model.AddressPostcode; ;
+    string appUserId = ViewBag.AppUserId.ToString();
+    var currentBranchId = ViewBag.CurrentBranchId;
+}
+
+@Html.HiddenFor(modelBranch => modelBranch.AppUserId)
+@Html.HiddenFor(modelBranch => modelBranch.BranchId)
+@Html.HiddenFor(modelBranch => modelBranch.BranchUserId)
+@Html.HiddenFor(modelBranch => modelBranch.BranchName)
+@Html.HiddenFor(modelBranch => modelBranch.AddressLine1)
+@Html.HiddenFor(modelBranch => modelBranch.AddressTownCity)
+@Html.HiddenFor(modelBranch => modelBranch.AddressPostcode)
+
+<tr>
+    <td></td>
+    <td>
+        @if (Model.CurrentBranch)
+        {
+            <input type="radio" name=@appUserId checked />
+            Model.CurrentBranch = true;
+            @Html.HiddenFor(modelBranch => modelBranch.CurrentBranch)
+        }
+        else
+        {
+            <input type = "radio" name = @appUserId />
+            Model.CurrentBranch = false;
+            @Html.HiddenFor(modelBranch => modelBranch.CurrentBranch)
+        }
+
+    </td>
+    <td>@Html.EnumDropDownListFor(modelBranch => modelBranch.UserRole, "", new { @class = "form-control" })</td>
+    <td>@Html.DisplayFor(modelBranch => modelBranch.BranchName)</td>
+    <td>@branchAddress;</td>
+</tr>

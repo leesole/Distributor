@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Helpers
 {
@@ -44,7 +46,7 @@ namespace Distributor.Helpers
                 //Build a list of all users for this branch
                 List<AppUser> allUsersForThisBranch = (from bu in db.BranchUsers
                                                        join au in db.AppUsers on bu.UserId equals au.AppUserId
-                                                       where bu.BranchId == branch.BranchId
+                                                       where (bu.BranchId == branch.BranchId && bu.EntityStatus == EntityStatusEnum.Active)
                                                        select au).ToList();
                 var allUsersForThisBranchDistinct = allUsersForThisBranch.Distinct();
 
@@ -103,15 +105,92 @@ namespace Distributor.Helpers
 
         #region Update
 
-        public static bool UpdateBranchesFromBranchAdminView(BranchAdminView branchAdminView)
+        public static bool UpdateBranchesFromBranchAdminView(List<BranchAdminView> branchesAdminView)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateBranchesFromBranchAdminView(db, branchAdminView);
+            return UpdateBranchesFromBranchAdminView(db, branchesAdminView);
         }
 
-        public static bool UpdateBranchesFromBranchAdminView(ApplicationDbContext db, BranchAdminView branchAdminView)
+        public static bool UpdateBranchesFromBranchAdminView(ApplicationDbContext db, List<BranchAdminView> branchesAdminView)
         {
-            return false;
+            try
+            {
+                foreach (BranchAdminView branchAdminVeiw in branchesAdminView)
+                {
+                    //Update branch
+                    Branch branch = BranchHelpers.UpdateBranch(db,
+                        branchAdminVeiw.BranchId,
+                        branchAdminVeiw.CompanyId,
+                        branchAdminVeiw.BusinessType,
+                        branchAdminVeiw.BranchName,
+                        branchAdminVeiw.AddressLine1,
+                        branchAdminVeiw.AddressLine2,
+                        branchAdminVeiw.AddressLine3,
+                        branchAdminVeiw.AddressTownCity,
+                        branchAdminVeiw.AddressCounty,
+                        branchAdminVeiw.AddressPostcode,
+                        branchAdminVeiw.TelephoneNumber,
+                        branchAdminVeiw.Email,
+                        branchAdminVeiw.ContactName,
+                        branchAdminVeiw.EntityStatus);
+
+                    //Update Users link with Branch
+                    foreach (BranchAdminViewCompanyUser companyUser in branchAdminVeiw.RelatedCompanyUsers)
+                    {
+                        //Try to find the user
+                        BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, companyUser.AppUserId, branchAdminVeiw.BranchId, branchAdminVeiw.CompanyId);
+
+                        //Now check if user is checked in list then ensure it is on branchUser, else remove if it is on branchUser
+                        if (companyUser.LinkedToThisBranch)
+                        {
+                            //if company user linked but not on BranchUser, add to BranchUser
+                            if (branchUser == null)
+                            { 
+                                BranchUserHelpers.CreateBranchUser(db, companyUser.AppUserId, branchAdminVeiw.BranchId, branchAdminVeiw.CompanyId, UserRoleEnum.User, EntityStatusEnum.Active);
+                            }
+                            //if company user linked but not ACTIVE on BranchUser
+                            else if (branchUser.EntityStatus != EntityStatusEnum.Active)
+                            {
+                                BranchUserHelpers.UpdateBranchUserStatus(db, branchUser, EntityStatusEnum.Active, companyUser.AppUserId);
+                            }
+                        }
+                        else
+                        {
+                            //if company user not linked but is on BranchUser, remove from BranchUser by setting status to Inactive
+                            if (branchUser != null)
+                            {
+                                BranchUserHelpers.UpdateBranchUserStatus(db, branchUser, EntityStatusEnum.Inactive, companyUser.AppUserId);
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+                return false;
+            }
+
+            //try
+            //{
+            //    Company company = CompanyHelpers.UpdateCompany(db,
+            //        companyAdminView.CompanyDetails.CompanyId,
+            //        companyAdminView.CompanyDetails.HeadOfficeBranchId,
+            //        companyAdminView.CompanyDetails.CompanyName,
+            //        companyAdminView.CompanyDetails.CompanyRegistrationDetails,
+            //        companyAdminView.CompanyDetails.CharityRegistrationDetails,
+            //        companyAdminView.CompanyDetails.VATRegistrationDetails,
+            //        companyAdminView.CompanyDetails.EntityStatus
+            //        );
+
+            //    return true;
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("{0} Exception caught.", e);
+            //    return false;
+            //}
         }
 
         #endregion

@@ -95,7 +95,36 @@ namespace Distributor.Helpers
         #endregion
 
         #region Update
-                
+
+        public static Branch UpdateBranch(Guid branchId, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateBranch(db, branchId, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
+        }
+
+        public static Branch UpdateBranch(ApplicationDbContext db, Guid branchId, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
+        {
+            Branch branch = GetBranch(db, branchId);
+            branch.CompanyId = companyId;
+            branch.BranchName = branchName;
+            branch.BusinessType = businessType;
+            branch.AddressLine1 = addressLine1;
+            branch.AddressLine2 = addressLine2;
+            branch.AddressLine3 = addressLine3;
+            branch.AddressTownCity = addressTownCity;
+            branch.AddressCounty = addressCounty;
+            branch.AddressPostcode = addressPostcode;
+            branch.TelephoneNumber = telephoneNumber;
+            branch.Email = email;
+            branch.ContactName = contactName;
+            branch.EntityStatus = entityStatus;
+            
+            db.Entry(branch).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return branch;
+        }
+
         public static Branch UpdateEntityStatus(Guid branchId, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();

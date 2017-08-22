@@ -27,16 +27,23 @@ namespace Distributor.Controllers
             return View(userAdminViewForUser);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserAdmin(List<UserAdminView> userAdminViewForUser)
+        {
+            return View(userAdminViewForUser);
+        }
+
         public ActionResult BranchAdmin()
         {
-            List<BranchAdminView> branchAdminView = BranchAdminHelpers.GetBranchAdminViewList(User);
-            return View(branchAdminView);
+            List<BranchAdminView> branchesAdminView = BranchAdminHelpers.GetBranchAdminViewList(User);
+            return View(branchesAdminView);
         }
 
         // POST: CompanyAdmin
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult BranchAdmin(List<BranchAdminView> branchAdminView)
+        public ActionResult BranchAdmin(List<BranchAdminView> branchesAdminView)
         {
             if (ModelState.IsValid)
             {
@@ -44,13 +51,13 @@ namespace Distributor.Controllers
                 if (Request.Form["submitbutton"] != null)
                 {
                     //Update tables
-                    //BranchAdminHelpers.UpdateBranchesFromBranchAdminView(branchAdminView);
+                    BranchAdminHelpers.UpdateBranchesFromBranchAdminView(branchesAdminView);
                 }
 
                 return RedirectToAction("BranchAdmin");
             }
 
-            return View(branchAdminView);
+            return View(branchesAdminView);
         }
 
         public ActionResult CompanyAdmin()

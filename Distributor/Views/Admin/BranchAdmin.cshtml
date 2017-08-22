@@ -69,6 +69,7 @@
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <!-- The table -->
         <div class="table-responsive">
             <table class="table table-hover">
@@ -81,32 +82,32 @@
                 </tr>
 
                 @foreach (var branch in Model)
-                        {
-                            branchId = branch.BranchId;
+                {
+                    branchId = branch.BranchId;
 
-                        <tr id=@branchId class="active">
-                            <td><input style="width:70px" type="button" value="Edit" class="btn btn-sm btn-primary btn-block showhidebranch" /></td>
-                            <td>@Html.DisplayFor(modelBranch => branch.EntityStatus)</td>
-                            <td>@Html.DisplayFor(modelBranch => branch.BranchName)</td>
-                            <td>@Html.DisplayFor(modelBranch => branch.AddressLine1)</td>
-                            <td>@Html.DisplayFor(modelBranch => branch.AddressTownCity)</td>
-                            <td>@Html.DisplayFor(modelBranch => branch.AddressCounty)</td>
-                            <td>@Html.DisplayFor(modelBranch => branch.AddressPostcode)</td>
-                            <td>@Html.DisplayFor(modelBranch => branch.BusinessType)</td>
-                        </tr>
+                    <tr id=@branchId class="active">
+                        <td><input style="width:70px" type="button" value="Edit" class="btn btn-sm btn-primary btn-block showhidebranch" /></td>
+                        <td>@Html.DisplayFor(modelBranch => branch.EntityStatus)</td>
+                        <td>@Html.DisplayFor(modelBranch => branch.BranchName)</td>
+                        <td>@Html.DisplayFor(modelBranch => branch.AddressLine1)</td>
+                        <td>@Html.DisplayFor(modelBranch => branch.AddressTownCity)</td>
+                        <td>@Html.DisplayFor(modelBranch => branch.AddressCounty)</td>
+                        <td>@Html.DisplayFor(modelBranch => branch.AddressPostcode)</td>
+                        <td>@Html.DisplayFor(modelBranch => branch.BusinessType)</td>
+                    </tr>
 
-                        <tbody id=@branchId style="display:none">
-                            @Html.EditorForModel(new { BranchId = branchId })
-                        </tbody>
-                        }
+                    <tbody id=@branchId style="display:none">
+                        @Html.EditorForModel(new { BranchId = branchId })
+                    </tbody>
+                }
             </table>
             <!-- table end -->
         </div>
 
     </div>
 
-            <div class="form-group">
-                <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
-                <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
-            </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+        <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
+    </div>
 }

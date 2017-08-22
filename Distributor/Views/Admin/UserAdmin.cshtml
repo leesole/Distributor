@@ -68,12 +68,21 @@
             <li class="active">User Admin</li>
         </ol>
         <p class="lead">Your current user list.</p>
-        
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <!-- The table -->
         <div class="table-responsive">
             <table class="table table-hover">
                 <tr class="info">
-                    <th style="width:90px">Branches</th>
+                    <th style="width:90px">Actions</th>
                     <th style="width:120px">Status</th>
                     <th>First name</th>
                     <th>Last name</th>
@@ -83,65 +92,16 @@
                 @foreach (var item in Model)
                 {
                     appUserId = item.AppUserId;
-                    
-                        <tr id=@appUserId class="active">
-                            <td>
-                                <input type="button" value="Branches" class="btn btn-sm btn-primary btn-block showhidebranch" />
-                            </td>
-                            <td>
-                                @Html.EnumDropDownListFor(modelItem => item.AppUserEntityStatus, "", new { @class = "form-control" })                                    
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LoginEmail)
-                            </td>
-                        </tr>
-                    
-                    <tbody id=@appUserId style="display:none">
-                        <tr class="info">
-                            <th></th>
-                            <th>Current</th>
-                            <th>User role</th>
-                            <th>Branch name</th>
-                            <th>Address</th>
-                        </tr>
 
-                        @foreach (var branch in item.RelatedBranches)
-                        {
-                            branchAddress = branch.BranchDetails.AddressLine1 + ", " + branch.BranchDetails.AddressTownCity + ", " + branch.BranchDetails.AddressCounty + ", " + branch.BranchDetails.AddressPostcode;
-                            <tr>
-                                <td></td>
-                                <td>
-                                    @if (branch.BranchId == item.CurrentBranchId)
-                                    {
-                                        @Html.RadioButton(appUserId.ToString(), "")
-                                    }
-                                    else
-                                    {
-                                        @Html.RadioButton(appUserId.ToString(), "1")
-                                    }
-                                </td>
-                                <td>
-                                    @Html.EnumDropDownListFor(modelBranch => branch.BranchUserDetails.UserRole, "", new { @class = "form-control" })   
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelBranch => branch.BranchDetails.BranchName)
-                                </td>
-                                <td>
-                                    @branchAddress;
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
+                    @Html.EditorForModel(new { AppUserId = appUserId })
                 }
             </table>
             <!-- table end -->
         </div>
     </div>
-</div>
 
+    <div class="form-group">
+        <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+        <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
+    </div>
+}

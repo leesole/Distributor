@@ -13,7 +13,6 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("TEST", "Index", "Branches")</li>
         <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
         @if (userRole == "Admin" || userRole == "SuperUser")
         {

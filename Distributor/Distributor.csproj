@@ -266,6 +266,14 @@
     <Compile Include="Migrations\201708110747499_14th.Designer.cs">
       <DependentUpon>201708110747499_14th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708220726104_15th.cs" />
+    <Compile Include="Migrations\201708220726104_15th.Designer.cs">
+      <DependentUpon>201708220726104_15th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708220749366_16th.cs" />
+    <Compile Include="Migrations\201708220749366_16th.Designer.cs">
+      <DependentUpon>201708220749366_16th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -365,9 +373,10 @@
     <Content Include="Views\Admin\BranchAdmin.cshtml" />
     <Content Include="Views\Admin\CompanyAdmin.cshtml" />
     <Content Include="Views\Task\Details.cshtml" />
-    <Content Include="Views\Admin\_BranchAdminBranches.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\BranchAdminView.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\BranchAdminViewCompanyUser.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UserAdminView.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UserAdminRelatedBranchesView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -427,6 +436,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708110747499_14th.resx">
       <DependentUpon>201708110747499_14th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708220726104_15th.resx">
+      <DependentUpon>201708220726104_15th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708220749366_16th.resx">
+      <DependentUpon>201708220749366_16th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
