@@ -61,6 +61,22 @@ namespace Distributor.Helpers
 
         #region Create
 
+        public static Branch CreateBranch(Branch branch)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return CreateBranch(db, branch);
+        }
+
+        public static Branch CreateBranch(ApplicationDbContext db, Branch branch)
+        {
+            branch.BranchId = Guid.NewGuid();
+            db.Branches.Add(branch);
+            db.SaveChanges();
+
+            return branch;
+
+        }
+
         public static Branch CreateBranch(Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();

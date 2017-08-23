@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Helpers
 {
@@ -55,6 +56,18 @@ namespace Distributor.Helpers
                                         });
 
             return new SelectList(entityStatusEnumList, "Id", "Name");
+        }
+
+        public static SelectList UserRoleEnumListDropDown()
+        {
+            var userRoleEnumList = (from UserRoleEnum ur in Enum.GetValues(typeof(UserRoleEnum))
+                                    select new
+                                    {
+                                        Id = ur,
+                                        Name = EnumHelpers.GetDescription((UserRoleEnum)ur)
+                                    });
+
+            return new SelectList(userRoleEnumList, "Id", "Name");
         }
 
         #endregion

@@ -16,7 +16,7 @@ namespace Distributor.Enums
             Active = 1,
             [Description("On hold")]
             OnHold = 2,
-            [Description("Closed)")]
+            [Description("Closed")]
             Closed = 3
         }
     }

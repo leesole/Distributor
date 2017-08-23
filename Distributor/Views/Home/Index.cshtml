@@ -40,7 +40,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
+    
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header" style="margin: 10px 0px 10px">Home <small>Dashboard</small></h1>
@@ -50,58 +50,92 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac
         </div>
     </div>
-    @*<div class="row">
-        <div class="col-md-2 col-sm-3 sidebar">
-            <ul class="nav nav-stacked nav-pills">
-                <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                <li class="disabled">General Info</li>
-                <li><a href="#">Campaigns</a></li>
-                <li><a href="#">Requests</a></li>
-                <li><a href="#">Available</a></li>
-                <li><br /></li>
-                <li class="disabled">Your Listings</li>
-                <li><a href="#">Campaigns</a></li>
-                <li><a href="#">Requests</a></li>
-                <li><a href="#">Available</a></li>
-                <li><a href="#">Orders</a></li>
-                <li><a href="#"></a></li>
-            </ul>
+    
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Requirement listing</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Our list of requirements that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE - 
+                       This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!</p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-10 col-sm-9">
-            <h1 class="page-header" style="margin: 10px 0px 10px">Home <small>Dashboard</small></h1>
-            <ol class="breadcrumb">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            </ol>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
+        <div class="col-sm-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Actions</h3>
+                </div>
+                <div class="panel-body">
+                    <p>These will be a list of actions such as un-attached orders, users etc when branches/users are made inactive or change branches etc.</p>
+                </div>
+            </div>
         </div>
-    </div>*@
-    <!-- /.row -->
+        <div class="col-sm-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tasks</h3>
+                </div>
+                <div class="panel-body">
+                    <p>List of the outstanding actions - maybe top x in date order</p>
+                </div>
+            </div>
+        </div>
+    </div>
+            @*<div class="row">
+                <div class="col-md-2 col-sm-3 sidebar">
+                    <ul class="nav nav-stacked nav-pills">
+                        <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li class="disabled">General Info</li>
+                        <li><a href="#">Campaigns</a></li>
+                        <li><a href="#">Requests</a></li>
+                        <li><a href="#">Available</a></li>
+                        <li><br /></li>
+                        <li class="disabled">Your Listings</li>
+                        <li><a href="#">Campaigns</a></li>
+                        <li><a href="#">Requests</a></li>
+                        <li><a href="#">Available</a></li>
+                        <li><a href="#">Orders</a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-10 col-sm-9">
+                    <h1 class="page-header" style="margin: 10px 0px 10px">Home <small>Dashboard</small></h1>
+                    <ol class="breadcrumb">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    </ol>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
+                </div>
+            </div>*@
+            <!-- /.row -->
 }
 else
 {
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+    <div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Current Campaigns</h2>
-        <p>
-            What current campaigns are being run?  Who needs what?  What is happening in your area?
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">See campaigns &raquo;</a></p>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Current Campaigns</h2>
+            <p>
+                What current campaigns are being run?  Who needs what?  What is happening in your area?
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">See campaigns &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Lastest Requests</h2>
+            <p>Food banks and charities always need food and other items.  What are the latest requests in your area?</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">See requests &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>About Us</h2>
+            <p>What is the point of this website?  What is it we plan to achieve? There are lots of charities that all are out to help those less fortunate, what is it that we do to help that happen?</p>
+            <p><a class="btn btn-default" href=@Url.Action("About", "Home")>Learn more &raquo;</a></p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Lastest Requests</h2>
-        <p>Food banks and charities always need food and other items.  What are the latest requests in your area?</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">See requests &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>About Us</h2>
-        <p>What is the point of this website?  What is it we plan to achieve? There are lots of charities that all are out to help those less fortunate, what is it that we do to help that happen?</p>
-        <p><a class="btn btn-default" href=@Url.Action("About", "Home")>Learn more &raquo;</a></p>
-    </div>
-</div>
 }

@@ -20,14 +20,10 @@
         @if (Model.CurrentBranch)
         {
             <input type="radio" name=@appUserId checked />
-            Model.CurrentBranch = true;
-            @Html.HiddenFor(modelBranch => modelBranch.CurrentBranch)
         }
         else
         {
             <input type = "radio" name = @appUserId />
-            Model.CurrentBranch = false;
-            @Html.HiddenFor(modelBranch => modelBranch.CurrentBranch)
         }
 
     </td>

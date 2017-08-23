@@ -279,12 +279,14 @@
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\BranchUser.cs" />
+    <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AppUserView.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
     <Compile Include="ViewModels\UserAdminView.cs" />
@@ -363,7 +365,6 @@
     <Content Include="Views\Branches\Index.cshtml" />
     <Content Include="Views\Account\Confirmation.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
-    <Content Include="Views\AppUsers\Create.cshtml" />
     <Content Include="Views\AppUsers\Delete.cshtml" />
     <Content Include="Views\AppUsers\Details.cshtml" />
     <Content Include="Views\AppUsers\Edit.cshtml" />
@@ -377,6 +378,7 @@
     <Content Include="Views\Shared\EditorTemplates\BranchAdminViewCompanyUser.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\UserAdminView.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\UserAdminRelatedBranchesView.cshtml" />
+    <Content Include="Views\AppUsers\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

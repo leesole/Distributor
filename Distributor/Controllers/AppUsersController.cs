@@ -7,6 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Distributor.Models;
+using Distributor.Helpers;
+using Distributor.ViewModels;
+using Distributor.Extenstions;
+using static Distributor.Enums.EntityEnums;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using static Distributor.Enums.UserTaskEnums;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Distributor.Controllers
 {
@@ -35,28 +43,113 @@ namespace Distributor.Controllers
         //    return View(appUser);
         //}
 
-        //// GET: AppUsers/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
+        // GET: AppUsers/Create
+        public ActionResult Create()
+        {
+            Branch userBranch = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
+
+            //DropDowns
+            ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(userBranch.CompanyId, userBranch.BranchId);
+            ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
+            ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
+
+            return View();
+        }
+
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(AppUserView model)
+        {
+            if (ModelState.IsValid)
+            {
+                //initialise the task creation flags
+                bool createUserOnHoldTask = false;
+
+                //Retrieve Branch
+                Branch branch = BranchHelpers.GetBranch(db, model.SelectedBranchId.Value);
+
+                //Create a new AppUser then write here
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, branch.BranchId, model.EntityStatus);
+
+                BranchUser branchUser = null;
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AppUserId = appUser.AppUserId, FullName = model.FirstName + " " + model.LastName, CurrentUserRole = model.UserRole };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    //set on-hold task flag
+                    if (model.EntityStatus == EntityStatusEnum.OnHold)
+                        createUserOnHoldTask = true;
+
+                    //Now Update related entities
+                    //BranchUser - set the status as ACTIVE as the link is active even though the entities linked are not.
+                    branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, branch.CompanyId, model.UserRole, EntityStatusEnum.Active);
+
+                    //Task creation
+                    if (createUserOnHoldTask)
+                        UserTaskHelpers.CreateUserTask(TaskTypeEnum.UserOnHold, "New user on hold, awaiting administrator/manager activation", appUser.AppUserId, appUser.AppUserId, EntityStatusEnum.Active);
+
+                    return RedirectToAction("UserAdmin", "Admin");
+                }
+
+                //Delete the appUser account as this has not gone through
+                AppUserHelpers.DeleteAppUser(appUser.AppUserId);
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form - set up the drop downs dependant on what was there originally from the model
+            Branch userBranch = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
+            //DropDown
+            ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(userBranch.CompanyId, userBranch.BranchId);
+            ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
+            ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
+
+            return View(model);
+        }
 
         //// POST: AppUsers/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "AppUserId,FirstName,LastName,EntityStatus,CurrentBranchId")] AppUser appUser)
+        //public async Task<ActionResult> Create(AppUserView model)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        appUser.AppUserId = Guid.NewGuid();
-        //        db.AppUsers.Add(appUser);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
+
         //    }
 
-        //    return View(appUser);
+        //    Branch branch = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
+        //    //DropDown
+        //    ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(branch.CompanyId, branch.BranchId);
+        //    ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
+        //    ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
+
+        //    return View(model);
         //}
 
         // GET: AppUsers/Edit/5

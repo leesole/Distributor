@@ -31,8 +31,9 @@ namespace Distributor.Helpers
             List<Branch> branchesForAppUser = (from bu in db.BranchUsers
                                                join b in db.Branches on bu.UserId equals appUser.AppUserId
                                                select b).ToList();
+            var branchesForAppUserDistinct = branchesForAppUser.Distinct();
 
-            foreach (Branch branch in branchesForAppUser)
+            foreach (Branch branch in branchesForAppUserDistinct)
             {
                 //Build list of company users to add to this branchView
                 List<BranchAdminViewCompanyUser> branchAdminCompanyUsers = new List<BranchAdminViewCompanyUser>();

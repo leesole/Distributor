@@ -31,7 +31,10 @@ namespace Distributor.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UserAdmin(List<UserAdminView> userAdminViewForUser)
         {
-            return View(userAdminViewForUser);
+            //need to put in the update of files
+
+            return RedirectToAction("UserAdmin");
+            //return View(userAdminViewForUser);
         }
 
         public ActionResult BranchAdmin()
