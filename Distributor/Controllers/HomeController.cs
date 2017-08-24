@@ -35,7 +35,7 @@ namespace Distributor.Controllers
         [Authorize]
         public ActionResult Manage()
         {
-            return View();
+            return RedirectToAction("Requirements", "ManageListings");
         }
     }
 }

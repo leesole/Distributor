@@ -40,6 +40,26 @@ namespace Distributor.Helpers
             return db.Campaigns.ToList();
         }
 
+        public static List<Campaign> GetAllCampaignsForBranchUser(BranchUser branchUser)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Campaign> list = GetAllCampaignsForBranchUser(db, branchUser);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Campaign> GetAllCampaignsForBranchUser(ApplicationDbContext db, BranchUser branchUser)
+        {
+            List<Campaign> allCampaignsForBranchUser = (from bu in db.BranchUsers
+                                                        from c in db.Campaigns
+                                                        where (bu.UserId == c.CampaignOriginatorAppUserId && bu.BranchId == c.CampaignOriginatorBranchId && bu.CompanyId == c.CampaignOriginatorCompanyId
+                                                        && c.EntityStatus == EntityStatusEnum.Active)
+                                                        select c).ToList();
+
+            return allCampaignsForBranchUser;
+        }
+
         #endregion
 
         #region Create
@@ -102,6 +122,42 @@ namespace Distributor.Helpers
             }
 
             return allCampaignsGeneralInfoView;
+        }
+
+        #endregion
+    }
+
+    public static class CampaignGeneralManageHelpers
+    {
+        #region Get
+
+        public static List<CampaignManageView> GetAllCampaignsManageViewForUserBranch(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<CampaignManageView> list = GetAllCampaignsManageViewForUserBranch(db, user);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<CampaignManageView> GetAllCampaignsManageViewForUserBranch(ApplicationDbContext db, IPrincipal user)
+        {
+            List<CampaignManageView> allCampaignsManageView = new List<CampaignManageView>();
+
+            BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
+            List<Campaign> allCampaignsForBranchUser = CampaignHelpers.GetAllCampaignsForBranchUser(db, branchUser);
+
+            foreach (Campaign campaignForBranchUser in allCampaignsForBranchUser)
+            {
+                CampaignManageView campaignManageView = new CampaignManageView()
+                {
+                    Campaign = campaignForBranchUser
+                };
+
+                allCampaignsManageView.Add(campaignManageView);
+            }
+
+            return allCampaignsManageView;
         }
 
         #endregion

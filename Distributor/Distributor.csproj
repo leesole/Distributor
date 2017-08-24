@@ -198,6 +198,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageListingsController.cs" />
+    <Compile Include="Controllers\RequirementListingsController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Enums\BranchEnums.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
@@ -304,8 +305,10 @@
     <Compile Include="ViewModels\AppUserView.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CampaignGeneralInfoView.cs" />
+    <Compile Include="ViewModels\CampaignManageView.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
     <Compile Include="ViewModels\RequirementListingGeneralInfoView.cs" />
+    <Compile Include="ViewModels\RequirementListingManageView.cs" />
     <Compile Include="ViewModels\UserAdminView.cs" />
     <Compile Include="ViewModels\UserTaskView.cs" />
   </ItemGroup>
@@ -404,12 +407,18 @@
     <Content Include="Views\Campaigns\Details.cshtml" />
     <Content Include="Views\Campaigns\Edit.cshtml" />
     <Content Include="Views\Campaigns\Index.cshtml" />
+    <Content Include="Views\RequirementListings\Create.cshtml" />
+    <Content Include="Views\RequirementListings\Delete.cshtml" />
+    <Content Include="Views\RequirementListings\Details.cshtml" />
+    <Content Include="Views\RequirementListings\Edit.cshtml" />
+    <Content Include="Views\RequirementListings\Index.cshtml" />
+    <Content Include="Views\ManageListings\Requirements.cshtml" />
+    <Content Include="Views\ManageListings\Campaigns.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Data\" />
     <Folder Include="Views\General\" />
-    <Folder Include="Views\ManageListings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

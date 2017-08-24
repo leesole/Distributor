@@ -39,6 +39,13 @@ namespace Distributor.Controllers
         // GET: Campaigns/Create
         public ActionResult Create()
         {
+            string[] callingUrlSegments = Request.UrlReferrer.Segments.Select(x => x.TrimEnd('/')).ToArray();
+            string callingController = callingUrlSegments[callingUrlSegments.Count() - 2];
+            string callingView = callingUrlSegments[callingUrlSegments.Count() - 1];
+
+            ViewBag.CallingController = callingController;
+            ViewBag.CallingView = callingView;
+
             return View();
         }
 
