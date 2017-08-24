@@ -12,10 +12,6 @@ namespace Distributor.Models
         [Key]
         public Guid CampaignId { get; set; }
 
-        public Guid CompanyId { get; set; }
-        public Guid BranchId { get; set; }
-        public Guid AppUserId { get; set; }
-
         [Display(Name="Campaign name")]
         public string Name { get; set; }
 
@@ -72,5 +68,11 @@ namespace Distributor.Models
 
         [Display(Name = "Status")]
         public EntityStatusEnum EntityStatus { get; set; }
+
+        //references to the listing originator
+        public Guid CampaignOriginatorAppUserId { get; set; }
+        public Guid CampaignOriginatorBranchId { get; set; }
+        public Guid CampaignOriginatorCompanyId { get; set; }
+        public DateTime CampaignOriginatorDateTime { get; set; }
     }
 }

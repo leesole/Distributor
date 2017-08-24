@@ -36,5 +36,24 @@ namespace Distributor.Helpers
 
             return en.ToString();
         }
+
+        public static string GetCategory(Enum en)
+        {
+            Type type = en.GetType();
+
+            MemberInfo[] memInfo = type.GetMember(en.ToString());
+
+            if (memInfo != null && memInfo.Length > 0)
+            {
+                object[] attrs = memInfo[0].GetCustomAttributes(typeof(CategoryAttribute), false);
+
+                if (attrs != null && attrs.Length > 0)
+                {
+                    return ((CategoryAttribute)attrs[0]).Category;
+                }
+            }
+
+            return en.ToString();
+        }
     }
 }

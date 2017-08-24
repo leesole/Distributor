@@ -44,6 +44,9 @@ namespace Distributor.Models
         public DbSet<UserTask> UserTasks { get; set; }
         public DbSet<UserTaskAssignment> UserTaskAssignments { get; set; }
 
+        public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<RequirementListing> RequirementListings { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
