@@ -7,6 +7,7 @@ using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
 using static Distributor.Enums.UserEnums;
+using static Distributor.Enums.UserTaskEnums;
 
 namespace Distributor.Helpers
 {
@@ -106,20 +107,27 @@ namespace Distributor.Helpers
 
         #region Update
 
-        public static bool UpdateBranchesFromBranchAdminView(List<BranchAdminView> branchesAdminView)
+        public static bool UpdateBranchesFromBranchAdminView(List<BranchAdminView> branchesAdminView, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateBranchesFromBranchAdminView(db, branchesAdminView);
+            return UpdateBranchesFromBranchAdminView(db, branchesAdminView, user);
         }
 
-        public static bool UpdateBranchesFromBranchAdminView(ApplicationDbContext db, List<BranchAdminView> branchesAdminView)
+        public static bool UpdateBranchesFromBranchAdminView(ApplicationDbContext db, List<BranchAdminView> branchesAdminView, IPrincipal user)
         {
+            //Get logged in user details for Task creation (if required)
+            AppUser loggedInUser = AppUserHelpers.GetAppUser(db, user);
+
             try
             {
                 foreach (BranchAdminView branchAdminVeiw in branchesAdminView)
                 {
+                    //Get original branch record so that we can compare previous and current entity status'
+                    Branch branch = BranchHelpers.GetBranch(db, branchAdminVeiw.BranchId);
+                    EntityStatusEnum previousEntityStatus = branch.EntityStatus;
+
                     //Update branch
-                    Branch branch = BranchHelpers.UpdateBranch(db,
+                    branch = BranchHelpers.UpdateBranch(db,
                         branchAdminVeiw.BranchId,
                         branchAdminVeiw.CompanyId,
                         branchAdminVeiw.BusinessType,
@@ -134,6 +142,23 @@ namespace Distributor.Helpers
                         branchAdminVeiw.Email,
                         branchAdminVeiw.ContactName,
                         branchAdminVeiw.EntityStatus);
+
+                    //if change of status from on-hold - anything then look for outstanding task and set to closed
+                    if (branchAdminVeiw.EntityStatus != EntityStatusEnum.OnHold && previousEntityStatus == EntityStatusEnum.OnHold)
+                    {
+                        List<UserTask> activeTasksForThisBranch = UserTaskHelpers.GetUserTasksForBranch(db, branch.BranchId);
+
+                        foreach (UserTask activeTaskForThisBranch in activeTasksForThisBranch)
+                        {
+                            UserTaskHelpers.UpdateEntityStatus(activeTaskForThisBranch.UserTaskId, EntityStatusEnum.Closed);
+                        }
+                    }
+
+                    //If change of status to on-hold then create a Task
+                    if (branchAdminVeiw.EntityStatus == EntityStatusEnum.OnHold && previousEntityStatus != EntityStatusEnum.OnHold)
+                    {
+                        UserTaskHelpers.CreateUserTask(TaskTypeEnum.BranchOnHold, "New branch on hold, awaiting administrator activation", branch.BranchId, loggedInUser.AppUserId, EntityStatusEnum.Active);
+                    }
 
                     //Update Users link with Branch
                     foreach (BranchAdminViewCompanyUser companyUser in branchAdminVeiw.RelatedCompanyUsers)
@@ -172,26 +197,6 @@ namespace Distributor.Helpers
                 Console.WriteLine("{0} Exception caught.", e);
                 return false;
             }
-
-            //try
-            //{
-            //    Company company = CompanyHelpers.UpdateCompany(db,
-            //        companyAdminView.CompanyDetails.CompanyId,
-            //        companyAdminView.CompanyDetails.HeadOfficeBranchId,
-            //        companyAdminView.CompanyDetails.CompanyName,
-            //        companyAdminView.CompanyDetails.CompanyRegistrationDetails,
-            //        companyAdminView.CompanyDetails.CharityRegistrationDetails,
-            //        companyAdminView.CompanyDetails.VATRegistrationDetails,
-            //        companyAdminView.CompanyDetails.EntityStatus
-            //        );
-
-            //    return true;
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine("{0} Exception caught.", e);
-            //    return false;
-            //}
         }
 
         #endregion

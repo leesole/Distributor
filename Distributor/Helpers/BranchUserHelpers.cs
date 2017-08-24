@@ -123,7 +123,23 @@ namespace Distributor.Helpers
 
             return branchUser;
         }
+        
+        public static BranchUser UpdateBranchUserRole(Guid branchUserId, UserRoleEnum userRole)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateBranchUserRole(db, branchUserId, userRole);
+        }
 
+        public static BranchUser UpdateBranchUserRole(ApplicationDbContext db, Guid branchUserId, UserRoleEnum userRole)
+        {
+            BranchUser branchUser = GetBranchUser(db, branchUserId);
+            branchUser.UserRole = userRole;
+            db.Entry(branchUser).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return branchUser;
+        }
+        
         #endregion
     }
 }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.UserTaskEnums;
 
 namespace Distributor.Helpers
 {
@@ -146,5 +148,68 @@ namespace Distributor.Helpers
         }
 
         #endregion
-    }
+
+        #region Update
+
+        public static bool UpdateUsersFromUserAdminView(List<UserAdminView> userAdminViewForUser, IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateUsersFromUserAdminView(db, userAdminViewForUser, user);
+        }
+
+        public static bool UpdateUsersFromUserAdminView(ApplicationDbContext db, List<UserAdminView> userAdminViewForUser, IPrincipal user)
+        {
+            //Get logged in user details for Task creation (if required)
+            AppUser loggedInUser = AppUserHelpers.GetAppUser(db, user);
+
+            try
+            {
+                foreach (UserAdminView userAdminView in userAdminViewForUser)
+                {
+                    //Get original appUser record so that we can compare previous and current entity status'
+                    AppUser appUser = AppUserHelpers.GetAppUser(db, userAdminView.AppUserId);
+                    EntityStatusEnum previousEntityStatus = appUser.EntityStatus;
+
+                    //Update the AppUser record (except Current Branch as that was done in real time)
+                    appUser = AppUserHelpers.UpdateAppUserExcludingCurrentBranchField(db,
+                        userAdminView.AppUserId,
+                        userAdminView.FirstName,
+                        userAdminView.LastName,
+                        userAdminView.AppUserEntityStatus);
+
+                    //if change of status from on-hold - anything then look for outstanding task and set to closed
+                    if (userAdminView.AppUserEntityStatus != EntityStatusEnum.OnHold && previousEntityStatus == EntityStatusEnum.OnHold)
+                    {
+                        List<UserTask> activeTasksForThisUser = UserTaskHelpers.GetUserTasksForUser(db, appUser.AppUserId);
+
+                        foreach(UserTask activeTaskForThisUser in activeTasksForThisUser)
+                        {
+                            UserTaskHelpers.UpdateEntityStatus(activeTaskForThisUser.UserTaskId, EntityStatusEnum.Closed);
+                        }
+                    }
+
+                    //If change of status to on-hold then create a Task
+                    if (userAdminView.AppUserEntityStatus == EntityStatusEnum.OnHold && previousEntityStatus != EntityStatusEnum.OnHold)
+                    {
+                        UserTaskHelpers.CreateUserTask(TaskTypeEnum.UserOnHold, "New user on hold, awaiting administrator/manager activation", appUser.AppUserId, loggedInUser.AppUserId, EntityStatusEnum.Active);
+                    }
+
+                    //Update the User Role on each Branch
+                    foreach (UserAdminRelatedBranchesView relatedBranch in userAdminView.RelatedBranches)
+                    {
+                        BranchUserHelpers.UpdateBranchUserRole(db, relatedBranch.BranchUserId, relatedBranch.UserRole);
+                    }
+                }
+                
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+                return false;
+            }
+        }
+
+        #endregion
+        }
 }

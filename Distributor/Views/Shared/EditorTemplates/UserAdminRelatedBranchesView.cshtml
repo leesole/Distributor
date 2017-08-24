@@ -4,6 +4,7 @@
     var branchAddress = Model.AddressLine1 + ", " + Model.AddressTownCity + ", " + Model.AddressPostcode; ;
     string appUserId = ViewBag.AppUserId.ToString();
     var currentBranchId = ViewBag.CurrentBranchId;
+    var branchId = Model.BranchId;
 }
 
 @Html.HiddenFor(modelBranch => modelBranch.AppUserId)
@@ -14,16 +15,16 @@
 @Html.HiddenFor(modelBranch => modelBranch.AddressTownCity)
 @Html.HiddenFor(modelBranch => modelBranch.AddressPostcode)
 
-<tr>
+<tr id=@branchId>
     <td></td>
-    <td>
+    <td id=@branchId>
         @if (Model.CurrentBranch)
         {
-            <input type="radio" name=@appUserId checked />
+            <input type="radio" name=@appUserId id=@branchId checked onchange="currentBranchOnChange(this.name, this.id);" />
         }
         else
         {
-            <input type = "radio" name = @appUserId />
+            <input type="radio" name=@appUserId id=@branchId onchange="currentBranchOnChange(this.name, this.id);" />
         }
 
     </td>

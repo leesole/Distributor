@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace Distributor.Controllers
 {
@@ -24,6 +25,7 @@ namespace Distributor.Controllers
         public ActionResult UserAdmin()
         {
             List<UserAdminView> userAdminViewForUser = UserAdminHelpers.GetUserAdminViewListForUser(User);
+            //TempData["OriginalModel"] = userAdminViewForUser;
             return View(userAdminViewForUser);
         }
 
@@ -31,10 +33,20 @@ namespace Distributor.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UserAdmin(List<UserAdminView> userAdminViewForUser)
         {
-            //need to put in the update of files
+            if (ModelState.IsValid)
+            {
+                //var originalModel = TempData["OriginalModel"];
 
-            return RedirectToAction("UserAdmin");
-            //return View(userAdminViewForUser);
+                if (Request.Form["submitbutton"] != null)
+                {
+                    //Update tables
+                    UserAdminHelpers.UpdateUsersFromUserAdminView(userAdminViewForUser, User);
+                }
+
+                return RedirectToAction("UserAdmin");
+            }
+
+            return View(userAdminViewForUser);
         }
 
         public ActionResult BranchAdmin()
@@ -54,7 +66,7 @@ namespace Distributor.Controllers
                 if (Request.Form["submitbutton"] != null)
                 {
                     //Update tables
-                    BranchAdminHelpers.UpdateBranchesFromBranchAdminView(branchesAdminView);
+                    BranchAdminHelpers.UpdateBranchesFromBranchAdminView(branchesAdminView, User);
                 }
 
                 return RedirectToAction("BranchAdmin");
@@ -92,5 +104,22 @@ namespace Distributor.Controllers
             }
             return View(companyAdminView);
         }
+
+        #region Data Manipulation
+
+        #region UserAdmin
+
+        [HttpPost]
+        public ActionResult ChangeCurrentBranchForUser(List<UserAdminView> modelDetails, Guid appUserId, Guid branchId)
+        {
+            //modelDetails coming through as blank so for now just update this value immediatetly, return and refresh data
+            AppUserHelpers.UpdateCurrentBranchId(appUserId, branchId);
+
+            return Json(new { success = true });
+        }
+
+        #endregion
+
+        #endregion
     }
 }

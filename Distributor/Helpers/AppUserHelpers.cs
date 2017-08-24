@@ -101,7 +101,25 @@ namespace Distributor.Helpers
             return appUser;
         }
 
-    #endregion
+        public static AppUser UpdateAppUserExcludingCurrentBranchField(Guid appUserId, string firstName, string lastName, EntityStatusEnum entityStatus)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return UpdateAppUserExcludingCurrentBranchField(db, appUserId, firstName, lastName, entityStatus);
+        }
+
+        public static AppUser UpdateAppUserExcludingCurrentBranchField(ApplicationDbContext db, Guid appUserId, string firstName, string lastName, EntityStatusEnum entityStatus)
+        {
+            AppUser appUser = GetAppUser(db, appUserId);
+            appUser.FirstName = firstName;
+            appUser.LastName = lastName;
+            appUser.EntityStatus = entityStatus;
+            db.Entry(appUser).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return appUser;
+        }
+
+        #endregion
 
         #region Delete
 

@@ -7,6 +7,7 @@ using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Helpers
 {

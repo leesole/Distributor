@@ -6,7 +6,6 @@
 @{
     var userRole = User.Identity.GetCurrentUserRole();
     var appUserId = Guid.Empty;
-    var branchAddress = "";
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -16,18 +15,30 @@
         $(function () {
             //show/hide branches
             $('.showhidebranch').click(function () {
-                //trid = $(this).closest('tr').attr('id');
-                //var tridstring = trid.toString();
-
-                //$(this)
-                //    .closest('tbody')
-                //    .next(tridstring)
-                //    .toggle();
-
-
                 $(this).closest('tbody').next('tbody').toggle();
             });
         });
+
+        function currentBranchOnChange(appUserId, branchId) {
+            if (window.confirm("This will update current branch selection but loose all other changes.  Do you wish to proceed?")) {
+                var url = '@Url.Action("ChangeCurrentBranchForUser", "Admin")';
+                var modelDataJSON = @Html.Raw(Json.Encode(Model));
+            
+                $.ajax({
+                    url: url,
+                    data: {
+                        modelDetails: JSON.stringify(modelDataJSON),
+                        appUserId: appUserId,
+                        branchId: branchId
+                    },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
     </script>
 }
 

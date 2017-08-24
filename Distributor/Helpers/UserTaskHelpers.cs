@@ -38,11 +38,30 @@ namespace Distributor.Helpers
             
             userTasksForUser = (from t in db.UserTasks
                                 join a in db.UserTaskAssignments on t.UserTaskId equals a.UserTaskId
-                                where (a.AppUserId == appUserId && t.EntityStatus == EntityStatusEnum.Active)
+                                where (t.ReferenceKey == appUserId && t.EntityStatus == EntityStatusEnum.Active)
                                 orderby t.CreatedOn ascending
                                 select t).ToList();
 
             return userTasksForUser;
+        }
+
+        public static List<UserTask> GetUserTasksForBranch(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetUserTasksForBranch(db, branchId);
+        }
+
+        public static List<UserTask> GetUserTasksForBranch(ApplicationDbContext db, Guid branchId)
+        {
+            List<UserTask> userTasksForBranch = new List<UserTask>();
+
+            userTasksForBranch = (from t in db.UserTasks
+                                join a in db.UserTaskAssignments on t.UserTaskId equals a.UserTaskId
+                                where (t.ReferenceKey == branchId && t.EntityStatus == EntityStatusEnum.Active)
+                                orderby t.CreatedOn ascending
+                                select t).ToList();
+
+            return userTasksForBranch;
         }
 
         #endregion
