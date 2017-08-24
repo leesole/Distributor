@@ -29,7 +29,7 @@ namespace Distributor.Controllers
         [Authorize]
         public ActionResult General()
         {
-            return View();
+            return RedirectToAction("Requirements", "GeneralInfo");
         }
 
         [Authorize]

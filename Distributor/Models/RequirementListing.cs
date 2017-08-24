@@ -26,7 +26,7 @@ namespace Distributor.Models
         [Display(Name = "Quantity fulfilled")]
         public string QuantityFulfilled { get; set; }
 
-        [Display(Name = "Quantity outstanding")]
+        [Display(Name = "Quantity needed")]
         public string QuantityOutstanding { get; set; }
 
         [Display(Name = "Unit of measure")]
@@ -46,6 +46,9 @@ namespace Distributor.Models
 
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatus ListingStatus { get; set; }
+
+        [Display(Name = "Listing location")]
+        public string ListingBranchPostcode { get; set; }  //Put here for quicker sorting in view screens
 
         //references to the listing originator
         public Guid ListingOriginatorAppUserId { get; set; }

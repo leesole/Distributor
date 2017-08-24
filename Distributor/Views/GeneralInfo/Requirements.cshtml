@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Distributor.ViewModels.RequirementListingGeneralInfoView>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*<a class="navbar-brand" href="#">Brand</a>*@
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="disabled">@Html.ActionLink("GENERAL INFO", "General", "Home")</li>
+                <li class="active">@Html.ActionLink("Requests", "Requirements", "GeneralInfo")</li>
+                <li>@Html.ActionLink("Available", "Available", "GeneralInfo")</li>
+                <li>@Html.ActionLink("Campaigns", "Campaigns", "GeneralInfo")</li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">General Info <small>Requests</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li class="active">Requests</li>
+        </ol>
+        <p class="lead">Current requirements.</p>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr class="info">
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.ItemDescription)</th>
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.ItemType)</th>
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.QuantityOutstanding)</th>
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.UoM)</th>
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.RequiredFrom)</th>
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.RequiredTo)</th>
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.AcceptDamagedItems)</th>
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.DeliveryAvailable)</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
+                <td>@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
+                <td>@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
+                <td>@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
+                <td>@Html.DisplayFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                <td>@Html.DisplayFor(modelItem => item.RequirementListing.RequiredTo)</td>
+                <td>@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
+                <td>@Html.DisplayFor(modelItem => item.RequirementListing.DeliveryAvailable)</td>
+            </tr>
+        }
+
+    </table>
+</div>

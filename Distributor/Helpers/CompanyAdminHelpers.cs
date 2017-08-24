@@ -59,7 +59,7 @@ namespace Distributor.Helpers
                     companyAdminView.CompanyDetails.VATRegistrationDetails, 
                     companyAdminView.CompanyDetails.EntityStatus
                     );
-
+                
                 return true;
             }
             catch (Exception e)

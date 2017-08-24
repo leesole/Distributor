@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
 using static Distributor.Enums.UserEnums;
@@ -52,6 +53,20 @@ namespace Distributor.Helpers
                                      select b).FirstOrDefault();
 
             return branchUser;
+        }
+
+        //Returns the current branch/company/appuser for the user sent
+        public static BranchUser GetBranchUserCurrentForUser(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return GetBranchUserCurrentForUser(db, user);
+        }
+
+        //Returns the current branch/company/appuser for the user sent
+        public static BranchUser GetBranchUserCurrentForUser(ApplicationDbContext db, IPrincipal user)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            return GetBranchUser(db, appUser.AppUserId, appUser.CurrentBranchId);
         }
 
         #endregion

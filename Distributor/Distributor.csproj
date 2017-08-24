@@ -192,9 +192,12 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppUsersController.cs" />
     <Compile Include="Controllers\BranchesController.cs" />
+    <Compile Include="Controllers\CampaignsController.cs" />
     <Compile Include="Controllers\DataController.cs" />
+    <Compile Include="Controllers\GeneralInfoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManageListingsController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Enums\BranchEnums.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
@@ -209,10 +212,12 @@
     <Compile Include="Helpers\BranchAdminHelpers.cs" />
     <Compile Include="Helpers\BranchHelpers.cs" />
     <Compile Include="Helpers\BranchUserHelpers.cs" />
+    <Compile Include="Helpers\CampaignHelpers.cs" />
     <Compile Include="Helpers\CompanyAdminHelpers.cs" />
     <Compile Include="Helpers\CompanyHelpers.cs" />
     <Compile Include="Helpers\ControlHelpers.cs" />
     <Compile Include="Helpers\EnumHelpers.cs" />
+    <Compile Include="Helpers\RequirementListingHelpers.cs" />
     <Compile Include="Helpers\UserAdminHelpers.cs" />
     <Compile Include="Helpers\UserTaskHelpers.cs" />
     <Compile Include="Migrations\201707271720127_1st.cs" />
@@ -279,6 +284,10 @@
     <Compile Include="Migrations\201708240921040_17th.Designer.cs">
       <DependentUpon>201708240921040_17th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708241032074_18th.cs" />
+    <Compile Include="Migrations\201708241032074_18th.Designer.cs">
+      <DependentUpon>201708241032074_18th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -294,7 +303,9 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AppUserView.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
+    <Compile Include="ViewModels\CampaignGeneralInfoView.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
+    <Compile Include="ViewModels\RequirementListingGeneralInfoView.cs" />
     <Compile Include="ViewModels\UserAdminView.cs" />
     <Compile Include="ViewModels\UserTaskView.cs" />
   </ItemGroup>
@@ -385,12 +396,20 @@
     <Content Include="Views\Shared\EditorTemplates\UserAdminView.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\UserAdminRelatedBranchesView.cshtml" />
     <Content Include="Views\AppUsers\Create.cshtml" />
-    <Content Include="Views\Home\General.cshtml" />
     <Content Include="Views\Home\Manage.cshtml" />
+    <Content Include="Views\GeneralInfo\Requirements.cshtml" />
+    <Content Include="Views\GeneralInfo\Campaigns.cshtml" />
+    <Content Include="Views\Campaigns\Create.cshtml" />
+    <Content Include="Views\Campaigns\Delete.cshtml" />
+    <Content Include="Views\Campaigns\Details.cshtml" />
+    <Content Include="Views\Campaigns\Edit.cshtml" />
+    <Content Include="Views\Campaigns\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Data\" />
+    <Folder Include="Views\General\" />
+    <Folder Include="Views\ManageListings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -455,6 +474,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708240921040_17th.resx">
       <DependentUpon>201708240921040_17th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708241032074_18th.resx">
+      <DependentUpon>201708241032074_18th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

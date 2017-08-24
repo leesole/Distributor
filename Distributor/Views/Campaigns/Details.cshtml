@@ -1,0 +1,202 @@
+﻿@model Distributor.Models.Campaign
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Campaign</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StrapLine)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StrapLine)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Website)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Website)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignStartDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignStartDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignEndDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignEndDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationAddressLine1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationAddressLine1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationAddressLine2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationAddressLine2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationAddressLine3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationAddressLine3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationAddressTownCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationAddressTownCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationAddressCounty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationAddressCounty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationAddressPostcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationAddressPostcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationTelephoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationTelephoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationContactName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationContactName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EntityStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntityStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignOriginatorAppUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignOriginatorAppUserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignOriginatorBranchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignOriginatorBranchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignOriginatorCompanyId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignOriginatorCompanyId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignOriginatorDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignOriginatorDateTime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CampaignId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
