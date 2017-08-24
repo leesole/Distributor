@@ -26,6 +26,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                <li class="disabled">@Html.ActionLink("ADMIN", "Tasks", "Admin")</li>
                 <li class="active">@Html.ActionLink("Tasks", "Tasks", "Admin")</li>
                 <li>@Html.ActionLink("User Admin", "UserAdmin", "Admin")</li>
                 <li>@Html.ActionLink("Branch Admin", "BranchAdmin", "Admin")</li>
@@ -46,18 +47,20 @@
             <li class="active">Tasks</li>
         </ol>
         <p class="lead">Your current active tasks.</p>
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <tr class="info">
-                    <th colspan="2">Actions</th>
-                    <th>Task type</th>
-                    <th>Description</th>
-                    <th>Reference details</th>
-                    <th>Created</th>
-                    <th>Created by</th>
-                </tr>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr class="info">
+            <th colspan="2">Actions</th>
+            <th>Task type</th>
+            <th>Description</th>
+            <th>Reference details</th>
+            <th>Created</th>
+            <th>Created by</th>
+        </tr>
 
-                @foreach (var item in Model)
+        @foreach (var item in Model)
                 {
                     taskTypeDescription = EnumHelpers.GetDescription(item.TaskType);
                     if (item.AppUserReference != null)
@@ -69,35 +72,33 @@
                         referenceDescription = item.BranchReference.BranchName + ", " + item.BranchReference.AddressLine1 + ", " + item.BranchReference.AddressTownCity;
                     }
 
-                    <tr id=@item.UserTaskId>
-                        <td>
-                            <input type="button" value="Approve" class="btn btn-sm btn-success btn-block confirmapprove" />
-                        </td>
-                        <td>
-                            <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirmcancel" />
-                        </td>
-                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                            @taskTypeDescription
-                        </td>
-                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                            @Html.DisplayFor(modelItem => item.TaskDescription)
-                        </td>
-                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                            @referenceDescription
-                        </td>
-                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                            @Html.DisplayFor(modelItem => item.CreatedOn)
-                        </td>
-                        <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                            @(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)
-                        </td>
-                    </tr>
+                <tr id=@item.UserTaskId>
+                    <td>
+                        <input type="button" value="Approve" class="btn btn-sm btn-success btn-block confirmapprove" />
+                    </td>
+                    <td>
+                        <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirmcancel" />
+                    </td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
+                        @taskTypeDescription
+                    </td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
+                        @Html.DisplayFor(modelItem => item.TaskDescription)
+                    </td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
+                        @referenceDescription
+                    </td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
+                        @(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)
+                    </td>
+                </tr>
                 }
 
-            </table>
+    </table>
 
-        </div>
-    </div>
 </div>
 
 @section Scripts {

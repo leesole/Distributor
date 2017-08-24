@@ -379,6 +379,8 @@
     <Content Include="Views\Shared\EditorTemplates\UserAdminView.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\UserAdminRelatedBranchesView.cshtml" />
     <Content Include="Views\AppUsers\Create.cshtml" />
+    <Content Include="Views\Home\General.cshtml" />
+    <Content Include="Views\Home\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

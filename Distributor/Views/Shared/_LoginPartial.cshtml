@@ -14,6 +14,8 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+        <li>@Html.ActionLink("General Info", "General", "Home")</li>
+        <li>@Html.ActionLink("Manage Listings", "Manage", "Home")</li>
         @if (userRole == "Admin" || userRole == "SuperUser")
         {
             <li>@Html.ActionLink("Admin", "Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")</li>
