@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static Distributor.ViewModels.OfferViews;
 
 namespace Distributor.Controllers
 {
@@ -25,12 +26,13 @@ namespace Distributor.Controllers
 
         public ActionResult Campaigns()
         {
-            List<CampaignManageView> model = CampaignGeneralManageHelpers.GetAllCampaignsManageViewForUserBranch(User);
+            List<CampaignManageView> model = CampaignManageHelpers.GetAllCampaignsManageViewForUserBranch(User);
             return View(model);
         }
 
         public ActionResult Offers()
-        {            
+        {
+            List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageViewForUserBranch(User);
             return View();
         }
     }

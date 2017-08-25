@@ -163,7 +163,7 @@ namespace Distributor.Helpers
         #endregion
     }
 
-    public static class CampaignGeneralManageHelpers
+    public static class CampaignManageHelpers
     {
         #region Get
 

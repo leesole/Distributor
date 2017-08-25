@@ -221,6 +221,7 @@
     <Compile Include="Helpers\CompanyHelpers.cs" />
     <Compile Include="Helpers\ControlHelpers.cs" />
     <Compile Include="Helpers\EnumHelpers.cs" />
+    <Compile Include="Helpers\OfferHelpers.cs" />
     <Compile Include="Helpers\RequirementListingHelpers.cs" />
     <Compile Include="Helpers\UserAdminHelpers.cs" />
     <Compile Include="Helpers\UserTaskHelpers.cs" />
@@ -444,6 +445,7 @@
     <Content Include="Views\AvailableListings\Details.cshtml" />
     <Content Include="Views\AvailableListings\Edit.cshtml" />
     <Content Include="Views\AvailableListings\Index.cshtml" />
+    <Content Include="Views\ManageListings\Offers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
