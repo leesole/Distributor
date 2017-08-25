@@ -64,24 +64,40 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static RequirementListing CreateRequirementListing(RequirementListing requirementListing, IPrincipal user)
+        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool deliveryAvailable, ItemRequiredListingStatus listingStatus, Guid? selectedCampaignId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            RequirementListing newRequirementListing = CreateRequirementListing(db, requirementListing, user);
+            RequirementListing newRequirementListing = CreateRequirementListing(db, user, itemDescription, itemType, quantityRequired, uom, requiredFrom, requiredTo, acceptDamagedItems, deliveryAvailable, listingStatus, selectedCampaignId);
             db.Dispose();
             return newRequirementListing;
         }
 
-        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, RequirementListing requirementListing, IPrincipal user)
+        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool deliveryAvailable, ItemRequiredListingStatus listingStatus, Guid? selectedCampaignId)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
+            Branch branch = BranchHelpers.GetBranch(db, branchUser.BranchId);
 
-            requirementListing.CampaignId = Guid.NewGuid();
-            requirementListing.ListingOriginatorAppUserId = branchUser.UserId;
-            requirementListing.ListingOriginatorBranchId = branchUser.BranchId;
-            requirementListing.ListingOriginatorCompanyId = branchUser.CompanyId;
-            requirementListing.ListingOriginatorDateTime = DateTime.Now;
-            requirementListing.ListingStatus = ItemRequiredListingStatus.Open;
+            RequirementListing requirementListing = new RequirementListing()
+            {
+                ListingId = Guid.NewGuid(),
+                ItemDescription = itemDescription,
+                ItemType = itemType,
+                QuantityRequired = quantityRequired,
+                QuantityFulfilled = 0,
+                QuantityOutstanding = quantityRequired,
+                UoM = uom,
+                RequiredFrom = requiredFrom,
+                RequiredTo = requiredTo,
+                AcceptDamagedItems = acceptDamagedItems,
+                DeliveryAvailable = deliveryAvailable,
+                ListingBranchPostcode = branch.AddressPostcode,
+                ListingOriginatorAppUserId = branchUser.UserId,
+                ListingOriginatorBranchId = branchUser.BranchId,
+                ListingOriginatorCompanyId = branchUser.CompanyId,
+                ListingOriginatorDateTime = DateTime.Now,
+                ListingStatus = ItemRequiredListingStatus.Open,
+                CampaignId = selectedCampaignId
+            };
 
             db.RequirementListings.Add(requirementListing);
             db.SaveChanges();
@@ -89,7 +105,20 @@ namespace Distributor.Helpers
             return requirementListing;
         }
 
-#endregion
+        public static RequirementListing CreateRequirementListingFromRequirementListingAddView(RequirementListingAddView requirementListingAddView, IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            RequirementListing newCampaign = CreateRequirementListingFromRequirementListingAddView(db, requirementListingAddView, user);
+            db.Dispose();
+            return newCampaign;
+        }
+
+        public static RequirementListing CreateRequirementListingFromRequirementListingAddView(ApplicationDbContext db, RequirementListingAddView requirementListingAddView, IPrincipal user)
+        {
+            return CreateRequirementListing(db, user, requirementListingAddView.ItemDescription, requirementListingAddView.ItemType, requirementListingAddView.QuantityRequired, requirementListingAddView.UoM, requirementListingAddView.RequiredFrom, requirementListingAddView.RequiredTo, requirementListingAddView.AcceptDamagedItems, requirementListingAddView.DeliveryAvailable, requirementListingAddView.ListingStatus, requirementListingAddView.SelectedCampaignId);
+        }
+
+        #endregion
     }
 
     public static class RequirementListingGeneralInfoHelpers

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Distributor.Models;
 using Distributor.Helpers;
+using Distributor.ViewModels;
 
 namespace Distributor.Controllers
 {
@@ -39,7 +40,19 @@ namespace Distributor.Controllers
         // GET: RequirementListings/Create
         public ActionResult Create()
         {
-            return View();
+            string[] callingUrlSegments = Request.UrlReferrer.Segments.Select(x => x.TrimEnd('/')).ToArray();
+            string callingController = callingUrlSegments[callingUrlSegments.Count() - 2];
+            string callingAction = callingUrlSegments[callingUrlSegments.Count() - 1];
+
+            ViewBag.CallingController = callingController;
+
+            RequirementListingAddView model = new RequirementListingAddView()
+            {
+                CallingAction = callingAction,
+                CallingController = callingController
+            };
+
+            return View(model);
         }
 
         // POST: RequirementListings/Create
@@ -47,12 +60,13 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,DeliveryAvailable,ListingStatus,ListingBranchPostcode,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId,ListingOriginatorDateTime,CampaignId")] RequirementListing requirementListing)
+        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,DeliveryAvailable,ListingStatus,CampaignId,CallingAction,CallingController")] RequirementListingAddView requirementListing)
         {
             if (ModelState.IsValid)
             {
-                RequirementListingHelpers.CreateRequirementListing(requirementListing, User);
-                return RedirectToAction("Requirements", "GeneralInfo");
+                RequirementListingHelpers.CreateRequirementListingFromRequirementListingAddView(requirementListing, User);
+                //CampaignHelpers.CreateCampaignFromCampaignAddView(campaign, User);
+                return RedirectToAction(requirementListing.CallingAction, requirementListing.CallingController);
             }
 
             return View(requirementListing);

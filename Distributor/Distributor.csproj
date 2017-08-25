@@ -293,6 +293,10 @@
     <Compile Include="Migrations\201708242112300_19th.Designer.cs">
       <DependentUpon>201708242112300_19th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708250902017_20th.cs" />
+    <Compile Include="Migrations\201708250902017_20th.Designer.cs">
+      <DependentUpon>201708250902017_20th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -313,6 +317,7 @@
     <Compile Include="ViewModels\CampaignManageView.cs" />
     <Compile Include="ViewModels\CampaignAddView.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
+    <Compile Include="ViewModels\RequirementListingAddView.cs" />
     <Compile Include="ViewModels\RequirementListingGeneralInfoView.cs" />
     <Compile Include="ViewModels\RequirementListingManageView.cs" />
     <Compile Include="ViewModels\UserAdminView.cs" />
@@ -408,12 +413,10 @@
     <Content Include="Views\Home\Manage.cshtml" />
     <Content Include="Views\GeneralInfo\Requirements.cshtml" />
     <Content Include="Views\GeneralInfo\Campaigns.cshtml" />
-    <Content Include="Views\Campaigns\Create1.cshtml" />
     <Content Include="Views\Campaigns\Delete.cshtml" />
     <Content Include="Views\Campaigns\Details.cshtml" />
     <Content Include="Views\Campaigns\Edit.cshtml" />
     <Content Include="Views\Campaigns\Index.cshtml" />
-    <Content Include="Views\RequirementListings\Create.cshtml" />
     <Content Include="Views\RequirementListings\Delete.cshtml" />
     <Content Include="Views\RequirementListings\Details.cshtml" />
     <Content Include="Views\RequirementListings\Edit.cshtml" />
@@ -421,6 +424,7 @@
     <Content Include="Views\ManageListings\Requirements.cshtml" />
     <Content Include="Views\ManageListings\Campaigns.cshtml" />
     <Content Include="Views\Campaigns\Create.cshtml" />
+    <Content Include="Views\RequirementListings\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -496,6 +500,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708242112300_19th.resx">
       <DependentUpon>201708242112300_19th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708250902017_20th.resx">
+      <DependentUpon>201708250902017_20th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

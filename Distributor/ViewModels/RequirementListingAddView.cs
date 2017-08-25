@@ -1,17 +1,15 @@
-﻿using System;
+﻿using Distributor.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.ItemEnums;
 
-namespace Distributor.Models
+namespace Distributor.ViewModels
 {
-    public class RequirementListing
+    public class RequirementListingAddView : BaseViewWithCallingFields
     {
-        [Key]
-        public Guid ListingId { get; set; }
-
         [Required]
         [Display(Name = "Description")]
         public string ItemDescription { get; set; }
@@ -22,12 +20,6 @@ namespace Distributor.Models
 
         [Display(Name = "Quantity required")]
         public decimal QuantityRequired { get; set; }
-
-        [Display(Name = "Quantity fulfilled")]
-        public decimal QuantityFulfilled { get; set; }
-
-        [Display(Name = "Quantity needed")]
-        public decimal QuantityOutstanding { get; set; }
 
         [Display(Name = "Unit of measure")]
         public string UoM { get; set; }
@@ -47,16 +39,7 @@ namespace Distributor.Models
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatus ListingStatus { get; set; }
 
-        [Display(Name = "Listing location")]
-        public string ListingBranchPostcode { get; set; }  //Put here for quicker sorting in view screens
-
-        //references to the listing originator
-        public Guid ListingOriginatorAppUserId { get; set; }
-        public Guid ListingOriginatorBranchId { get; set; }
-        public Guid ListingOriginatorCompanyId { get; set; }
-        public DateTime ListingOriginatorDateTime { get; set; }
-
         //other references
-        public Guid? CampaignId { get; set; }
+        public Guid? SelectedCampaignId { get; set; }
     }
 }
