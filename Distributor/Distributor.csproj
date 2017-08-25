@@ -289,9 +289,14 @@
     <Compile Include="Migrations\201708241032074_18th.Designer.cs">
       <DependentUpon>201708241032074_18th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708242112300_19th.cs" />
+    <Compile Include="Migrations\201708242112300_19th.Designer.cs">
+      <DependentUpon>201708242112300_19th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\BaseViewWithCallingFields.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\BranchUser.cs" />
     <Compile Include="Models\Campaign.cs" />
@@ -306,6 +311,7 @@
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CampaignGeneralInfoView.cs" />
     <Compile Include="ViewModels\CampaignManageView.cs" />
+    <Compile Include="ViewModels\CampaignAddView.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
     <Compile Include="ViewModels\RequirementListingGeneralInfoView.cs" />
     <Compile Include="ViewModels\RequirementListingManageView.cs" />
@@ -402,7 +408,7 @@
     <Content Include="Views\Home\Manage.cshtml" />
     <Content Include="Views\GeneralInfo\Requirements.cshtml" />
     <Content Include="Views\GeneralInfo\Campaigns.cshtml" />
-    <Content Include="Views\Campaigns\Create.cshtml" />
+    <Content Include="Views\Campaigns\Create1.cshtml" />
     <Content Include="Views\Campaigns\Delete.cshtml" />
     <Content Include="Views\Campaigns\Details.cshtml" />
     <Content Include="Views\Campaigns\Edit.cshtml" />
@@ -414,6 +420,7 @@
     <Content Include="Views\RequirementListings\Index.cshtml" />
     <Content Include="Views\ManageListings\Requirements.cshtml" />
     <Content Include="Views\ManageListings\Campaigns.cshtml" />
+    <Content Include="Views\Campaigns\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -486,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708241032074_18th.resx">
       <DependentUpon>201708241032074_18th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708242112300_19th.resx">
+      <DependentUpon>201708242112300_19th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

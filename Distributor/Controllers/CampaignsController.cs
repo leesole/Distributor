@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Distributor.Models;
 using Distributor.Helpers;
+using Distributor.ViewModels;
 
 namespace Distributor.Controllers
 {
@@ -41,12 +42,17 @@ namespace Distributor.Controllers
         {
             string[] callingUrlSegments = Request.UrlReferrer.Segments.Select(x => x.TrimEnd('/')).ToArray();
             string callingController = callingUrlSegments[callingUrlSegments.Count() - 2];
-            string callingView = callingUrlSegments[callingUrlSegments.Count() - 1];
+            string callingAction = callingUrlSegments[callingUrlSegments.Count() - 1];
 
             ViewBag.CallingController = callingController;
-            ViewBag.CallingView = callingView;
 
-            return View();
+            CampaignAddView model = new CampaignAddView()
+            {
+                CallingAction = callingAction,
+                CallingController = callingController
+            };
+
+            return View(model);
         }
 
         // POST: Campaigns/Create
@@ -54,12 +60,15 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CampaignId,Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,EntityStatus,CampaignOriginatorAppUserId,CampaignOriginatorBranchId,CampaignOriginatorCompanyId,CampaignOriginatorDateTime")] Campaign campaign)
-        {
+        //public ActionResult Create([Bind(Include = "CampaignId,Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,EntityStatus,CampaignOriginatorAppUserId,CampaignOriginatorBranchId,CampaignOriginatorCompanyId,CampaignOriginatorDateTime")] Campaign campaign)
+        public ActionResult Create([Bind(Include = "Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,CallingAction,CallingController")] CampaignAddView campaign)
+        { 
+
             if (ModelState.IsValid)
             {
-                CampaignHelpers.CreateCampaign(campaign, User);
-                return RedirectToAction("Campaigns", "GeneralInfo");
+                CampaignHelpers.CreateCampaignFromCampaignAddView(campaign, User);
+                
+                return RedirectToAction(campaign.CallingAction, campaign.CallingController);
             }
 
             return View(campaign);

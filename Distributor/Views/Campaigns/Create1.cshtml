@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Distributor.Extenstions
 
-@model Distributor.ViewModels.CampaignAddView
+@**@@model Distributor.ViewModels.CampaignAddView
 
 @{
     var userRole = User.Identity.GetCurrentUserRole();
@@ -90,9 +90,6 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.HiddenFor(model => model.CallingAction)
-        @Html.HiddenFor(model => model.CallingController)
-        
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-4" })

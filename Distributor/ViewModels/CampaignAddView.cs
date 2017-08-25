@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Distributor.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using static Distributor.Enums.EntityEnums;
 
-namespace Distributor.Models
+namespace Distributor.ViewModels
 {
-    public class Campaign
+    public class CampaignAddView : BaseViewWithCallingFields
     {
-        [Key]
-        public Guid CampaignId { get; set; }
-
-        [Display(Name="Campaign name")]
+        [Display(Name = "Campaign name")]
         public string Name { get; set; }
 
         [Display(Name = "Campaign strapline")]
@@ -65,14 +62,5 @@ namespace Distributor.Models
 
         [Display(Name = "Contact name")]
         public string LocationContactName { get; set; }
-
-        [Display(Name = "Status")]
-        public EntityStatusEnum EntityStatus { get; set; }
-
-        //references to the listing originator
-        public Guid CampaignOriginatorAppUserId { get; set; }
-        public Guid CampaignOriginatorBranchId { get; set; }
-        public Guid CampaignOriginatorCompanyId { get; set; }
-        public DateTime CampaignOriginatorDateTime { get; set; }
     }
 }
