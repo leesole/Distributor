@@ -204,6 +204,7 @@
     <Compile Include="Enums\BranchEnums.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
     <Compile Include="Enums\ItemEnums.cs" />
+    <Compile Include="Enums\OfferEnums.cs" />
     <Compile Include="Enums\UserTaskEnums.cs" />
     <Compile Include="Enums\UserEnums.cs" />
     <Compile Include="Extenstions\IdentityExtensions.cs" />
@@ -303,10 +304,15 @@
     <Compile Include="Migrations\201708251037362_21th.Designer.cs">
       <DependentUpon>201708251037362_21th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708251505367_22nd.cs" />
+    <Compile Include="Migrations\201708251505367_22nd.Designer.cs">
+      <DependentUpon>201708251505367_22nd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\AvailableListing.cs" />
+    <Compile Include="Models\AvailableOffer.cs" />
     <Compile Include="Models\BaseViewWithCallingFields.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\BranchUser.cs" />
@@ -315,6 +321,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RequirementListing.cs" />
+    <Compile Include="Models\Offer.cs" />
     <Compile Include="Models\UserTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -517,6 +524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708251037362_21th.resx">
       <DependentUpon>201708251037362_21th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708251505367_22nd.resx">
+      <DependentUpon>201708251505367_22nd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

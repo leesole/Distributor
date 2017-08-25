@@ -47,6 +47,7 @@ namespace Distributor.Models
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<RequirementListing> RequirementListings { get; set; }
         public DbSet<AvailableListing> AvailableListings { get; set; }
+        public DbSet<Offer> Offers { get; set; }
 
         public static ApplicationDbContext Create()
         {
