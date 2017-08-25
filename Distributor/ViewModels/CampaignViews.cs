@@ -63,4 +63,14 @@ namespace Distributor.ViewModels
         [Display(Name = "Contact name")]
         public string LocationContactName { get; set; }
     }
+
+    public class CampaignGeneralInfoView
+    {
+        public Campaign Campaign { get; set; }
+    }
+
+    public class CampaignManageView
+    {
+        public Campaign Campaign { get; set; }
+    }
 }

@@ -7,7 +7,7 @@ using static Distributor.Enums.ItemEnums;
 
 namespace Distributor.Models
 {
-    public class RequirementListing
+    public class AvailableListing
     {
         [Key]
         public Guid ListingId { get; set; }
@@ -20,29 +20,29 @@ namespace Distributor.Models
         [Display(Name = "Item type")]
         public ItemTypeEnum ItemType { get; set; }
 
-        [Display(Name = "Quantity required")]
+        [Display(Name = "Quantity available")]
         public decimal QuantityRequired { get; set; }
 
-        [Display(Name = "Quantity fulfilled")]
+        [Display(Name = "Quantity reserved")]
         public decimal QuantityFulfilled { get; set; }
 
-        [Display(Name = "Quantity needed")]
+        [Display(Name = "Quantity available")]
         public decimal QuantityOutstanding { get; set; }
 
         [Display(Name = "Unit of measure")]
         public string UoM { get; set; }
 
-        [Display(Name = "Required from")]
-        public DateTime? RequiredFrom { get; set; }
+        [Display(Name = "Available from")]
+        public DateTime? AvailableFrom { get; set; }
 
-        [Display(Name = "Required to")]
-        public DateTime? RequiredTo { get; set; }
+        [Display(Name = "Available to")]
+        public DateTime? AvailableTo { get; set; }
 
-        [Display(Name = "Accept damaged items?")]
-        public bool AcceptDamagedItems { get; set; }
+        [Display(Name = "Item condition")]
+        public ItemConditionEnum ItemCondition { get; set; }
 
-        [Display(Name = "Can deliver?")]
-        public bool DeliveryAvailable { get; set; }
+        [Display(Name = "Can collect?")]
+        public bool CollectionAvailable { get; set; }
 
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }
@@ -55,8 +55,5 @@ namespace Distributor.Models
         public Guid ListingOriginatorBranchId { get; set; }
         public Guid ListingOriginatorCompanyId { get; set; }
         public DateTime ListingOriginatorDateTime { get; set; }
-
-        //other references
-        public Guid? CampaignId { get; set; }
     }
 }

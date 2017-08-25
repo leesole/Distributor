@@ -37,9 +37,19 @@ namespace Distributor.ViewModels
         public bool DeliveryAvailable { get; set; }
 
         [Display(Name = "Listing status")]
-        public ItemRequiredListingStatus ListingStatus { get; set; }
+        public ItemRequiredListingStatusEnum ListingStatus { get; set; }
 
         //other references
         public Guid? SelectedCampaignId { get; set; }
+    }
+
+    public class RequirementListingGeneralInfoView
+    {
+        public RequirementListing RequirementListing { get; set; }
+    }
+
+    public class RequirementListingManageView
+    {
+        public RequirementListing RequirementListing { get; set; }
     }
 }

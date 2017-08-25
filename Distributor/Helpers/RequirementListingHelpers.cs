@@ -54,7 +54,7 @@ namespace Distributor.Helpers
             List<RequirementListing> allRequirementsListingForBranchUser = (from bu in db.BranchUsers
                                                                             from rl in db.RequirementListings
                                                                             where (bu.UserId == rl.ListingOriginatorAppUserId && bu.BranchId == rl.ListingOriginatorBranchId && bu.CompanyId == rl.ListingOriginatorCompanyId 
-                                                                            && (rl.ListingStatus == ItemRequiredListingStatus.Open || rl.ListingStatus == ItemRequiredListingStatus.Partial))
+                                                                            && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
                                                                             select rl).ToList();
 
             return allRequirementsListingForBranchUser;
@@ -64,7 +64,7 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool deliveryAvailable, ItemRequiredListingStatus listingStatus, Guid? selectedCampaignId)
+        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             RequirementListing newRequirementListing = CreateRequirementListing(db, user, itemDescription, itemType, quantityRequired, uom, requiredFrom, requiredTo, acceptDamagedItems, deliveryAvailable, listingStatus, selectedCampaignId);
@@ -72,7 +72,7 @@ namespace Distributor.Helpers
             return newRequirementListing;
         }
 
-        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool deliveryAvailable, ItemRequiredListingStatus listingStatus, Guid? selectedCampaignId)
+        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
             Branch branch = BranchHelpers.GetBranch(db, branchUser.BranchId);
@@ -95,7 +95,7 @@ namespace Distributor.Helpers
                 ListingOriginatorBranchId = branchUser.BranchId,
                 ListingOriginatorCompanyId = branchUser.CompanyId,
                 ListingOriginatorDateTime = DateTime.Now,
-                ListingStatus = ItemRequiredListingStatus.Open,
+                ListingStatus = ItemRequiredListingStatusEnum.Open,
                 CampaignId = selectedCampaignId
             };
 

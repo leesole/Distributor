@@ -31,7 +31,7 @@ namespace Distributor.Enums
             Packet = 3
         }
 
-        public enum ItemCondition
+        public enum ItemConditionEnum
         {
             [Description("Good")]
             Good = 0,
@@ -49,7 +49,7 @@ namespace Distributor.Enums
             Taped = 6
         }
 
-        public enum ItemRequiredListingStatus
+        public enum ItemRequiredListingStatusEnum
         {
             [Description("Open")]
             Open = 0,
