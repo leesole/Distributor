@@ -329,6 +329,7 @@
     <Compile Include="ViewModels\AvailableListingViews.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CampaignViews.cs" />
+    <Compile Include="ViewModels\OfferViews.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
     <Compile Include="ViewModels\RequirementListingViews.cs" />
     <Compile Include="ViewModels\UserAdminView.cs" />

@@ -28,5 +28,10 @@ namespace Distributor.Controllers
             List<CampaignManageView> model = CampaignGeneralManageHelpers.GetAllCampaignsManageViewForUserBranch(User);
             return View(model);
         }
+
+        public ActionResult Offers()
+        {            
+            return View();
+        }
     }
 }
