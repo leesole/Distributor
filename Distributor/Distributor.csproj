@@ -191,6 +191,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppUsersController.cs" />
+    <Compile Include="Controllers\AvailableListingsController.cs" />
     <Compile Include="Controllers\BranchesController.cs" />
     <Compile Include="Controllers\CampaignsController.cs" />
     <Compile Include="Controllers\DataController.cs" />
@@ -210,6 +211,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AppUserHelpers.cs" />
+    <Compile Include="Helpers\AvailableListingHelpers.cs" />
     <Compile Include="Helpers\BranchAdminHelpers.cs" />
     <Compile Include="Helpers\BranchHelpers.cs" />
     <Compile Include="Helpers\BranchUserHelpers.cs" />
@@ -296,6 +298,10 @@
     <Compile Include="Migrations\201708250902017_20th.cs" />
     <Compile Include="Migrations\201708250902017_20th.Designer.cs">
       <DependentUpon>201708250902017_20th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708251037362_21th.cs" />
+    <Compile Include="Migrations\201708251037362_21th.Designer.cs">
+      <DependentUpon>201708251037362_21th.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -423,6 +429,13 @@
     <Content Include="Views\ManageListings\Campaigns.cshtml" />
     <Content Include="Views\Campaigns\Create.cshtml" />
     <Content Include="Views\RequirementListings\Create.cshtml" />
+    <Content Include="Views\ManageListings\Available.cshtml" />
+    <Content Include="Views\GeneralInfo\Available.cshtml" />
+    <Content Include="Views\AvailableListings\Create.cshtml" />
+    <Content Include="Views\AvailableListings\Delete.cshtml" />
+    <Content Include="Views\AvailableListings\Details.cshtml" />
+    <Content Include="Views\AvailableListings\Edit.cshtml" />
+    <Content Include="Views\AvailableListings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -501,6 +514,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708250902017_20th.resx">
       <DependentUpon>201708250902017_20th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708251037362_21th.resx">
+      <DependentUpon>201708251037362_21th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

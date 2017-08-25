@@ -7,37 +7,37 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Distributor.Models;
-using Distributor.Helpers;
 using Distributor.ViewModels;
+using Distributor.Helpers;
 
 namespace Distributor.Controllers
 {
-    public class CampaignsController : Controller
+    public class AvailableListingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        //// GET: Campaigns
+        //// GET: AvailableListings
         //public ActionResult Index()
         //{
-        //    return View(db.Campaigns.ToList());
+        //    return View(db.AvailableListings.ToList());
         //}
 
-        //// GET: Campaigns/Details/5
+        //// GET: AvailableListings/Details/5
         //public ActionResult Details(Guid? id)
         //{
         //    if (id == null)
         //    {
         //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         //    }
-        //    Campaign campaign = db.Campaigns.Find(id);
-        //    if (campaign == null)
+        //    AvailableListing availableListing = db.AvailableListings.Find(id);
+        //    if (availableListing == null)
         //    {
         //        return HttpNotFound();
         //    }
-        //    return View(campaign);
+        //    return View(availableListing);
         //}
 
-        // GET: Campaigns/Create
+        // GET: AvailableListings/Create
         public ActionResult Create()
         {
             string callingController = "Home";
@@ -53,7 +53,7 @@ namespace Distributor.Controllers
 
             ViewBag.CallingController = callingController;
 
-            CampaignAddView model = new CampaignAddView()
+            AvailableListingAddView model = new AvailableListingAddView()
             {
                 CallingAction = callingAction,
                 CallingController = callingController
@@ -62,78 +62,76 @@ namespace Distributor.Controllers
             return View(model);
         }
 
-        // POST: Campaigns/Create
+        // POST: AvailableListings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "CampaignId,Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,EntityStatus,CampaignOriginatorAppUserId,CampaignOriginatorBranchId,CampaignOriginatorCompanyId,CampaignOriginatorDateTime")] Campaign campaign)
-        public ActionResult Create([Bind(Include = "Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,CallingAction,CallingController")] CampaignAddView campaign)
-        { 
-
+        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,CollectionAvailable,ListingStatus,CallingAction,CallingController")] AvailableListingAddView availableListing)
+        {
             if (ModelState.IsValid)
             {
-                CampaignHelpers.CreateCampaignFromCampaignAddView(campaign, User);
-                
-                return RedirectToAction(campaign.CallingAction, campaign.CallingController);
+                AvailableListingHelpers.CreateAvailableListingFromAvailableListingAddView(availableListing, User);
+
+                return RedirectToAction(availableListing.CallingAction, availableListing.CallingController);
             }
 
-            return View(campaign);
+            return View(availableListing);
         }
 
-        //// GET: Campaigns/Edit/5
+        //// GET: AvailableListings/Edit/5
         //public ActionResult Edit(Guid? id)
         //{
         //    if (id == null)
         //    {
         //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         //    }
-        //    Campaign campaign = db.Campaigns.Find(id);
-        //    if (campaign == null)
+        //    AvailableListing availableListing = db.AvailableListings.Find(id);
+        //    if (availableListing == null)
         //    {
         //        return HttpNotFound();
         //    }
-        //    return View(campaign);
+        //    return View(availableListing);
         //}
 
-        //// POST: Campaigns/Edit/5
+        //// POST: AvailableListings/Edit/5
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "CampaignId,Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,EntityStatus,CampaignOriginatorAppUserId,CampaignOriginatorBranchId,CampaignOriginatorCompanyId,CampaignOriginatorDateTime")] Campaign campaign)
+        //public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,CollectionAvailable,ListingStatus,ListingBranchPostcode,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId,ListingOriginatorDateTime")] AvailableListing availableListing)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        db.Entry(campaign).State = EntityState.Modified;
+        //        db.Entry(availableListing).State = EntityState.Modified;
         //        db.SaveChanges();
         //        return RedirectToAction("Index");
         //    }
-        //    return View(campaign);
+        //    return View(availableListing);
         //}
 
-        //// GET: Campaigns/Delete/5
+        //// GET: AvailableListings/Delete/5
         //public ActionResult Delete(Guid? id)
         //{
         //    if (id == null)
         //    {
         //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         //    }
-        //    Campaign campaign = db.Campaigns.Find(id);
-        //    if (campaign == null)
+        //    AvailableListing availableListing = db.AvailableListings.Find(id);
+        //    if (availableListing == null)
         //    {
         //        return HttpNotFound();
         //    }
-        //    return View(campaign);
+        //    return View(availableListing);
         //}
 
-        //// POST: Campaigns/Delete/5
+        //// POST: AvailableListings/Delete/5
         //[HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
         //public ActionResult DeleteConfirmed(Guid id)
         //{
-        //    Campaign campaign = db.Campaigns.Find(id);
-        //    db.Campaigns.Remove(campaign);
+        //    AvailableListing availableListing = db.AvailableListings.Find(id);
+        //    db.AvailableListings.Remove(availableListing);
         //    db.SaveChanges();
         //    return RedirectToAction("Index");
         //}

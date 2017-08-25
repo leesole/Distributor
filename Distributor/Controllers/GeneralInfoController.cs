@@ -23,7 +23,11 @@ namespace Distributor.Controllers
 
         public ActionResult Available()
         {
-            return View();
+            List<AvailableListingGeneralInfoView> model = AvailableListingGeneralInfoHelpers.GetAllAvailableListingsGeneralInfoView();
+
+            //Do filtering
+
+            return View(model);
         }
 
         public ActionResult Campaigns()

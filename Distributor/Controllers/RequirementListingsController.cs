@@ -40,9 +40,16 @@ namespace Distributor.Controllers
         // GET: RequirementListings/Create
         public ActionResult Create()
         {
-            string[] callingUrlSegments = Request.UrlReferrer.Segments.Select(x => x.TrimEnd('/')).ToArray();
-            string callingController = callingUrlSegments[callingUrlSegments.Count() - 2];
-            string callingAction = callingUrlSegments[callingUrlSegments.Count() - 1];
+            string callingController = "Home";
+            string callingAction = "Index";
+
+            try
+            {
+                string[] callingUrlSegments = Request.UrlReferrer.Segments.Select(x => x.TrimEnd('/')).ToArray();
+                callingController = callingUrlSegments[callingUrlSegments.Count() - 2];
+                callingAction = callingUrlSegments[callingUrlSegments.Count() - 1];
+            }
+            catch { }
 
             ViewBag.CallingController = callingController;
 
@@ -65,7 +72,7 @@ namespace Distributor.Controllers
             if (ModelState.IsValid)
             {
                 RequirementListingHelpers.CreateRequirementListingFromRequirementListingAddView(requirementListing, User);
-                //CampaignHelpers.CreateCampaignFromCampaignAddView(campaign, User);
+
                 return RedirectToAction(requirementListing.CallingAction, requirementListing.CallingController);
             }
 

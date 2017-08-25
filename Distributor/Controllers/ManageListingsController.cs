@@ -19,7 +19,8 @@ namespace Distributor.Controllers
 
         public ActionResult Available()
         {
-            return View();
+            List<AvailableListingManageView> model = AvailableListingManageHelpers.GetAllAvailableListingsManageViewForUserBranch(User);
+            return View(model);
         }
 
         public ActionResult Campaigns()

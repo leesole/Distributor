@@ -1,0 +1,146 @@
+﻿@model Distributor.Models.AvailableListing
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AvailableListing</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantityRequired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantityRequired)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantityFulfilled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantityFulfilled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantityOutstanding)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantityOutstanding)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UoM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UoM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CollectionAvailable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CollectionAvailable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListingStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListingStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListingBranchPostcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListingBranchPostcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListingOriginatorAppUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListingOriginatorAppUserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListingOriginatorBranchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListingOriginatorBranchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListingOriginatorCompanyId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListingOriginatorCompanyId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListingOriginatorDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListingOriginatorDateTime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ListingId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

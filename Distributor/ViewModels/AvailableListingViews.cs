@@ -8,7 +8,7 @@ using static Distributor.Enums.ItemEnums;
 
 namespace Distributor.ViewModels
 {
-    public class AvailableListingAddView
+    public class AvailableListingAddView : BaseViewWithCallingFields
     {
         [Required]
         [Display(Name = "Description")]
@@ -20,12 +20,6 @@ namespace Distributor.ViewModels
 
         [Display(Name = "Quantity available")]
         public decimal QuantityRequired { get; set; }
-
-        [Display(Name = "Quantity reserved")]
-        public decimal QuantityFulfilled { get; set; }
-
-        [Display(Name = "Quantity available")]
-        public decimal QuantityOutstanding { get; set; }
 
         [Display(Name = "Unit of measure")]
         public string UoM { get; set; }
