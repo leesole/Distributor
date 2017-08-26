@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.OfferEnums;
 
 namespace Distributor.Helpers
@@ -55,18 +56,18 @@ namespace Distributor.Helpers
 
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
             List<Offer> allOffersForBranchUser = OfferHelpers.GetAllOffersForBranchUser(db, branchUser);
-            
+
             foreach (Offer offerForBranchUser in allOffersForBranchUser)
             {
                 AvailableListing availableListing = null;
                 RequirementListing requirementListing = null;
 
-                switch (offerForBranchUser.OfferType)
+                switch (offerForBranchUser.ListingType)
                 {
-                    case OfferTypeEnum.Available:
+                    case ListingTypeEnum.Available:
                         availableListing = AvailableListingHelpers.GetAvailableListing(db, offerForBranchUser.ListingId);
                         break;
-                    case OfferTypeEnum.Requriement:
+                    case ListingTypeEnum.Requriement:
                         requirementListing = RequirementListingHelpers.GetRequirementListing(db, offerForBranchUser.ListingId);
                         break;
                 }
@@ -88,28 +89,4 @@ namespace Distributor.Helpers
 
         #endregion
     }
-
-                
-
-                //public static List<CampaignManageView> GetAllCampaignsManageViewForUserBranch(ApplicationDbContext db, IPrincipal user)
-                //{
-                //    List<CampaignManageView> allCampaignsManageView = new List<CampaignManageView>();
-
-                //    BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
-                //    List<Campaign> allCampaignsForBranchUser = CampaignHelpers.GetAllCampaignsForBranchUser(db, branchUser);
-
-                //    foreach (Campaign campaignForBranchUser in allCampaignsForBranchUser)
-                //    {
-                //        CampaignManageView campaignManageView = new CampaignManageView()
-                //        {
-                //            Campaign = campaignForBranchUser
-                //        };
-
-                //        allCampaignsManageView.Add(campaignManageView);
-                //    }
-
-                //    return allCampaignsManageView;
-                //}
-
-        
-    }
+}

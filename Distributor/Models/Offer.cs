@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.OfferEnums;
 
 namespace Distributor.Models
@@ -14,8 +15,8 @@ namespace Distributor.Models
 
         public Guid ListingId { get; set; }
 
-        [Display(Name = "Offer type")]
-        public OfferTypeEnum OfferType { get; set; }
+        [Display(Name = "Listing type")]
+        public ListingTypeEnum ListingType { get; set; }
 
         [Display(Name = "Offer status")]
         public OfferStatusEnum OfferStatus { get; set; }

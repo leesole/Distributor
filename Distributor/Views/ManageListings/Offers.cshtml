@@ -40,7 +40,7 @@
 <div class="table-responsive">
     <table class="table table-hover">
         <tr class="info">
-            <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferType)</th>
+            <th>@Html.DisplayNameFor(model => model.OfferDetails.ListingType)</th>
             <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
             <th>@Html.DisplayNameFor(model => model.OfferDetails.CurrentOfferQuantity)</th>
             <th>@Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)</th>
@@ -58,7 +58,7 @@
             foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
                     <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                     <td>@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
                     <td>@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
