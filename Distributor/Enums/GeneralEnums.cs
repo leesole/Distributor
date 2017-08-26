@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Distributor.Enums
 {
-    public class GeneralEnums
+    public static class GeneralEnums
     {
         public enum ListingTypeEnum
         {

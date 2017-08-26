@@ -33,7 +33,13 @@ namespace Distributor.Controllers
         public ActionResult Offers()
         {
             List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageViewForUserBranch(User);
-            return View();
+            return View(model);
+        }
+
+        public ActionResult Orders()
+        {
+            List<OrderManageView> model = OrderManageHelpers.GetAllOrdersManageViewForUserBranch(User);
+            return View(model);
         }
     }
 }

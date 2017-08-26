@@ -206,6 +206,7 @@
     <Compile Include="Enums\GeneralEnums.cs" />
     <Compile Include="Enums\ItemEnums.cs" />
     <Compile Include="Enums\OfferEnums.cs" />
+    <Compile Include="Enums\OrderEnums.cs" />
     <Compile Include="Enums\UserTaskEnums.cs" />
     <Compile Include="Enums\UserEnums.cs" />
     <Compile Include="Extenstions\IdentityExtensions.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="Helpers\BranchHelpers.cs" />
     <Compile Include="Helpers\BranchUserHelpers.cs" />
     <Compile Include="Helpers\CampaignHelpers.cs" />
+    <Compile Include="Helpers\OrderHelpers.cs" />
     <Compile Include="Helpers\CompanyAdminHelpers.cs" />
     <Compile Include="Helpers\CompanyHelpers.cs" />
     <Compile Include="Helpers\ControlHelpers.cs" />
@@ -314,6 +316,10 @@
     <Compile Include="Migrations\201708260914574_23rd.Designer.cs">
       <DependentUpon>201708260914574_23rd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708261007139_24th.cs" />
+    <Compile Include="Migrations\201708261007139_24th.Designer.cs">
+      <DependentUpon>201708261007139_24th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -338,6 +344,7 @@
     <Compile Include="ViewModels\CampaignViews.cs" />
     <Compile Include="ViewModels\OfferViews.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
+    <Compile Include="ViewModels\OrderViews.cs" />
     <Compile Include="ViewModels\RequirementListingViews.cs" />
     <Compile Include="ViewModels\UserAdminView.cs" />
     <Compile Include="ViewModels\UserTaskView.cs" />
@@ -539,6 +546,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708260914574_23rd.resx">
       <DependentUpon>201708260914574_23rd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708261007139_24th.resx">
+      <DependentUpon>201708261007139_24th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

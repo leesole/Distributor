@@ -13,15 +13,15 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static Campaign GetCmapaign(Guid campaignId)
+        public static Campaign GetCampaign(Guid campaignId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            Campaign campaign = GetCmapaign(db, campaignId);
+            Campaign campaign = GetCampaign(db, campaignId);
             db.Dispose();
             return campaign;
         }
 
-        public static Campaign GetCmapaign(ApplicationDbContext db, Guid campaignId)
+        public static Campaign GetCampaign(ApplicationDbContext db, Guid campaignId)
         {
             return db.Campaigns.Find(campaignId);
         }
