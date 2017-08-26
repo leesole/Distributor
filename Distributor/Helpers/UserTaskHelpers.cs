@@ -38,7 +38,7 @@ namespace Distributor.Helpers
             
             userTasksForUser = (from t in db.UserTasks
                                 join a in db.UserTaskAssignments on t.UserTaskId equals a.UserTaskId
-                                where (t.ReferenceKey == appUserId && t.EntityStatus == EntityStatusEnum.Active)
+                                where (a.AppUserId == appUserId && t.EntityStatus == EntityStatusEnum.Active)
                                 orderby t.CreatedOn ascending
                                 select t).ToList();
 
@@ -122,8 +122,10 @@ namespace Distributor.Helpers
                                              where (b.CompanyId == companyId && b.UserRole == UserRoleEnum.Admin)
                                              select a).ToList();
 
+            var usersForCompanyDistict = usersForCompany.Distinct();
+
             //Add new User Task Admin records for this task
-            foreach (AppUser user in usersForCompany)
+            foreach (AppUser user in usersForCompanyDistict)
             {
                 UserTaskAssignment userTaskAdmin = new UserTaskAssignment()
                 {
@@ -167,8 +169,10 @@ namespace Distributor.Helpers
                                              where (b.BranchId == branchId && b.UserRole == UserRoleEnum.Manager)
                                              select a).ToList();
 
+            var usersForBranchDistict = usersForBranch.Distinct();
+
             //Add new User Task Admin records for this task
-            foreach (AppUser user in usersForBranch)
+            foreach (AppUser user in usersForBranchDistict)
             {
                 UserTaskAssignment userTaskManager = new UserTaskAssignment()
                 {

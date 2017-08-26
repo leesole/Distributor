@@ -49,27 +49,33 @@
             <th>Description</th>
         </tr>
 
-        @foreach (var item in Model)
+        @if (Model == null)
         {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferType)</td>
-                <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
-                <td>@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
-                <td>@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
-                <td>@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
-                @if (item.AvailableListingDetails != null)
-                {
-                    <td>@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                    <td>@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
-                }
-                @if (item.RequirementListingDetails != null)
-                {
-                    <td>@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                    <td>@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
-                }
-            </tr>
+           <tr>No details to show</tr>
         }
-
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                    @if (item.AvailableListingDetails != null)
+                    {
+                        <td>@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+                    }
+                    @if (item.RequirementListingDetails != null)
+                    {
+                        <td>@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+                    }
+                </tr>
+            }
+        }
     </table>
 </div>
 

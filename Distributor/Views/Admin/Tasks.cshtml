@@ -60,17 +60,23 @@
             <th>Created by</th>
         </tr>
 
-        @foreach (var item in Model)
+        @if (Model == null)
+        {
+            <tr>No details to show</tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                taskTypeDescription = EnumHelpers.GetDescription(item.TaskType);
+                if (item.AppUserReference != null)
                 {
-                    taskTypeDescription = EnumHelpers.GetDescription(item.TaskType);
-                    if (item.AppUserReference != null)
-                    {
-                        referenceDescription = item.AppUserReference.FirstName + " " + item.AppUserReference.LastName;
-                    }
-                    if (item.BranchReference != null)
-                    {
-                        referenceDescription = item.BranchReference.BranchName + ", " + item.BranchReference.AddressLine1 + ", " + item.BranchReference.AddressTownCity;
-                    }
+                    referenceDescription = item.AppUserReference.FirstName + " " + item.AppUserReference.LastName;
+                }
+                if (item.BranchReference != null)
+                {
+                    referenceDescription = item.BranchReference.BranchName + ", " + item.BranchReference.AddressLine1 + ", " + item.BranchReference.AddressTownCity;
+                }
 
                 <tr id=@item.UserTaskId>
                     <td>
@@ -95,8 +101,8 @@
                         @(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)
                     </td>
                 </tr>
-                }
-
+            }
+        }
     </table>
 
 </div>
