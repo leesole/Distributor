@@ -42,6 +42,8 @@ namespace Distributor.ViewModels
 
     public class AvailableListingGeneralInfoView
     {
+        public decimal OfferQuantity { get; set; }
+
         public AvailableListing AvailableListing { get; set; }
     }
 

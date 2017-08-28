@@ -23,7 +23,7 @@ namespace Distributor.Controllers
 
         public ActionResult Available()
         {
-            List<AvailableListingGeneralInfoView> model = AvailableListingGeneralInfoHelpers.GetAllAvailableListingsGeneralInfoView();
+            List<AvailableListingGeneralInfoView> model = AvailableListingGeneralInfoHelpers.GetAllAvailableListingsGeneralInfoView(User);
 
             //Do filtering
 

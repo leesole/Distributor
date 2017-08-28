@@ -41,6 +41,23 @@ namespace Distributor.Helpers
             return db.RequirementListings.ToList();
         }
 
+        public static List<RequirementListing> GetAllRequirementListingsForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<RequirementListing> list = GetAllRequirementListingsForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<RequirementListing> GetAllRequirementListingsForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<RequirementListing> allRequirementsListingForUser = (from rl in db.RequirementListings
+                                                                      where (rl.ListingOriginatorAppUserId == appUserId                                     && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                      select rl).ToList();
+
+            return allRequirementsListingForUser;
+        }
+
         public static List<RequirementListing> GetAllRequirementListingsForBranchUser(BranchUser branchUser)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -168,23 +185,23 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<RequirementListingManageView> GetAllRequirementListingsManageViewForUserBranch(IPrincipal user)
+        public static List<RequirementListingManageView> GetAllRequirementListingsManageViewForUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<RequirementListingManageView> list = GetAllRequirementListingsManageViewForUserBranch(db, user);
+            List<RequirementListingManageView> list = GetAllRequirementListingsManageViewForUser(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<RequirementListingManageView> GetAllRequirementListingsManageViewForUserBranch(ApplicationDbContext db, IPrincipal user)
+        public static List<RequirementListingManageView> GetAllRequirementListingsManageViewForUser(ApplicationDbContext db, IPrincipal user)
         {
             List<RequirementListingManageView> allRequirementListingsManageView = new List<RequirementListingManageView>();
 
-            BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
-            List<RequirementListing> allRequirementListingsForBranchUser = RequirementListingHelpers.GetAllRequirementListingsForBranchUser(db, branchUser);
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            List<RequirementListing> allRequirementListingsForUser = RequirementListingHelpers.GetAllRequirementListingsForUser(db, appUser.AppUserId);
 
-            foreach (RequirementListing requirementListingForBranchUser in allRequirementListingsForBranchUser)
+            foreach (RequirementListing requirementListingForBranchUser in allRequirementListingsForUser)
             {
                 RequirementListingManageView requirementListingManageView = new RequirementListingManageView()
                 {

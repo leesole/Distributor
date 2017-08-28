@@ -41,8 +41,27 @@ namespace Distributor.Helpers
                            where (o.ListingId == listingId && o.OfferOriginatorAppUserId == appUserId)
                            select o).FirstOrDefault();
 
-
             return offer;
+        }
+
+        public static List<Offer> GetAllOffersForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Offer> list = GetAllOffersForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Offer> GetAllOffersForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<Offer> allOffersForUser = (from o in db.Offers
+                                            where ((o.OfferOriginatorAppUserId == appUserId && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Accepted))
+                                                  || (o.ListingOriginatorAppUserId == appUserId))
+                                                  select o).ToList();
+            var allOffersForUserDistinct = allOffersForUser.Distinct().ToList();
+
+            return allOffersForUserDistinct;
         }
 
         public static List<Offer> GetAllOffersForBranchUser(BranchUser branchUser)
@@ -62,13 +81,49 @@ namespace Distributor.Helpers
                                                   && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Accepted))
                                                   || (bu.UserId == o.ListingOriginatorAppUserId && bu.BranchId == o.ListingOriginatorBranchId && bu.CompanyId == o.ListingOriginatorCompanyId))
                                                   select o).ToList();
+            var allOffersForBranchUserDistinct = allOffersForBranchUser.Distinct().ToList();
 
-            return allOffersForBranchUser;
+            return allOffersForBranchUserDistinct;
         }
 
         #endregion
 
         #region Create
+
+        public static Offer CreateOfferForAvailable(IPrincipal user, AvailableListing availableListing, decimal offerQuantity)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Offer offer = CreateOfferForAvailable(db, user, availableListing, offerQuantity);
+            db.Dispose();
+            return offer;
+        }
+
+        public static Offer CreateOfferForAvailable(ApplicationDbContext db, IPrincipal user, AvailableListing availableListing, decimal offerQuantity)
+        {
+            BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
+
+            Offer offer = new Offer()
+            {
+                OfferId = Guid.NewGuid(),
+                ListingId = availableListing.ListingId,
+                ListingType = ListingTypeEnum.Available,
+                OfferStatus = OfferStatusEnum.New,
+                CurrentOfferQuantity = offerQuantity,
+                OfferOriginatorAppUserId = branchUser.UserId,
+                OfferOriginatorBranchId = branchUser.BranchId,
+                OfferOriginatorCompanyId = branchUser.CompanyId,
+                OfferOriginatorDateTime = DateTime.Now,
+                ListingOriginatorAppUserId = availableListing.ListingOriginatorAppUserId,
+                ListingOriginatorBranchId = availableListing.ListingOriginatorBranchId,
+                ListingOriginatorCompanyId = availableListing.ListingOriginatorCompanyId,
+                ListingOriginatorDateTime = availableListing.ListingOriginatorDateTime
+            };
+
+            db.Offers.Add(offer);
+            db.SaveChanges();
+
+            return offer;
+        }
 
         public static Offer CreateOfferForRequirement(IPrincipal user, RequirementListing requirementListing, decimal offerQuantity)
         {
@@ -112,44 +167,44 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<OfferManageView> GetAllOffersManageViewForUserBranch(IPrincipal user)
+        public static List<OfferManageView> GetAllOffersManageViewForUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<OfferManageView> list = GetAllOffersManageViewForUserBranch(db, user);
+            List<OfferManageView> list = GetAllOffersManageViewForUser(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<OfferManageView> GetAllOffersManageViewForUserBranch(ApplicationDbContext db, IPrincipal user)
+        public static List<OfferManageView> GetAllOffersManageViewForUser(ApplicationDbContext db, IPrincipal user)
         {
             List<OfferManageView> allOffersManageView = new List<OfferManageView>();
 
-            BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
-            List<Offer> allOffersForBranchUser = OfferHelpers.GetAllOffersForBranchUser(db, branchUser);
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            List<Offer> allOffersForUser = OfferHelpers.GetAllOffersForUser(db, appUser.AppUserId);
 
-            foreach (Offer offerForBranchUser in allOffersForBranchUser)
+            foreach (Offer offerForUser in allOffersForUser)
             {
                 AvailableListing availableListing = null;
                 RequirementListing requirementListing = null;
 
-                switch (offerForBranchUser.ListingType)
+                switch (offerForUser.ListingType)
                 {
                     case ListingTypeEnum.Available:
-                        availableListing = AvailableListingHelpers.GetAvailableListing(db, offerForBranchUser.ListingId);
+                        availableListing = AvailableListingHelpers.GetAvailableListing(db, offerForUser.ListingId);
                         break;
                     case ListingTypeEnum.Requirement:
-                        requirementListing = RequirementListingHelpers.GetRequirementListing(db, offerForBranchUser.ListingId);
+                        requirementListing = RequirementListingHelpers.GetRequirementListing(db, offerForUser.ListingId);
                         break;
                 }
 
                 OfferManageView offerManageView = new OfferManageView()
                 {
-                    OfferDetails = offerForBranchUser,
+                    OfferDetails = offerForUser,
                     AvailableListingDetails = availableListing,
                     RequirementListingDetails = requirementListing,
-                    AppUserDetails = AppUserHelpers.GetAppUser(db, branchUser.UserId),
-                    BranchDetails = BranchHelpers.GetBranch(db, branchUser.BranchId)
+                    AppUserDetails = appUser,
+                    BranchDetails = BranchHelpers.GetBranch(db, appUser.CurrentBranchId)
                 };
 
                 allOffersManageView.Add(offerManageView);

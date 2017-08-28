@@ -1,4 +1,5 @@
-﻿using Distributor.Models;
+﻿using Distributor.Extenstions;
+using Distributor.Models;
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,24 @@ namespace Distributor.Helpers
         public static List<AvailableListing> GetAllAvailableListings(ApplicationDbContext db)
         {
             return db.AvailableListings.ToList();
+        }
+
+        public static List<AvailableListing> GetAllAvailableListingsForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<AvailableListing> list = GetAllAvailableListingsForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AvailableListing> GetAllAvailableListingsForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<AvailableListing> allRequirementsListingForUser = (from rl in db.AvailableListings
+                                                                     where (rl.ListingOriginatorAppUserId == appUserId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                     select rl).ToList();
+
+            return allRequirementsListingForUser;
         }
 
         public static List<AvailableListing> GetAllAvailableListingsForBranchUser(BranchUser branchUser)
@@ -124,16 +143,16 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<AvailableListingGeneralInfoView> GetAllAvailableListingsGeneralInfoView()
+        public static List<AvailableListingGeneralInfoView> GetAllAvailableListingsGeneralInfoView(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<AvailableListingGeneralInfoView> list = GetAllAvailableListingsGeneralInfoView(db);
+            List<AvailableListingGeneralInfoView> list = GetAllAvailableListingsGeneralInfoView(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<AvailableListingGeneralInfoView> GetAllAvailableListingsGeneralInfoView(ApplicationDbContext db)
+        public static List<AvailableListingGeneralInfoView> GetAllAvailableListingsGeneralInfoView(ApplicationDbContext db, IPrincipal user)
         {
             List<AvailableListingGeneralInfoView> allAvailableListingsGeneralInfoView = new List<AvailableListingGeneralInfoView>();
 
@@ -141,9 +160,16 @@ namespace Distributor.Helpers
 
             foreach (AvailableListing AvailableListing in allAvailableListings)
             {
+                //Find any related offers
+                Offer offer = OfferHelpers.GetOfferForListingAndUser(db, AvailableListing.ListingId, AppUserHelpers.GetGuidFromUserGetAppUserId(user.Identity.GetAppUserId()));
+                decimal offerQty = 0M;
+                if (offer != null)
+                    offerQty = offer.CurrentOfferQuantity;
+
                 AvailableListingGeneralInfoView AvailableListingGeneralInfoView = new AvailableListingGeneralInfoView()
                 {
-                    AvailableListing = AvailableListing
+                    AvailableListing = AvailableListing,
+                    OfferQuantity = offerQty
                 };
 
                 allAvailableListingsGeneralInfoView.Add(AvailableListingGeneralInfoView);
@@ -158,6 +184,35 @@ namespace Distributor.Helpers
     public static class AvailableListingManageHelpers
     {
         #region Get
+
+        public static List<AvailableListingManageView> GetAllAvailableListingsManageViewForUser(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<AvailableListingManageView> list = GetAllAvailableListingsManageViewForUser(db, user);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AvailableListingManageView> GetAllAvailableListingsManageViewForUser(ApplicationDbContext db, IPrincipal user)
+        {
+            List<AvailableListingManageView> allAvailableListingsManageView = new List<AvailableListingManageView>();
+
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            List<AvailableListing> allAvailableListingsForUser = AvailableListingHelpers.GetAllAvailableListingsForUser(db, appUser.AppUserId);
+
+            foreach (AvailableListing AvailableListingForBranchUser in allAvailableListingsForUser)
+            {
+                AvailableListingManageView AvailableListingManageView = new AvailableListingManageView()
+                {
+                    AvailableListing = AvailableListingForBranchUser
+                };
+
+                allAvailableListingsManageView.Add(AvailableListingManageView);
+            }
+
+            return allAvailableListingsManageView;
+        }
 
         public static List<AvailableListingManageView> GetAllAvailableListingsManageViewForUserBranch(IPrincipal user)
         {

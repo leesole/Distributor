@@ -144,5 +144,26 @@ namespace Distributor.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region data manipulation
+
+        public ActionResult SubmitAvailableOffer(Guid? listingId, decimal? offerQuantity)
+        {
+            if (listingId.HasValue && offerQuantity.HasValue)
+            {
+                if (offerQuantity > 0)
+                {
+                    AvailableListing availableListing = AvailableListingHelpers.GetAvailableListing(db, listingId.Value);
+
+                    OfferHelpers.CreateOfferForAvailable(db, User, availableListing, offerQuantity.Value);
+                }
+
+                return Json(new { success = true });
+            }
+            else
+                return Json(new { success = false });
+        }
+
+        #endregion
     }
 }

@@ -40,6 +40,24 @@ namespace Distributor.Helpers
             return db.Orders.ToList();
         }
 
+        public static List<Order> GetAllOrdersForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Order> list = GetAllOrdersForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Order> GetAllOrdersForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<Order> allOrdersForUser = (from o in db.Orders
+                                            where (o.OrderOriginatorAppUserId == appUserId && o.OrderStatus == OrderStatusEnum.New)
+                                            select o).ToList();
+
+            return allOrdersForUser;
+        }
+
         public static List<Order> GetAllOrdersForBranchUser(BranchUser branchUser)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -66,6 +84,35 @@ namespace Distributor.Helpers
     public static class OrderManageHelpers
     {
         #region Get
+
+        public static List<OrderManageView> GetAllOrdersManageViewForUser(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<OrderManageView> list = GetAllOrdersManageViewForUser(db, user);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<OrderManageView> GetAllOrdersManageViewForUser(ApplicationDbContext db, IPrincipal user)
+        {
+            List<OrderManageView> allOrdersManageView = new List<OrderManageView>();
+
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            List<Order> allOrdersForUser = OrderHelpers.GetAllOrdersForUser(db, appUser.AppUserId);
+
+            foreach (Order orderForUser in allOrdersForUser)
+            {
+                OrderManageView orderManageView = new OrderManageView()
+                {
+                    OrderDetails = orderForUser
+                };
+
+                allOrdersManageView.Add(orderManageView);
+            }
+
+            return allOrdersManageView;
+        }
 
         public static List<OrderManageView> GetAllOrdersManageViewForUserBranch(IPrincipal user)
         {

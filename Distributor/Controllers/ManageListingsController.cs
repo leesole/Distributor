@@ -1,4 +1,5 @@
-﻿using Distributor.Helpers;
+﻿using Distributor.Extenstions;
+using Distributor.Helpers;
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,25 +15,25 @@ namespace Distributor.Controllers
     {
         public ActionResult Requirements()
         {
-            List<RequirementListingManageView> model = RequirementListingManageHelpers.GetAllRequirementListingsManageViewForUserBranch(User);
+            List<RequirementListingManageView> model = RequirementListingManageHelpers.GetAllRequirementListingsManageViewForUser(User);
             return View(model);
         }
 
         public ActionResult Available()
         {
-            List<AvailableListingManageView> model = AvailableListingManageHelpers.GetAllAvailableListingsManageViewForUserBranch(User);
+            List<AvailableListingManageView> model = AvailableListingManageHelpers.GetAllAvailableListingsManageViewForUser(User);
             return View(model);
         }
 
         public ActionResult Campaigns()
         {
-            List<CampaignManageView> model = CampaignManageHelpers.GetAllCampaignsManageViewForUserBranch(User);
+            List<CampaignManageView> model = CampaignManageHelpers.GetAllCampaignsManageViewForUser(User);
             return View(model);
         }
 
         public ActionResult Offers()
         {
-            List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageViewForUserBranch(User);
+            List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageViewForUser(User);
             return View(model);
         }
 

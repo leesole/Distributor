@@ -144,6 +144,7 @@ namespace Distributor.Controllers
             }
             base.Dispose(disposing);
         }
+
         #region data manipulation
 
         public ActionResult SubmitRequirementOffer(Guid? listingId, decimal? offerQuantity)
@@ -156,21 +157,6 @@ namespace Distributor.Controllers
 
                     OfferHelpers.CreateOfferForRequirement(db, User, requirementListing, offerQuantity.Value);
                 }
-                
-                //UserTask userTask = UserTaskHelpers.GetUserTask(userTaskId.Value);
-
-                //switch (userTask.TaskType)
-                //{
-                //    case TaskTypeEnum.UserOnHold:  //Make AppUser active
-                //        AppUserHelpers.UpdateEntityStatus(userTask.ReferenceKey, EntityStatusEnum.Active);
-                //        break;
-                //    case TaskTypeEnum.BranchOnHold:  //Make Branch active
-                //        BranchHelpers.UpdateEntityStatus(userTask.ReferenceKey, EntityStatusEnum.Active);
-                //        break;
-                //}
-
-                ////close the Task
-                //UserTaskHelpers.UpdateEntityStatus(userTask.UserTaskId, EntityStatusEnum.Closed);
 
                 return Json(new { success = true });
             }
