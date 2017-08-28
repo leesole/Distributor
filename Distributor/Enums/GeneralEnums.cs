@@ -11,7 +11,7 @@ namespace Distributor.Enums
         public enum ListingTypeEnum
         {
             [Description("Requirement listing")]
-            Requriement = 0,
+            Requirement = 0,
 
             [Description("Available listing")]
             Available = 1

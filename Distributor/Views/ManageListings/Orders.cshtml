@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Distributor.ViewModels.OrderManageView>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*<a class="navbar-brand" href="#">Brand</a>*@
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="disabled">@Html.ActionLink("MANAGE LISTINGS", "General", "Home")</li>
+                <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                <li>@Html.ActionLink("Available", "Available", "ManageListings")</li>
+                <li>@Html.ActionLink("Campaigns", "Campaigns", "ManageListings")</li>
+                <li>@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+                <li class="active">@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">Manage Listings <small>Orders</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li class="active">Orders</li>
+        </ol>
+        <p class="lead">Your current orders.</p>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr class="info">
+            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+        </tr>
+
+        @if (Model == null)
+        {
+            <tr>No details to show</tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</th>
+                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</th>
+                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</th>
+                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</th>
+                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</th>
+                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</th>
+                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</th>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+@*<div class="form-group">
+        @Html.ActionLink("Create campaign", "Create", "Campaigns", "", new { @class = "btn btn-primary" })
+    </div>*@

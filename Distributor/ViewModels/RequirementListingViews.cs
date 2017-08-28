@@ -45,6 +45,8 @@ namespace Distributor.ViewModels
 
     public class RequirementListingGeneralInfoView
     {
+        public decimal OfferQuantity { get; set; }
+
         public RequirementListing RequirementListing { get; set; }
     }
 

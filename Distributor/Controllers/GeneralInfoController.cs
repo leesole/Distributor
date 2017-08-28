@@ -14,7 +14,7 @@ namespace Distributor.Controllers
     {   
         public ActionResult Requirements()
         {
-            List<RequirementListingGeneralInfoView> model = RequirementListingGeneralInfoHelpers.GetAllRequirementListingsGeneralInfoView();
+            List<RequirementListingGeneralInfoView> model = RequirementListingGeneralInfoHelpers.GetAllRequirementListingsGeneralInfoView(User);
 
             //Do any filtering
 

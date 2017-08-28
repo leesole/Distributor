@@ -1,4 +1,5 @@
-﻿using Distributor.Models;
+﻿using Distributor.Extenstions;
+using Distributor.Models;
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -125,16 +126,16 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<RequirementListingGeneralInfoView> GetAllRequirementListingsGeneralInfoView()
+        public static List<RequirementListingGeneralInfoView> GetAllRequirementListingsGeneralInfoView(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<RequirementListingGeneralInfoView> list = GetAllRequirementListingsGeneralInfoView(db);
+            List<RequirementListingGeneralInfoView> list = GetAllRequirementListingsGeneralInfoView(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<RequirementListingGeneralInfoView> GetAllRequirementListingsGeneralInfoView(ApplicationDbContext db)
+        public static List<RequirementListingGeneralInfoView> GetAllRequirementListingsGeneralInfoView(ApplicationDbContext db, IPrincipal user)
         {
             List<RequirementListingGeneralInfoView> allRequirementListingsGeneralInfoView = new List<RequirementListingGeneralInfoView>();
 
@@ -142,9 +143,16 @@ namespace Distributor.Helpers
 
             foreach (RequirementListing requirementListing in allRequirementListings)
             {
+                //Find any related offers
+                Offer offer = OfferHelpers.GetOfferForListingAndUser(db, requirementListing.ListingId, AppUserHelpers.GetGuidFromUserGetAppUserId(user.Identity.GetAppUserId()));
+                decimal offerQty = 0M;
+                if (offer != null)
+                    offerQty = offer.CurrentOfferQuantity;
+
                 RequirementListingGeneralInfoView requirementListingGeneralInfoView = new RequirementListingGeneralInfoView()
                 {
-                    RequirementListing = requirementListing
+                    RequirementListing = requirementListing,
+                    OfferQuantity = offerQty
                 };
 
                 allRequirementListingsGeneralInfoView.Add(requirementListingGeneralInfoView);
