@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Distributor.Models;
+using Distributor.Helpers;
 
 namespace Distributor.Controllers
 {
@@ -124,5 +125,77 @@ namespace Distributor.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region data manipulation
+
+        public ActionResult AcceptOffer(string offerId)
+        {
+            if (offerId != null)
+            {
+                Offer offer = OfferHelpers.GetOffer(db, GeneralHelpers.GetGuidFromStringId(offerId));
+
+                OfferHelpers.AcceptOffer(db, User, offer);
+
+                return Json(new { success = true });
+            }
+            else
+                return Json(new { success = false });
+        }
+
+        public ActionResult RejectOffer(string offerId)
+        {
+            if (offerId != null)
+            {
+                Offer offer = OfferHelpers.GetOffer(db, GeneralHelpers.GetGuidFromStringId(offerId));
+
+                OfferHelpers.RejectOffer(db, User, offer);
+
+                return Json(new { success = true });
+            }
+            else
+               return Json(new { success = false });
+        }
+
+        public ActionResult SubmitNewOffer(string offerId, string offerQuantity)
+        {
+            if (offerId != null && offerQuantity != null)
+            {
+                decimal offerQty = 0;
+                decimal.TryParse(offerQuantity, out offerQty);
+
+                if (offerQty > 0)
+                {
+                    Offer offer = OfferHelpers.GetOffer(db, GeneralHelpers.GetGuidFromStringId(offerId));
+
+                    OfferHelpers.UpdateOffer(db, User, offer, offerQty);
+                }
+
+                return Json(new { success = true });
+            }
+            else
+                return Json(new { success = false });
+        }
+
+        public ActionResult SubmitCounterOffer(string offerId, string offerQuantity)
+        {
+            if (offerId != null && offerQuantity != null)
+            {
+                decimal offerQty = 0;
+                decimal.TryParse(offerQuantity, out offerQty);
+
+                if (offerQty > 0)
+                {
+                    Offer offer = OfferHelpers.GetOffer(db, GeneralHelpers.GetGuidFromStringId(offerId));
+
+                    OfferHelpers.UpdateCounterOffer(db, User, offer, offerQty);
+                }
+
+                return Json(new { success = true });
+            }
+            else
+                return Json(new { success = false });
+        }
+
+        #endregion
     }
 }

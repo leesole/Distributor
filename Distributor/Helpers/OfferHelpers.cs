@@ -2,6 +2,7 @@
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -56,9 +57,9 @@ namespace Distributor.Helpers
         public static List<Offer> GetAllOffersForUser(ApplicationDbContext db, Guid appUserId)
         {
             List<Offer> allOffersForUser = (from o in db.Offers
-                                            where ((o.OfferOriginatorAppUserId == appUserId && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Accepted))
-                                                  || (o.ListingOriginatorAppUserId == appUserId))
-                                                  select o).ToList();
+                                            where ((o.OfferOriginatorAppUserId == appUserId && o.OfferStatus == OfferStatusEnum.New)
+                                                  || (o.ListingOriginatorAppUserId == appUserId && o.OfferStatus == OfferStatusEnum.New))
+                                            select o).ToList();
             var allOffersForUserDistinct = allOffersForUser.Distinct().ToList();
 
             return allOffersForUserDistinct;
@@ -155,6 +156,99 @@ namespace Distributor.Helpers
             };
 
             db.Offers.Add(offer);
+            db.SaveChanges();
+
+            return offer;
+        }
+
+        #endregion
+
+        #region Update
+
+        public static Offer UpdateOffer(IPrincipal user, Offer offer, decimal offerQuantity)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Offer updatedOffer = UpdateOffer(db, user, offer, offerQuantity);
+            db.Dispose();
+            return updatedOffer;
+        }
+
+        public static Offer UpdateOffer(ApplicationDbContext db, IPrincipal user, Offer offer, decimal offerQuantity)
+        {
+            BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
+
+            offer.CurrentOfferQuantity = offerQuantity;
+            offer.CounterOfferQuantity = 0;
+
+            db.Entry(offer).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return offer;
+        }
+
+        public static Offer UpdateCounterOffer(IPrincipal user, Offer offer, decimal offerQuantity)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Offer updatedOffer = UpdateCounterOffer(db, user, offer, offerQuantity);
+            db.Dispose();
+            return updatedOffer;
+        }
+
+        public static Offer UpdateCounterOffer(ApplicationDbContext db, IPrincipal user, Offer offer, decimal offerQuantity)
+        { 
+            BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
+
+            offer.CounterOfferQuantity = offerQuantity;
+            offer.PreviousOfferQuantity = offer.CurrentOfferQuantity;
+            offer.CurrentOfferQuantity = 0;
+
+            db.Entry(offer).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return offer;
+        }
+
+        public static Offer RejectOffer(IPrincipal user, Offer offer)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Offer rejectedOffer = RejectOffer(db, user, offer);
+            db.Dispose();
+            return rejectedOffer;
+        }
+
+        public static Offer RejectOffer(ApplicationDbContext db, IPrincipal user, Offer offer)
+        {
+            offer.OfferStatus = OfferStatusEnum.Rejected;
+            offer.RejectedBy = AppUserHelpers.GetAppUserIdFromUser(user);
+            offer.RejectedOn = DateTime.Now;
+
+            db.Entry(offer).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return offer;
+        }
+
+        public static Offer AcceptOffer(IPrincipal user, Offer offer)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Offer acceptedOffer = AcceptOffer(db, user, offer);
+            db.Dispose();
+            return acceptedOffer;
+        }
+
+        public static Offer AcceptOffer(ApplicationDbContext db, IPrincipal user, Offer offer)
+        {
+            offer.OfferStatus = OfferStatusEnum.Accepted;
+
+            Order order = OrderHelpers.CreateOrder(db, user, offer);
+
+            offer.OrderId = order.OrderId;
+            offer.OrderOriginatorAppUserId = order.OrderOriginatorAppUserId;
+            offer.OrderOriginatorBranchId = order.OrderOriginatorBranchId;
+            offer.OrderOriginatorCompanyId = order.OrderOriginatorCompanyId;
+            offer.OrderOriginatorDateTime = order.OrderOriginatorDateTime;
+
+            db.Entry(offer).State = EntityState.Modified;
             db.SaveChanges();
 
             return offer;

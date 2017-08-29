@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.OrderEnums;
 
 namespace Distributor.Helpers
@@ -69,13 +70,66 @@ namespace Distributor.Helpers
 
         public static List<Order> GetAllOrdersForBranchUser(ApplicationDbContext db, BranchUser branchUser)
         {
-            List<Order> allOrdersForBranchUser = (from bu in db.BranchUsers
-                                                  from o in db.Orders
-                                                  where (bu.UserId == o.OrderOriginatorAppUserId && bu.BranchId == o.OrderOriginatorBranchId && bu.CompanyId == o.OrderOriginatorCompanyId
-                                                        && o.OrderStatus == OrderStatusEnum.New)
+            List<Order> allOrdersForBranchUser = (from o in db.Orders
+                                                  where (o.OrderOriginatorAppUserId == branchUser.UserId && o.OrderStatus == OrderStatusEnum.New)
                                                   select o).ToList();
 
             return allOrdersForBranchUser;
+        }
+
+        #endregion
+
+        #region Create
+
+        public static Order CreateOrder(IPrincipal user, Offer offer)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Order order = CreateOrder(db, user, offer);
+            db.Dispose();
+            return order;
+        }
+
+        public static Order CreateOrder(ApplicationDbContext db, IPrincipal user, Offer offer)
+        {
+            BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
+
+            Order order = new Order()
+            {
+                OrderId = Guid.NewGuid(),
+                OrderQuanity = offer.CurrentOfferQuantity,
+                OrderStatus = OrderStatusEnum.New,
+                OrderCreationDateTime = DateTime.Now,
+                OrderOriginatorAppUserId = branchUser.UserId,
+                OrderOriginatorBranchId = branchUser.BranchId,
+                OrderOriginatorCompanyId = branchUser.CompanyId,
+                OrderOriginatorDateTime = DateTime.Now,
+                OfferId = offer.OfferId,
+                OfferOriginatorAppUserId = offer.OfferOriginatorAppUserId,
+                OfferOriginatorBranchId = offer.OfferOriginatorBranchId,
+                OfferOriginatorCompanyId = offer.OfferOriginatorCompanyId,
+                ListingId = offer.ListingId,
+                ListingOriginatorAppUserId = offer.ListingOriginatorAppUserId,
+                ListingOriginatorBranchId = offer.ListingOriginatorBranchId,
+                ListingOriginatorCompanyId = offer.ListingOriginatorCompanyId
+            };
+
+            db.Orders.Add(order);
+
+            //Update the quantities on listing
+            
+            switch (offer.ListingType)
+            {
+                case ListingTypeEnum.Available:
+                    AvailableListingHelpers.UpdateQuantitiesFromOrder(db, offer);
+                    break;
+                case ListingTypeEnum.Requirement:
+                    RequirementListingHelpers.UpdateQuantitiesFromOrder(db, offer);
+                    break;
+            }
+
+            db.SaveChanges();
+
+            return order;
         }
 
         #endregion

@@ -3,6 +3,7 @@ using Distributor.Models;
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -134,6 +135,34 @@ namespace Distributor.Helpers
         public static AvailableListing CreateAvailableListingFromAvailableListingAddView(ApplicationDbContext db, AvailableListingAddView AvailableListingAddView, IPrincipal user)
         {
             return CreateAvailableListing(db, user, AvailableListingAddView.ItemDescription, AvailableListingAddView.ItemType, AvailableListingAddView.QuantityRequired, AvailableListingAddView.UoM, AvailableListingAddView.AvailableFrom, AvailableListingAddView.AvailableTo, AvailableListingAddView.ItemCondition, AvailableListingAddView.CollectionAvailable, AvailableListingAddView.ListingStatus);
+        }
+
+        #endregion
+
+        #region Update
+
+        public static AvailableListing UpdateQuantitiesFromOrder(Offer offer)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            AvailableListing listing = UpdateQuantitiesFromOrder(db, offer);
+            db.Dispose();
+            return listing;
+        }
+
+        public static AvailableListing UpdateQuantitiesFromOrder(ApplicationDbContext db, Offer offer)
+        {
+            AvailableListing listing = GetAvailableListing(db, offer.ListingId);
+            listing.QuantityFulfilled += offer.CurrentOfferQuantity;
+            listing.QuantityOutstanding -= offer.CurrentOfferQuantity;
+            listing.ListingStatus = ItemRequiredListingStatusEnum.Partial;
+
+            if (listing.QuantityOutstanding <= 0)
+                listing.ListingStatus = ItemRequiredListingStatusEnum.Complete;
+
+            db.Entry(listing).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return listing;
         }
 
         #endregion

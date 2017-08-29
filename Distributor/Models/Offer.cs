@@ -30,6 +30,9 @@ namespace Distributor.Models
         [Display(Name = "Counter offer quantity")]
         public decimal? CounterOfferQuantity { get; set; }  //if 'returned' status with a new offer, value is here
 
+        public Guid? RejectedBy { get; set; }
+        public DateTime? RejectedOn { get; set; }
+
         //references to the offer originator
         public Guid OfferOriginatorAppUserId { get; set; }
         public Guid OfferOriginatorBranchId { get; set; }

@@ -166,6 +166,11 @@ namespace Distributor.Helpers
             return appUserId;
         }
 
+        public static Guid GetAppUserIdFromUser(IPrincipal user)
+        {
+            return GetGuidFromUserGetAppUserId(user.Identity.GetAppUserId());
+        }
+
         #endregion
     }
 }

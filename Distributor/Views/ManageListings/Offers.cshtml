@@ -3,7 +3,151 @@
 @model IEnumerable<Distributor.ViewModels.OfferManageView>
 
 @{ 
+    var offerId = Guid.Empty;
+    var acceptButton = "";
+    var rejectButton = "";
+    var counterButton = "";
+    var saveButton = "";
+    var offerQuantityField = "";
+    var counterOfferQuantityField = "";
     var currentAppUserId = User.Identity.GetAppUserId();
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function acceptButtonClick(id) {
+            var thisOfferId = id.substr(12, 43);
+            if (window.confirm("Accept this offer?")) {
+                var url = "/Offers/AcceptOffer";
+
+                $.ajax({
+                    url: url,
+                    data: { offerId: thisOfferId },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        function rejectButtonClick(id) {
+            var thisOfferId = id.substr(12, 43);
+            if (window.confirm("Reject this offer?")) {
+                var url = "/Offers/RejectOffer";
+
+                $.ajax({
+                    url: url,
+                    data: { offerId: thisOfferId },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        function setOfferField(id) {
+            var thisOfferId = id.substr(13, 36);
+            var offerQuantityFieldId = "offerquantityfield" + thisOfferId;
+            var saveButtonId = "savebutton" + thisOfferId;
+            var acceptButtonId = "acceptbutton" + thisOfferId;
+            var rejectButtonId = "rejectbutton" + thisOfferId;
+
+            $("#" + offerQuantityFieldId).prop("disabled", false);
+            $("#" + saveButtonId).show();
+            $("#" + acceptButtonId).prop("disabled", true);
+            $("#" + rejectButtonId).prop("disabled", true);
+        }
+
+        function setCounterOfferField(id) {
+            var thisOfferId = id.substr(13, 36);
+            var offerQuantityFieldId = "counterofferquantityfield" + thisOfferId;
+            var saveButtonId = "savebutton" + thisOfferId;
+            var acceptButtonId = "acceptbutton" + thisOfferId;
+            var rejectButtonId = "rejectbutton" + thisOfferId;
+
+            $("#" + offerQuantityFieldId).prop("disabled", false);
+            $("#" + saveButtonId).show();
+            $("#" + acceptButtonId).prop("disabled", true);
+            $("#" + rejectButtonId).prop("disabled", true);
+        }
+
+        function saveOfferField(id) {
+            var thisId = id.substr(10, 41);
+            var offerQuantityFieldId = "offerquantityfield" + thisId;
+            var offerQty = $("#" + offerQuantityFieldId).val();
+            alert("offer:" + offerQuantityFieldId + "," + offerQty);
+            if (window.confirm("Submit this new offer?")) {
+                var url = "/Offers/SubmitNewOffer";
+
+                $.ajax({
+                    url: url,
+                    data: { offerId: thisId, offerQuantity: offerQty },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        function saveCounterOfferField(id) {
+            var thisId = id.substr(10, 41);
+            var offerQuantityFieldId = "counterofferquantityfield" + thisId;
+            var offerQty = $("#" + offerQuantityFieldId).val();
+            alert("counter:" + offerQuantityFieldId + "," + offerQty);
+            if (window.confirm("Submit this counter offer?")) {
+                var url = "/Offers/SubmitCounterOffer";
+
+                $.ajax({
+                    url: url,
+                    data: { offerId: thisId, offerQuantity: offerQty },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        //$(function () {
+        //    //show/hide offer details to edit
+        //    $('.showhideofferdetails').click(function () {
+        //        var id = $(this).closest('tr').attr('id');
+        //        var offerButtonId = "offerbutton" + id.toString();
+        //        var saveButtonId = "savebutton" + id.toString();
+        //        var offerQuantityFieldId = "offerquantityfield" + id.toString();
+        //        if ($("#" + offerButtonId).prop("disabled") == false) {
+        //            $("#" + offerButtonId).prop("disabled", true);
+        //            $("#" + saveButtonId).prop("disabled", false);
+        //            $("#" + offerQuantityFieldId).prop("disabled", false);
+        //        } else if ($("#" + saveButtonId).prop("disabled") == false && $("#" + offerQuantityFieldId).val() > 0) {
+        //            var offerQty = $("#" + offerQuantityFieldId).val();
+        //            if (window.confirm("Submit this offer?")) {
+        //                var url = "/AvailableListings/SubmitAvailableOffer";
+
+        //                $.ajax({
+        //                    url: url,
+        //                    data: { listingId: id, offerQuantity: offerQty },
+        //                    cache: false,
+        //                    type: "POST",
+        //                    success: function (result) {
+        //                        location.reload(true);
+        //                    }
+        //                });
+        //            }
+        //        }
+        //    });
+        //});
+    </script>
 }
 
 <nav class="navbar navbar-default">
@@ -47,10 +191,13 @@
 <div class="table-responsive">
     <table class="table table-hover">
         <tr class="info">
+            <th colspan="3">Actions</th>
             <th>@Html.DisplayNameFor(model => model.OfferDetails.ListingType)</th>
             <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
             <th>@Html.DisplayNameFor(model => model.OfferDetails.CurrentOfferQuantity)</th>
+            <th></th>
             <th>@Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)</th>
+            <th></th>
             <th>@Html.DisplayNameFor(model => model.OfferDetails.PreviousOfferQuantity)</th>
             <th>Unit of measure</th>
             <th>Description</th>
@@ -64,13 +211,35 @@
         {
             foreach (var item in Model)
             {
+                offerId = item.OfferDetails.OfferId;
+                acceptButton = "acceptbutton" + offerId.ToString();
+                rejectButton = "rejectbutton" + offerId.ToString();
+                counterButton = "counterbutton" + offerId.ToString();
+                saveButton = "savebutton" + offerId.ToString();
+                offerQuantityField = "offerquantityfield" + offerId.ToString();
+                counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
+
                 if (item.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId)
                 {
-                    <tr class="warning">
+                    <tr id=@offerId class="warning">
+                        @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
+                        {
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else
+                        {
+                            <td><input type="button" value="Accept" class="btn btn-sm btn-success btn-block buttondetails" id=@acceptButton onclick="acceptButtonClick(id)" /></td>
+                            <td><input type="button" value="Reject" class="btn btn-sm btn-danger btn-block buttondetails" id=@rejectButton onclick="rejectButtonClick(id)" /></td>
+                            <td><input type="button" value="Offer" class="btn btn-sm btn-primary btn-block buttondetails" id=@counterButton onclick="setOfferField(id)" /></td>
+                        }
                         <td>@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
                         <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
+                        <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
+                        <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveOfferField(id)" style="display:none" /></td>
                         <td>@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
+                        <td></td>
                         <td>@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                         @if (item.AvailableListingDetails != null)
                         {
@@ -86,11 +255,25 @@
                 }
                 else
                 {
-                    <tr>
+                    <tr id=@offerId>
+                        @if (item.OfferDetails.CurrentOfferQuantity == 0)
+                        {
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                        else
+                        {
+                            <td><input type="button" value="Accept" class="btn btn-sm btn-success btn-block buttondetails" id=@acceptButton onclick="acceptButtonClick(id)" /></td>
+                            <td><input type="button" value="Reject" class="btn btn-sm btn-danger btn-block buttondetails" id=@rejectButton onclick="rejectButtonClick(id)" /></td>
+                            <td><input type="button" value="Counter" class="btn btn-sm btn-primary btn-block buttondetails" id=@counterButton onclick="setCounterOfferField(id)" /></td>
+                        }
                         <td>@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
                         <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                         <td>@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
+                        <td></td>
+                        <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CounterOfferQuantity, new { id = @counterOfferQuantityField, disabled = "disabled" })</td>
+                        <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveCounterOfferField(id)" style="display:none" /></td>
                         <td>@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                         @if (item.AvailableListingDetails != null)
                         {
