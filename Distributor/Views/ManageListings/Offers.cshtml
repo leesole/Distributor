@@ -82,7 +82,6 @@
             var thisId = id.substr(10, 41);
             var offerQuantityFieldId = "offerquantityfield" + thisId;
             var offerQty = $("#" + offerQuantityFieldId).val();
-            alert("offer:" + offerQuantityFieldId + "," + offerQty);
             if (window.confirm("Submit this new offer?")) {
                 var url = "/Offers/SubmitNewOffer";
 
@@ -102,7 +101,6 @@
             var thisId = id.substr(10, 41);
             var offerQuantityFieldId = "counterofferquantityfield" + thisId;
             var offerQty = $("#" + offerQuantityFieldId).val();
-            alert("counter:" + offerQuantityFieldId + "," + offerQty);
             if (window.confirm("Submit this counter offer?")) {
                 var url = "/Offers/SubmitCounterOffer";
 
@@ -117,36 +115,6 @@
                 });
             }
         }
-
-        //$(function () {
-        //    //show/hide offer details to edit
-        //    $('.showhideofferdetails').click(function () {
-        //        var id = $(this).closest('tr').attr('id');
-        //        var offerButtonId = "offerbutton" + id.toString();
-        //        var saveButtonId = "savebutton" + id.toString();
-        //        var offerQuantityFieldId = "offerquantityfield" + id.toString();
-        //        if ($("#" + offerButtonId).prop("disabled") == false) {
-        //            $("#" + offerButtonId).prop("disabled", true);
-        //            $("#" + saveButtonId).prop("disabled", false);
-        //            $("#" + offerQuantityFieldId).prop("disabled", false);
-        //        } else if ($("#" + saveButtonId).prop("disabled") == false && $("#" + offerQuantityFieldId).val() > 0) {
-        //            var offerQty = $("#" + offerQuantityFieldId).val();
-        //            if (window.confirm("Submit this offer?")) {
-        //                var url = "/AvailableListings/SubmitAvailableOffer";
-
-        //                $.ajax({
-        //                    url: url,
-        //                    data: { listingId: id, offerQuantity: offerQty },
-        //                    cache: false,
-        //                    type: "POST",
-        //                    success: function (result) {
-        //                        location.reload(true);
-        //                    }
-        //                });
-        //            }
-        //        }
-        //    });
-        //});
     </script>
 }
 
@@ -206,24 +174,24 @@
         @if (Model == null)
         {
            <tr>No details to show</tr>
-                    }
-                    else
-                    {
-                        foreach (var item in Model)
-                        {
-                            offerId = item.OfferDetails.OfferId;
-                            acceptButton = "acceptbutton" + offerId.ToString();
-                            rejectButton = "rejectbutton" + offerId.ToString();
-                            counterButton = "counterbutton" + offerId.ToString();
-                            saveButton = "savebutton" + offerId.ToString();
-                            offerQuantityField = "offerquantityfield" + offerId.ToString();
-                            counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                offerId = item.OfferDetails.OfferId;
+                acceptButton = "acceptbutton" + offerId.ToString();
+                rejectButton = "rejectbutton" + offerId.ToString();
+                counterButton = "counterbutton" + offerId.ToString();
+                saveButton = "savebutton" + offerId.ToString();
+                offerQuantityField = "offerquantityfield" + offerId.ToString();
+                counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
 
-                            if (item.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId)
-                            {
+                if (item.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId)
+                {
                     <tr id=@offerId class="warning">
                         @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
-                {
+                        {
                             <td></td>
                             <td></td>
                             <td></td>
@@ -242,12 +210,12 @@
                         <td></td>
                         <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                         @if (item.AvailableListingDetails != null)
-        {
+                        {
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                         }
                         @if (item.RequirementListingDetails != null)
-        {
+                        {
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                         }
@@ -276,12 +244,12 @@
                         <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveCounterOfferField(id)" style="display:none" /></td>
                         <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                         @if (item.AvailableListingDetails != null)
-        {
+                        {
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                         }
                         @if (item.RequirementListingDetails != null)
-        {
+                        {
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                         }
