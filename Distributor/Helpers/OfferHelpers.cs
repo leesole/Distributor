@@ -288,6 +288,9 @@ namespace Distributor.Helpers
 
         public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Offer offer)
         {
+            if (offer.OfferStatus != OfferStatusEnum.New)
+                return null;
+
             AppUser offerAppUser = AppUserHelpers.GetAppUser(db, offer.OfferOriginatorAppUserId);
 
             AvailableListing availableListing = null;

@@ -32,9 +32,9 @@ namespace Distributor.Controllers
 
             OfferManageView offerManageView = OfferManageHelpers.GetOfferManageViewForOffer(offerId.Value);
 
-            if (offerManageView == null)
+            if (offerManageView == null) //set to null if the value has changed from new to something else
             {
-                return HttpNotFound();
+                return RedirectToAction("Offers", "ManageListings");
             }
 
             return View(offerManageView);

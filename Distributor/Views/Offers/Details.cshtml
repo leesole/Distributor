@@ -265,7 +265,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4">@Html.LabelFor(model => model.OfferDetails.CurrentOfferQuantity)</div>
-                    @if (Model.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity == 0)
+                    @if (Model.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity > 0)
                     {
                         <div class="col-md-8">@Html.TextBoxFor(model => model.OfferDetails.CurrentOfferQuantity, new { id = "offerquantityfield" })</div>
                     }
@@ -286,11 +286,11 @@
                     }
                 </div>
                 <div class="row">
-                    <div class="col-md-8">@Html.LabelFor(model => model.OfferDetails.PreviousOfferQuantity)</div>
+                    <div class="col-md-4">@Html.LabelFor(model => model.OfferDetails.PreviousOfferQuantity)</div>
                     <div class="col-md-8">@Html.DisplayFor(model => model.OfferDetails.PreviousOfferQuantity)</div>
                 </div>
             </div>
-            @if (Model.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity == 0)
+            @if (Model.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity > 0)
             {
                 <div class="panel-footer">
                     <input type = "button" value="Accept" class="btn btn-sm btn-success" onclick="acceptButtonClick()" />
