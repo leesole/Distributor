@@ -1,138 +1,375 @@
-﻿@model Distributor.Models.Offer
+﻿
+
+@model Distributor.ViewModels.OfferManageView
 
 @{
-    ViewBag.Title = "Details";
+    
 }
 
-<h2>Details</h2>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @*<a class="navbar-brand" href="#">Brand</a>*@
+        </div>
 
-<div>
-    <h4>Offer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ListingId)
-        </dt>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="disabled">@Html.ActionLink("MANAGE LISTINGS", "General", "Home")</li>
+                <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                <li>@Html.ActionLink("Available", "Available", "ManageListings")</li>
+                <li>@Html.ActionLink("Campaigns", "Campaigns", "ManageListings")</li>
+                <li class="active">@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+                <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
-        <dd>
-            @Html.DisplayFor(model => model.ListingId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ListingType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ListingType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OfferStatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OfferStatus)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentOfferQuantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CurrentOfferQuantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PreviousOfferQuantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PreviousOfferQuantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CounterOfferQuantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CounterOfferQuantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OfferOriginatorAppUserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OfferOriginatorAppUserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OfferOriginatorBranchId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OfferOriginatorBranchId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OfferOriginatorCompanyId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OfferOriginatorCompanyId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OfferOriginatorDateTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OfferOriginatorDateTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderOriginatorAppUserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderOriginatorAppUserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderOriginatorBranchId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderOriginatorBranchId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderOriginatorCompanyId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderOriginatorCompanyId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderOriginatorDateTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderOriginatorDateTime)
-        </dd>
-
-    </dl>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">Offers <small>Offer details</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+            <li class="active">Offer details</li>
+        </ol>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.OfferId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listing details</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    @if (Model.AvailableListingDetails != null)
+                    {
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AvailableListingDetails.ItemDescription)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AvailableListingDetails.ItemDescription)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AvailableListingDetails.ItemType)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AvailableListingDetails.ItemType)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AvailableListingDetails.ItemCondition)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AvailableListingDetails.ItemCondition)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableFrom)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AvailableListingDetails.AvailableFrom)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableTo)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AvailableListingDetails.AvailableTo)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AvailableListingDetails.CollectionAvailable)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AvailableListingDetails.CollectionAvailable)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AvailableListingDetails.QuantityOutstanding)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AvailableListingDetails.QuantityOutstanding)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AvailableListingDetails.UoM)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.AvailableListingDetails.UoM)
+                        </dd>
+                    }
+                    @if (Model.RequirementListingDetails != null)
+                    {
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RequirementListingDetails.ItemDescription)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RequirementListingDetails.ItemDescription)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RequirementListingDetails.ItemType)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RequirementListingDetails.ItemType)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RequirementListingDetails.AcceptDamagedItems)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RequirementListingDetails.AcceptDamagedItems)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredFrom)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RequirementListingDetails.RequiredFrom)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredTo)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RequirementListingDetails.RequiredTo)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RequirementListingDetails.DeliveryAvailable)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RequirementListingDetails.DeliveryAvailable)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RequirementListingDetails.QuantityOutstanding)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RequirementListingDetails.QuantityOutstanding)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RequirementListingDetails.UoM)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.RequirementListingDetails.UoM)
+                        </dd>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listing user details</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingAppUserDetails.FirstName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingAppUserDetails.FirstName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingAppUserDetails.LastName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingAppUserDetails.LastName)
+                    </dd>
+
+                    <dt></dt>
+                    <dd></dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingBranchDetails.BranchName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingBranchDetails.BranchName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingBranchDetails.AddressLine1)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingBranchDetails.AddressTownCity)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingBranchDetails.AddressCounty)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingBranchDetails.AddressPostcode)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingBranchDetails.TelephoneNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingBranchDetails.TelephoneNumber)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingBranchDetails.Email)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingBranchDetails.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ListingBranchDetails.BusinessType)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ListingBranchDetails.BusinessType)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="login-panel panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Offer details</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferDetails.CurrentOfferQuantity)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferDetails.CurrentOfferQuantity)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferDetails.CounterOfferQuantity)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferDetails.PreviousOfferQuantity)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferDetails.PreviousOfferQuantity)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Offer user details</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferAppUserDetails.FirstName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferAppUserDetails.FirstName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferAppUserDetails.LastName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferAppUserDetails.LastName)
+                    </dd>
+
+                    <dt></dt>
+                    <dd></dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferBranchDetails.BranchName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferBranchDetails.BranchName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferBranchDetails.AddressLine1)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferBranchDetails.AddressLine1)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferBranchDetails.AddressTownCity)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferBranchDetails.AddressTownCity)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferBranchDetails.AddressCounty)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferBranchDetails.AddressCounty)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferBranchDetails.AddressPostcode)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferBranchDetails.AddressPostcode)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferBranchDetails.TelephoneNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferBranchDetails.TelephoneNumber)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferBranchDetails.Email)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferBranchDetails.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OfferBranchDetails.BusinessType)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OfferBranchDetails.BusinessType)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

@@ -483,10 +483,11 @@
     <Content Include="Views\ManageListings\Offers.cshtml" />
     <Content Include="Views\Offers\Create.cshtml" />
     <Content Include="Views\Offers\Delete.cshtml" />
-    <Content Include="Views\Offers\Details.cshtml" />
+    <Content Include="Views\Offers\Details1.cshtml" />
     <Content Include="Views\Offers\Edit.cshtml" />
     <Content Include="Views\Offers\Index.cshtml" />
     <Content Include="Views\ManageListings\Orders.cshtml" />
+    <Content Include="Views\Offers\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

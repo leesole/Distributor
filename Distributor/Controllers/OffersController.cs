@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Distributor.Models;
 using Distributor.Helpers;
+using Distributor.ViewModels;
 
 namespace Distributor.Controllers
 {
@@ -21,20 +22,23 @@ namespace Distributor.Controllers
         //    return View(db.Offers.ToList());
         //}
 
-        //// GET: Offers/Details/5
-        //public ActionResult Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Offer offer = db.Offers.Find(id);
-        //    if (offer == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(offer);
-        //}
+        // GET: Offers/Details
+        public ActionResult Details(Guid? offerId)
+        {
+            if (offerId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            OfferManageView offerManageView = OfferManageHelpers.GetOfferManageViewForOffer(offerId.Value);
+
+            if (offerManageView == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(offerManageView);
+        }
 
         // GET: Offers/Create
         public ActionResult Create()

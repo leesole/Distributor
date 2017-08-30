@@ -261,6 +261,65 @@ namespace Distributor.Helpers
     {
         #region Get
 
+        public static OfferManageView GetOfferManageViewForOffer(Guid offerId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            OfferManageView offerManageView = GetOfferManageViewForOffer(db, offerId);
+            db.Dispose();
+            return offerManageView;
+        }
+
+        public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Guid offerId)
+        {
+            Offer offer = OfferHelpers.GetOffer(db, offerId);
+
+            return GetOfferManageViewForOffer(db, offer);
+        }
+
+        public static OfferManageView GetOfferManageViewForOffer(Offer offer)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            OfferManageView offerManageView = GetOfferManageViewForOffer(db, offer);
+            db.Dispose();
+            return offerManageView;
+        }
+
+        public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Offer offer)
+        {
+            AppUser offerAppUser = AppUserHelpers.GetAppUser(db, offer.OfferOriginatorAppUserId);
+
+            AvailableListing availableListing = null;
+            RequirementListing requirementListing = null;
+            AppUser listingAppUser = null;
+
+            switch (offer.ListingType)
+            {
+                case ListingTypeEnum.Available:
+                    availableListing = AvailableListingHelpers.GetAvailableListing(db, offer.ListingId);
+                    listingAppUser = AppUserHelpers.GetAppUser(db, availableListing.ListingOriginatorAppUserId);
+                    break;
+                case ListingTypeEnum.Requirement:
+                    requirementListing = RequirementListingHelpers.GetRequirementListing(db, offer.ListingId);
+                    listingAppUser = AppUserHelpers.GetAppUser(db, requirementListing.ListingOriginatorAppUserId);
+                    break;
+            }
+
+            OfferManageView offerManageView = new OfferManageView()
+            {
+                OfferDetails = offer,
+                AvailableListingDetails = availableListing,
+                RequirementListingDetails = requirementListing,
+                OfferAppUserDetails = offerAppUser,
+                ListingAppUserDetails = listingAppUser,
+                OfferBranchDetails = BranchHelpers.GetBranch(db, offerAppUser.CurrentBranchId),
+                ListingBranchDetails = BranchHelpers.GetBranch(db, listingAppUser.CurrentBranchId)
+            };
+
+            return offerManageView;
+        }
+
         public static List<OfferManageView> GetAllOffersManageViewForUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -279,29 +338,36 @@ namespace Distributor.Helpers
 
             foreach (Offer offerForUser in allOffersForUser)
             {
-                AvailableListing availableListing = null;
-                RequirementListing requirementListing = null;
+                //AvailableListing availableListing = null;
+                //RequirementListing requirementListing = null;
+                //AppUser listingAppUser = null;
 
-                switch (offerForUser.ListingType)
-                {
-                    case ListingTypeEnum.Available:
-                        availableListing = AvailableListingHelpers.GetAvailableListing(db, offerForUser.ListingId);
-                        break;
-                    case ListingTypeEnum.Requirement:
-                        requirementListing = RequirementListingHelpers.GetRequirementListing(db, offerForUser.ListingId);
-                        break;
-                }
+                //AppUser offerAppUser = AppUserHelpers.GetAppUser(db, offerForUser.OfferOriginatorAppUserId);
 
-                OfferManageView offerManageView = new OfferManageView()
-                {
-                    OfferDetails = offerForUser,
-                    AvailableListingDetails = availableListing,
-                    RequirementListingDetails = requirementListing,
-                    AppUserDetails = appUser,
-                    BranchDetails = BranchHelpers.GetBranch(db, appUser.CurrentBranchId)
-                };
+                //switch (offerForUser.ListingType)
+                //{
+                //    case ListingTypeEnum.Available:
+                //        availableListing = AvailableListingHelpers.GetAvailableListing(db, offerForUser.ListingId);
+                //        listingAppUser = AppUserHelpers.GetAppUser(db, availableListing.ListingOriginatorAppUserId);
+                //        break;
+                //    case ListingTypeEnum.Requirement:
+                //        requirementListing = RequirementListingHelpers.GetRequirementListing(db, offerForUser.ListingId);
+                //        listingAppUser = AppUserHelpers.GetAppUser(db, requirementListing.ListingOriginatorAppUserId);
+                //        break;
+                //}
 
-                allOffersManageView.Add(offerManageView);
+                //OfferManageView offerManageView = new OfferManageView()
+                //{
+                //    OfferDetails = offerForUser,
+                //    AvailableListingDetails = availableListing,
+                //    RequirementListingDetails = requirementListing,
+                //    OfferAppUserDetails = offerAppUser,
+                //    ListingAppUserDetails = listingAppUser,
+                //    OfferBranchDetails = BranchHelpers.GetBranch(db, offerAppUser.CurrentBranchId),
+                //    ListingBranchDetails = BranchHelpers.GetBranch(db, listingAppUser.CurrentBranchId)
+                //};
+
+                allOffersManageView.Add(GetOfferManageViewForOffer(db, offerForUser));
             }
 
             return allOffersManageView;

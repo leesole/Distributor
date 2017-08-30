@@ -206,24 +206,24 @@
         @if (Model == null)
         {
            <tr>No details to show</tr>
-        }
-        else
-        {
-            foreach (var item in Model)
-            {
-                offerId = item.OfferDetails.OfferId;
-                acceptButton = "acceptbutton" + offerId.ToString();
-                rejectButton = "rejectbutton" + offerId.ToString();
-                counterButton = "counterbutton" + offerId.ToString();
-                saveButton = "savebutton" + offerId.ToString();
-                offerQuantityField = "offerquantityfield" + offerId.ToString();
-                counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            offerId = item.OfferDetails.OfferId;
+                            acceptButton = "acceptbutton" + offerId.ToString();
+                            rejectButton = "rejectbutton" + offerId.ToString();
+                            counterButton = "counterbutton" + offerId.ToString();
+                            saveButton = "savebutton" + offerId.ToString();
+                            offerQuantityField = "offerquantityfield" + offerId.ToString();
+                            counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
 
-                if (item.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId)
-                {
+                            if (item.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId)
+                            {
                     <tr id=@offerId class="warning">
                         @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
-                        {
+                {
                             <td></td>
                             <td></td>
                             <td></td>
@@ -234,22 +234,22 @@
                             <td><input type="button" value="Reject" class="btn btn-sm btn-danger btn-block buttondetails" id=@rejectButton onclick="rejectButtonClick(id)" /></td>
                             <td><input type="button" value="Offer" class="btn btn-sm btn-primary btn-block buttondetails" id=@counterButton onclick="setOfferField(id)" /></td>
                         }
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                         <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
                         <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveOfferField(id)" style="display:none" /></td>
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
                         <td></td>
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                         @if (item.AvailableListingDetails != null)
-                        {
-                            <td>@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+        {
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                         }
                         @if (item.RequirementListingDetails != null)
-                        {
-                            <td>@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                            <td>@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+        {
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                         }
                     </tr>
                 }
@@ -268,22 +268,22 @@
                             <td><input type="button" value="Reject" class="btn btn-sm btn-danger btn-block buttondetails" id=@rejectButton onclick="rejectButtonClick(id)" /></td>
                             <td><input type="button" value="Counter" class="btn btn-sm btn-primary btn-block buttondetails" id=@counterButton onclick="setCounterOfferField(id)" /></td>
                         }
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
                         <td></td>
                         <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CounterOfferQuantity, new { id = @counterOfferQuantityField, disabled = "disabled" })</td>
                         <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveCounterOfferField(id)" style="display:none" /></td>
-                        <td>@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                         @if (item.AvailableListingDetails != null)
-                        {
-                            <td>@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                            <td>@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+        {
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                         }
                         @if (item.RequirementListingDetails != null)
-                        {
-                            <td>@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                            <td>@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+        {
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                         }
                     </tr>
                 }

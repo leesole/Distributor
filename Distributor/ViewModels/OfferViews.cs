@@ -19,8 +19,12 @@ namespace Distributor.ViewModels
 
         public RequirementListing RequirementListingDetails { get; set; }
 
-        public AppUser AppUserDetails { get; set; }
+        public AppUser OfferAppUserDetails { get; set; }
 
-        public Branch BranchDetails { get; set; }
+        public AppUser ListingAppUserDetails { get; set; }
+
+        public Branch OfferBranchDetails { get; set; }
+
+        public Branch ListingBranchDetails { get; set; }
     }
 }
