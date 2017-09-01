@@ -149,11 +149,11 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CollectionAvailable, htmlAttributes: new { @class = "control-label col-md-4" })
+            @Html.LabelFor(model => model.DeliveryAvailable, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.CollectionAvailable)
-                    @Html.ValidationMessageFor(model => model.CollectionAvailable, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.DeliveryAvailable)
+                    @Html.ValidationMessageFor(model => model.DeliveryAvailable, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

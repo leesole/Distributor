@@ -33,8 +33,8 @@ namespace Distributor.ViewModels
         [Display(Name = "Accept damaged items?")]
         public bool AcceptDamagedItems { get; set; }
 
-        [Display(Name = "Can deliver?")]
-        public bool DeliveryAvailable { get; set; }
+        [Display(Name = "Can collect?")]
+        public bool CollectionAvailable { get; set; }
 
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }

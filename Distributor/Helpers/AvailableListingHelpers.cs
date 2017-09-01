@@ -84,15 +84,15 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AvailableListing CreateAvailableListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus)
+        public static AvailableListing CreateAvailableListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AvailableListing newAvailableListing = CreateAvailableListing(db, user, itemDescription, itemType, quantityRequired, uom, availableFrom, availableTo, itemCondition, collectionAvailable, listingStatus);
+            AvailableListing newAvailableListing = CreateAvailableListing(db, user, itemDescription, itemType, quantityRequired, uom, availableFrom, availableTo, itemCondition, deliveryAvailable, listingStatus);
             db.Dispose();
             return newAvailableListing;
         }
 
-        public static AvailableListing CreateAvailableListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus)
+        public static AvailableListing CreateAvailableListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
             Branch branch = BranchHelpers.GetBranch(db, branchUser.BranchId);
@@ -109,7 +109,7 @@ namespace Distributor.Helpers
                 AvailableFrom = availableFrom,
                 AvailableTo = availableTo,
                 ItemCondition = itemCondition,
-                CollectionAvailable = collectionAvailable,
+                DeliveryAvailable = deliveryAvailable,
                 ListingBranchPostcode = branch.AddressPostcode,
                 ListingOriginatorAppUserId = branchUser.UserId,
                 ListingOriginatorBranchId = branchUser.BranchId,
@@ -134,7 +134,7 @@ namespace Distributor.Helpers
 
         public static AvailableListing CreateAvailableListingFromAvailableListingAddView(ApplicationDbContext db, AvailableListingAddView AvailableListingAddView, IPrincipal user)
         {
-            return CreateAvailableListing(db, user, AvailableListingAddView.ItemDescription, AvailableListingAddView.ItemType, AvailableListingAddView.QuantityRequired, AvailableListingAddView.UoM, AvailableListingAddView.AvailableFrom, AvailableListingAddView.AvailableTo, AvailableListingAddView.ItemCondition, AvailableListingAddView.CollectionAvailable, AvailableListingAddView.ListingStatus);
+            return CreateAvailableListing(db, user, AvailableListingAddView.ItemDescription, AvailableListingAddView.ItemType, AvailableListingAddView.QuantityRequired, AvailableListingAddView.UoM, AvailableListingAddView.AvailableFrom, AvailableListingAddView.AvailableTo, AvailableListingAddView.ItemCondition, AvailableListingAddView.DeliveryAvailable, AvailableListingAddView.ListingStatus);
         }
 
         #endregion

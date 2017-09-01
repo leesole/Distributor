@@ -49,7 +49,7 @@
             <th>@Html.DisplayNameFor(model => model.AvailableListing.AvailableFrom)</th>
             <th>@Html.DisplayNameFor(model => model.AvailableListing.AvailableTo)</th>
             <th>@Html.DisplayNameFor(model => model.AvailableListing.ItemCondition)</th>
-            <th>@Html.DisplayNameFor(model => model.AvailableListing.CollectionAvailable)</th>
+            <th>@Html.DisplayNameFor(model => model.AvailableListing.DeliveryAvailable)</th>
         </tr>
 
         @foreach (var item in Model)
@@ -62,7 +62,7 @@
                 <td>@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
                 <td>@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
                 <td>@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.CollectionAvailable)</td>
+                <td>@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
             </tr>
         }
 

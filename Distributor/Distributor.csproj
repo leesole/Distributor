@@ -342,6 +342,10 @@
     <Compile Include="Migrations\201708292036002_29th.Designer.cs">
       <DependentUpon>201708292036002_29th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709011953108_30th.cs" />
+    <Compile Include="Migrations\201709011953108_30th.Designer.cs">
+      <DependentUpon>201709011953108_30th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -483,7 +487,6 @@
     <Content Include="Views\ManageListings\Offers.cshtml" />
     <Content Include="Views\Offers\Create.cshtml" />
     <Content Include="Views\Offers\Delete.cshtml" />
-    <Content Include="Views\Offers\Details1.cshtml" />
     <Content Include="Views\Offers\Edit.cshtml" />
     <Content Include="Views\Offers\Index.cshtml" />
     <Content Include="Views\ManageListings\Orders.cshtml" />
@@ -593,6 +596,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708292036002_29th.resx">
       <DependentUpon>201708292036002_29th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709011953108_30th.resx">
+      <DependentUpon>201709011953108_30th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

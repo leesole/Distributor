@@ -41,8 +41,8 @@ namespace Distributor.Models
         [Display(Name = "Item condition")]
         public ItemConditionEnum ItemCondition { get; set; }
 
-        [Display(Name = "Can collect?")]
-        public bool CollectionAvailable { get; set; }
+        [Display(Name = "Can deliver?")]
+        public bool DeliveryAvailable { get; set; }
 
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }
