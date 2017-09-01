@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Distributor.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderQuanity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderCreationDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDistributionDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDeliveredDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderCollectedDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderClosedDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderOriginatorAppUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderOriginatorBranchId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderOriginatorCompanyId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderOriginatorDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OfferId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OfferOriginatorAppUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OfferOriginatorBranchId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OfferOriginatorCompanyId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingOriginatorAppUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingOriginatorBranchId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingOriginatorCompanyId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderQuanity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderCreationDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderDistributionDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderDeliveredDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderCollectedDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderClosedDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderOriginatorAppUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderOriginatorBranchId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderOriginatorCompanyId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderOriginatorDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OfferId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OfferOriginatorAppUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OfferOriginatorBranchId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OfferOriginatorCompanyId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingOriginatorAppUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingOriginatorBranchId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingOriginatorCompanyId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OrderId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.OrderId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderId })
+        </td>
+    </tr>
+}
+
+</table>

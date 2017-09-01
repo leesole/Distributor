@@ -22,20 +22,20 @@ namespace Distributor.Controllers
         //    return View(db.Campaigns.ToList());
         //}
 
-        //// GET: Campaigns/Details/5
-        //public ActionResult Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Campaign campaign = db.Campaigns.Find(id);
-        //    if (campaign == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(campaign);
-        //}
+        // GET: Campaigns/Details/5
+        public ActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Campaign campaign = db.Campaigns.Find(id);
+            if (campaign == null)
+            {
+                return HttpNotFound();
+            }
+            return View(campaign);
+        }
 
         // GET: Campaigns/Create
         public ActionResult Create()
@@ -81,36 +81,36 @@ namespace Distributor.Controllers
             return View(campaign);
         }
 
-        //// GET: Campaigns/Edit/5
-        //public ActionResult Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Campaign campaign = db.Campaigns.Find(id);
-        //    if (campaign == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(campaign);
-        //}
+        // GET: Campaigns/Edit/5
+        public ActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Campaign campaign = db.Campaigns.Find(id);
+            if (campaign == null)
+            {
+                return HttpNotFound();
+            }
+            return View(campaign);
+        }
 
-        //// POST: Campaigns/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "CampaignId,Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,EntityStatus,CampaignOriginatorAppUserId,CampaignOriginatorBranchId,CampaignOriginatorCompanyId,CampaignOriginatorDateTime")] Campaign campaign)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(campaign).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(campaign);
-        //}
+        // POST: Campaigns/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "CampaignId,Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,EntityStatus,CampaignOriginatorAppUserId,CampaignOriginatorBranchId,CampaignOriginatorCompanyId,CampaignOriginatorDateTime")] Campaign campaign)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(campaign).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(campaign);
+        }
 
         //// GET: Campaigns/Delete/5
         //public ActionResult Delete(Guid? id)

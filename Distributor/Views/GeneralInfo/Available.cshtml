@@ -118,15 +118,15 @@
                     <td><input type="button" value="Offer" class="btn btn-sm btn-primary btn-block showhideofferdetails" id=@offerButton disabled /></td>
                 }
                 <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                <td><input type="button" value="Save" class="btn btn-sm btn-success btn-block showhideofferdetails" id=@saveButton disabled /></td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.ItemDescription)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'"><input type="button" value="Save" class="btn btn-sm btn-success btn-block showhideofferdetails" id=@saveButton disabled /></td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemDescription)</td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
+                <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
             </tr>
         }
 

@@ -59,13 +59,13 @@
             foreach (var item in Model)
             {
                 <tr>
-                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</th>
-                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</th>
-                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</th>
-                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</th>
-                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</th>
-                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</th>
-                    <th>@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</th>
+                    <th onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</th>
+                    <th onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</th>
+                    <th onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</th>
+                    <th onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</th>
+                    <th onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</th>
+                    <th onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</th>
+                    <th onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</th>
                 </tr>
             }
         }

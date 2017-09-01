@@ -22,20 +22,20 @@ namespace Distributor.Controllers
         //    return View(db.RequirementListings.ToList());
         //}
 
-        //// GET: RequirementListings/Details/5
-        //public ActionResult Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    RequirementListing requirementListing = db.RequirementListings.Find(id);
-        //    if (requirementListing == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(requirementListing);
-        //}
+        // GET: RequirementListings/Details/5
+        public ActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RequirementListing requirementListing = db.RequirementListings.Find(id);
+            if (requirementListing == null)
+            {
+                return HttpNotFound();
+            }
+            return View(requirementListing);
+        }
 
         // GET: RequirementListings/Create
         public ActionResult Create()
@@ -79,36 +79,36 @@ namespace Distributor.Controllers
             return View(requirementListing);
         }
 
-        //// GET: RequirementListings/Edit/5
-        //public ActionResult Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    RequirementListing requirementListing = db.RequirementListings.Find(id);
-        //    if (requirementListing == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(requirementListing);
-        //}
+        // GET: RequirementListings/Edit/5
+        public ActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RequirementListing requirementListing = db.RequirementListings.Find(id);
+            if (requirementListing == null)
+            {
+                return HttpNotFound();
+            }
+            return View(requirementListing);
+        }
 
-        //// POST: RequirementListings/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,DeliveryAvailable,ListingStatus,ListingBranchPostcode,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId,ListingOriginatorDateTime,CampaignId")] RequirementListing requirementListing)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(requirementListing).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(requirementListing);
-        //}
+        // POST: RequirementListings/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,DeliveryAvailable,ListingStatus,ListingBranchPostcode,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId,ListingOriginatorDateTime,CampaignId")] RequirementListing requirementListing)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(requirementListing).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(requirementListing);
+        }
 
         //// GET: RequirementListings/Delete/5
         //public ActionResult Delete(Guid? id)

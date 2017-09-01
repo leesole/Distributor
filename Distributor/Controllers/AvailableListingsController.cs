@@ -22,20 +22,20 @@ namespace Distributor.Controllers
         //    return View(db.AvailableListings.ToList());
         //}
 
-        //// GET: AvailableListings/Details/5
-        //public ActionResult Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    AvailableListing availableListing = db.AvailableListings.Find(id);
-        //    if (availableListing == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(availableListing);
-        //}
+        // GET: AvailableListings/Details/5
+        public ActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AvailableListing availableListing = db.AvailableListings.Find(id);
+            if (availableListing == null)
+            {
+                return HttpNotFound();
+            }
+            return View(availableListing);
+        }
 
         // GET: AvailableListings/Create
         public ActionResult Create()
@@ -79,36 +79,36 @@ namespace Distributor.Controllers
             return View(availableListing);
         }
 
-        //// GET: AvailableListings/Edit/5
-        //public ActionResult Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    AvailableListing availableListing = db.AvailableListings.Find(id);
-        //    if (availableListing == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(availableListing);
-        //}
+        // GET: AvailableListings/Edit/5
+        public ActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AvailableListing availableListing = db.AvailableListings.Find(id);
+            if (availableListing == null)
+            {
+                return HttpNotFound();
+            }
+            return View(availableListing);
+        }
 
-        //// POST: AvailableListings/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,CollectionAvailable,ListingStatus,ListingBranchPostcode,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId,ListingOriginatorDateTime")] AvailableListing availableListing)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(availableListing).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(availableListing);
-        //}
+        // POST: AvailableListings/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,CollectionAvailable,ListingStatus,ListingBranchPostcode,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId,ListingOriginatorDateTime")] AvailableListing availableListing)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(availableListing).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(availableListing);
+        }
 
         //// GET: AvailableListings/Delete/5
         //public ActionResult Delete(Guid? id)

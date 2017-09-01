@@ -55,14 +55,14 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.ItemDescription)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
-                <td>@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemDescription)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
             </tr>
         }
 
