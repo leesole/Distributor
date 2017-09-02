@@ -1,5 +1,9 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Microsoft.AspNet.Identity
+@using Distributor.Extenstions
+@using Distributor.Helpers
+
+@{
+    var userRole = User.Identity.GetCurrentUserRole();
 }
 
 @section Scripts {
@@ -8,81 +12,136 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header" style="margin: 10px 0px 10px">Dashboard <small>Home</small></h1>
-            <ol class="breadcrumb">
-                <li class="active">Home</li>
-            </ol>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac
+    if (userRole == "User")
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="margin: 10px 0px 10px">Dashboard <small>Home</small></h1>
+                <ol class="breadcrumb">
+                    <li class="active">Home</li>
+                </ol>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac
+            </div>
         </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-sm-4 col-md-4">
-            <div class="login-panel panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Tasks</h3>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Campaigns</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>Campaign</p>
+                        <p>Campaign</p>
+                        <p>Campaign</p>
+                        <p>Campaign</p>
+                        <p>Campaign</p>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <p>List of the outstanding actions - maybe top x in date order</p>
-                    <p>List of the outstanding actions - maybe top x in date order</p>
-                    <p>List of the outstanding actions - maybe top x in date order</p>
-                    <p>List of the outstanding actions - maybe top x in date order</p>
-                    <p>List of the outstanding actions - maybe top x in date order</p>
-                    <p>List of the outstanding actions - maybe top x in date order</p>
-                    <p>List of the outstanding actions - maybe top x in date order</p>
+            </div>
+            <div class="col-sm-4 col-md-8">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Requirement listing</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Our list of requirements that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE -
+                            This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-8">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Available listing</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Our list of available that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE -
+                            This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-md-8">
-            <div class="login-panel panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Requirement listing</h3>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="margin: 10px 0px 10px">Dashboard <small>Home</small></h1>
+                <ol class="breadcrumb">
+                    <li class="active">Home</li>
+                </ol>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Tasks</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>List of the outstanding actions - maybe top x in date order</p>
+                        <p>List of the outstanding actions - maybe top x in date order</p>
+                        <p>List of the outstanding actions - maybe top x in date order</p>
+                        <p>List of the outstanding actions - maybe top x in date order</p>
+                        <p>List of the outstanding actions - maybe top x in date order</p>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <p>Our list of requirements that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE - 
-                       This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!</p>
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Actions</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>These will be a list of actions such as un-attached orders, users etc when branches/users are made inactive or change branches etc.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-8">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Campaigns</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            CAMPAIGNS...........!!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-8">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Requirement listing</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Our list of requirements that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE -
+                            This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-8">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Available listing</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Our list of available that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE -
+                            This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-md-8">
-            <div class="login-panel panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Actions</h3>
-                </div>
-                <div class="panel-body">
-                    <p>These will be a list of actions such as un-attached orders, users etc when branches/users are made inactive or change branches etc.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-            @*<div class="row">
-                <div class="col-md-2 col-sm-3 sidebar">
-                    <ul class="nav nav-stacked nav-pills">
-                        <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li class="disabled">General Info</li>
-                        <li><a href="#">Campaigns</a></li>
-                        <li><a href="#">Requests</a></li>
-                        <li><a href="#">Available</a></li>
-                        <li><br /></li>
-                        <li class="disabled">Your Listings</li>
-                        <li><a href="#">Campaigns</a></li>
-                        <li><a href="#">Requests</a></li>
-                        <li><a href="#">Available</a></li>
-                        <li><a href="#">Orders</a></li>
-                        <li><a href="#"></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-10 col-sm-9">
-                    <h1 class="page-header" style="margin: 10px 0px 10px">Home <small>Dashboard</small></h1>
-                    <ol class="breadcrumb">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    </ol>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam placerat nunc ut tellus tristique, non posuere neque iaculis. Fusce aliquet dui ut felis rhoncus, vitae molestie mauris auctor. Donec pellentesque feugiat leo a adipiscing. Pellentesque quis tristique eros, sed rutrum mauris.</p>
-                </div>
-            </div>*@
-            <!-- /.row -->
+    }
 }
 else
 {
