@@ -221,6 +221,7 @@
     <Compile Include="Helpers\BranchHelpers.cs" />
     <Compile Include="Helpers\BranchUserHelpers.cs" />
     <Compile Include="Helpers\CampaignHelpers.cs" />
+    <Compile Include="Helpers\DashboardHelpers.cs" />
     <Compile Include="Helpers\GeneralHelpers.cs" />
     <Compile Include="Helpers\OrderHelpers.cs" />
     <Compile Include="Helpers\CompanyAdminHelpers.cs" />
@@ -369,6 +370,7 @@
     <Compile Include="ViewModels\AvailableListingViews.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CampaignViews.cs" />
+    <Compile Include="ViewModels\DashboardView.cs" />
     <Compile Include="ViewModels\OfferViews.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
     <Compile Include="ViewModels\OrderViews.cs" />

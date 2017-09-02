@@ -2,6 +2,8 @@
 @using Distributor.Extenstions
 @using Distributor.Helpers
 
+@model Distributor.ViewModels.DashboardView
+
 @{
     var userRole = User.Identity.GetCurrentUserRole();
 }
@@ -20,7 +22,6 @@
                 <ol class="breadcrumb">
                     <li class="active">Home</li>
                 </ol>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac
             </div>
         </div>
 
@@ -28,7 +29,7 @@
             <div class="col-sm-4 col-md-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Campaigns</h3>
+                        <h3 class="panel-title">Your campaigns</h3>
                     </div>
                     <div class="panel-body">
                         <p>Campaign</p>
@@ -42,7 +43,7 @@
             <div class="col-sm-4 col-md-8">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Requirement listing</h3>
+                        <h3 class="panel-title">Your requirement listing</h3>
                     </div>
                     <div class="panel-body">
                         <p>
@@ -51,11 +52,10 @@
                         </p>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4 col-md-8">
+
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Available listing</h3>
+                        <h3 class="panel-title">Your available listing</h3>
                     </div>
                     <div class="panel-body">
                         <p>
@@ -75,7 +75,6 @@
                 <ol class="breadcrumb">
                     <li class="active">Home</li>
                 </ol>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac
             </div>
         </div>
 
@@ -83,19 +82,36 @@
             <div class="col-sm-4 col-md-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Tasks</h3>
+                        <h3 class="panel-title">Your tasks</h3>
                     </div>
                     <div class="panel-body">
-                        <p>List of the outstanding actions - maybe top x in date order</p>
-                        <p>List of the outstanding actions - maybe top x in date order</p>
-                        <p>List of the outstanding actions - maybe top x in date order</p>
-                        <p>List of the outstanding actions - maybe top x in date order</p>
-                        <p>List of the outstanding actions - maybe top x in date order</p>
+                        @if (Model.UserTaskList == null || Model.UserTaskList.Count == 0)
+                        {
+                            <p>No tasks to show</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Task type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    @foreach (var item in Model.UserTaskList)
+                                    {
+                                        <tr id=@item.UserTaskId>
+                                            <td>@Html.DisplayFor(modelItem => item.TaskType)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.TaskDescription)</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        }                        
                     </div>
                 </div>
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Actions</h3>
+                        <h3 class="panel-title">Your actions</h3>
                     </div>
                     <div class="panel-body">
                         <p>These will be a list of actions such as un-attached orders, users etc when branches/users are made inactive or change branches etc.</p>
@@ -105,38 +121,103 @@
             <div class="col-sm-4 col-md-8">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Campaigns</h3>
+                        <h3 class="panel-title">Your campaigns</h3>
                     </div>
                     <div class="panel-body">
-                        <p>
-                            CAMPAIGNS...........!!
-                        </p>
+                        @if (Model.CampaignList == null || Model.CampaignList.Count == 0)
+                        {
+                            <p>No campaigns to show</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Website</th>
+                                        <th>Start date</th>
+                                    </tr>
+                                    @foreach (var item in Model.CampaignList)
+                                    {
+                                        <tr id=@item.CampaignId>
+                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Website)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        } 
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4 col-md-8">
+
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Requirement listing</h3>
+                        <h3 class="panel-title">Your requirement listing</h3>
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Our list of requirements that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE -
-                            This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!
-                        </p>
+                        @if (Model.RequirementListingList == null || Model.RequirementListingList.Count == 0)
+                        {
+                            <p>No requirements to show</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Quantity required</th>
+                                        <th>UoM</th>
+                                    </tr>
+                                    @foreach (var item in Model.RequirementListingList)
+                                    {
+                                        <tr id=@item.ListingId>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        }
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4 col-md-8">
+
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Available listing</h3>
+                        <h3 class="panel-title">Your available listing</h3>
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Our list of available that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE -
-                            This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!
-                        </p>
+                        @if (Model.AvailableListingList == null || Model.AvailableListingList.Count == 0)
+                        {
+                            <p>No available items to show</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Quantity available</th>
+                                        <th>UoM</th>
+                                    </tr>
+                                    @foreach (var item in Model.AvailableListingList)
+                                    {
+                                        <tr id=@item.ListingId>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

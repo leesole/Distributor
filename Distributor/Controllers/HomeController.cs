@@ -1,5 +1,6 @@
 ﻿using Distributor.Extenstions;
 using Distributor.Helpers;
+using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,14 @@ namespace Distributor.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            DashboardView dashboardView = new DashboardView();
+
+            if (User.Identity.IsAuthenticated)
+                dashboardView = DashboardHelpers.GetDashboardViewLogin(User);
+            else
+                dashboardView = DashboardHelpers.GetDashboardView();
+
+            return View(dashboardView);
         }
 
         public ActionResult About()
