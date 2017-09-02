@@ -17,7 +17,9 @@ namespace Distributor.Helpers
         public static AppUser GetAppUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetAppUser(db, appUserId);
+            AppUser appUser = GetAppUser(db, appUserId);
+            db.Dispose();
+            return appUser;
         }
 
         public static AppUser GetAppUser(ApplicationDbContext db, Guid appUserId)
@@ -28,7 +30,9 @@ namespace Distributor.Helpers
         public static AppUser GetAppUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetAppUser(db, user);
+            AppUser appUser = GetAppUser(db, user);
+            db.Dispose();
+            return appUser;
         }
 
         public static AppUser GetAppUser(ApplicationDbContext db, IPrincipal user)
@@ -46,7 +50,9 @@ namespace Distributor.Helpers
         public static AppUser CreateAppUser(string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus);
+            AppUser appUser = CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus);
+            db.Dispose();
+            return appUser;
         }
 
         public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus)
@@ -72,7 +78,9 @@ namespace Distributor.Helpers
         public static AppUser UpdateCurrentBranchId(Guid appUserId, Guid branchId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateCurrentBranchId(db, appUserId, branchId);
+            AppUser appUser = UpdateCurrentBranchId(db, appUserId, branchId);
+            db.Dispose();
+            return appUser;
         }
 
         public static AppUser UpdateCurrentBranchId(ApplicationDbContext db, Guid appUserId, Guid branchId)
@@ -88,7 +96,9 @@ namespace Distributor.Helpers
         public static AppUser UpdateEntityStatus(Guid appUserId, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateEntityStatus(db, appUserId, entityStatus);
+            AppUser appUser = UpdateEntityStatus(db, appUserId, entityStatus);
+            db.Dispose();
+            return appUser;
         }
 
         public static AppUser UpdateEntityStatus(ApplicationDbContext db, Guid appUserId, EntityStatusEnum entityStatus)
@@ -104,7 +114,9 @@ namespace Distributor.Helpers
         public static AppUser UpdateAppUserExcludingCurrentBranchField(Guid appUserId, string firstName, string lastName, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateAppUserExcludingCurrentBranchField(db, appUserId, firstName, lastName, entityStatus);
+            AppUser appUser = UpdateAppUserExcludingCurrentBranchField(db, appUserId, firstName, lastName, entityStatus);
+            db.Dispose();
+            return appUser;
         }
 
         public static AppUser UpdateAppUserExcludingCurrentBranchField(ApplicationDbContext db, Guid appUserId, string firstName, string lastName, EntityStatusEnum entityStatus)
@@ -127,6 +139,7 @@ namespace Distributor.Helpers
         {
             ApplicationDbContext db = new ApplicationDbContext();
             DeleteAppUser(db, appUserId);
+            db.Dispose();
         }
 
         public static void DeleteAppUser(ApplicationDbContext db, Guid appUserId)

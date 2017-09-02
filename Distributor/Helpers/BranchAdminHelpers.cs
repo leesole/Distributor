@@ -18,7 +18,9 @@ namespace Distributor.Helpers
         public static List<BranchAdminView> GetBranchAdminViewList(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetBranchAdminViewList(db, user);
+            List<BranchAdminView> list = GetBranchAdminViewList(db, user);
+            db.Dispose();
+            return list;
         }
 
         public static List<BranchAdminView> GetBranchAdminViewList(ApplicationDbContext db, IPrincipal user)
@@ -110,7 +112,9 @@ namespace Distributor.Helpers
         public static bool UpdateBranchesFromBranchAdminView(List<BranchAdminView> branchesAdminView, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateBranchesFromBranchAdminView(db, branchesAdminView, user);
+            bool updated = UpdateBranchesFromBranchAdminView(db, branchesAdminView, user);
+            db.Dispose();
+            return updated;
         }
 
         public static bool UpdateBranchesFromBranchAdminView(ApplicationDbContext db, List<BranchAdminView> branchesAdminView, IPrincipal user)

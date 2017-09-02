@@ -18,7 +18,9 @@ namespace Distributor.Helpers
         public static List<UserAdminView> GetUserAdminViewListForUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetUserAdminViewListForUser(db, user);
+            List<UserAdminView> list = GetUserAdminViewListForUser(db, user);
+            db.Dispose();
+            return list;
         }
 
         public static List<UserAdminView> GetUserAdminViewListForUser(ApplicationDbContext db, IPrincipal user)
@@ -154,7 +156,9 @@ namespace Distributor.Helpers
         public static bool UpdateUsersFromUserAdminView(List<UserAdminView> userAdminViewForUser, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateUsersFromUserAdminView(db, userAdminViewForUser, user);
+            bool updated = UpdateUsersFromUserAdminView(db, userAdminViewForUser, user);
+            db.Dispose();
+            return updated;
         }
 
         public static bool UpdateUsersFromUserAdminView(ApplicationDbContext db, List<UserAdminView> userAdminViewForUser, IPrincipal user)

@@ -18,7 +18,9 @@ namespace Distributor.Helpers
         public static UserTask GetUserTask(Guid taskId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetUserTask(db, taskId);
+            UserTask userTask = GetUserTask(db, taskId);
+            db.Dispose();
+            return userTask;
         }
 
         public static UserTask GetUserTask(ApplicationDbContext db, Guid taskId)
@@ -29,7 +31,9 @@ namespace Distributor.Helpers
         public static List<UserTask> GetUserTasksForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetUserTasksForUser(db, appUserId);
+            List<UserTask> list = GetUserTasksForUser(db, appUserId);
+            db.Dispose();
+            return list;
         }
 
         public static List<UserTask> GetUserTasksForUser(ApplicationDbContext db, Guid appUserId)
@@ -48,7 +52,9 @@ namespace Distributor.Helpers
         public static List<UserTask> GetUserTasksForBranch(Guid branchId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetUserTasksForBranch(db, branchId);
+            List<UserTask> list = GetUserTasksForBranch(db, branchId);
+            db.Dispose();
+            return list;
         }
 
         public static List<UserTask> GetUserTasksForBranch(ApplicationDbContext db, Guid branchId)
@@ -71,7 +77,9 @@ namespace Distributor.Helpers
         public static UserTask CreateUserTask(TaskTypeEnum taskType, string taskDescription, Guid referenceKey, Guid createdBy, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateUserTask(db, taskType, taskDescription, referenceKey, createdBy, entityStatus);
+            UserTask userTask = CreateUserTask(db, taskType, taskDescription, referenceKey, createdBy, entityStatus);
+            db.Dispose();
+            return userTask;
         }
 
         public static UserTask CreateUserTask(ApplicationDbContext db, TaskTypeEnum taskType, string taskDescription, Guid referenceKey, Guid createdBy, EntityStatusEnum entityStatus)
@@ -196,7 +204,9 @@ namespace Distributor.Helpers
         public static UserTask UpdateEntityStatus(Guid userTaskId, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateEntityStatus(db, userTaskId, entityStatus);
+            UserTask userTask = UpdateEntityStatus(db, userTaskId, entityStatus);
+            db.Dispose();
+            return userTask;
         }
 
         public static UserTask UpdateEntityStatus(ApplicationDbContext db, Guid userTaskId, EntityStatusEnum entityStatus)
@@ -219,7 +229,9 @@ namespace Distributor.Helpers
         public static List<UserTaskView> GetUserTasksForUserView(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetUserTasksForUserView(db, appUserId);
+            List<UserTaskView> list = GetUserTasksForUserView(db, appUserId);
+            db.Dispose();
+            return list;
         }
         public static List<UserTaskView> GetUserTasksForUserView(ApplicationDbContext db, Guid appUserId)
         {
@@ -263,7 +275,9 @@ namespace Distributor.Helpers
         public static UserTaskView GetUserTaskForUserView(Guid appUserId, Guid userTaskId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetUserTaskForUserView(db, appUserId, userTaskId);
+            UserTaskView view = GetUserTaskForUserView(db, appUserId, userTaskId);
+            db.Dispose();
+            return view;
         }
 
         public static UserTaskView GetUserTaskForUserView(ApplicationDbContext db, Guid appUserId, Guid userTaskId)

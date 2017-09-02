@@ -17,7 +17,9 @@ namespace Distributor.Helpers
         public static BranchUser GetBranchUser(Guid branchUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetBranchUser(db, branchUserId);
+            BranchUser branchUser = GetBranchUser(db, branchUserId);
+            db.Dispose();
+            return branchUser;
         }
 
         public static BranchUser GetBranchUser(ApplicationDbContext db, Guid branchUserId)
@@ -28,7 +30,9 @@ namespace Distributor.Helpers
         public static BranchUser GetBranchUser(Guid appUserId, Guid branchId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetBranchUser(db, appUserId, branchId);
+            BranchUser branchUser = GetBranchUser(db, appUserId, branchId);
+            db.Dispose();
+            return branchUser;
         }
 
         public static BranchUser GetBranchUser(ApplicationDbContext db, Guid appUserId, Guid branchId)
@@ -43,7 +47,9 @@ namespace Distributor.Helpers
         public static BranchUser GetBranchUser(Guid appUserId, Guid branchId, Guid companyId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetBranchUser(db, appUserId, branchId, companyId);
+            BranchUser branchUser = GetBranchUser(db, appUserId, branchId, companyId);
+            db.Dispose();
+            return branchUser;
         }
 
         public static BranchUser GetBranchUser(ApplicationDbContext db, Guid appUserId, Guid branchId, Guid companyId)
@@ -59,7 +65,9 @@ namespace Distributor.Helpers
         public static BranchUser GetBranchUserCurrentForUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetBranchUserCurrentForUser(db, user);
+            BranchUser branchUser = GetBranchUserCurrentForUser(db, user);
+            db.Dispose();
+            return branchUser;
         }
 
         //Returns the current branch/company/appuser for the user sent
@@ -76,7 +84,9 @@ namespace Distributor.Helpers
         public static BranchUser CreateBranchUser(Guid userId, Guid branchId, Guid companyId, UserRoleEnum userRole, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateBranchUser(db, userId, branchId, companyId, userRole, entityStatus);
+            BranchUser branchUser = CreateBranchUser(db, userId, branchId, companyId, userRole, entityStatus);
+            db.Dispose();
+            return branchUser;
         }
 
         public static BranchUser CreateBranchUser(ApplicationDbContext db, Guid userId, Guid branchId, Guid companyId, UserRoleEnum userRole, EntityStatusEnum entityStatus)
@@ -103,7 +113,9 @@ namespace Distributor.Helpers
         public static BranchUser UpdateBranchUserStatus(Guid branchUserId, EntityStatusEnum newEntityStatus, Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateBranchUserStatus(db, branchUserId, newEntityStatus, appUserId);
+            BranchUser updateBranchUser = UpdateBranchUserStatus(db, branchUserId, newEntityStatus, appUserId);
+            db.Dispose();
+            return updateBranchUser;
         }
 
         public static BranchUser UpdateBranchUserStatus(ApplicationDbContext db, Guid branchUserId, EntityStatusEnum newEntityStatus, Guid appUserId)
@@ -123,7 +135,9 @@ namespace Distributor.Helpers
         public static BranchUser UpdateBranchUserStatus(BranchUser branchUser, EntityStatusEnum newEntityStatus, Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateBranchUserStatus(db, branchUser, newEntityStatus, appUserId);
+            BranchUser updateBranchUser = UpdateBranchUserStatus(db, branchUser, newEntityStatus, appUserId);
+            db.Dispose();
+            return updateBranchUser;
         }
 
         public static BranchUser UpdateBranchUserStatus(ApplicationDbContext db, BranchUser branchUser, EntityStatusEnum newEntityStatus, Guid appUserId)
@@ -142,7 +156,9 @@ namespace Distributor.Helpers
         public static BranchUser UpdateBranchUserRole(Guid branchUserId, UserRoleEnum userRole)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateBranchUserRole(db, branchUserId, userRole);
+            BranchUser updateBranchUser = UpdateBranchUserRole(db, branchUserId, userRole);
+            db.Dispose();
+            return updateBranchUser;
         }
 
         public static BranchUser UpdateBranchUserRole(ApplicationDbContext db, Guid branchUserId, UserRoleEnum userRole)

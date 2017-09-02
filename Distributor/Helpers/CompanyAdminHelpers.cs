@@ -15,7 +15,9 @@ namespace Distributor.Helpers
         public static CompanyAdminView GetCompanyAdminView(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetCompanyAdminView(db, user);
+            CompanyAdminView view = GetCompanyAdminView(db, user);
+            db.Dispose();
+            return view;
         }
 
         public static CompanyAdminView GetCompanyAdminView(ApplicationDbContext db, IPrincipal user)
@@ -43,7 +45,9 @@ namespace Distributor.Helpers
         public static bool UpdateCompanyFromCompanyAdminView(CompanyAdminView companyAdminView)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateCompanyFromCompanyAdminView(db, companyAdminView);
+            bool updated = UpdateCompanyFromCompanyAdminView(db, companyAdminView);
+            db.Dispose();
+            return updated;
         }
 
         public static bool UpdateCompanyFromCompanyAdminView(ApplicationDbContext db, CompanyAdminView companyAdminView)

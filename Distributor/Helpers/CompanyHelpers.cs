@@ -16,7 +16,9 @@ namespace Distributor.Helpers
         public static List<Company> GetAllCompanies()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetAllCompanies(db);
+            List<Company> list = GetAllCompanies(db);
+            db.Dispose();
+            return list;
         }
 
         public static List<Company> GetAllCompanies(ApplicationDbContext db)
@@ -27,7 +29,9 @@ namespace Distributor.Helpers
         public static Company GetCompany(Guid companyId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetCompany(db, companyId);
+            Company company = GetCompany(db, companyId);
+            db.Dispose();
+            return company;
         }
 
         public static Company GetCompany(ApplicationDbContext db, Guid companyId)
@@ -38,7 +42,9 @@ namespace Distributor.Helpers
         public static Company GetCompanyForUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetCompanyForUser(db, user);
+            Company company = GetCompanyForUser(db, user);
+            db.Dispose();
+            return company;
         }
 
         public static Company GetCompanyForUser(ApplicationDbContext db, IPrincipal user)
@@ -50,7 +56,9 @@ namespace Distributor.Helpers
         public static Company GetCompanyForUser(AppUser appUser)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetCompanyForUser(db, appUser);
+            Company company = GetCompanyForUser(db, appUser);
+            db.Dispose();
+            return company;
         }
 
         public static Company GetCompanyForUser(ApplicationDbContext db, AppUser appUser)
@@ -67,7 +75,9 @@ namespace Distributor.Helpers
         public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
+            Company company = CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
+            db.Dispose();
+            return company;
         }
 
         public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
@@ -95,7 +105,9 @@ namespace Distributor.Helpers
         public static Company UpdateCompany(Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateCompany(db, companyId, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
+            Company company = UpdateCompany(db, companyId, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
+            db.Dispose();
+            return company;
         }
 
         public static Company UpdateCompany(ApplicationDbContext db, Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
@@ -117,7 +129,9 @@ namespace Distributor.Helpers
         public static Company UpdateCompanyHeadOffice(Guid companyId, Guid headOfficeBranchId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateCompanyHeadOffice(db, companyId, headOfficeBranchId);
+            Company company = UpdateCompanyHeadOffice(db, companyId, headOfficeBranchId);
+            db.Dispose();
+            return company;
         }
 
         public static Company UpdateCompanyHeadOffice(ApplicationDbContext db, Guid companyId, Guid headOfficeBranchId)

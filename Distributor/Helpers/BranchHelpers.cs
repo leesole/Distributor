@@ -18,7 +18,9 @@ namespace Distributor.Helpers
         public static Branch GetBranch(Guid branchId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetBranch(db, branchId);
+            Branch branch = GetBranch(db, branchId);
+            db.Dispose();
+            return branch;
         }
 
         public static Branch GetBranch(ApplicationDbContext db, Guid branchId)
@@ -29,7 +31,9 @@ namespace Distributor.Helpers
         public static List<Branch> GetBranchesForCompany(Guid companyId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetBranchesForCompany(db, companyId);
+            List<Branch> list = GetBranchesForCompany(db, companyId);
+            db.Dispose();
+            return list;
         }
 
         public static List<Branch> GetBranchesForCompany(ApplicationDbContext db, Guid companyId)
@@ -45,7 +49,9 @@ namespace Distributor.Helpers
         public static Branch GetCurrentBranchForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return GetCurrentBranchForUser(db, appUserId);
+            Branch branch = GetCurrentBranchForUser(db, appUserId);
+            db.Dispose();
+            return branch;
         }
 
         public static Branch GetCurrentBranchForUser(ApplicationDbContext db, Guid appUserId)
@@ -65,7 +71,9 @@ namespace Distributor.Helpers
         public static Branch CreateBranch(Branch branch)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateBranch(db, branch);
+            Branch newBranch = CreateBranch(db, branch);
+            db.Dispose();
+            return newBranch;
         }
 
         public static Branch CreateBranch(ApplicationDbContext db, Branch branch)
@@ -81,7 +89,9 @@ namespace Distributor.Helpers
         public static Branch CreateBranch(Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return CreateBranch(db, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
+            Branch newBranch = CreateBranch(db, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
+            db.Dispose();
+            return newBranch;
         }
 
         public static Branch CreateBranch(ApplicationDbContext db, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
@@ -116,7 +126,9 @@ namespace Distributor.Helpers
         public static Branch UpdateBranch(Guid branchId, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateBranch(db, branchId, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
+            Branch branch = UpdateBranch(db, branchId, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
+            db.Dispose();
+            return branch;
         }
 
         public static Branch UpdateBranch(ApplicationDbContext db, Guid branchId, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
@@ -145,7 +157,9 @@ namespace Distributor.Helpers
         public static Branch UpdateEntityStatus(Guid branchId, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return UpdateEntityStatus(db, branchId, entityStatus);
+            Branch branch = UpdateEntityStatus(db, branchId, entityStatus);
+            db.Dispose();
+            return branch;
         }
 
         public static Branch UpdateEntityStatus(ApplicationDbContext db, Guid branchId, EntityStatusEnum entityStatus)
