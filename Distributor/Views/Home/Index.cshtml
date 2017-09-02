@@ -32,11 +32,32 @@
                         <h3 class="panel-title">Your campaigns</h3>
                     </div>
                     <div class="panel-body">
-                        <p>Campaign</p>
-                        <p>Campaign</p>
-                        <p>Campaign</p>
-                        <p>Campaign</p>
-                        <p>Campaign</p>
+                        @if (Model.CampaignList == null || Model.CampaignList.Count == 0)
+                        {
+                            <p>No campaigns to show</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Website</th>
+                                        <th>Start date</th>
+                                    </tr>
+                                    @foreach (var item in Model.CampaignList)
+                                    {
+                                        <tr id=@item.CampaignId>
+                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Website)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        } 
                     </div>
                 </div>
             </div>
@@ -46,10 +67,32 @@
                         <h3 class="panel-title">Your requirement listing</h3>
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Our list of requirements that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE -
-                            This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!
-                        </p>
+                        @if (Model.RequirementListingList == null || Model.RequirementListingList.Count == 0)
+                        {
+                            <p>No requirements to show</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Quantity required</th>
+                                        <th>UoM</th>
+                                    </tr>
+                                    @foreach (var item in Model.RequirementListingList)
+                                    {
+                                        <tr id=@item.ListingId>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -58,10 +101,32 @@
                         <h3 class="panel-title">Your available listing</h3>
                     </div>
                     <div class="panel-body">
-                        <p>
-                            Our list of available that we have put up on the system - I THINK THERE WILL BE A DIFFERENT DASH DEPENDING ON USER TYPE -
-                            This will require partial views and then we can select what partial parts to put where on the screen - to be completed!!
-                        </p>
+                        @if (Model.AvailableListingList == null || Model.AvailableListingList.Count == 0)
+                        {
+                            <p>No available items to show</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Quantity available</th>
+                                        <th>UoM</th>
+                                    </tr>
+                                    @foreach (var item in Model.AvailableListingList)
+                                    {
+                                        <tr id=@item.ListingId>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
