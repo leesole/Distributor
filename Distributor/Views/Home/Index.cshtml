@@ -27,7 +27,7 @@
 
         <div class="row">
             <div class="col-sm-4 col-md-4">
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Campaigns", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your campaigns</h3>
                     </div>
@@ -39,7 +39,7 @@
                         else
                         {
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-condensed">
                                     <tr class="info">
                                         <th>Name</th>
                                         <th>Description</th>
@@ -62,9 +62,9 @@
                 </div>
             </div>
             <div class="col-sm-4 col-md-8">
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Requirements", "ManageListings")'">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Your requirement listing</h3>
+                        <h3 class="panel-title">Your requests listing</h3>
                     </div>
                     <div class="panel-body">
                         @if (Model.RequirementListingList == null || Model.RequirementListingList.Count == 0)
@@ -74,7 +74,7 @@
                         else
                         {
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-condensed">
                                     <tr class="info">
                                         <th>Description</th>
                                         <th>Type</th>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
 
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Available", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your available listing</h3>
                     </div>
@@ -108,7 +108,7 @@
                         else
                         {
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-condensed">
                                     <tr class="info">
                                         <th>Description</th>
                                         <th>Type</th>
@@ -145,7 +145,7 @@
 
         <div class="row">
             <div class="col-sm-4 col-md-4">
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-warning" onclick = "location.href='@Url.Action("Tasks", "Admin", new { redirect = Request.Url.ToString() })'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your tasks</h3>
                     </div>
@@ -157,7 +157,7 @@
                         else
                         {
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-condensed">
                                     <tr class="info">
                                         <th>Task type</th>
                                         <th>Description</th>
@@ -171,10 +171,11 @@
                                     }
                                 </table>
                             </div>
-                        }                        
+                        }
                     </div>
                 </div>
-                <div class="login-panel panel panel-default">
+
+                <div class="login-panel panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your actions</h3>
                     </div>
@@ -184,7 +185,7 @@
                 </div>
             </div>
             <div class="col-sm-4 col-md-8">
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Campaigns", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your campaigns</h3>
                     </div>
@@ -196,7 +197,7 @@
                         else
                         {
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-condensed">
                                     <tr class="info">
                                         <th>Name</th>
                                         <th>Description</th>
@@ -218,9 +219,9 @@
                     </div>
                 </div>
 
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Requirements", "ManageListings")'">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Your requirement listing</h3>
+                        <h3 class="panel-title">Your requests listing</h3>
                     </div>
                     <div class="panel-body">
                         @if (Model.RequirementListingList == null || Model.RequirementListingList.Count == 0)
@@ -230,7 +231,7 @@
                         else
                         {
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-condensed">
                                     <tr class="info">
                                         <th>Description</th>
                                         <th>Type</th>
@@ -252,7 +253,7 @@
                     </div>
                 </div>
 
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Available", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your available listing</h3>
                     </div>
@@ -264,7 +265,7 @@
                         else
                         {
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-condensed">
                                     <tr class="info">
                                         <th>Description</th>
                                         <th>Type</th>

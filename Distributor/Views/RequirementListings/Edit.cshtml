@@ -1,4 +1,4 @@
-﻿@model Distributor.Models.RequirementListing
+﻿@model Distributor.ViewModels.RequirementListingEditView
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -35,18 +35,46 @@
             <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
             <li class="active">Edit Details</li>
         </ol>
-        <p class="lead">Your requirement listing.</p>
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-6">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listing details</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listee details</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal"></dl>
+            </div>
+        </div>
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Campaign details</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal"></dl>
+            </div>
+        </div>
+    </div>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>RequirementListing</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ListingId)
 

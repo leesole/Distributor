@@ -245,4 +245,53 @@ namespace Distributor.Helpers
 
         #endregion
     }
+
+    public static class RequirementListingEditHelpers
+    {
+        #region Get
+
+        public static RequirementListingEditView GetRequirementListingEditView(Guid listingId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            RequirementListingEditView view = GetRequirementListingEditView(db, listingId);
+            db.Dispose();
+            return view;
+        }
+
+        public static RequirementListingEditView GetRequirementListingEditView(ApplicationDbContext db, Guid listingId)
+        {
+            RequirementListing requirementListing = RequirementListingHelpers.GetRequirementListing(db, listingId);
+            AppUser listingAppUser = AppUserHelpers.GetAppUser(db, requirementListing.ListingOriginatorAppUserId);
+            Branch listingBranch = BranchHelpers.GetBranch(db, requirementListing.ListingOriginatorBranchId);
+            Campaign listingCampaign = null;
+
+            if (requirementListing.CampaignId.Value != null || requirementListing.CampaignId.Value != Guid.Empty)
+                listingCampaign = CampaignHelpers.GetCampaign(db, requirementListing.CampaignId.Value);
+
+            RequirementListingEditView view = new RequirementListingEditView()
+            {
+                ListingId = requirementListing.ListingId,
+                ItemDescription = requirementListing.ItemDescription,
+                ItemType = requirementListing.ItemType,
+                QuantityRequired = requirementListing.QuantityRequired,
+                QuantityFulfilled = requirementListing.QuantityFulfilled,
+                QuantityOutstanding = requirementListing.QuantityOutstanding,
+                UoM = requirementListing.UoM,
+                RequiredFrom = requirementListing.RequiredFrom,
+                RequiredTo = requirementListing.RequiredTo,
+                AcceptDamagedItems = requirementListing.AcceptDamagedItems,
+                CollectionAvailable = requirementListing.CollectionAvailable,
+                ListingStatus = requirementListing.ListingStatus,
+                ListingOriginatorDateTime = requirementListing.ListingOriginatorDateTime,
+                ListingAppUser = listingAppUser,
+                ListingBranchDetails = listingBranch,
+                CampaignDetails = listingCampaign
+            };
+
+            return view;
+        }
+
+        #endregion
+    }
 }

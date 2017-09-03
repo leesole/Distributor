@@ -28,7 +28,13 @@ namespace Distributor.Enums
             Canned = 2,
             [Category("Food")]
             [Description("Packet")]
-            Packet = 3
+            Packet = 3,
+            [Category("Food")]
+            [Description("Cooked")]
+            Cooked = 4,
+            [Category("Food")]
+            [Description("Carton")]
+            Carton = 5
         }
 
         public enum ItemConditionEnum

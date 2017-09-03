@@ -71,7 +71,7 @@ namespace Distributor.Controllers
         {
             if (ModelState.IsValid)
             {
-                RequirementListingHelpers.CreateRequirementListingFromRequirementListingAddView(requirementListing, User);
+                RequirementListingHelpers.CreateRequirementListingFromRequirementListingAddView(db, requirementListing, User);
 
                 return RedirectToAction(requirementListing.CallingAction, requirementListing.CallingController);
             }
@@ -86,7 +86,8 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RequirementListing requirementListing = db.RequirementListings.Find(id);
+            //RequirementListing requirementListing = db.RequirementListings.Find(id);
+            RequirementListingEditView requirementListing = RequirementListingEditHelpers.GetRequirementListingEditView(db, id);
             if (requirementListing == null)
             {
                 return HttpNotFound();
