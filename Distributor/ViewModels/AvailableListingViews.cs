@@ -51,4 +51,50 @@ namespace Distributor.ViewModels
     {
         public AvailableListing AvailableListing { get; set; }
     }
+
+    public class AvailableListingEditView
+    {
+        public Guid ListingId { get; set; }
+
+        [Required]
+        [Display(Name = "Description")]
+        public string ItemDescription { get; set; }
+
+        [Required]
+        [Display(Name = "Item type")]
+        public ItemTypeEnum ItemType { get; set; }
+
+        [Display(Name = "Quantity available")]
+        public decimal QuantityRequired { get; set; }
+
+        [Display(Name = "Quantity reserved")]
+        public decimal QuantityFulfilled { get; set; }
+
+        [Display(Name = "Quantity available")]
+        public decimal QuantityOutstanding { get; set; }
+
+        [Display(Name = "Unit of measure")]
+        public string UoM { get; set; }
+
+        [Display(Name = "Available from")]
+        public DateTime? AvailableFrom { get; set; }
+
+        [Display(Name = "Available to")]
+        public DateTime? AvailableTo { get; set; }
+
+        [Display(Name = "Item condition")]
+        public ItemConditionEnum ItemCondition { get; set; }
+
+        [Display(Name = "Can deliver?")]
+        public bool DeliveryAvailable { get; set; }
+
+        [Display(Name = "Listing status")]
+        public ItemRequiredListingStatusEnum ListingStatus { get; set; }
+
+        [Display(Name = "Listing submitted date")]
+        public DateTime ListingOriginatorDateTime { get; set; }
+
+        public AppUser ListingAppUser { get; set; }
+        public Branch ListingBranchDetails { get; set; }
+    }
 }

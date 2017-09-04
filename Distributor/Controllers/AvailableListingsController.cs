@@ -67,7 +67,7 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,CollectionAvailable,ListingStatus,CallingAction,CallingController")] AvailableListingAddView availableListing)
+        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,DeliveryAvailable,ListingStatus,CallingAction,CallingController")] AvailableListingAddView availableListing)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,8 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AvailableListing availableListing = db.AvailableListings.Find(id);
+            //AvailableListing availableListing = db.AvailableListings.Find(id);
+            AvailableListingEditView availableListing = AvailableListingEditHelpers.GetAvailableListingEditView(db, id.Value);
             if (availableListing == null)
             {
                 return HttpNotFound();
@@ -99,14 +100,27 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,CollectionAvailable,ListingStatus,ListingBranchPostcode,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId,ListingOriginatorDateTime")] AvailableListing availableListing)
+        public ActionResult Edit(AvailableListingEditView availableListing)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(availableListing).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //If the 'Submit' button pressed then update tables, else leave as are so that on reload it takes original values once again.
+                if (Request.Form["submitbutton"] != null)
+                {
+                    //Update tables
+                    AvailableListingHelpers.UpdateAvailableListingFromAvailableListingEditView(db, availableListing);
+
+                    return RedirectToAction("Available", "ManageListings");
+                }
+
+                return RedirectToAction("Edit");
             }
+
+            //rebuild the missing details before returning to screen to show errors
+            AvailableListing listing = AvailableListingHelpers.GetAvailableListing(db, availableListing.ListingId);
+            availableListing.ListingAppUser = AppUserHelpers.GetAppUser(db, listing.ListingOriginatorAppUserId);
+            availableListing.ListingBranchDetails = BranchHelpers.GetBranch(db, listing.ListingOriginatorAppUserId);
+
             return View(availableListing);
         }
 

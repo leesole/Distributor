@@ -1,4 +1,9 @@
-﻿@model Distributor.Models.Order
+﻿@model Distributor.ViewModels.OrderEditView
+
+@{ 
+    var uoM = "";
+    var description = "";
+}
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -35,178 +40,291 @@
             <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
             <li class="active">Edit Details</li>
         </ol>
-        <p class="lead">Your order.</p>
     </div>
 </div>
 
+@if (Model.AvailableListingDetails != null)
+{
+    uoM = Model.AvailableListingDetails.UoM;
+    description = Model.AvailableListingDetails.ItemDescription;
+
+    <p class="lead">Listing details</p>
+    <div class="table-responsive">
+        <table class="table">
+            <tr class="info">
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemDescription)</th>
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemType)</th>
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.QuantityOutstanding)</th>
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.UoM)</th>
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableFrom)</th>
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableTo)</th>
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemCondition)</th>
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.DeliveryAvailable)</th>
+            </tr>
+            <tr>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.ItemDescription)</td>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.ItemType)</td>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.QuantityOutstanding)</td>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.UoM)</td>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableFrom)</td>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableTo)</td>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.ItemCondition)</td>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.DeliveryAvailable)</td>
+            </tr>
+        </table>
+    </div>
+}
+@if (Model.RequirementListingDetails != null)
+{
+    uoM = Model.RequirementListingDetails.UoM;
+    description = Model.RequirementListingDetails.ItemDescription;
+
+    <p class="lead">Listing details</p>
+    <div class="table-responsive">
+        <table class="table">
+            <tr class="info">
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemDescription)</th>
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemType)</th>
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.QuantityOutstanding)</th>
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.UoM)</th>
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredFrom)</th>
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredTo)</th>
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.AcceptDamagedItems)</th>
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.CollectionAvailable)</th>
+            </tr>
+            <tr>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.ItemDescription)</td>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.ItemType)</td>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.QuantityOutstanding)</td>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.UoM)</td>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredFrom)</td>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredTo)</td>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.AcceptDamagedItems)</td>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.CollectionAvailable)</td>
+            </tr>
+        </table>
+    </div>
+}
+@if (Model.OfferDetails != null)
+{
+    <p class="lead">Offer details</p>
+    <div class="table-responsive">
+        <table class="table">
+            <tr class="info">
+                <th>@Html.DisplayNameFor(model => model.OfferDetails.ListingType)</th>
+                <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
+                <th>@Html.DisplayNameFor(model => model.OfferDetails.CurrentOfferQuantity)</th>
+                <th>@Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)</th>
+                <th>@Html.DisplayNameFor(model => model.OfferDetails.PreviousOfferQuantity)</th>
+                <th>Unit of measure</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>@Html.DisplayFor(model => model.OfferDetails.ListingType)</td>
+                <td>@Html.DisplayFor(model => model.OfferDetails.OfferStatus)</td>
+                <td>@Html.DisplayFor(model => model.OfferDetails.CurrentOfferQuantity)</td>
+                <td>@Html.DisplayFor(model => model.OfferDetails.CounterOfferQuantity)</td>
+                <td>@Html.DisplayFor(model => model.OfferDetails.PreviousOfferQuantity)</td>
+                <td>@uoM</td>
+                <td>@description</td>
+            </tr>
+        </table>
+    </div>
+}
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>Order</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.OrderId)
+    <div class="row">
+        <div class="col-md-6">
+            <div class="login-panel panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Order details</h3>
+                </div>
+                <div class="panel-body">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderQuanity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderQuanity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderQuanity, "", new { @class = "text-danger" })
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.OrderId)
+                    
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderStatus)</div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.OrderStatus, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OrderStatus, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderQuanity)</div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.OrderQuanity, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OrderQuanity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.Label("Unit of measure")</div>
+                        <div class="col-md-8">@uoM</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderCreationDateTime)</div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.OrderCreationDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OrderCreationDateTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderDistributionDateTime)</div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.OrderDistributionDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OrderDistributionDateTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderDeliveredDateTime)</div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.OrderDeliveredDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OrderDeliveredDateTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderCollectedDateTime)</div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.OrderCollectedDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OrderCollectedDateTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderClosedDateTime)</div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.OrderClosedDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OrderClosedDateTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.OrderStatus, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.OrderStatus, "", new { @class = "text-danger" })
+        <div class="col-md-6">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Order created by</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderAppUser.FirstName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderAppUser.FirstName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderAppUser.LastName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderAppUser.LastName)</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.BranchName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.BranchName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressLine1)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressLine1)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressTownCity)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressTownCity)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressCounty)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressCounty)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressPostcode)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressPostcode)</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderCreationDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderCreationDateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderCreationDateTime, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-md-6">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Listing created by</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.FirstName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.FirstName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.LastName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.LastName)</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.BranchName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.BranchName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderDistributionDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderDistributionDateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderDistributionDateTime, "", new { @class = "text-danger" })
+        <div class="col-md-6">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Offer created by</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferAppUser.FirstName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferAppUser.FirstName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferAppUser.LastName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferAppUser.LastName)</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.BranchName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.BranchName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressLine1)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressLine1)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressTownCity)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressTownCity)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressCounty)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressCounty)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressPostcode)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressPostcode)</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderDeliveredDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderDeliveredDateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderDeliveredDateTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderCollectedDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderCollectedDateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderCollectedDateTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderClosedDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderClosedDateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderClosedDateTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderOriginatorAppUserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderOriginatorAppUserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderOriginatorAppUserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderOriginatorBranchId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderOriginatorBranchId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderOriginatorBranchId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderOriginatorCompanyId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderOriginatorCompanyId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderOriginatorCompanyId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderOriginatorDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderOriginatorDateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderOriginatorDateTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OfferId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OfferId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OfferId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OfferOriginatorAppUserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OfferOriginatorAppUserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OfferOriginatorAppUserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OfferOriginatorBranchId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OfferOriginatorBranchId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OfferOriginatorBranchId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OfferOriginatorCompanyId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OfferOriginatorCompanyId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OfferOriginatorCompanyId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ListingId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ListingId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ListingId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ListingOriginatorAppUserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ListingOriginatorAppUserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ListingOriginatorAppUserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ListingOriginatorBranchId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ListingOriginatorBranchId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ListingOriginatorBranchId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ListingOriginatorCompanyId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ListingOriginatorCompanyId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ListingOriginatorCompanyId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+        <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
     </div>
 }
 

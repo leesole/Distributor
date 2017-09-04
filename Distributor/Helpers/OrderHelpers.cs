@@ -2,6 +2,7 @@
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -10,7 +11,7 @@ using static Distributor.Enums.OrderEnums;
 
 namespace Distributor.Helpers
 {
-    public class OrderHelpers
+    public static class OrderHelpers
     {
         #region Get
 
@@ -133,6 +134,35 @@ namespace Distributor.Helpers
         }
 
         #endregion
+
+        #region Update
+
+        public static Order UpdateOrderFromOrderEditView(OrderEditView view)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Order orderDetails = UpdateOrderFromOrderEditView(db, view);
+            db.Dispose();
+            return orderDetails;
+        }
+
+        public static Order UpdateOrderFromOrderEditView(ApplicationDbContext db, OrderEditView view)
+        {
+            Order orderDetails = GetOrder(db, view.OrderId);
+            orderDetails.OrderQuanity = view.OrderQuanity;
+            orderDetails.OrderStatus = view.OrderStatus;
+            orderDetails.OrderCreationDateTime = view.OrderCreationDateTime;
+            orderDetails.OrderDistributionDateTime = view.OrderDistributionDateTime;
+            orderDetails.OrderDeliveredDateTime = view.OrderDeliveredDateTime;
+            orderDetails.OrderCollectedDateTime = view.OrderCollectedDateTime;
+            orderDetails.OrderClosedDateTime = view.OrderClosedDateTime;
+
+            db.Entry(orderDetails).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return orderDetails;
+        }
+
+        #endregion
     }
 
     public static class OrderManageHelpers
@@ -195,6 +225,108 @@ namespace Distributor.Helpers
             }
 
             return allOrdersManageView;
+        }
+
+        #endregion
+    }
+
+    public static class OrderEditHelpers
+    {
+        #region Get
+
+        public static OrderEditView GetOrderEditView(Guid orderId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            OrderEditView view = GetOrderEditView(db, orderId);
+            db.Dispose();
+            return view;
+        }
+
+        public static OrderEditView GetOrderEditView(ApplicationDbContext db, Guid orderId)
+        {
+            Order orderDetails = OrderHelpers.GetOrder(db, orderId);
+            AppUser orderAppUser = null;
+            Branch orderBranch = null;
+            AppUser offerAppUser = null;
+            Branch offerBranch = null;
+            AppUser listingAppUser = null;
+            Branch listingBranch = null;
+            Offer offerDetails = null;
+            AvailableListing availableListing = null;
+            RequirementListing requirementListing = null;
+            
+            if (orderDetails.OrderOriginatorAppUserId != null)
+                if (orderDetails.OrderOriginatorAppUserId.Value != Guid.Empty)
+                    orderAppUser = AppUserHelpers.GetAppUser(db, orderDetails.OrderOriginatorAppUserId.Value);
+
+            if (orderDetails.OrderOriginatorBranchId != null)
+                if (orderDetails.OrderOriginatorBranchId.Value != Guid.Empty)
+                    orderBranch = BranchHelpers.GetBranch(db, orderDetails.ListingOriginatorBranchId.Value);
+
+            if (orderDetails.OfferOriginatorAppUserId != null)
+                if (orderDetails.OfferOriginatorAppUserId.Value != Guid.Empty)
+                    offerAppUser = AppUserHelpers.GetAppUser(db, orderDetails.OfferOriginatorAppUserId.Value);
+
+            if (orderDetails.OfferOriginatorBranchId != null)
+                if (orderDetails.OfferOriginatorBranchId.Value != Guid.Empty)
+                    offerBranch = BranchHelpers.GetBranch(db, orderDetails.OfferOriginatorBranchId.Value);
+
+            if (orderDetails.ListingOriginatorAppUserId != null)
+                if (orderDetails.ListingOriginatorAppUserId.Value != Guid.Empty)
+                    listingAppUser = AppUserHelpers.GetAppUser(db, orderDetails.ListingOriginatorAppUserId.Value);
+
+            if (orderDetails.ListingOriginatorBranchId != null)
+                if (orderDetails.ListingOriginatorBranchId.Value != Guid.Empty)
+                    listingBranch = BranchHelpers.GetBranch(db, orderDetails.ListingOriginatorBranchId.Value);
+
+            if (orderDetails.OfferId != null)
+            {
+                if (orderDetails.OfferId.Value != Guid.Empty)
+                {
+                    offerDetails = OfferHelpers.GetOffer(db, orderDetails.OfferId.Value);
+                    if (orderDetails.ListingId != null)
+                    {
+                        if (orderDetails.ListingId.Value != Guid.Empty)
+                        {
+                            switch (offerDetails.ListingType)
+                            {
+                                case ListingTypeEnum.Available:
+                                    availableListing = AvailableListingHelpers.GetAvailableListing(db, orderDetails.ListingId.Value);
+                                    break;
+                                case ListingTypeEnum.Requirement:
+                                    requirementListing = RequirementListingHelpers.GetRequirementListing(db, orderDetails.ListingId.Value);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            OrderEditView view = new OrderEditView()
+            {
+                OrderId = orderDetails.OrderId,
+                OrderQuanity = orderDetails.OrderQuanity,
+                OrderStatus = orderDetails.OrderStatus,
+                OrderCreationDateTime = orderDetails.OrderCreationDateTime,
+                OrderDistributionDateTime = orderDetails.OrderDistributionDateTime,
+                OrderDeliveredDateTime = orderDetails.OrderDeliveredDateTime,
+                OrderCollectedDateTime = orderDetails.OrderCollectedDateTime,
+                OrderClosedDateTime = orderDetails.OrderClosedDateTime,
+                OrderAppUser = orderAppUser,
+                OrderBranchDetails = orderBranch,
+                OfferId = orderDetails.OfferId.GetValueOrDefault(),
+                OfferAppUser = offerAppUser,
+                OfferBranchDetails = offerBranch,
+                OfferDetails = offerDetails,
+                ListingId = orderDetails.ListingId.GetValueOrDefault(),
+                ListingAppUser = listingAppUser,
+                ListingBranchDetails = listingBranch,
+                AvailableListingDetails = availableListing,
+                RequirementListingDetails = requirementListing
+            };
+
+            return view;
         }
 
         #endregion

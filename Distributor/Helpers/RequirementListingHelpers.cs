@@ -165,6 +165,35 @@ namespace Distributor.Helpers
             return listing;
         }
 
+        public static RequirementListing UpdateRequirementListingFromRequirementListingEditView(RequirementListingEditView view)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            RequirementListing listing = UpdateRequirementListingFromRequirementListingEditView(db, view);
+            db.Dispose();
+            return listing;
+        }
+
+        public static RequirementListing UpdateRequirementListingFromRequirementListingEditView(ApplicationDbContext db, RequirementListingEditView view)
+        {
+            RequirementListing listing = GetRequirementListing(db, view.ListingId);
+            listing.ItemDescription = view.ItemDescription;
+            listing.ItemType = view.ItemType;
+            listing.QuantityRequired = view.QuantityRequired;
+            listing.QuantityFulfilled = view.QuantityFulfilled;
+            listing.QuantityOutstanding = view.QuantityOutstanding;
+            listing.UoM = view.UoM;
+            listing.RequiredFrom = view.RequiredFrom;
+            listing.RequiredTo = view.RequiredTo;
+            listing.AcceptDamagedItems = view.AcceptDamagedItems;
+            listing.CollectionAvailable = view.CollectionAvailable;
+            listing.ListingStatus = view.ListingStatus;
+
+            db.Entry(listing).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return listing;
+        }
+
         #endregion
     }
 
@@ -266,8 +295,9 @@ namespace Distributor.Helpers
             Branch listingBranch = BranchHelpers.GetBranch(db, requirementListing.ListingOriginatorBranchId);
             Campaign listingCampaign = null;
 
-            if (requirementListing.CampaignId.Value != null || requirementListing.CampaignId.Value != Guid.Empty)
-                listingCampaign = CampaignHelpers.GetCampaign(db, requirementListing.CampaignId.Value);
+            if (requirementListing.CampaignId != null)
+                if (requirementListing.CampaignId.Value != Guid.Empty)
+                    listingCampaign = CampaignHelpers.GetCampaign(db, requirementListing.CampaignId.Value);
 
             RequirementListingEditView view = new RequirementListingEditView()
             {

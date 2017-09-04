@@ -11,7 +11,7 @@ using static Distributor.Enums.ItemEnums;
 
 namespace Distributor.Helpers
 {
-    public class AvailableListingHelpers
+    public static class AvailableListingHelpers
     {
         #region Get
 
@@ -165,6 +165,35 @@ namespace Distributor.Helpers
             return listing;
         }
 
+        public static AvailableListing UpdateAvailableListingFromAvailableListingEditView(AvailableListingEditView view)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            AvailableListing listing = UpdateAvailableListingFromAvailableListingEditView(db, view);
+            db.Dispose();
+            return listing;
+        }
+
+        public static AvailableListing UpdateAvailableListingFromAvailableListingEditView(ApplicationDbContext db, AvailableListingEditView view)
+        {
+            AvailableListing listing = GetAvailableListing(db, view.ListingId);
+            listing.ItemDescription = view.ItemDescription;
+            listing.ItemType = view.ItemType;
+            listing.QuantityRequired = view.QuantityRequired;
+            listing.QuantityFulfilled = view.QuantityFulfilled;
+            listing.QuantityOutstanding = view.QuantityOutstanding;
+            listing.UoM = view.UoM;
+            listing.AvailableFrom = view.AvailableFrom;
+            listing.AvailableTo = view.AvailableTo;
+            listing.ItemCondition = view.ItemCondition;
+            listing.DeliveryAvailable = view.DeliveryAvailable;
+            listing.ListingStatus = view.ListingStatus;
+
+            db.Entry(listing).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return listing;
+        }
+
         #endregion
     }
 
@@ -275,4 +304,47 @@ namespace Distributor.Helpers
         #endregion
     }
 
+    public static class AvailableListingEditHelpers
+    {
+        #region Get
+
+        public static AvailableListingEditView GetAvailableListingEditView(Guid listingId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            AvailableListingEditView view = GetAvailableListingEditView(db, listingId);
+            db.Dispose();
+            return view;
+        }
+
+        public static AvailableListingEditView GetAvailableListingEditView(ApplicationDbContext db, Guid listingId)
+        {
+            AvailableListing availableListing = AvailableListingHelpers.GetAvailableListing(db, listingId);
+            AppUser listingAppUser = AppUserHelpers.GetAppUser(db, availableListing.ListingOriginatorAppUserId);
+            Branch listingBranch = BranchHelpers.GetBranch(db, availableListing.ListingOriginatorBranchId);
+
+            AvailableListingEditView view = new AvailableListingEditView()
+            {
+                ListingId = availableListing.ListingId,
+                ItemDescription = availableListing.ItemDescription,
+                ItemType = availableListing.ItemType,
+                QuantityRequired = availableListing.QuantityRequired,
+                QuantityFulfilled = availableListing.QuantityFulfilled,
+                QuantityOutstanding = availableListing.QuantityOutstanding,
+                UoM = availableListing.UoM,
+                AvailableFrom = availableListing.AvailableFrom,
+                AvailableTo = availableListing.AvailableTo,
+                ItemCondition = availableListing.ItemCondition,
+                DeliveryAvailable = availableListing.DeliveryAvailable,
+                ListingStatus = availableListing.ListingStatus,
+                ListingOriginatorDateTime = availableListing.ListingOriginatorDateTime,
+                ListingAppUser = listingAppUser,
+                ListingBranchDetails = listingBranch
+            };
+
+            return view;
+        }
+
+        #endregion
+    }
 }

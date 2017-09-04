@@ -67,7 +67,7 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,DeliveryAvailable,ListingStatus,CampaignId,CallingAction,CallingController")] RequirementListingAddView requirementListing)
+        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,CollectionAvailable,ListingStatus,CampaignId,CallingAction,CallingController")] RequirementListingAddView requirementListing)
         {
             if (ModelState.IsValid)
             {
@@ -86,8 +86,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //RequirementListing requirementListing = db.RequirementListings.Find(id);
-            RequirementListingEditView requirementListing = RequirementListingEditHelpers.GetRequirementListingEditView(db, id);
+            RequirementListingEditView requirementListing = RequirementListingEditHelpers.GetRequirementListingEditView(db, id.Value);
             if (requirementListing == null)
             {
                 return HttpNotFound();
@@ -100,14 +99,28 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,DeliveryAvailable,ListingStatus,ListingBranchPostcode,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId,ListingOriginatorDateTime,CampaignId")] RequirementListing requirementListing)
+        //public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,CollectionAvailable,ListingStatus,ListingOriginatorDateTime,ListingAppUser,ListingBranchDetails,CampaignDetails")] RequirementListingEditView requirementListing)
+        public ActionResult Edit(RequirementListingEditView requirementListing)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(requirementListing).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //If the 'Submit' button pressed then update tables, else leave as are so that on reload it takes original values once again.
+                if (Request.Form["submitbutton"] != null)
+                {
+                    //Update tables
+                    RequirementListingHelpers.UpdateRequirementListingFromRequirementListingEditView(db, requirementListing);
+
+                    return RedirectToAction("Requirements", "ManageListings");
+                }
+
+                return RedirectToAction("Edit");
             }
+            
+            //rebuild the missing details before returning to screen to show errors
+            RequirementListing listing = RequirementListingHelpers.GetRequirementListing(db, requirementListing.ListingId);
+            requirementListing.ListingAppUser = AppUserHelpers.GetAppUser(db, listing.ListingOriginatorAppUserId);
+            requirementListing.ListingBranchDetails = BranchHelpers.GetBranch(db, listing.ListingOriginatorAppUserId);
+            
             return View(requirementListing);
         }
 

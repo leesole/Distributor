@@ -94,7 +94,7 @@ namespace Distributor.ViewModels
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }
 
-        [Display(Name = "Listing location")]
+        [Display(Name = "Listing submitted date")]
         public DateTime ListingOriginatorDateTime { get; set; }
 
         public AppUser ListingAppUser { get; set; }

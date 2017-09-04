@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Distributor.Models;
+using Distributor.ViewModels;
+using Distributor.Helpers;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Controllers
 {
@@ -66,7 +69,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+            OrderEditView order = OrderEditHelpers.GetOrderEditView(db, id.Value);
             if (order == null)
             {
                 return HttpNotFound();
@@ -79,14 +82,72 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrderId,OrderQuanity,OrderStatus,OrderCreationDateTime,OrderDistributionDateTime,OrderDeliveredDateTime,OrderCollectedDateTime,OrderClosedDateTime,OrderOriginatorAppUserId,OrderOriginatorBranchId,OrderOriginatorCompanyId,OrderOriginatorDateTime,OfferId,OfferOriginatorAppUserId,OfferOriginatorBranchId,OfferOriginatorCompanyId,ListingId,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId")] Order order)
+        public ActionResult Edit(OrderEditView order)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //If the 'Submit' button pressed then update tables, else leave as are so that on reload it takes original values once again.
+                if (Request.Form["submitbutton"] != null)
+                {
+                    //Update tables
+                    OrderHelpers.UpdateOrderFromOrderEditView(db, order);
+
+                    return RedirectToAction("Orders", "ManageListings");
+                }
+
+                return RedirectToAction("Edit");
             }
+
+            //rebuild the missing details before returning to screen to show errors
+            Order orderDetails = OrderHelpers.GetOrder(db, order.OrderId);
+
+            if (orderDetails.OrderOriginatorAppUserId != null)
+                if (orderDetails.OrderOriginatorAppUserId.Value != Guid.Empty)
+                    order.OrderAppUser = AppUserHelpers.GetAppUser(db, orderDetails.OrderOriginatorAppUserId.Value);
+
+            if (orderDetails.OrderOriginatorBranchId != null)
+                if (orderDetails.OrderOriginatorBranchId.Value != Guid.Empty)
+                    order.OrderBranchDetails = BranchHelpers.GetBranch(db, orderDetails.OrderOriginatorBranchId.Value);
+
+            if (orderDetails.OfferOriginatorAppUserId != null)
+                if (orderDetails.OfferOriginatorAppUserId.Value != Guid.Empty)
+                    order.OfferAppUser = AppUserHelpers.GetAppUser(db, orderDetails.OfferOriginatorAppUserId.Value);
+
+            if (orderDetails.OfferOriginatorBranchId != null)
+                if (orderDetails.OfferOriginatorBranchId.Value != Guid.Empty)
+                    order.OfferBranchDetails = BranchHelpers.GetBranch(db, orderDetails.OfferOriginatorBranchId.Value);
+
+            if (orderDetails.ListingOriginatorAppUserId != null)
+                if (orderDetails.ListingOriginatorAppUserId.Value != Guid.Empty)
+                    order.ListingAppUser = AppUserHelpers.GetAppUser(db, orderDetails.ListingOriginatorAppUserId.Value);
+
+            if (orderDetails.ListingOriginatorBranchId != null)
+                if (orderDetails.ListingOriginatorBranchId.Value != Guid.Empty)
+                    order.ListingBranchDetails = BranchHelpers.GetBranch(db, orderDetails.ListingOriginatorBranchId.Value);
+
+            if (orderDetails.OfferId != null)
+            {
+                if (orderDetails.OfferId.Value != Guid.Empty)
+                {
+                    order.OfferDetails = OfferHelpers.GetOffer(db, orderDetails.OfferId.Value);
+                    if (orderDetails.ListingId != null)
+                    {
+                        if (orderDetails.ListingId.Value != Guid.Empty)
+                        {
+                            switch (order.OfferDetails.ListingType)
+                            {
+                                case ListingTypeEnum.Available:
+                                    order.AvailableListingDetails = AvailableListingHelpers.GetAvailableListing(db, orderDetails.ListingId.Value);
+                                    break;
+                                case ListingTypeEnum.Requirement:
+                                    order.RequirementListingDetails = RequirementListingHelpers.GetRequirementListing(db, orderDetails.ListingId.Value);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+
             return View(order);
         }
 
