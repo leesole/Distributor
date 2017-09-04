@@ -1,5 +1,4 @@
-﻿@model Distributor.Models.Campaign
-
+﻿@model Distributor.ViewModels.CampaignEditView
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,194 +36,143 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-6">
+        <div class="login-panel panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listing details</h3>
+            </div>
+            <div class="panel-body">
 
-<div>
-    <h4>Campaign</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.CampaignId)
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StrapLine)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StrapLine)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImageLocation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Website)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Website)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CampaignStartDateTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CampaignStartDateTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CampaignEndDateTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CampaignEndDateTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationAddressLine1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationAddressLine1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationAddressLine2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationAddressLine2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationAddressLine3)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationAddressLine3)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationAddressTownCity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationAddressTownCity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationAddressCounty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationAddressCounty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationAddressPostcode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationAddressPostcode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationTelephoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationTelephoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationEmail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationEmail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationContactName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationContactName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EntityStatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EntityStatus)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CampaignOriginatorAppUserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CampaignOriginatorAppUserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CampaignOriginatorBranchId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CampaignOriginatorBranchId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CampaignOriginatorCompanyId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CampaignOriginatorCompanyId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CampaignOriginatorDateTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CampaignOriginatorDateTime)
-        </dd>
-
-    </dl>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.Name)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.Name)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.StrapLine)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.StrapLine)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.Description)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.Description)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.Website)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.Website)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignStartDateTime)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignStartDateTime)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignEndDateTime)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignEndDateTime)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationName)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationName)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationAddressLine1)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationAddressLine1)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationAddressLine2)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationAddressLine2)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationAddressLine3)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationAddressLine3)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationAddressTownCity)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationAddressTownCity)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationAddressCounty)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationAddressCounty)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationAddressPostcode)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationAddressPostcode)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationTelephoneNumber)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationTelephoneNumber)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationEmail)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationEmail)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.LocationContactName)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.LocationContactName)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignOriginatorDateTime)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignOriginatorDateTime)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.EntityStatus)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.EntityStatus)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="login-panel panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Campaign poster</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.Image)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.Image)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.ImageLocation)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.ImageLocation)</div>
+                </div>
+            </div>
+        </div>
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Campaign created by</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignAppUser.FirstName)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignAppUser.FirstName)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignAppUser.LastName)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignAppUser.LastName)</div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.BranchName)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.BranchName)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.AddressLine1)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressLine1)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.AddressTownCity)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressTownCity)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.AddressCounty)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressCounty)</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.AddressPostcode)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressPostcode)</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

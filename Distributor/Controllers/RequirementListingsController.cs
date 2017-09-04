@@ -29,7 +29,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RequirementListing requirementListing = db.RequirementListings.Find(id);
+            RequirementListingEditView requirementListing = RequirementListingEditHelpers.GetRequirementListingEditView(db, id.Value);
             if (requirementListing == null)
             {
                 return HttpNotFound();
