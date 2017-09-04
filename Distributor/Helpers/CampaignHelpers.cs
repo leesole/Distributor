@@ -2,6 +2,7 @@
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
@@ -144,6 +145,49 @@ namespace Distributor.Helpers
         }
 
         #endregion
+
+        #region Update
+
+        public static Campaign UpdateCampaignFromCampaignEditView(CampaignEditView view)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Campaign campaignDetails = UpdateCampaignFromCampaignEditView(db, view);
+            db.Dispose();
+            return campaignDetails;
+        }
+
+        public static Campaign UpdateCampaignFromCampaignEditView(ApplicationDbContext db, CampaignEditView view)
+        {
+            Campaign campaignDetails = GetCampaign(db, view.CampaignId);
+            campaignDetails.CampaignId = view.CampaignId;
+            campaignDetails.Name = view.Name;
+            campaignDetails.StrapLine = view.StrapLine;
+            campaignDetails.Description = view.Description;
+            campaignDetails.Image = view.Image;
+            campaignDetails.ImageLocation = view.ImageLocation;
+            campaignDetails.Website = view.Website;
+            campaignDetails.CampaignStartDateTime = view.CampaignStartDateTime;
+            campaignDetails.CampaignEndDateTime = view.CampaignEndDateTime;
+            campaignDetails.LocationName = view.LocationName;
+            campaignDetails.LocationAddressLine1 = view.LocationAddressLine1;
+            campaignDetails.LocationAddressLine2 = view.LocationAddressLine2;
+            campaignDetails.LocationAddressLine3 = view.LocationAddressLine3;
+            campaignDetails.LocationAddressTownCity = view.LocationAddressTownCity;
+            campaignDetails.LocationAddressCounty = view.LocationAddressCounty;
+            campaignDetails.LocationAddressPostcode = view.LocationAddressPostcode;
+            campaignDetails.LocationTelephoneNumber = view.LocationTelephoneNumber;
+            campaignDetails.LocationEmail = view.LocationEmail;
+            campaignDetails.LocationContactName = view.LocationContactName;
+            campaignDetails.EntityStatus = view.EntityStatus;
+            campaignDetails.CampaignOriginatorDateTime = view.CampaignOriginatorDateTime;
+
+            db.Entry(campaignDetails).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return campaignDetails;
+        }
+
+        #endregion
     }
 
     public static class CampaignGeneralInfoViewHelpers
@@ -241,6 +285,58 @@ namespace Distributor.Helpers
             }
 
             return allCampaignsManageView;
+        }
+
+        #endregion
+    }
+
+    public static class CampaignEditHelpers
+    {
+        #region Get
+
+        public static CampaignEditView GetCampaignEditView(Guid campaignId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            CampaignEditView view = GetCampaignEditView(db, campaignId);
+            db.Dispose();
+            return view;
+        }
+
+        public static CampaignEditView GetCampaignEditView(ApplicationDbContext db, Guid campaignId)
+        {
+            Campaign campaignDetails = CampaignHelpers.GetCampaign(db, campaignId);
+            AppUser campaignAppUser = AppUserHelpers.GetAppUser(db, campaignDetails.CampaignOriginatorAppUserId);
+            Branch campaignBranch = BranchHelpers.GetBranch(db, campaignDetails.CampaignOriginatorBranchId);
+
+            CampaignEditView view = new CampaignEditView()
+            {
+                CampaignId = campaignDetails.CampaignId,
+                Name = campaignDetails.Name,
+                StrapLine = campaignDetails.StrapLine,
+                Description = campaignDetails.Description,
+                Image = campaignDetails.Image,
+                ImageLocation = campaignDetails.ImageLocation,
+                Website = campaignDetails.Website,
+                CampaignStartDateTime = campaignDetails.CampaignStartDateTime,
+                CampaignEndDateTime = campaignDetails.CampaignEndDateTime,
+                LocationName = campaignDetails.LocationName,
+                LocationAddressLine1 = campaignDetails.LocationAddressLine1,
+                LocationAddressLine2 = campaignDetails.LocationAddressLine2,
+                LocationAddressLine3 = campaignDetails.LocationAddressLine3,
+                LocationAddressTownCity = campaignDetails.LocationAddressTownCity,
+                LocationAddressCounty = campaignDetails.LocationAddressCounty,
+                LocationAddressPostcode = campaignDetails.LocationAddressPostcode,
+                LocationTelephoneNumber = campaignDetails.LocationTelephoneNumber,
+                LocationEmail = campaignDetails.LocationEmail,
+                LocationContactName = campaignDetails.LocationContactName,
+                EntityStatus = campaignDetails.EntityStatus,
+                CampaignOriginatorDateTime = campaignDetails.CampaignOriginatorDateTime,
+                CampaignAppUser = campaignAppUser,
+                CampaignBranchDetails = campaignBranch
+            };
+
+            return view;
         }
 
         #endregion

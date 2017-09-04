@@ -88,7 +88,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Campaign campaign = db.Campaigns.Find(id);
+            CampaignEditView campaign = CampaignEditHelpers.GetCampaignEditView(db, id.Value);
             if (campaign == null)
             {
                 return HttpNotFound();
@@ -101,14 +101,27 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CampaignId,Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,EntityStatus,CampaignOriginatorAppUserId,CampaignOriginatorBranchId,CampaignOriginatorCompanyId,CampaignOriginatorDateTime")] Campaign campaign)
+        public ActionResult Edit(CampaignEditView campaign)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(campaign).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //If the 'Submit' button pressed then update tables, else leave as are so that on reload it takes original values once again.
+                if (Request.Form["submitbutton"] != null)
+                {
+                    //Update tables
+                    CampaignHelpers.UpdateCampaignFromCampaignEditView(db, campaign);
+
+                    return RedirectToAction("Campaigns", "ManageListings");
+                }
+
+                return RedirectToAction("Edit");
             }
+
+            //rebuild the missing details before returning to screen to show errors
+            Campaign campaignDetails = CampaignHelpers.GetCampaign(db, campaign.CampaignId);
+            campaign.CampaignAppUser = AppUserHelpers.GetAppUser(db, campaignDetails.CampaignOriginatorAppUserId);
+            campaign.CampaignBranchDetails = BranchHelpers.GetBranch(db, campaignDetails.CampaignOriginatorBranchId);
+
             return View(campaign);
         }
 
