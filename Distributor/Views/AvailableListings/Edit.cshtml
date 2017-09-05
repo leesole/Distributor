@@ -85,7 +85,7 @@
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.ItemType)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.ItemType, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EnumDropDownListFor(model => model.ItemType, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.ItemType, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.ItemCondition)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.ItemCondition, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EnumDropDownListFor(model => model.ItemCondition, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.ItemCondition, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.ListingStatus)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.ListingStatus, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EnumDropDownListFor(model => model.ListingStatus, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.ListingStatus, "", new { @class = "text-danger" })
                         </div>
                     </div>

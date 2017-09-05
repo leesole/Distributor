@@ -196,7 +196,7 @@
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.EntityStatus)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.EntityStatus, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EnumDropDownListFor(model => model.EntityStatus, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.EntityStatus, "", new { @class = "text-danger" })
                         </div>
                     </div>

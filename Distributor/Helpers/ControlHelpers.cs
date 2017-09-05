@@ -6,6 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.ItemEnums;
+using static Distributor.Enums.OfferEnums;
+using static Distributor.Enums.OrderEnums;
 using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Helpers
@@ -34,6 +37,8 @@ namespace Distributor.Helpers
             return new SelectList(BranchHelpers.GetBranchesForCompany(companyId), "BranchId", "BranchName");
         }
 
+        #region BranchEnums
+
         public static SelectList BusinessTypeEnumListDropDown()
         {
             var businessTypeEnumList = (from BusinessTypeEnum bt in Enum.GetValues(typeof(BusinessTypeEnum))
@@ -45,6 +50,10 @@ namespace Distributor.Helpers
 
             return new SelectList(businessTypeEnumList, "Id", "Name");
         }
+
+        #endregion
+
+        #region EntityEnums
 
         public static SelectList EntityStatusEnumListDropDown()
         {
@@ -58,6 +67,94 @@ namespace Distributor.Helpers
             return new SelectList(entityStatusEnumList, "Id", "Name");
         }
 
+        #endregion
+
+        #region ItemEnum
+
+        public static SelectList ItemCategoryEnumListDropDown()
+        {
+            var itemCategoryEnumList = (from ItemCategoryEnum es in Enum.GetValues(typeof(ItemCategoryEnum))
+                                        select new
+                                        {
+                                            Id = es,
+                                            Name = EnumHelpers.GetDescription((ItemCategoryEnum)es)
+                                        });
+
+            return new SelectList(itemCategoryEnumList, "Id", "Name");
+        }
+
+        public static SelectList ItemTypeEnumListDropDown()
+        {
+            var itemTypeEnumList = (from ItemTypeEnum es in Enum.GetValues(typeof(ItemTypeEnum))
+                                    select new
+                                    {
+                                        Id = es,
+                                        Name = EnumHelpers.GetDescription((ItemTypeEnum)es)
+                                    });
+
+            return new SelectList(itemTypeEnumList, "Id", "Name");
+        }
+
+        public static SelectList ItemConditionEnumListDropDown()
+        {
+            var itemConditionEnumList = (from ItemConditionEnum es in Enum.GetValues(typeof(ItemConditionEnum))
+                                         select new
+                                         {
+                                             Id = es,
+                                             Name = EnumHelpers.GetDescription((ItemConditionEnum)es)
+                                         });
+
+            return new SelectList(itemConditionEnumList, "Id", "Name");
+        }
+
+        public static SelectList ItemRequiredListingStatusEnumListDropDown()
+        {
+            var itemRequiredListingStatusEnumList = (from ItemRequiredListingStatusEnum es in Enum.GetValues(typeof(ItemRequiredListingStatusEnum))
+                                                     select new
+                                                     {
+                                                         Id = es,
+                                                         Name = EnumHelpers.GetDescription((ItemRequiredListingStatusEnum)es)
+                                                     });
+
+            return new SelectList(itemRequiredListingStatusEnumList, "Id", "Name");
+        }
+
+        #endregion
+
+        #region OfferEnums
+
+        public static SelectList OfferStatusEnumListDropDown()
+        {
+            var offerStatusEnumList = (from OfferStatusEnum ur in Enum.GetValues(typeof(OfferStatusEnum))
+                                       select new
+                                       {
+                                           Id = ur,
+                                           Name = EnumHelpers.GetDescription((OfferStatusEnum)ur)
+                                       });
+
+            return new SelectList(offerStatusEnumList, "Id", "Name");
+        }
+
+        #endregion
+
+        #region OrderEnums
+
+        public static SelectList OrderStatusEnumListDropDown()
+        {
+            var orderStatusEnumList = (from OrderStatusEnum ur in Enum.GetValues(typeof(OrderStatusEnum))
+                                       select new
+                                       {
+                                           Id = ur,
+                                           Name = EnumHelpers.GetDescription((OrderStatusEnum)ur)
+                                       });
+
+            return new SelectList(orderStatusEnumList, "Id", "Name");
+        }
+
+        #endregion
+
+        #region UserEnums
+
         public static SelectList UserRoleEnumListDropDown()
         {
             var userRoleEnumList = (from UserRoleEnum ur in Enum.GetValues(typeof(UserRoleEnum))
@@ -69,6 +166,8 @@ namespace Distributor.Helpers
 
             return new SelectList(userRoleEnumList, "Id", "Name");
         }
+
+        #endregion
 
         #endregion
     }
