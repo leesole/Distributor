@@ -77,7 +77,7 @@ namespace Distributor.Helpers
                         userAdminView.LastName = appUserForCompany.LastName;
                         userAdminView.AppUserEntityStatus = appUserForCompany.EntityStatus;
                         userAdminView.CurrentBranchId = appUserForCompany.CurrentBranchId;
-                        userAdminView.LoginEmail = "";
+                        userAdminView.LoginEmail = appUserForCompany.LoginEmail;
                         userAdminView.RelatedBranches = (from rb in relatedBranches
                                                          where rb.AppUserId == appUserForCompany.AppUserId
                                                          select rb).ToList();
@@ -134,7 +134,7 @@ namespace Distributor.Helpers
                         userAdminView.LastName = appUserForBranch.LastName;
                         userAdminView.AppUserEntityStatus = appUserForBranch.EntityStatus;
                         userAdminView.CurrentBranchId = appUserForBranch.CurrentBranchId;
-                        userAdminView.LoginEmail = "";
+                        userAdminView.LoginEmail = appUserForBranch.LoginEmail;
                         userAdminView.RelatedBranches = (from rb in relatedBranches
                                                          where rb.AppUserId == appUserForBranch.AppUserId
                                                          select rb).ToList();

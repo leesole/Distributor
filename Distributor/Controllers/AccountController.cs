@@ -196,7 +196,7 @@ namespace Distributor.Controllers
                 }
 
                 //Create a new AppUser then write here
-                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, Guid.Empty, statusForUser);
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, Guid.Empty, statusForUser, model.Email);
 
                 Company company = null;
                 Branch branch = null;

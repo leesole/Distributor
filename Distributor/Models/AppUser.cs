@@ -25,5 +25,8 @@ namespace Distributor.Models
 
         [Display(Name = "Current branch")]
         public Guid CurrentBranchId { get; set; }
+
+        [Display(Name = "Login email")]
+        public string LoginEmail { get; set; }
     }
 }

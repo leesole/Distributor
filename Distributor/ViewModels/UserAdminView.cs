@@ -26,7 +26,7 @@ namespace Distributor.ViewModels
         [Display(Name = "Current branch")]
         public Guid CurrentBranchId { get; set; }
 
-        //Taken from AppNetUsers.Email
+        [Display(Name = "Login email")]
         public string LoginEmail { get; set; }
 
         public List<UserAdminRelatedBranchesView> RelatedBranches { get; set; }

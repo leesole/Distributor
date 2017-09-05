@@ -47,15 +47,15 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AppUser CreateAppUser(string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus)
+        public static AppUser CreateAppUser(string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUser appUser = CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus);
+            AppUser appUser = CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus, loginEmail);
             db.Dispose();
             return appUser;
         }
 
-        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus)
+        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail)
         {
             AppUser appUser = new AppUser()
             {
@@ -63,7 +63,8 @@ namespace Distributor.Helpers
                 FirstName = firstName,
                 LastName = lastName,
                 CurrentBranchId = currentBranchId,
-                EntityStatus = entityStatus
+                EntityStatus = entityStatus,
+                LoginEmail = loginEmail
             };
             db.AppUsers.Add(appUser);
             db.SaveChanges();
