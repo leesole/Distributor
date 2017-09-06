@@ -41,6 +41,15 @@ namespace Distributor.Models
         [Display(Name = "Item condition")]
         public ItemConditionEnum ItemCondition { get; set; }
 
+        [Display(Name = "Earliest display-until date")]
+        public DateTime? DisplayUntilDate { get; set; }
+
+        [Display(Name = "Earliest sell-by date")]
+        public DateTime? SellByDate { get; set; }
+
+        [Display(Name = "Earliest use-by date")]
+        public DateTime? UseByDate { get; set; }
+
         [Display(Name = "Can deliver?")]
         public bool DeliveryAvailable { get; set; }
 

@@ -70,6 +70,7 @@
             <th>@Html.DisplayNameFor(model => model.AvailableListing.AvailableFrom)</th>
             <th>@Html.DisplayNameFor(model => model.AvailableListing.AvailableTo)</th>
             <th>@Html.DisplayNameFor(model => model.AvailableListing.ItemCondition)</th>
+            <th>@Html.DisplayNameFor(model => model.AvailableListing.UseByDate)</th>
             <th>@Html.DisplayNameFor(model => model.AvailableListing.DeliveryAvailable)</th>
         </tr>
 
@@ -83,6 +84,7 @@
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
             </tr>
         }

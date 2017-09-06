@@ -352,6 +352,10 @@
     <Compile Include="Migrations\201709050709115_31st.Designer.cs">
       <DependentUpon>201709050709115_31st.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709060909098_32nd.cs" />
+    <Compile Include="Migrations\201709060909098_32nd.Designer.cs">
+      <DependentUpon>201709060909098_32nd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -389,6 +393,12 @@
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\jquery-ui.css" />
+    <Content Include="css\jquery-ui.min.css" />
+    <Content Include="css\jquery-ui.structure.css" />
+    <Content Include="css\jquery-ui.structure.min.css" />
+    <Content Include="css\jquery-ui.theme.css" />
+    <Content Include="css\jquery-ui.theme.min.css" />
     <Content Include="css\modern-business.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -407,6 +417,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -614,6 +626,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709050709115_31st.resx">
       <DependentUpon>201709050709115_31st.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709060909098_32nd.resx">
+      <DependentUpon>201709060909098_32nd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -7,6 +7,18 @@
     var userRole = User.Identity.GetCurrentUserRole();
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+        })
+    </script>
+}
+
 @if (ViewBag.CallingController == "GeneralInfo")
 {
     <nav class="navbar navbar-fixed-top">
@@ -171,7 +183,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RequiredFrom, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.RequiredFrom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.RequiredFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
                 @Html.ValidationMessageFor(model => model.RequiredFrom, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -179,7 +191,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RequiredTo, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.RequiredTo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.RequiredTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
                 @Html.ValidationMessageFor(model => model.RequiredTo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -190,6 +202,16 @@
                 <div class="checkbox">
                     @Html.EditorFor(model => model.AcceptDamagedItems)
                     @Html.ValidationMessageFor(model => model.AcceptDamagedItems, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AcceptOutOfDateItems, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.AcceptOutOfDateItems)
+                    @Html.ValidationMessageFor(model => model.AcceptOutOfDateItems, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -216,8 +238,4 @@
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-success" />
     </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

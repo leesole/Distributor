@@ -70,6 +70,7 @@
             <th>@Html.DisplayNameFor(model => model.RequirementListing.RequiredFrom)</th>
             <th>@Html.DisplayNameFor(model => model.RequirementListing.RequiredTo)</th>
             <th>@Html.DisplayNameFor(model => model.RequirementListing.AcceptDamagedItems)</th>
+            <th>@Html.DisplayNameFor(model => model.RequirementListing.AcceptOutOfDateItems)</th>
             <th>@Html.DisplayNameFor(model => model.RequirementListing.CollectionAvailable)</th>
         </tr>
 
@@ -83,6 +84,7 @@
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.RequiredFrom)</td>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.RequiredTo)</td>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
+                <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
             </tr>
         }

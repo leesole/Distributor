@@ -39,6 +39,9 @@
             @Html.DisplayNameFor(model => model.AcceptDamagedItems)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.AcceptOutOfDateItems)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.CollectionAvailable)
         </th>
         <th>
@@ -95,7 +98,10 @@
             @Html.DisplayFor(modelItem => item.AcceptDamagedItems)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DeliveryAvailable)
+            @Html.DisplayFor(modelItem => item.AcceptOutOfDateItems)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectionAvailable)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ListingStatus)

@@ -2,8 +2,21 @@
 @using Distributor.Extenstions
 
 @model Distributor.ViewModels.AvailableListingAddView
+
 @{
     var userRole = User.Identity.GetCurrentUserRole();
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+        })
+    </script>
 }
 
 @if (ViewBag.CallingController == "GeneralInfo")
@@ -169,7 +182,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AvailableFrom, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.AvailableFrom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.AvailableFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
                 @Html.ValidationMessageFor(model => model.AvailableFrom, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -177,7 +190,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AvailableTo, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.AvailableTo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.AvailableTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
                 @Html.ValidationMessageFor(model => model.AvailableTo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -187,6 +200,30 @@
             <div class="col-md-8">
                 @Html.EnumDropDownListFor(model => model.ItemCondition, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ItemCondition, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisplayUntilDate, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.DisplayUntilDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                @Html.ValidationMessageFor(model => model.DisplayUntilDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SellByDate, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.SellByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                @Html.ValidationMessageFor(model => model.SellByDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UseByDate, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.UseByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                @Html.ValidationMessageFor(model => model.UseByDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -212,8 +249,4 @@
     <div class="form-group">
         <input type="submit" value="Create" class="btn btn-success" />
     </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

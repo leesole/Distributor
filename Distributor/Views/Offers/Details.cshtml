@@ -179,6 +179,18 @@
                         <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.DeliveryAvailable)</div>
                     </div>
                     <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.DisplayUntilDate)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.DisplayUntilDate)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.SellByDate)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.SellByDate)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.UseByDate)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.UseByDate)</div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.QuantityOutstanding)</div>
                         <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.QuantityOutstanding)</div>
                     </div>
@@ -200,6 +212,14 @@
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.AcceptDamagedItems)</div>
                         <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.AcceptDamagedItems)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.RequiredFrom)</div>

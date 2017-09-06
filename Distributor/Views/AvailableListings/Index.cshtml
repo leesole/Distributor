@@ -39,6 +39,15 @@
             @Html.DisplayNameFor(model => model.ItemCondition)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.DisplayUntilDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SellByDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UseByDate)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DeliveryAvailable)
         </th>
         <th>
@@ -90,6 +99,15 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ItemCondition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisplayUntilDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SellByDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UseByDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DeliveryAvailable)

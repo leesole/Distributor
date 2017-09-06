@@ -67,7 +67,7 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,CollectionAvailable,ListingStatus,CampaignId,CallingAction,CallingController")] RequirementListingAddView requirementListing)
+        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,AcceptOutOfDateItems,CollectionAvailable,ListingStatus,CampaignId,CallingAction,CallingController")] RequirementListingAddView requirementListing)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,6 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,CollectionAvailable,ListingStatus,ListingOriginatorDateTime,ListingAppUser,ListingBranchDetails,CampaignDetails")] RequirementListingEditView requirementListing)
         public ActionResult Edit(RequirementListingEditView requirementListing)
         {
             if (ModelState.IsValid)

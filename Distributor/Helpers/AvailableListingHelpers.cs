@@ -84,15 +84,15 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AvailableListing CreateAvailableListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
+        public static AvailableListing CreateAvailableListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, DateTime? displayUntilDate, DateTime? sellByDate, DateTime? useByDate, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AvailableListing newAvailableListing = CreateAvailableListing(db, user, itemDescription, itemType, quantityRequired, uom, availableFrom, availableTo, itemCondition, deliveryAvailable, listingStatus);
+            AvailableListing newAvailableListing = CreateAvailableListing(db, user, itemDescription, itemType, quantityRequired, uom, availableFrom, availableTo, itemCondition, displayUntilDate, sellByDate, useByDate, deliveryAvailable, listingStatus);
             db.Dispose();
             return newAvailableListing;
         }
 
-        public static AvailableListing CreateAvailableListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
+        public static AvailableListing CreateAvailableListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, DateTime? displayUntilDate, DateTime? sellByDate, DateTime? useByDate, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
             Branch branch = BranchHelpers.GetBranch(db, branchUser.BranchId);
@@ -109,6 +109,9 @@ namespace Distributor.Helpers
                 AvailableFrom = availableFrom,
                 AvailableTo = availableTo,
                 ItemCondition = itemCondition,
+                DisplayUntilDate = displayUntilDate,
+                SellByDate = sellByDate,
+                UseByDate = useByDate,
                 DeliveryAvailable = deliveryAvailable,
                 ListingBranchPostcode = branch.AddressPostcode,
                 ListingOriginatorAppUserId = branchUser.UserId,
@@ -134,7 +137,7 @@ namespace Distributor.Helpers
 
         public static AvailableListing CreateAvailableListingFromAvailableListingAddView(ApplicationDbContext db, AvailableListingAddView AvailableListingAddView, IPrincipal user)
         {
-            return CreateAvailableListing(db, user, AvailableListingAddView.ItemDescription, AvailableListingAddView.ItemType, AvailableListingAddView.QuantityRequired, AvailableListingAddView.UoM, AvailableListingAddView.AvailableFrom, AvailableListingAddView.AvailableTo, AvailableListingAddView.ItemCondition, AvailableListingAddView.DeliveryAvailable, AvailableListingAddView.ListingStatus);
+            return CreateAvailableListing(db, user, AvailableListingAddView.ItemDescription, AvailableListingAddView.ItemType, AvailableListingAddView.QuantityRequired, AvailableListingAddView.UoM, AvailableListingAddView.AvailableFrom, AvailableListingAddView.AvailableTo, AvailableListingAddView.ItemCondition, AvailableListingAddView.DisplayUntilDate, AvailableListingAddView.SellByDate, AvailableListingAddView.UseByDate, AvailableListingAddView.DeliveryAvailable, AvailableListingAddView.ListingStatus);
         }
 
         #endregion
@@ -185,6 +188,9 @@ namespace Distributor.Helpers
             listing.AvailableFrom = view.AvailableFrom;
             listing.AvailableTo = view.AvailableTo;
             listing.ItemCondition = view.ItemCondition;
+            listing.DisplayUntilDate = view.DisplayUntilDate;
+            listing.SellByDate = view.SellByDate;
+            listing.UseByDate = view.UseByDate;
             listing.DeliveryAvailable = view.DeliveryAvailable;
             listing.ListingStatus = view.ListingStatus;
 
@@ -335,6 +341,9 @@ namespace Distributor.Helpers
                 AvailableFrom = availableListing.AvailableFrom,
                 AvailableTo = availableListing.AvailableTo,
                 ItemCondition = availableListing.ItemCondition,
+                DisplayUntilDate = availableListing.DisplayUntilDate,
+                SellByDate = availableListing.SellByDate,
+                UseByDate = availableListing.UseByDate,
                 DeliveryAvailable = availableListing.DeliveryAvailable,
                 ListingStatus = availableListing.ListingStatus,
                 ListingOriginatorDateTime = availableListing.ListingOriginatorDateTime,

@@ -7,6 +7,18 @@
     var userRole = User.Identity.GetCurrentUserRole();
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+        })
+    </script>
+}
+
 @if (ViewBag.CallingController == "GeneralInfo")
 {
     <nav class="navbar navbar-fixed-top">
@@ -187,7 +199,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CampaignStartDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.CampaignStartDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.CampaignStartDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
                     @Html.ValidationMessageFor(model => model.CampaignStartDateTime, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -195,7 +207,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CampaignEndDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.CampaignEndDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.CampaignEndDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
                     @Html.ValidationMessageFor(model => model.CampaignEndDateTime, "", new { @class = "text-danger" })
                 </div>
             </div>

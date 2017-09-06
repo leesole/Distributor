@@ -5,6 +5,18 @@
     var description = "";
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+        })
+    </script>
+}
+
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
         <div class="container-fluid">
@@ -80,6 +92,7 @@
                 <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableFrom)</th>
                 <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableTo)</th>
                 <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemCondition)</th>
+                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.UseByDate)</th>
                 <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.DeliveryAvailable)</th>
             </tr>
             <tr>
@@ -90,6 +103,7 @@
                 <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableFrom)</td>
                 <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableTo)</td>
                 <td>@Html.DisplayFor(model => model.AvailableListingDetails.ItemCondition)</td>
+                <td>@Html.DisplayFor(model => model.AvailableListingDetails.UseByDate)</td>
                 <td>@Html.DisplayFor(model => model.AvailableListingDetails.DeliveryAvailable)</td>
             </tr>
         </table>
@@ -111,6 +125,7 @@
                 <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredFrom)</th>
                 <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredTo)</th>
                 <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.AcceptDamagedItems)</th>
+                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</th>
                 <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.CollectionAvailable)</th>
             </tr>
             <tr>
@@ -121,6 +136,7 @@
                 <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredFrom)</td>
                 <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredTo)</td>
                 <td>@Html.DisplayFor(model => model.RequirementListingDetails.AcceptDamagedItems)</td>
+                <td>@Html.DisplayFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</td>
                 <td>@Html.DisplayFor(model => model.RequirementListingDetails.CollectionAvailable)</td>
             </tr>
         </table>
@@ -189,35 +205,35 @@
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.OrderCreationDateTime)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.OrderCreationDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderCreationDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
                             @Html.ValidationMessageFor(model => model.OrderCreationDateTime, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.OrderDistributionDateTime)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.OrderDistributionDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderDistributionDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
                             @Html.ValidationMessageFor(model => model.OrderDistributionDateTime, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.OrderDeliveredDateTime)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.OrderDeliveredDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderDeliveredDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
                             @Html.ValidationMessageFor(model => model.OrderDeliveredDateTime, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.OrderCollectedDateTime)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.OrderCollectedDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderCollectedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
                             @Html.ValidationMessageFor(model => model.OrderCollectedDateTime, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.OrderClosedDateTime)</div>
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.OrderClosedDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.OrderClosedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
                             @Html.ValidationMessageFor(model => model.OrderClosedDateTime, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -347,8 +363,4 @@
         <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
         <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
     </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

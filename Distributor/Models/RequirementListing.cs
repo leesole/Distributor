@@ -40,7 +40,10 @@ namespace Distributor.Models
 
         [Display(Name = "Accept damaged items?")]
         public bool AcceptDamagedItems { get; set; }
-        
+
+        [Display(Name = "Accept out-of-date items?")]
+        public bool AcceptOutOfDateItems { get; set; }
+
         [Display(Name = "Can collect?")]
         public bool CollectionAvailable { get; set; }
 
