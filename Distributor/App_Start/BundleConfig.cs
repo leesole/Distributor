@@ -25,13 +25,14 @@ namespace Distributor
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
+                      "~/css/bootstrap.min.css",
                       "~/css/bootstrap-theme.css",
                       "~/css/modern-business.css",
+                      "~/css/jquery-ui.min.css",
                       "~/Content/site.css"));
 
-            bundles.Add(new StyleBundle("~/css").Include(
-                      "~/css/jquery-ui.min.css"));
+            //bundles.Add(new StyleBundle("~/css").Include(
+            //          "~/css/jquery-ui.min.css"));
         }
     }
 }
