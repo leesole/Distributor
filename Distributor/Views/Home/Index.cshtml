@@ -26,7 +26,7 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4 col-md-4">
+            <div class="col-md-4">
                 <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Campaigns", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your campaigns</h3>
@@ -61,72 +61,138 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-md-8">
-                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Requirements", "ManageListings")'">
+            <div class="col-md-8">
+                <div class="login-panel panel panel-info" onclick="location.href='@Url.Action("Requirements", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your requests listing</h3>
                     </div>
                     <div class="panel-body">
-                        @if (Model.RequirementListingList == null || Model.RequirementListingList.Count == 0)
-                        {
-                            <p>No requirements to show</p>
-                        }
-                        else
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Description</th>
-                                        <th>Type</th>
-                                        <th>Quantity required</th>
-                                        <th>UoM</th>
-                                    </tr>
-                                    @foreach (var item in Model.RequirementListingList)
-                                    {
-                                        <tr id=@item.ListingId>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
-                                        </tr>
-                                    }
-                                </table>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-center" style="padding:10px">
+                                <h4>Current Requests</h4>
+                                <h1><b>@ViewBag.CurrentRequests</b></h1>
                             </div>
-                        }
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card bg-danger text-center" style="padding:10px">
+                                        <p>Oustanding</p>
+                                        <p><b>@ViewBag.RequestsOutstanding</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-warning text-center" style="padding:10px">
+                                        <p>Fulfilled</p>
+                                        <p><b>@ViewBag.RequestsFulfilled</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-info text-center" style="padding:10px">
+                                        <p>Total</p>
+                                        <p><b>@ViewBag.RequestsTotal</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br />
+                                    @if (Model.RequirementListingList == null || Model.RequirementListingList.Count == 0)
+                                    {
+                                        <p>No requirements to show</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed">
+                                                <tr class="info">
+                                                    <th>Description</th>
+                                                    <th>Type</th>
+                                                    <th>Quantity required</th>
+                                                    <th>UoM</th>
+                                                </tr>
+                                                @foreach (var item in Model.RequirementListingList)
+                                                {
+                                                    <tr id=@item.ListingId>
+                                                        <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Available", "ManageListings")'">
+                <div class="login-panel panel panel-info" onclick="location.href='@Url.Action("Available", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your available listing</h3>
                     </div>
                     <div class="panel-body">
-                        @if (Model.AvailableListingList == null || Model.AvailableListingList.Count == 0)
-                        {
-                            <p>No available items to show</p>
-                        }
-                        else
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Description</th>
-                                        <th>Type</th>
-                                        <th>Quantity available</th>
-                                        <th>UoM</th>
-                                    </tr>
-                                    @foreach (var item in Model.AvailableListingList)
-                                    {
-                                        <tr id=@item.ListingId>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
-                                        </tr>
-                                    }
-                                </table>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-center" style="padding:10px">
+                                <h4>Current Available</h4>
+                                <h1><b>@ViewBag.CurrentAvailable</b></h1>
                             </div>
-                        }
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card bg-danger text-center" style="padding:10px">
+                                        <p>Oustanding</p>
+                                        <p><b>@ViewBag.AvailableOutstanding</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-warning text-center" style="padding:10px">
+                                        <p>Fulfilled</p>
+                                        <p><b>@ViewBag.AvailableFulfilled</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-info text-center" style="padding:10px">
+                                        <p>Total</p>
+                                        <p><b>@ViewBag.AvailableTotal</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br />
+                                    @if (Model.AvailableListingList == null || Model.AvailableListingList.Count == 0)
+                                    {
+                                        <p>No available items to show</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed">
+                                                <tr class="info">
+                                                    <th>Description</th>
+                                                    <th>Type</th>
+                                                    <th>Quantity available</th>
+                                                    <th>UoM</th>
+                                                </tr>
+                                                @foreach (var item in Model.AvailableListingList)
+                                                {
+                                                    <tr id=@item.ListingId>
+                                                        <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            </div>    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -144,146 +210,199 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4 col-md-4">
-                <div class="login-panel panel panel-warning" onclick = "location.href='@Url.Action("Tasks", "Admin", new { redirect = Request.Url.ToString() })'">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Your tasks</h3>
-                    </div>
-                    <div class="panel-body">
-                        @if (Model.UserTaskList == null || Model.UserTaskList.Count == 0)
-                        {
-                            <p>No tasks to show</p>
-                        }
-                        else
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Task type</th>
-                                        <th>Description</th>
-                                    </tr>
-                                    @foreach (var item in Model.UserTaskList)
-                                    {
-                                        <tr id=@item.UserTaskId>
-                                            <td>@Html.DisplayFor(modelItem => item.TaskType)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.TaskDescription)</td>
-                                        </tr>
-                                    }
-                                </table>
-                            </div>
-                        }
+            <div class="col-md-4">
+                <div class="col-md-6" style="padding:0px 5px 5px 0px">
+                    <div class="card bg-danger text-center" style="padding:10px" onclick = "location.href='@Url.Action("Tasks", "Admin", new { redirect = Request.Url.ToString() })'">
+                        <h4>Outstanding Tasks</h4>
+                        <h1><b>@ViewBag.OutstandingTasks</b></h1>
                     </div>
                 </div>
-
-                <div class="login-panel panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Your actions</h3>
+                <div class="col-md-6" style="padding:0px 5px 5px 0px">
+                    <div class="card bg-danger text-center" style="padding:10px">
+                        <h4>Outstanding Actions</h4>
+                        <h1><b>@ViewBag.OutstandingActions</b></h1>
                     </div>
-                    <div class="panel-body">
-                        <p>These will be a list of actions such as un-attached orders, users etc when branches/users are made inactive or change branches etc.</p>
+                </div>
+                <div class="col-md-6" style="padding:0px 5px 5px 0px">
+                    <div class="card bg-warning text-center" style="padding:10px">
+                        <h4>Outstanding Offers</h4>
+                        <h1><b>@ViewBag.OutstandingOffers</b></h1>
+                    </div>
+                </div>
+                <div class="col-md-6" style="padding:0px 5px 5px 0px">
+                    <div class="card bg-warning text-center" style="padding:10px">
+                        <h4>Outstanding Orders</h4>
+                        <h1><b>@ViewBag.Orders</b></h1>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding:0px 5px 5px 0px">
+                    <div class="login-panel panel panel-info" onclick="location.href='@Url.Action("Campaigns", "ManageListings")'">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Your campaigns</h3>
+                        </div>
+                        <div class="panel-body">
+                            @if (Model.CampaignList == null || Model.CampaignList.Count == 0)
+                            {
+                                <p>No campaigns to show</p>
+                            }
+                            else
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-condensed">
+                                        <tr class="info">
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Website</th>
+                                            <th>Start date</th>
+                                        </tr>
+                                        @foreach (var item in Model.CampaignList)
+                                        {
+                                            <tr id=@item.CampaignId>
+                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Website)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-md-8">
-                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Campaigns", "ManageListings")'">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Your campaigns</h3>
-                    </div>
-                    <div class="panel-body">
-                        @if (Model.CampaignList == null || Model.CampaignList.Count == 0)
-                        {
-                            <p>No campaigns to show</p>
-                        }
-                        else
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Website</th>
-                                        <th>Start date</th>
-                                    </tr>
-                                    @foreach (var item in Model.CampaignList)
-                                    {
-                                        <tr id=@item.CampaignId>
-                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Website)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
-                                        </tr>
-                                    }
-                                </table>
-                            </div>
-                        } 
-                    </div>
-                </div>
-
-                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Requirements", "ManageListings")'">
+            <div class="col-md-8">
+                <div class="login-panel panel panel-info" onclick="location.href='@Url.Action("Requirements", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your requests listing</h3>
                     </div>
                     <div class="panel-body">
-                        @if (Model.RequirementListingList == null || Model.RequirementListingList.Count == 0)
-                        {
-                            <p>No requirements to show</p>
-                        }
-                        else
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Description</th>
-                                        <th>Type</th>
-                                        <th>Quantity required</th>
-                                        <th>UoM</th>
-                                    </tr>
-                                    @foreach (var item in Model.RequirementListingList)
-                                    {
-                                        <tr id=@item.ListingId>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
-                                        </tr>
-                                    }
-                                </table>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-center" style="padding:10px" onclick="location.href='@Url.Action("Requirements", "ManageListings")'">
+                                <h4>Current Requests</h4>
+                                <h1><b>@ViewBag.CurrentRequests</b></h1>
                             </div>
-                        }
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card bg-danger text-center" style="padding:10px">
+                                        <p>Oustanding</p>
+                                        <p><b>@ViewBag.RequestsOutstanding</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-warning text-center" style="padding:10px">
+                                        <p>Fulfilled</p>
+                                        <p><b>@ViewBag.RequestsFulfilled</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-info text-center" style="padding:10px">
+                                        <p>Total</p>
+                                        <p><b>@ViewBag.RequestsTotal</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br />
+                                    @if (Model.RequirementListingList == null || Model.RequirementListingList.Count == 0)
+                                    { 
+                                        <p>No requirements to show</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed">
+                                                <tr class="info">
+                                                    <th>Description</th>
+                                                    <th>Type</th>
+                                                    <th>Quantity required</th>
+                                                    <th>UoM</th>
+                                                </tr>
+                                                @foreach (var item in Model.RequirementListingList)
+                                                {
+                                                    <tr id=@item.ListingId>
+                                                        <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="login-panel panel panel-info" onclick = "location.href='@Url.Action("Available", "ManageListings")'">
+                <div class="login-panel panel panel-info" onclick="location.href='@Url.Action("Available", "ManageListings")'">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your available listing</h3>
                     </div>
                     <div class="panel-body">
-                        @if (Model.AvailableListingList == null || Model.AvailableListingList.Count == 0)
-                        {
-                            <p>No available items to show</p>
-                        }
-                        else
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Description</th>
-                                        <th>Type</th>
-                                        <th>Quantity available</th>
-                                        <th>UoM</th>
-                                    </tr>
-                                    @foreach (var item in Model.AvailableListingList)
-                                    {
-                                        <tr id=@item.ListingId>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
-                                        </tr>
-                                    }
-                                </table>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-center" style="padding:10px" onclick="location.href='@Url.Action("Available", "ManageListings")'">
+                                <h4>Current Available</h4>
+                                <h1><b>@ViewBag.CurrentAvailable</b></h1>
                             </div>
-                        }
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card bg-danger text-center" style="padding:10px">
+                                        <p>Oustanding</p>
+                                        <p><b>@ViewBag.AvailableOutstanding</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-warning text-center" style="padding:10px">
+                                        <p>Fulfilled</p>
+                                        <p><b>@ViewBag.AvailableFulfilled</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-info text-center" style="padding:10px">
+                                        <p>Total</p>
+                                        <p><b>@ViewBag.AvailableTotal</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br />
+                                    @if (Model.AvailableListingList == null || Model.AvailableListingList.Count == 0)
+                                    {
+                                        <p>No available items to show</p>
+                                    }
+                                    else
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-condensed">
+                                                <tr class="info">
+                                                    <th>Description</th>
+                                                    <th>Type</th>
+                                                    <th>Quantity available</th>
+                                                    <th>UoM</th>
+                                                </tr>
+                                                @foreach (var item in Model.AvailableListingList)
+                                                {
+                                                    <tr id=@item.ListingId>
+                                                        <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

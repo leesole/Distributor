@@ -11,6 +11,8 @@ namespace Distributor.Helpers
 {
     public static class DashboardHelpers
     {
+        #region Get
+
         public static DashboardView GetDashboardView()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -70,5 +72,71 @@ namespace Distributor.Helpers
 
             return dashboardView;
         }
+
+        #endregion
+
+        #region Processes
+
+        public static decimal GetRequirementsTotalFromDashboardView(DashboardView view)
+        {
+            decimal value = 0;
+
+            foreach (RequirementListing requirement in view.RequirementListingList)
+                value += requirement.QuantityRequired;
+
+            return value;
+        }
+
+        public static decimal GetRequirementsFulfilledFromDashboardView(DashboardView view)
+        {
+            decimal value = 0;
+
+            foreach (RequirementListing requirement in view.RequirementListingList)
+                value += requirement.QuantityFulfilled;
+
+            return value;
+        }
+
+        public static decimal GetRequirementsOutstandingFromDashboardView(DashboardView view)
+        {
+            decimal value = 0;
+
+            foreach (RequirementListing requirement in view.RequirementListingList)
+                value += requirement.QuantityOutstanding;
+
+            return value;
+        }
+
+        public static decimal GetAvailableTotalFromDashboardView(DashboardView view)
+        {
+            decimal value = 0;
+
+            foreach (AvailableListing available in view.AvailableListingList)
+                value += available.QuantityRequired;
+
+            return value;
+        }
+
+        public static decimal GetAvailableFulfilledFromDashboardView(DashboardView view)
+        {
+            decimal value = 0;
+
+            foreach (AvailableListing available in view.AvailableListingList)
+                value += available.QuantityFulfilled;
+
+            return value;
+        }
+
+        public static decimal GetAvailableOutstandingFromDashboardView(DashboardView view)
+        {
+            decimal value = 0;
+
+            foreach (AvailableListing available in view.AvailableListingList)
+                value += available.QuantityOutstanding;
+
+            return value;
+        }
+
+        #endregion
     }
 }

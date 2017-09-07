@@ -16,8 +16,36 @@ namespace Distributor.Controllers
         {
             DashboardView dashboardView = new DashboardView();
 
+            ViewBag.OutstandingTasks = 0;
+            ViewBag.OutstandingActions = 0;
+            ViewBag.OutstandingOffers = 0;
+            ViewBag.Orders = 0;
+            ViewBag.CurrentRequests = 0;
+            ViewBag.CurrentAvailable = 0;
+            ViewBag.RequestsOutstanding = 0;
+            ViewBag.RequestsFulfilled = 0;
+            ViewBag.RequestsTotal = 0;
+
             if (User.Identity.IsAuthenticated)
+            {
                 dashboardView = DashboardHelpers.GetDashboardViewLogin(User);
+                if (dashboardView.UserTaskList != null)
+                    ViewBag.OustandingTasks = dashboardView.UserTaskList.Count();
+                if (dashboardView.RequirementListingList != null)
+                {
+                    ViewBag.CurrentRequests = dashboardView.RequirementListingList.Count();
+                    ViewBag.RequestsOutstanding = DashboardHelpers.GetRequirementsOutstandingFromDashboardView(dashboardView);
+                    ViewBag.RequestsFulfilled = DashboardHelpers.GetRequirementsFulfilledFromDashboardView(dashboardView);
+                    ViewBag.RequestsTotal = DashboardHelpers.GetRequirementsTotalFromDashboardView(dashboardView);
+                }
+                if (dashboardView.AvailableListingList != null)
+                {
+                    ViewBag.CurrentAvailable = dashboardView.AvailableListingList.Count();
+                    ViewBag.AvailableOutstanding = DashboardHelpers.GetAvailableOutstandingFromDashboardView(dashboardView);
+                    ViewBag.AvailableFulfilled = DashboardHelpers.GetAvailableFulfilledFromDashboardView(dashboardView);
+                    ViewBag.AvailableTotal = DashboardHelpers.GetAvailableTotalFromDashboardView(dashboardView);
+                }
+            }
             else
                 dashboardView = DashboardHelpers.GetDashboardView();
 
