@@ -14,6 +14,7 @@ namespace Distributor.Controllers
     {
         public ActionResult Index()
         {
+
             DashboardView dashboardView = new DashboardView();
 
             ViewBag.OutstandingTasks = 0;
@@ -45,6 +46,10 @@ namespace Distributor.Controllers
                     ViewBag.AvailableFulfilled = DashboardHelpers.GetAvailableFulfilledFromDashboardView(dashboardView);
                     ViewBag.AvailableTotal = DashboardHelpers.GetAvailableTotalFromDashboardView(dashboardView);
                 }
+                if (dashboardView.OfferList != null)
+                    ViewBag.OutstandingOffers = dashboardView.OfferList.Count();
+                if (dashboardView.OrderList != null)
+                    ViewBag.Orders = dashboardView.OrderList.Count();
             }
             else
                 dashboardView = DashboardHelpers.GetDashboardView();

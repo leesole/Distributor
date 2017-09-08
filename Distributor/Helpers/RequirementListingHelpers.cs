@@ -42,6 +42,28 @@ namespace Distributor.Helpers
             return db.RequirementListings.ToList();
         }
 
+        public static List<RequirementListing> GetAllRequirementListingsForPastXDays(double days)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<RequirementListing> list = GetAllRequirementListingsForPastXDays(db, days);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<RequirementListing> GetAllRequirementListingsForPastXDays(ApplicationDbContext db, double days)
+        {
+            double negativeDays = 0 - days;
+            var dateCheck = DateTime.Now.AddDays(negativeDays);
+
+            List<RequirementListing> list = (from rl in db.RequirementListings
+                                            where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
+                                                   && rl.ListingOriginatorDateTime >= dateCheck)
+                                            select rl).ToList();
+
+            return list;
+        }
+
         public static List<RequirementListing> GetAllRequirementListingsForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -53,7 +75,7 @@ namespace Distributor.Helpers
         public static List<RequirementListing> GetAllRequirementListingsForUser(ApplicationDbContext db, Guid appUserId)
         {
             List<RequirementListing> allRequirementsListingForUser = (from rl in db.RequirementListings
-                                                                      where (rl.ListingOriginatorAppUserId == appUserId                                     && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                      where (rl.ListingOriginatorAppUserId == appUserId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
                                                                       select rl).ToList();
 
             return allRequirementsListingForUser;

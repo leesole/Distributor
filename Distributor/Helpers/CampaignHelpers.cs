@@ -41,6 +41,29 @@ namespace Distributor.Helpers
             return db.Campaigns.ToList();
         }
 
+        
+
+        public static List<Campaign> GetAllCampaignsForPastXDays(double days)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Campaign> list = GetAllCampaignsForPastXDays(db, days);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Campaign> GetAllCampaignsForPastXDays(ApplicationDbContext db, double days)
+        {
+            double negativeDays = 0 - days;
+            var dateCheck = DateTime.Now.AddDays(negativeDays);
+
+            List<Campaign> list = (from c in db.Campaigns
+                                   where (c.EntityStatus == EntityStatusEnum.Active && c.CampaignOriginatorDateTime >= dateCheck)
+                                           select c).ToList();
+
+            return list;
+        }
+
         public static List<Campaign> GetAllCampaignsForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();

@@ -55,11 +55,26 @@ namespace Distributor.Helpers
             List<Campaign> campaignsForUser = CampaignHelpers.GetAllCampaignsForUser(db, appUser.AppUserId);
             dashboardView.CampaignList = campaignsForUser;
 
+            List<Campaign> campaignsRecentList = CampaignHelpers.GetAllCampaignsForPastXDays(db, 14);
+            dashboardView.CampaignRecentList = campaignsRecentList;
+
             List<RequirementListing> requirementListingsForUser = RequirementListingHelpers.GetAllRequirementListingsForUser(db, appUser.AppUserId);
             dashboardView.RequirementListingList = requirementListingsForUser;
 
+            List<RequirementListing> requirementListingRecentList = RequirementListingHelpers.GetAllRequirementListingsForPastXDays(db, 14);
+            dashboardView.RequirementListingRecentList = requirementListingRecentList;
+
             List<AvailableListing> availableListingsForUser = AvailableListingHelpers.GetAllAvailableListingsForUser(db, appUser.AppUserId);
             dashboardView.AvailableListingList = availableListingsForUser;
+
+            List<AvailableListing> availableListingRecentList = AvailableListingHelpers.GetAllAvailableListingsForPastXDays(db, 14);
+            dashboardView.AvailableListingRecentList = availableListingRecentList;
+
+            List<Offer> offersForUser = OfferHelpers.GetAllOffersForUser(db, appUser.AppUserId);
+            dashboardView.OfferList = offersForUser;
+
+            List<Order> ordersForUser = OrderHelpers.GetAllOrdersForUser(db, appUser.AppUserId);
+            dashboardView.OrderList = ordersForUser;
 
             //get listings for admin areas if this user is not a 'User' - i.e. is Manager, Admin etc.
             if (user.Identity.GetCurrentUserRole() != "User")

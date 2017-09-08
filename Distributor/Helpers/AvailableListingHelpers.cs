@@ -42,6 +42,28 @@ namespace Distributor.Helpers
             return db.AvailableListings.ToList();
         }
 
+        public static List<AvailableListing> GetAllAvailableListingsForPastXDays(double days)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<AvailableListing> list = GetAllAvailableListingsForPastXDays(db, days);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AvailableListing> GetAllAvailableListingsForPastXDays(ApplicationDbContext db, double days)
+        {
+            double negativeDays = 0 - days;
+            var dateCheck = DateTime.Now.AddDays(negativeDays);
+
+            List<AvailableListing> list = (from rl in db.AvailableListings
+                                           where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
+                                                   && rl.ListingOriginatorDateTime >= dateCheck)
+                                           select rl).ToList();
+
+            return list;
+        }
+
         public static List<AvailableListing> GetAllAvailableListingsForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
