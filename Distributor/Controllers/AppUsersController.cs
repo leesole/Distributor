@@ -159,12 +159,36 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            string callingController = "Home";
+            string callingAction = "Index";
+
+            try
+            {
+                string[] callingUrlSegments = Request.UrlReferrer.Segments.Select(x => x.TrimEnd('/')).ToArray();
+                callingController = callingUrlSegments[callingUrlSegments.Count() - 2];
+                callingAction = callingUrlSegments[callingUrlSegments.Count() - 1];
+            }
+            catch { }
+
             AppUser appUser = db.AppUsers.Find(id);
-            if (appUser == null)
+
+            AppUserEditView model = AppUserEditViewHelpers.CreateAppUserEditViewForUser(db, appUser);
+            model.CallingAction = callingAction;
+            model.CallingController = callingController;
+
+            Branch userBranch = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
+
+            ////DropDowns
+            //ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(userBranch.CompanyId, userBranch.BranchId);
+            //ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
+            //ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
+            
+            if (model == null)
             {
                 return HttpNotFound();
             }
-            return View(appUser);
+            return View(model);
         }
 
         // POST: AppUsers/Edit/5
@@ -172,15 +196,18 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AppUserId,FirstName,LastName,EntityStatus,CurrentBranchId")] AppUser appUser)
+        public ActionResult Edit(AppUserEditView model)
         {
             if (ModelState.IsValid)
-            {
-                db.Entry(appUser).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+            {if (Request.Form["submitbutton"] != null)
+                {
+                    AppUserHelpers.UpdateAppUserFromAppUserEditView(db, model);
+                    return RedirectToAction(model.CallingAction, model.CallingController);
+                }
+
+                return RedirectToAction("Edit");
             }
-            return View(appUser);
+            return View(model);
         }
 
         //// GET: AppUsers/Delete/5

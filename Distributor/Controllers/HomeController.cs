@@ -14,7 +14,6 @@ namespace Distributor.Controllers
     {
         public ActionResult Index()
         {
-
             DashboardView dashboardView = new DashboardView();
 
             ViewBag.OutstandingTasks = 0;

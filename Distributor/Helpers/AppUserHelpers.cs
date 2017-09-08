@@ -1,5 +1,6 @@
 ﻿using Distributor.Extenstions;
 using Distributor.Models;
+using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -67,6 +68,10 @@ namespace Distributor.Helpers
                 LoginEmail = loginEmail
             };
             db.AppUsers.Add(appUser);
+
+            //Create initial settings values from the settings template
+            AppUserSettingsHelpers.CreateAppUserSettingsForNewUser(db, appUser.AppUserId);
+
             db.SaveChanges();
 
             return appUser;
@@ -132,6 +137,36 @@ namespace Distributor.Helpers
             return appUser;
         }
 
+        public static AppUser UpdateAppUserFromAppUserEditView(AppUserEditView view)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            AppUser appUser = UpdateAppUserFromAppUserEditView(db, view);
+            db.Dispose();
+            return appUser;
+        }
+
+        public static AppUser UpdateAppUserFromAppUserEditView(ApplicationDbContext db, AppUserEditView view)
+        {
+            //Update AppUser
+            AppUser appUser = GetAppUser(db, view.AppUserId);
+            appUser.FirstName = view.FirstName;
+            appUser.LastName = view.LastName;
+            appUser.EntityStatus = view.EntityStatus;
+            if (view.SelectedBranchId != null)
+                appUser.CurrentBranchId = view.SelectedBranchId.Value;
+            db.Entry(appUser).State = EntityState.Modified;
+            db.SaveChanges();
+
+            //Update BranchUser (Role)
+            BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, appUser.AppUserId, appUser.CurrentBranchId);
+            BranchUserHelpers.UpdateBranchUserRole(db, branchUser.BranchUserId, view.UserRole);
+
+            //Update UserSettings
+            AppUserSettingsHelpers.UpdateUserSettingsFromAppUserEditView(db, view);
+
+            return appUser;
+        }
+
         #endregion
 
         #region Delete
@@ -147,6 +182,9 @@ namespace Distributor.Helpers
         {
             AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
             db.AppUsers.Remove(appUser);
+
+            AppUserSettingsHelpers.DeleteAppUserSettingsForUser(db, appUserId);
+
             db.SaveChanges();
         }
 
@@ -183,6 +221,57 @@ namespace Distributor.Helpers
         public static Guid GetAppUserIdFromUser(IPrincipal user)
         {
             return GetGuidFromUserGetAppUserId(user.Identity.GetAppUserId());
+        }
+
+        #endregion
+    }
+
+    public static class AppUserEditViewHelpers
+    {
+        #region Create
+
+        public static AppUserEditView CreateAppUserEditViewForUser(AppUser appUserDetails)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            AppUserEditView view = CreateAppUserEditViewForUser(db, appUserDetails);
+            db.Dispose();
+            return view;
+        }
+
+        public static AppUserEditView CreateAppUserEditViewForUser(ApplicationDbContext db, AppUser appUserDetails)
+        {
+            BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, appUserDetails.AppUserId, appUserDetails.CurrentBranchId);
+
+            AppUserSettings appUserSettings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserDetails.AppUserId);
+
+            AppUserEditView view = new AppUserEditView()
+            {
+                AppUserId = appUserDetails.AppUserId,
+                FirstName = appUserDetails.FirstName,
+                LastName = appUserDetails.LastName,
+                EntityStatus = appUserDetails.EntityStatus,
+                SelectedBranchId = appUserDetails.CurrentBranchId,
+                UserRole = branchUser.UserRole,
+                AppUserSettingsId = appUserSettings.AppUserSettingsId,
+                GlobalMaxDistance = appUserSettings.GlobalMaxDistance,
+                GlobalMaxAge = appUserSettings.GlobalMaxAge,
+                GlobalInternalSelectionLevel = appUserSettings.GlobalInternalSelectionLevel,
+                GlobalExternalSelectionLevel = appUserSettings.GlobalExternalSelectionLevel,
+                AvailableListingGeneralInfoMaxDistance = appUserSettings.AvailableListingGeneralInfoMaxDistance,
+                AvailableListingRecentMaxDistance = appUserSettings.AvailableListingRecentMaxDistance,
+                AvailableListingRecentMaxAge = appUserSettings.AvailableListingRecentMaxAge,
+                RequiredListingGeneralInfoMaxDistance = appUserSettings.RequiredListingGeneralInfoMaxDistance,
+                RequiredListingRecentMaxDistance = appUserSettings.RequiredListingRecentMaxDistance,
+                RequiredListingRecentMaxAge = appUserSettings.RequiredListingRecentMaxAge,
+                AvailableListingManageViewInternalSelectionLevel = appUserSettings.AvailableListingManageViewInternalSelectionLevel,
+                RequiredListingManageViewInternalSelectionLevel = appUserSettings.RequiredListingManageViewInternalSelectionLevel,
+                AvailableListingGeneralInfoExternalSelectionLevel = appUserSettings.AvailableListingGeneralInfoExternalSelectionLevel,
+                RequiredListingGeneralInfoExternalSelectionLevel = appUserSettings.RequiredListingGeneralInfoExternalSelectionLevel,
+                AvailableListingRecentExternalSelectionLevel = appUserSettings.AvailableListingRecentExternalSelectionLevel,
+                RequiredListingRecentExternalSelectionLevel = appUserSettings.RequiredListingRecentExternalSelectionLevel
+            };
+
+            return view;
         }
 
         #endregion

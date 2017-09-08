@@ -222,6 +222,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AppUserHelpers.cs" />
+    <Compile Include="Helpers\AppUserSettingsHelpers.cs" />
     <Compile Include="Helpers\AvailableListingHelpers.cs" />
     <Compile Include="Helpers\BranchAdminHelpers.cs" />
     <Compile Include="Helpers\BranchHelpers.cs" />
@@ -362,9 +363,18 @@
     <Compile Include="Migrations\201709060909098_32nd.Designer.cs">
       <DependentUpon>201709060909098_32nd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709080843406_33rd.cs" />
+    <Compile Include="Migrations\201709080843406_33rd.Designer.cs">
+      <DependentUpon>201709080843406_33rd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709080924346_34th.cs" />
+    <Compile Include="Migrations\201709080924346_34th.Designer.cs">
+      <DependentUpon>201709080924346_34th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\AppUserSettings.cs" />
     <Compile Include="Models\AvailableListing.cs" />
     <Compile Include="Models\AvailableOffer.cs" />
     <Compile Include="Models\BaseViewWithCallingFields.cs" />
@@ -372,6 +382,8 @@
     <Compile Include="Models\BranchUser.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupMember.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
@@ -380,7 +392,8 @@
     <Compile Include="Models\UserTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\AppUserView.cs" />
+    <Compile Include="Templates\AppUserSettingsTemplate.cs" />
+    <Compile Include="ViewModels\AppUserViews.cs" />
     <Compile Include="ViewModels\AvailableListingViews.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CampaignViews.cs" />
@@ -636,6 +649,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709060909098_32nd.resx">
       <DependentUpon>201709060909098_32nd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709080843406_33rd.resx">
+      <DependentUpon>201709080843406_33rd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709080924346_34th.resx">
+      <DependentUpon>201709080924346_34th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

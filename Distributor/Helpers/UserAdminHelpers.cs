@@ -38,7 +38,7 @@ namespace Distributor.Helpers
                     var branchUsersForCompany = (from b in db.BranchUsers
                                                  join a in db.AppUsers on b.UserId equals a.AppUserId
                                                  where b.CompanyId == branchUser.CompanyId
-                                                 select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId }).ToList();
+                                                 select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, b.UserRole }).ToList();
                     var branchUsersForCompanyDistinct = branchUsersForCompany.Distinct();
 
                     foreach (var branchUserForCompany in branchUsersForCompanyDistinct)
@@ -47,6 +47,7 @@ namespace Distributor.Helpers
                         relatedBranch.AppUserId = branchUserForCompany.AppUserId;
                         relatedBranch.BranchId = branchUserForCompany.BranchId;
                         relatedBranch.BranchUserId = branchUserForCompany.BranchUserId;
+                        relatedBranch.UserRole = branchUserForCompany.UserRole;
 
                         //relatedBranch.BranchUserDetails = BranchUserHelpers.GetBranchUser(db, branchUserForCompany.BranchUserId);
                         Branch branchDetails = BranchHelpers.GetBranch(db, branchUserForCompany.BranchId);
@@ -79,7 +80,7 @@ namespace Distributor.Helpers
                         userAdminView.CurrentBranchId = appUserForCompany.CurrentBranchId;
                         userAdminView.LoginEmail = appUserForCompany.LoginEmail;
                         userAdminView.RelatedBranches = (from rb in relatedBranches
-                                                         where rb.AppUserId == appUserForCompany.AppUserId
+                                                         where (rb.AppUserId == appUserForCompany.AppUserId && rb.BranchId == appUserForCompany.CurrentBranchId)
                                                          select rb).ToList();
 
                         userAdminViewListForUser.Add(userAdminView);
@@ -96,7 +97,7 @@ namespace Distributor.Helpers
                                                 join a in db.AppUsers on b.UserId equals a.AppUserId
                                                 join c in branchListDistinct on b.BranchId equals c.BranchId
                                                 where b.BranchId == appUser.CurrentBranchId
-                                                select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId }).ToList();
+                                                select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, b.UserRole }).ToList();
                     var branchUsersForBranchDistinct = branchUsersForBranch.Distinct();
 
                     foreach (var branchUserForBranch in branchUsersForBranchDistinct)
@@ -105,6 +106,7 @@ namespace Distributor.Helpers
                         relatedBranch.AppUserId = branchUserForBranch.AppUserId;
                         relatedBranch.BranchId = branchUserForBranch.BranchId;
                         relatedBranch.BranchUserId = branchUserForBranch.BranchUserId;
+                        relatedBranch.UserRole = branchUserForBranch.UserRole;
                         //relatedBranch.BranchUserDetails = BranchUserHelpers.GetBranchUser(db, branchUserForBranch.BranchUserId);
                         Branch branchDetails = BranchHelpers.GetBranch(db, branchUserForBranch.BranchId);
 
@@ -136,7 +138,7 @@ namespace Distributor.Helpers
                         userAdminView.CurrentBranchId = appUserForBranch.CurrentBranchId;
                         userAdminView.LoginEmail = appUserForBranch.LoginEmail;
                         userAdminView.RelatedBranches = (from rb in relatedBranches
-                                                         where rb.AppUserId == appUserForBranch.AppUserId
+                                                         where (rb.AppUserId == appUserForBranch.AppUserId && rb.BranchId == appUserForBranch.CurrentBranchId)
                                                          select rb).ToList();
 
                         userAdminViewListForUser.Add(userAdminView);

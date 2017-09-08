@@ -50,6 +50,11 @@ namespace Distributor.Models
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<AppUserSettings> AppUserSettings { get; set; }
+
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupMember> GroupMembers { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
