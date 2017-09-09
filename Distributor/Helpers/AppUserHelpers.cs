@@ -228,17 +228,31 @@ namespace Distributor.Helpers
 
     public static class AppUserEditViewHelpers
     {
-        #region Create
+        #region Get
 
-        public static AppUserEditView CreateAppUserEditViewForUser(AppUser appUserDetails)
+        public static AppUserEditView GetAppUserEditViewForUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUserEditView view = CreateAppUserEditViewForUser(db, appUserDetails);
+            AppUserEditView view = GetAppUserEditViewForUser(db, user);
             db.Dispose();
             return view;
         }
 
-        public static AppUserEditView CreateAppUserEditViewForUser(ApplicationDbContext db, AppUser appUserDetails)
+        public static AppUserEditView GetAppUserEditViewForUser(ApplicationDbContext db, IPrincipal user)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            return GetAppUserEditViewForUser(db, appUser);
+        }
+
+        public static AppUserEditView GetAppUserEditViewForUser(AppUser appUserDetails)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            AppUserEditView view = GetAppUserEditViewForUser(db, appUserDetails);
+            db.Dispose();
+            return view;
+        }
+
+        public static AppUserEditView GetAppUserEditViewForUser(ApplicationDbContext db, AppUser appUserDetails)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, appUserDetails.AppUserId, appUserDetails.CurrentBranchId);
 
@@ -253,16 +267,22 @@ namespace Distributor.Helpers
                 SelectedBranchId = appUserDetails.CurrentBranchId,
                 UserRole = branchUser.UserRole,
                 AppUserSettingsId = appUserSettings.AppUserSettingsId,
+                CampaignDashboardMaxDistance = appUserSettings.CampaignDashboardMaxDistance,
+                CampaignDashboardMaxAge = appUserSettings.CampaignDashboardMaxAge,
                 RequiredListingDashboardMaxDistance = appUserSettings.RequiredListingDashboardMaxDistance,
                 RequiredListingDashboardMaxAge = appUserSettings.RequiredListingDashboardMaxAge,
                 AvailableListingDashboardMaxDistance = appUserSettings.AvailableListingDashboardMaxDistance,
                 AvailableListingDashboardMaxAge = appUserSettings.AvailableListingDashboardMaxAge,
+                CampaignDashboardExternalSelectionLevel = appUserSettings.CampaignDashboardExternalSelectionLevel,
                 RequiredListingDashboardExternalSelectionLevel = appUserSettings.RequiredListingDashboardExternalSelectionLevel,
                 AvailableListingDashboardExternalSelectionLevel = appUserSettings.AvailableListingDashboardExternalSelectionLevel,
+                CampaignGeneralInfoMaxDistance = appUserSettings.CampaignGeneralInfoMaxDistance,
                 RequiredListingGeneralInfoMaxDistance = appUserSettings.RequiredListingGeneralInfoMaxDistance,
                 AvailableListingGeneralInfoMaxDistance = appUserSettings.AvailableListingGeneralInfoMaxDistance,
+                CampaignManageViewInternalSelectionLevel = appUserSettings.CampaignManageViewInternalSelectionLevel,
                 RequiredListingManageViewInternalSelectionLevel = appUserSettings.RequiredListingManageViewInternalSelectionLevel,
                 AvailableListingManageViewInternalSelectionLevel = appUserSettings.AvailableListingManageViewInternalSelectionLevel,
+                CampaignGeneralInfoExternalSelectionLevel = appUserSettings.CampaignGeneralInfoExternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = appUserSettings.RequiredListingGeneralInfoExternalSelectionLevel,
                 AvailableListingGeneralInfoExternalSelectionLevel = appUserSettings.AvailableListingGeneralInfoExternalSelectionLevel
             };

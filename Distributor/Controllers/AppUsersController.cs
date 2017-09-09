@@ -171,9 +171,7 @@ namespace Distributor.Controllers
             }
             catch { }
 
-            AppUser appUser = db.AppUsers.Find(id);
-
-            AppUserEditView model = AppUserEditViewHelpers.CreateAppUserEditViewForUser(db, appUser);
+            AppUserEditView model = AppUserEditViewHelpers.GetAppUserEditViewForUser(db, User);
             model.CallingAction = callingAction;
             model.CallingController = callingController;
 
@@ -199,7 +197,8 @@ namespace Distributor.Controllers
         public ActionResult Edit(AppUserEditView model)
         {
             if (ModelState.IsValid)
-            {if (Request.Form["submitbutton"] != null)
+            {
+                if (Request.Form["submitbutton"] != null)
                 {
                     AppUserHelpers.UpdateAppUserFromAppUserEditView(db, model);
                     return RedirectToAction(model.CallingAction, model.CallingController);

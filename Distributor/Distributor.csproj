@@ -229,6 +229,7 @@
     <Compile Include="Helpers\BranchUserHelpers.cs" />
     <Compile Include="Helpers\CampaignHelpers.cs" />
     <Compile Include="Helpers\DashboardHelpers.cs" />
+    <Compile Include="Helpers\DistanceHelpers.cs" />
     <Compile Include="Helpers\GeneralHelpers.cs" />
     <Compile Include="Helpers\OrderHelpers.cs" />
     <Compile Include="Helpers\CompanyAdminHelpers.cs" />
@@ -374,6 +375,14 @@
     <Compile Include="Migrations\201709082046257_35th.cs" />
     <Compile Include="Migrations\201709082046257_35th.Designer.cs">
       <DependentUpon>201709082046257_35th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709091235488_36th.cs" />
+    <Compile Include="Migrations\201709091235488_36th.Designer.cs">
+      <DependentUpon>201709091235488_36th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709091440433_37th.cs" />
+    <Compile Include="Migrations\201709091440433_37th.Designer.cs">
+      <DependentUpon>201709091440433_37th.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -662,6 +671,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709082046257_35th.resx">
       <DependentUpon>201709082046257_35th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709091235488_36th.resx">
+      <DependentUpon>201709091235488_36th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709091440433_37th.resx">
+      <DependentUpon>201709091440433_37th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

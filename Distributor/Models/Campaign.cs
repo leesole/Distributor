@@ -54,6 +54,7 @@ namespace Distributor.Models
         [Display(Name = "Address county")]
         public string LocationAddressCounty { get; set; }
 
+        [Required]
         [Display(Name = "Address postcode")]
         public string LocationAddressPostcode { get; set; }
 

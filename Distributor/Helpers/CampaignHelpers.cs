@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Helpers
 {
@@ -43,23 +44,68 @@ namespace Distributor.Helpers
 
         
 
-        public static List<Campaign> GetAllCampaignsForPastXDays(double days)
+        public static List<Campaign> GetAllRecentCampaigns(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Campaign> list = GetAllCampaignsForPastXDays(db, days);
+            List<Campaign> list = GetAllRecentCampaigns(db, appUserId);
             db.Dispose();
             return list;
         }
 
-        public static List<Campaign> GetAllCampaignsForPastXDays(ApplicationDbContext db, double days)
+        public static List<Campaign> GetAllRecentCampaigns(ApplicationDbContext db, Guid appUserId)
         {
-            double negativeDays = 0 - days;
-            var dateCheck = DateTime.Now.AddDays(negativeDays);
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
 
+            var dateCheck = DateTime.MinValue;
+            double settingsMaxAge = settings.CampaignDashboardMaxAge ?? 0;
+            int settingsMaxDistance = settings.CampaignDashboardMaxDistance ?? 0;
+
+            if (settingsMaxAge > 0)
+            {
+                double negativeDays = 0 - settings.CampaignDashboardMaxAge.Value;
+                dateCheck = DateTime.Now.AddDays(negativeDays);
+            }
+
+            //Create list within the time frame if setting set
             List<Campaign> list = (from c in db.Campaigns
                                    where (c.EntityStatus == EntityStatusEnum.Active && c.CampaignOriginatorDateTime >= dateCheck)
-                                           select c).ToList();
+                                   select c).ToList();
+
+            //Now bring in the Selection Level sort
+            switch (settings.CampaignDashboardExternalSelectionLevel)
+            {
+                case ExternalSearchLevelEnum.All: //do nothing
+                    break;
+                case ExternalSearchLevelEnum.Branch: //user's current branch to filter
+                    list = list.Where(l => l.CampaignOriginatorBranchId == branch.BranchId).ToList();
+                    break;
+                case ExternalSearchLevelEnum.Company: //user's current company to filter
+                    list = list.Where(l => l.CampaignOriginatorCompanyId == branch.CompanyId).ToList();
+                    break;
+                case ExternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                    break;
+            }
+
+            //Now sort by distance
+            if (settingsMaxDistance > 0)
+            {
+                List<Campaign> removeList = new List<Campaign>();
+
+                foreach (Campaign campaign in list)
+                {
+                    DistanceHelpers distance = new DistanceHelpers();
+                    int distanceValue = distance.GetDistance(branch.AddressPostcode, campaign.LocationAddressPostcode);
+
+                    if (distanceValue > settingsMaxDistance)
+                        removeList.Add(campaign);
+                }
+
+                if (removeList.Count > 0)
+                    list.RemoveAll(l => removeList.Contains(l));
+            }
 
             return list;
         }
@@ -75,9 +121,11 @@ namespace Distributor.Helpers
 
         public static List<Campaign> GetAllCampaignsForUser(ApplicationDbContext db, Guid appUserId)
         {
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
+
             List<Campaign> allCampaignsForUser = (from c in db.Campaigns
-                                                        where (c.CampaignOriginatorAppUserId == appUserId && c.EntityStatus == EntityStatusEnum.Active)
-                                                        select c).ToList();
+                                                  where (c.CampaignOriginatorAppUserId == appUserId && c.EntityStatus == EntityStatusEnum.Active)
+                                                  select c).ToList();
 
             return allCampaignsForUser;
         }

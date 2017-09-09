@@ -55,7 +55,7 @@ namespace Distributor.Helpers
             List<Campaign> campaignsForUser = CampaignHelpers.GetAllCampaignsForUser(db, appUser.AppUserId);
             dashboardView.CampaignList = campaignsForUser;
 
-            List<Campaign> campaignsRecentList = CampaignHelpers.GetAllCampaignsForPastXDays(db, 14);
+            List<Campaign> campaignsRecentList = CampaignHelpers.GetAllRecentCampaigns(db, appUser.AppUserId);
             dashboardView.CampaignRecentList = campaignsRecentList;
 
             List<RequirementListing> requirementListingsForUser = RequirementListingHelpers.GetAllRequirementListingsForUser(db, appUser.AppUserId);

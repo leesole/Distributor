@@ -71,7 +71,13 @@ namespace Distributor.ViewModels
 
         public Guid AppUserSettingsId { get; set; }
 
-        
+
+        [Display(Name = "Max distance from current branch (miles)")]
+        public int? CampaignDashboardMaxDistance { get; set; }
+
+        [Display(Name = "max age since listing added (days)")]
+        public double? CampaignDashboardMaxAge { get; set; }
+
         [Display(Name = "Max distance from current branch (miles)")]
         public int? RequiredListingDashboardMaxDistance { get; set; }
 
@@ -86,6 +92,10 @@ namespace Distributor.ViewModels
 
         [Required]
         [Display(Name = "External selection level")]
+        public ExternalSearchLevelEnum CampaignDashboardExternalSelectionLevel { get; set; }
+
+        [Required]
+        [Display(Name = "External selection level")]
         public ExternalSearchLevelEnum AvailableListingDashboardExternalSelectionLevel { get; set; }
 
         [Required]
@@ -94,19 +104,18 @@ namespace Distributor.ViewModels
 
 
         [Display(Name = "Max distance from current branch (miles)")]
+        public int? CampaignGeneralInfoMaxDistance { get; set; }
+
+        [Display(Name = "Max distance from current branch (miles)")]
         public int? RequiredListingGeneralInfoMaxDistance { get; set; }
 
         [Display(Name = "Max distance from current branch (miles)")]
         public int? AvailableListingGeneralInfoMaxDistance { get; set; }
 
-        [Required]
-        [Display(Name = "External selection level")]
-        public ExternalSearchLevelEnum RequiredListingGeneralInfoExternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "External selection level")]
-        public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel { get; set; }
-
+        [Display(Name = "Internal selection level")]
+        public InternalSearchLevelEnum CampaignManageViewInternalSelectionLevel { get; set; }
 
         [Required]
         [Display(Name = "Internal selection level")]
@@ -115,5 +124,18 @@ namespace Distributor.ViewModels
         [Required]
         [Display(Name = "Internal selection level")]
         public InternalSearchLevelEnum RequiredListingManageViewInternalSelectionLevel { get; set; }
+
+
+        [Required]
+        [Display(Name = "External selection level")]
+        public ExternalSearchLevelEnum CampaignGeneralInfoExternalSelectionLevel { get; set; }
+
+        [Required]
+        [Display(Name = "External selection level")]
+        public ExternalSearchLevelEnum RequiredListingGeneralInfoExternalSelectionLevel { get; set; }
+
+        [Required]
+        [Display(Name = "External selection level")]
+        public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel { get; set; }
     }
 }
