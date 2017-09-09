@@ -65,6 +65,46 @@ namespace Distributor.Helpers
             return allOffersForUserDistinct;
         }
 
+        public static List<Offer> GetAllOffersForBranch(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Offer> list = GetAllOffersForBranch(db, branchId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Offer> GetAllOffersForBranch(ApplicationDbContext db, Guid branchId)
+        {
+            List<Offer> list = (from o in db.Offers
+                                where ((o.OfferOriginatorBranchId == branchId && o.OfferStatus == OfferStatusEnum.New)
+                                      || (o.ListingOriginatorBranchId == branchId && o.OfferStatus == OfferStatusEnum.New))
+                                select o).ToList();
+            var listDistinct = list.Distinct().ToList();
+
+            return listDistinct;
+        }
+
+        public static List<Offer> GetAllOffersForCompany(Guid companyId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Offer> list = GetAllOffersForCompany(db, companyId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Offer> GetAllOffersForCompany(ApplicationDbContext db, Guid companyId)
+        {
+            List<Offer> list = (from o in db.Offers
+                                where ((o.OfferOriginatorCompanyId == companyId && o.OfferStatus == OfferStatusEnum.New)
+                                      || (o.ListingOriginatorCompanyId == companyId && o.OfferStatus == OfferStatusEnum.New))
+                                select o).ToList();
+            var listDistinct = list.Distinct().ToList();
+
+            return listDistinct;
+        }
+
         public static List<Offer> GetAllOffersForBranchUser(BranchUser branchUser)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -85,6 +125,43 @@ namespace Distributor.Helpers
             var allOffersForBranchUserDistinct = allOffersForBranchUser.Distinct().ToList();
 
             return allOffersForBranchUserDistinct;
+        }
+
+        public static List<Offer> GetAllManageListingFilteredOffers(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Offer> list = GetAllManageListingFilteredOffers(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Offer> GetAllManageListingFilteredOffers(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
+
+            //Create list 
+            List<Offer> list = new List<Offer>();
+
+            //Now bring in the Selection Level sort
+            switch (settings.OffersManageViewInternalSelectionLevel)
+            {
+                case InternalSearchLevelEnum.User:
+                    list = GetAllOffersForUser(db, appUserId);
+                    break;
+                case InternalSearchLevelEnum.Branch: //user's current branch to filter
+                    list = GetAllOffersForBranch(db, branch.BranchId);
+                    break;
+                case InternalSearchLevelEnum.Company: //user's current company to filter
+                    list = GetAllOffersForCompany(db, branch.CompanyId);
+                    break;
+                case InternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                    break;
+            }
+
+            return list;
         }
 
         #endregion
@@ -323,21 +400,21 @@ namespace Distributor.Helpers
             return offerManageView;
         }
 
-        public static List<OfferManageView> GetAllOffersManageViewForUser(IPrincipal user)
+        public static List<OfferManageView> GetAllOffersManageView(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<OfferManageView> list = GetAllOffersManageViewForUser(db, user);
+            List<OfferManageView> list = GetAllOffersManageView(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<OfferManageView> GetAllOffersManageViewForUser(ApplicationDbContext db, IPrincipal user)
+        public static List<OfferManageView> GetAllOffersManageView(ApplicationDbContext db, IPrincipal user)
         {
             List<OfferManageView> allOffersManageView = new List<OfferManageView>();
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
-            List<Offer> allOffersForUser = OfferHelpers.GetAllOffersForUser(db, appUser.AppUserId);
+            List<Offer> allOffersForUser = OfferHelpers.GetAllManageListingFilteredOffers(db, appUser.AppUserId);
 
             foreach (Offer offerForUser in allOffersForUser)
             {

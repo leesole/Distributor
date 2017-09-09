@@ -15,31 +15,31 @@ namespace Distributor.Controllers
     {
         public ActionResult Requirements()
         {
-            List<RequirementListingManageView> model = RequirementListingManageHelpers.GetAllRequirementListingsManageViewForUser(User);
+            List<RequirementListingManageView> model = RequirementListingManageHelpers.GetAllRequirementListingsManageView(User);
             return View(model);
         }
 
         public ActionResult Available()
         {
-            List<AvailableListingManageView> model = AvailableListingManageHelpers.GetAllAvailableListingsManageViewForUser(User);
+            List<AvailableListingManageView> model = AvailableListingManageHelpers.GetAllAvailableListingsManageView(User);
             return View(model);
         }
 
         public ActionResult Campaigns()
         {
-            List<CampaignManageView> model = CampaignManageHelpers.GetAllCampaignsManageViewForUser(User);
+            List<CampaignManageView> model = CampaignManageHelpers.GetAllCampaignsManageView(User);
             return View(model);
         }
 
         public ActionResult Offers()
         {
-            List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageViewForUser(User);
+            List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageView(User);
             return View(model);
         }
 
         public ActionResult Orders()
         {
-            List<OrderManageView> model = OrderManageHelpers.GetAllOrdersManageViewForUserBranch(User);
+            List<OrderManageView> model = OrderManageHelpers.GetAllOrdersManageView(User);
             return View(model);
         }
     }

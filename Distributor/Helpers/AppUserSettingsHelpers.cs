@@ -66,10 +66,12 @@ namespace Distributor.Helpers
             ExternalSearchLevelEnum availableListingGeneralInfoExternalSelectionLevel,
             InternalSearchLevelEnum campaignManageViewInternalSelectionLevel,
             InternalSearchLevelEnum requiredListingManageViewInternalSelectionLevel,
-            InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel)
+            InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel,
+            InternalSearchLevelEnum offersManageViewInternalSelectionLevel,
+            InternalSearchLevelEnum ordersManageViewInternalSelectionLevel)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUserSettings appUserSettings = CreateAppUserSettings(db, appUserId, campaignDashboardMaxDistance, campaignDashboardMaxAge, requiredListingDashboardMaxDistance, requiredListingDashboardMaxAge, availableListingDashboardMaxDistance, availableListingDashboardMaxAge, campaignDashboardExternalSelectionLevel, requiredListingDashboardtExternalSelectionLevel, availableListingDashboardExternalSelectionLevel, campaignGeneralInfoMaxDistance, requiredListingGeneralInfoMaxDistance, availableListingGeneralInfoMaxDistance, campaignGeneralInfoExternalSelectionLevel, requiredListingGeneralInfoExternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, campaignManageViewInternalSelectionLevel, requiredListingManageViewInternalSelectionLevel, availableListingManageViewInternalSelectionLevel);
+            AppUserSettings appUserSettings = CreateAppUserSettings(db, appUserId, campaignDashboardMaxDistance, campaignDashboardMaxAge, requiredListingDashboardMaxDistance, requiredListingDashboardMaxAge, availableListingDashboardMaxDistance, availableListingDashboardMaxAge, campaignDashboardExternalSelectionLevel, requiredListingDashboardtExternalSelectionLevel, availableListingDashboardExternalSelectionLevel, campaignGeneralInfoMaxDistance, requiredListingGeneralInfoMaxDistance, availableListingGeneralInfoMaxDistance, campaignGeneralInfoExternalSelectionLevel, requiredListingGeneralInfoExternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, campaignManageViewInternalSelectionLevel, requiredListingManageViewInternalSelectionLevel, availableListingManageViewInternalSelectionLevel, offersManageViewInternalSelectionLevel, ordersManageViewInternalSelectionLevel);
             db.Dispose();
             return appUserSettings;
         }
@@ -92,7 +94,9 @@ namespace Distributor.Helpers
             ExternalSearchLevelEnum availableListingGeneralInfoExternalSelectionLevel,
             InternalSearchLevelEnum campaignManageViewInternalSelectionLevel,
             InternalSearchLevelEnum requiredListingManageViewInternalSelectionLevel,
-            InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel)
+            InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel,
+            InternalSearchLevelEnum offersManageViewInternalSelectionLevel,
+            InternalSearchLevelEnum ordersManageViewInternalSelectionLevel)
         {
             AppUserSettings appUserSettings = new AppUserSettings()
             {
@@ -114,6 +118,8 @@ namespace Distributor.Helpers
                 RequiredListingManageViewInternalSelectionLevel = requiredListingManageViewInternalSelectionLevel,
                 AvailableListingManageViewInternalSelectionLevel = availableListingManageViewInternalSelectionLevel,
                 CampaignGeneralInfoExternalSelectionLevel = campaignGeneralInfoExternalSelectionLevel,
+                OffersManageViewInternalSelectionLevel = offersManageViewInternalSelectionLevel,
+                OrdersManageViewInternalSelectionLevel = ordersManageViewInternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = requiredListingGeneralInfoExternalSelectionLevel,
                 AvailableListingGeneralInfoExternalSelectionLevel = availableListingGeneralInfoExternalSelectionLevel
             };
@@ -154,6 +160,8 @@ namespace Distributor.Helpers
                 CampaignManageViewInternalSelectionLevel = template.CampaignManageViewInternalSelectionLevel,
                 RequiredListingManageViewInternalSelectionLevel = template.RequiredListingManageViewInternalSelectionLevel,
                 AvailableListingManageViewInternalSelectionLevel = template.AvailableListingManageViewInternalSelectionLevel,
+                OffersManageViewInternalSelectionLevel = template.OffersManageViewInternalSelectionLevel,
+                OrdersManageViewInternalSelectionLevel = template.OrdersManageViewInternalSelectionLevel,
                 CampaignGeneralInfoExternalSelectionLevel = template.CampaignGeneralInfoExternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = template.RequiredListingGeneralInfoExternalSelectionLevel,
                 AvailableListingGeneralInfoExternalSelectionLevel = template.AvailableListingGeneralInfoExternalSelectionLevel
@@ -194,6 +202,8 @@ namespace Distributor.Helpers
             settings.CampaignManageViewInternalSelectionLevel = view.CampaignManageViewInternalSelectionLevel;
             settings.RequiredListingManageViewInternalSelectionLevel = view.RequiredListingManageViewInternalSelectionLevel;
             settings.AvailableListingManageViewInternalSelectionLevel = view.AvailableListingManageViewInternalSelectionLevel;
+            settings.OffersManageViewInternalSelectionLevel = view.OffersManageViewInternalSelectionLevel;
+            settings.OrdersManageViewInternalSelectionLevel = view.OrdersManageViewInternalSelectionLevel;
             settings.CampaignGeneralInfoExternalSelectionLevel = view.CampaignGeneralInfoExternalSelectionLevel;
             settings.RequiredListingGeneralInfoExternalSelectionLevel = view.RequiredListingGeneralInfoExternalSelectionLevel;
             settings.AvailableListingGeneralInfoExternalSelectionLevel = view.AvailableListingGeneralInfoExternalSelectionLevel;

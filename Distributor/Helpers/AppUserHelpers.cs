@@ -282,6 +282,8 @@ namespace Distributor.Helpers
                 CampaignManageViewInternalSelectionLevel = appUserSettings.CampaignManageViewInternalSelectionLevel,
                 RequiredListingManageViewInternalSelectionLevel = appUserSettings.RequiredListingManageViewInternalSelectionLevel,
                 AvailableListingManageViewInternalSelectionLevel = appUserSettings.AvailableListingManageViewInternalSelectionLevel,
+                OffersManageViewInternalSelectionLevel = appUserSettings.OffersManageViewInternalSelectionLevel,
+                OrdersManageViewInternalSelectionLevel = appUserSettings.OrdersManageViewInternalSelectionLevel,
                 CampaignGeneralInfoExternalSelectionLevel = appUserSettings.CampaignGeneralInfoExternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = appUserSettings.RequiredListingGeneralInfoExternalSelectionLevel,
                 AvailableListingGeneralInfoExternalSelectionLevel = appUserSettings.AvailableListingGeneralInfoExternalSelectionLevel

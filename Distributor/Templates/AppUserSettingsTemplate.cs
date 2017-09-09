@@ -23,6 +23,8 @@ namespace Distributor.Templates
         public InternalSearchLevelEnum CampaignManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
         public InternalSearchLevelEnum RequiredListingManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
         public InternalSearchLevelEnum AvailableListingManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
+        public InternalSearchLevelEnum OffersManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
+        public InternalSearchLevelEnum OrdersManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
         public ExternalSearchLevelEnum CampaignGeneralInfoExternalSelectionLevel = ExternalSearchLevelEnum.All;
         public ExternalSearchLevelEnum RequiredListingGeneralInfoExternalSelectionLevel = ExternalSearchLevelEnum.All;
         public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel = ExternalSearchLevelEnum.All;

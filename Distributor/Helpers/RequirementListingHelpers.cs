@@ -103,6 +103,43 @@ namespace Distributor.Helpers
             return list;
         }
 
+        public static List<RequirementListing> GetAllManageListingFilteredRequirementListings(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<RequirementListing> list = GetAllManageListingFilteredRequirementListings(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<RequirementListing> GetAllManageListingFilteredRequirementListings(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
+
+            //Create list
+            List<RequirementListing> list = new List<RequirementListing>();
+
+            //Now bring in the Selection Level sort
+            switch (settings.RequiredListingManageViewInternalSelectionLevel)
+            {
+                case InternalSearchLevelEnum.User:
+                    list = GetAllRequirementListingsForUser(db, appUserId);
+                    break;
+                case InternalSearchLevelEnum.Branch: //user's current branch to filter
+                    list = GetAllRequirementListingsForBranch(db, branch.BranchId);
+                    break;
+                case InternalSearchLevelEnum.Company: //user's current company to filter
+                    list = GetAllRequirementListingsForCompany(db, branch.CompanyId);
+                    break;
+                case InternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                    break;
+            }
+
+            return list;
+        }
+
         public static List<RequirementListing> GetAllDashboardFilteredRequirementListings(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -185,6 +222,40 @@ namespace Distributor.Helpers
                                                                       select rl).ToList();
 
             return allRequirementsListingForUser;
+        }
+
+        public static List<RequirementListing> GetAllRequirementListingsForBranch(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<RequirementListing> list = GetAllRequirementListingsForBranch(db, branchId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<RequirementListing> GetAllRequirementListingsForBranch(ApplicationDbContext db, Guid branchId)
+        {
+            List<RequirementListing> list = (from rl in db.RequirementListings
+                                             where (rl.ListingOriginatorBranchId == branchId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                             select rl).ToList();
+
+            return list;
+        }
+
+        public static List<RequirementListing> GetAllRequirementListingsForCompany(Guid companyId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<RequirementListing> list = GetAllRequirementListingsForCompany(db, companyId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<RequirementListing> GetAllRequirementListingsForCompany(ApplicationDbContext db, Guid companyId)
+        {
+            List<RequirementListing> list = (from rl in db.RequirementListings
+                                             where (rl.ListingOriginatorCompanyId == companyId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                             select rl).ToList();
+
+            return list;
         }
 
         public static List<RequirementListing> GetAllRequirementListingsForBranchUser(BranchUser branchUser)
@@ -373,21 +444,21 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<RequirementListingManageView> GetAllRequirementListingsManageViewForUser(IPrincipal user)
+        public static List<RequirementListingManageView> GetAllRequirementListingsManageView(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<RequirementListingManageView> list = GetAllRequirementListingsManageViewForUser(db, user);
+            List<RequirementListingManageView> list = GetAllRequirementListingsManageView(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<RequirementListingManageView> GetAllRequirementListingsManageViewForUser(ApplicationDbContext db, IPrincipal user)
+        public static List<RequirementListingManageView> GetAllRequirementListingsManageView(ApplicationDbContext db, IPrincipal user)
         {
             List<RequirementListingManageView> allRequirementListingsManageView = new List<RequirementListingManageView>();
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
-            List<RequirementListing> allRequirementListingsForUser = RequirementListingHelpers.GetAllRequirementListingsForUser(db, appUser.AppUserId);
+            List<RequirementListing> allRequirementListingsForUser = RequirementListingHelpers.GetAllManageListingFilteredRequirementListings(db, appUser.AppUserId);
 
             foreach (RequirementListing requirementListingForBranchUser in allRequirementListingsForUser)
             {

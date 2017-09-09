@@ -103,6 +103,45 @@ namespace Distributor.Helpers
 
             return list;
         }
+                
+        public static List<AvailableListing> GetAllManageListingFilteredAvailableListings(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<AvailableListing> list = GetAllManageListingFilteredAvailableListings(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AvailableListing> GetAllManageListingFilteredAvailableListings(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
+
+            var dateCheck = DateTime.MinValue;
+
+            //Create list within the time frame if setting set
+            List<AvailableListing> list = new List<AvailableListing>();
+
+            //Now bring in the Selection Level sort
+            switch (settings.AvailableListingManageViewInternalSelectionLevel)
+            {
+                case InternalSearchLevelEnum.User:
+                    list = GetAllAvailableListingsForUser(db, appUserId);
+                    break;
+                case InternalSearchLevelEnum.Branch: //user's current branch to filter
+                    list = GetAllAvailableListingsForBranch(db, branch.BranchId);
+                    break;
+                case InternalSearchLevelEnum.Company: //user's current company to filter
+                    list = GetAllAvailableListingsForCompany(db, branch.CompanyId);
+                    break;
+                case InternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                    break;
+            }
+
+            return list;
+        }
 
         public static List<AvailableListing> GetAllDashboardFilteredAvailableListings(Guid appUserId)
         {
@@ -186,6 +225,42 @@ namespace Distributor.Helpers
             List<AvailableListing> allRequirementsListingForUser = (from rl in db.AvailableListings
                                                                      where (rl.ListingOriginatorAppUserId == appUserId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
                                                                      select rl).ToList();
+
+            return allRequirementsListingForUser;
+        }
+
+        public static List<AvailableListing> GetAllAvailableListingsForBranch(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<AvailableListing> list = GetAllAvailableListingsForBranch(db, branchId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AvailableListing> GetAllAvailableListingsForBranch(ApplicationDbContext db, Guid branchId)
+        {
+            List<AvailableListing> allRequirementsListingForUser = (from rl in db.AvailableListings
+                                                                    where (rl.ListingOriginatorBranchId == branchId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                    select rl).ToList();
+
+            return allRequirementsListingForUser;
+        }
+
+        public static List<AvailableListing> GetAllAvailableListingsForCompany(Guid companyId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<AvailableListing> list = GetAllAvailableListingsForCompany(db, companyId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AvailableListing> GetAllAvailableListingsForCompany(ApplicationDbContext db, Guid companyId)
+        {
+            List<AvailableListing> allRequirementsListingForUser = (from rl in db.AvailableListings
+                                                                    where (rl.ListingOriginatorCompanyId == companyId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                    select rl).ToList();
 
             return allRequirementsListingForUser;
         }
@@ -379,21 +454,21 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<AvailableListingManageView> GetAllAvailableListingsManageViewForUser(IPrincipal user)
+        public static List<AvailableListingManageView> GetAllAvailableListingsManageView(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<AvailableListingManageView> list = GetAllAvailableListingsManageViewForUser(db, user);
+            List<AvailableListingManageView> list = GetAllAvailableListingsManageView(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<AvailableListingManageView> GetAllAvailableListingsManageViewForUser(ApplicationDbContext db, IPrincipal user)
+        public static List<AvailableListingManageView> GetAllAvailableListingsManageView(ApplicationDbContext db, IPrincipal user)
         {
             List<AvailableListingManageView> allAvailableListingsManageView = new List<AvailableListingManageView>();
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
-            List<AvailableListing> allAvailableListingsForUser = AvailableListingHelpers.GetAllAvailableListingsForUser(db, appUser.AppUserId);
+            List<AvailableListing> allAvailableListingsForUser = AvailableListingHelpers.GetAllManageListingFilteredAvailableListings(db, appUser.AppUserId);
 
             foreach (AvailableListing AvailableListingForBranchUser in allAvailableListingsForUser)
             {

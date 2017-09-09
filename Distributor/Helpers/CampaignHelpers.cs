@@ -101,6 +101,43 @@ namespace Distributor.Helpers
             return list;
         }
 
+        public static List<Campaign> GetAllManageListingFilteredCampaigns(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Campaign> list = GetAllManageListingFilteredCampaigns(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Campaign> GetAllManageListingFilteredCampaigns(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
+
+            //Create list 
+            List<Campaign> list = new List<Campaign>();
+
+            //Now bring in the Selection Level sort
+            switch (settings.CampaignManageViewInternalSelectionLevel)
+            {
+                case InternalSearchLevelEnum.User:
+                    list = GetAllCampaignsForUser(db, appUserId);
+                    break;
+                case InternalSearchLevelEnum.Branch: //user's current branch to filter
+                    list = GetAllCampaignsForBranch(db, branch.BranchId);
+                    break;
+                case InternalSearchLevelEnum.Company: //user's current company to filter
+                    list = GetAllCampaignsForCompany(db, branch.CompanyId);
+                    break;
+                case InternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                    break;
+            }
+
+            return list;
+        }
+
         public static List<Campaign> GetAllDashboardFilteredCampaigns(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -178,10 +215,44 @@ namespace Distributor.Helpers
 
         public static List<Campaign> GetAllCampaignsForUser(ApplicationDbContext db, Guid appUserId)
         {
-            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
-
             List<Campaign> allCampaignsForUser = (from c in db.Campaigns
                                                   where (c.CampaignOriginatorAppUserId == appUserId && c.EntityStatus == EntityStatusEnum.Active)
+                                                  select c).ToList();
+
+            return allCampaignsForUser;
+        }
+
+        public static List<Campaign> GetAllCampaignsForBranch(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Campaign> list = GetAllCampaignsForBranch(db, branchId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Campaign> GetAllCampaignsForBranch(ApplicationDbContext db, Guid branchId)
+        {
+            List<Campaign> allCampaignsForUser = (from c in db.Campaigns
+                                                  where (c.CampaignOriginatorBranchId == branchId && c.EntityStatus == EntityStatusEnum.Active)
+                                                  select c).ToList();
+
+            return allCampaignsForUser;
+        }
+
+        public static List<Campaign> GetAllCampaignsForCompany(Guid companyId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Campaign> list = GetAllCampaignsForCompany(db, companyId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Campaign> GetAllCampaignsForCompany(ApplicationDbContext db, Guid companyId)
+        {
+            List<Campaign> allCampaignsForUser = (from c in db.Campaigns
+                                                  where (c.CampaignOriginatorCompanyId == companyId && c.EntityStatus == EntityStatusEnum.Active)
                                                   select c).ToList();
 
             return allCampaignsForUser;
@@ -357,21 +428,21 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<CampaignManageView> GetAllCampaignsManageViewForUser(IPrincipal user)
+        public static List<CampaignManageView> GetAllCampaignsManageView(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<CampaignManageView> list = GetAllCampaignsManageViewForUser(db, user);
+            List<CampaignManageView> list = GetAllCampaignsManageView(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<CampaignManageView> GetAllCampaignsManageViewForUser(ApplicationDbContext db, IPrincipal user)
+        public static List<CampaignManageView> GetAllCampaignsManageView(ApplicationDbContext db, IPrincipal user)
         {
             List<CampaignManageView> allCampaignsManageView = new List<CampaignManageView>();
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
-            List<Campaign> allCampaignsForUser = CampaignHelpers.GetAllCampaignsForUser(db, appUser.AppUserId);
+            List<Campaign> allCampaignsForUser = CampaignHelpers.GetAllManageListingFilteredCampaigns(db, appUser.AppUserId);
 
             foreach (Campaign campaignForBranchUser in allCampaignsForUser)
             {

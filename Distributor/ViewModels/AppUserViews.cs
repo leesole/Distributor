@@ -125,6 +125,14 @@ namespace Distributor.ViewModels
         [Display(Name = "Internal selection level")]
         public InternalSearchLevelEnum RequiredListingManageViewInternalSelectionLevel { get; set; }
 
+        [Required]
+        [Display(Name = "Internal selection level")]
+        public InternalSearchLevelEnum OffersManageViewInternalSelectionLevel { get; set; }
+
+        [Required]
+        [Display(Name = "Internal selection level")]
+        public InternalSearchLevelEnum OrdersManageViewInternalSelectionLevel { get; set; }
+
 
         [Required]
         [Display(Name = "External selection level")]
