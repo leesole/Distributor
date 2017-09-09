@@ -8,21 +8,17 @@ namespace Distributor.Templates
 {
     public class AppUserSettingsTemplate
     {
-        public int? GlobalMaxDistance = null;
-        public double? GlobalMaxAge = null;
-        public InternalSearchLevelEnum GlobalInternalSelectionLevel = InternalSearchLevelEnum.User;
-        public ExternalSearchLevelEnum GlobalExternalSelectionLevel = ExternalSearchLevelEnum.All;
-        public int? AvailableListingGeneralInfoMaxDistance = null;
-        public int? AvailableListingRecentMaxDistance = null;
-        public double? AvailableListingRecentMaxAge = null;
+        public int? RequiredListingDashboardMaxDistance = null;
+        public double? RequiredListingDashboardMaxAge = 7;
+        public int? AvailableListingDashboardMaxDistance = null;
+        public double? AvailableListingDashboardMaxAge = 7;
+        public ExternalSearchLevelEnum RequiredListingDashboardExternalSelectionLevel = ExternalSearchLevelEnum.All;
+        public ExternalSearchLevelEnum AvailableListingDashboardExternalSelectionLevel = ExternalSearchLevelEnum.All;
         public int? RequiredListingGeneralInfoMaxDistance = null;
-        public int? RequiredListingRecentMaxDistance = null;
-        public double? RequiredListingRecentMaxAge = null;
-        public InternalSearchLevelEnum AvailableListingManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
+        public int? AvailableListingGeneralInfoMaxDistance = null;
         public InternalSearchLevelEnum RequiredListingManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
-        public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel = ExternalSearchLevelEnum.All;
+        public InternalSearchLevelEnum AvailableListingManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
         public ExternalSearchLevelEnum RequiredListingGeneralInfoExternalSelectionLevel = ExternalSearchLevelEnum.All;
-        public ExternalSearchLevelEnum AvailableListingRecentExternalSelectionLevel = ExternalSearchLevelEnum.All;
-        public ExternalSearchLevelEnum RequiredListingRecentExternalSelectionLevel = ExternalSearchLevelEnum.All;
+        public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel = ExternalSearchLevelEnum.All;
     }
 }

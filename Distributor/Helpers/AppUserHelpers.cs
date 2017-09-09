@@ -253,22 +253,18 @@ namespace Distributor.Helpers
                 SelectedBranchId = appUserDetails.CurrentBranchId,
                 UserRole = branchUser.UserRole,
                 AppUserSettingsId = appUserSettings.AppUserSettingsId,
-                GlobalMaxDistance = appUserSettings.GlobalMaxDistance,
-                GlobalMaxAge = appUserSettings.GlobalMaxAge,
-                GlobalInternalSelectionLevel = appUserSettings.GlobalInternalSelectionLevel,
-                GlobalExternalSelectionLevel = appUserSettings.GlobalExternalSelectionLevel,
-                AvailableListingGeneralInfoMaxDistance = appUserSettings.AvailableListingGeneralInfoMaxDistance,
-                AvailableListingRecentMaxDistance = appUserSettings.AvailableListingRecentMaxDistance,
-                AvailableListingRecentMaxAge = appUserSettings.AvailableListingRecentMaxAge,
+                RequiredListingDashboardMaxDistance = appUserSettings.RequiredListingDashboardMaxDistance,
+                RequiredListingDashboardMaxAge = appUserSettings.RequiredListingDashboardMaxAge,
+                AvailableListingDashboardMaxDistance = appUserSettings.AvailableListingDashboardMaxDistance,
+                AvailableListingDashboardMaxAge = appUserSettings.AvailableListingDashboardMaxAge,
+                RequiredListingDashboardExternalSelectionLevel = appUserSettings.RequiredListingDashboardExternalSelectionLevel,
+                AvailableListingDashboardExternalSelectionLevel = appUserSettings.AvailableListingDashboardExternalSelectionLevel,
                 RequiredListingGeneralInfoMaxDistance = appUserSettings.RequiredListingGeneralInfoMaxDistance,
-                RequiredListingRecentMaxDistance = appUserSettings.RequiredListingRecentMaxDistance,
-                RequiredListingRecentMaxAge = appUserSettings.RequiredListingRecentMaxAge,
-                AvailableListingManageViewInternalSelectionLevel = appUserSettings.AvailableListingManageViewInternalSelectionLevel,
+                AvailableListingGeneralInfoMaxDistance = appUserSettings.AvailableListingGeneralInfoMaxDistance,
                 RequiredListingManageViewInternalSelectionLevel = appUserSettings.RequiredListingManageViewInternalSelectionLevel,
-                AvailableListingGeneralInfoExternalSelectionLevel = appUserSettings.AvailableListingGeneralInfoExternalSelectionLevel,
+                AvailableListingManageViewInternalSelectionLevel = appUserSettings.AvailableListingManageViewInternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = appUserSettings.RequiredListingGeneralInfoExternalSelectionLevel,
-                AvailableListingRecentExternalSelectionLevel = appUserSettings.AvailableListingRecentExternalSelectionLevel,
-                RequiredListingRecentExternalSelectionLevel = appUserSettings.RequiredListingRecentExternalSelectionLevel
+                AvailableListingGeneralInfoExternalSelectionLevel = appUserSettings.AvailableListingGeneralInfoExternalSelectionLevel
             };
 
             return view;

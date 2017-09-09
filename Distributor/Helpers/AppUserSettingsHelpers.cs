@@ -48,42 +48,56 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AppUserSettings CreateAppUserSettings(Guid appUserId, int? globalMaxDistance, double? globalMaxAge, InternalSearchLevelEnum globalInternalSelectionLevel, ExternalSearchLevelEnum globalExternalSelectionLevel,
-            int? availableListingGeneralInfoMaxDistance, int? availableListingRecentMaxDistance, double? availableListingRecentMaxAge, int? requiredListingGeneralInfoMaxDistance, int? requiredListingRecentMaxDistance,
-            double? requiredListingRecentMaxAge, InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel, InternalSearchLevelEnum requiredListingManageViewInternalSelectionLevel, ExternalSearchLevelEnum availableListingGeneralInfoExternalSelectionLevel,
-            ExternalSearchLevelEnum requiredListingGeneralInfoExternalSelectionLevel, ExternalSearchLevelEnum availableListingRecentExternalSelectionLevel, ExternalSearchLevelEnum requiredListingRecentExternalSelectionLevel)
+        public static AppUserSettings CreateAppUserSettings(Guid appUserId,
+            int? requiredListingDashboardMaxDistance,
+            double? requiredListingDashboardMaxAge,
+            int? availableListingDashboardMaxDistance,
+            double? availableListingDashboardMaxAge,
+            ExternalSearchLevelEnum requiredListingDashboardtExternalSelectionLevel,
+            ExternalSearchLevelEnum availableListingDashboardExternalSelectionLevel,
+            int? requiredListingGeneralInfoMaxDistance,
+            int? availableListingGeneralInfoMaxDistance,
+            ExternalSearchLevelEnum requiredListingGeneralInfoExternalSelectionLevel,
+            ExternalSearchLevelEnum availableListingGeneralInfoExternalSelectionLevel,
+            InternalSearchLevelEnum requiredListingManageViewInternalSelectionLevel,
+            InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUserSettings appUserSettings = CreateAppUserSettings(db, appUserId, globalMaxDistance, globalMaxAge, globalInternalSelectionLevel, globalExternalSelectionLevel, availableListingGeneralInfoMaxDistance, availableListingRecentMaxDistance, availableListingRecentMaxAge, requiredListingGeneralInfoMaxDistance, requiredListingRecentMaxDistance, requiredListingRecentMaxAge, availableListingManageViewInternalSelectionLevel, requiredListingManageViewInternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, requiredListingGeneralInfoExternalSelectionLevel, availableListingRecentExternalSelectionLevel, requiredListingRecentExternalSelectionLevel);
+            AppUserSettings appUserSettings = CreateAppUserSettings(db, appUserId, requiredListingDashboardMaxDistance, requiredListingDashboardMaxAge, availableListingDashboardMaxDistance, availableListingDashboardMaxAge, requiredListingDashboardtExternalSelectionLevel, availableListingDashboardExternalSelectionLevel, requiredListingGeneralInfoMaxDistance, availableListingGeneralInfoMaxDistance, requiredListingGeneralInfoExternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, requiredListingManageViewInternalSelectionLevel, availableListingManageViewInternalSelectionLevel);
             db.Dispose();
             return appUserSettings;
         }
 
-        public static AppUserSettings CreateAppUserSettings(ApplicationDbContext db, Guid appUserId, int? globalMaxDistance, double? globalMaxAge, InternalSearchLevelEnum globalInternalSelectionLevel, ExternalSearchLevelEnum globalExternalSelectionLevel,
-            int? availableListingGeneralInfoMaxDistance, int? availableListingRecentMaxDistance, double? availableListingRecentMaxAge, int? requiredListingGeneralInfoMaxDistance, int? requiredListingRecentMaxDistance,
-            double? requiredListingRecentMaxAge, InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel, InternalSearchLevelEnum requiredListingManageViewInternalSelectionLevel, ExternalSearchLevelEnum availableListingGeneralInfoExternalSelectionLevel,
-            ExternalSearchLevelEnum requiredListingGeneralInfoExternalSelectionLevel, ExternalSearchLevelEnum availableListingRecentExternalSelectionLevel, ExternalSearchLevelEnum requiredListingRecentExternalSelectionLevel)
+        public static AppUserSettings CreateAppUserSettings(ApplicationDbContext db, Guid appUserId,
+            int? requiredListingDashboardMaxDistance,
+            double? requiredListingDashboardMaxAge,
+            int? availableListingDashboardMaxDistance,
+            double? availableListingDashboardMaxAge,
+            ExternalSearchLevelEnum requiredListingDashboardExternalSelectionLevel,
+            ExternalSearchLevelEnum availableListingDashboardExternalSelectionLevel,
+            int? requiredListingGeneralInfoMaxDistance,
+            int? availableListingGeneralInfoMaxDistance,
+            ExternalSearchLevelEnum requiredListingGeneralInfoExternalSelectionLevel,
+            ExternalSearchLevelEnum availableListingGeneralInfoExternalSelectionLevel,
+            InternalSearchLevelEnum requiredListingManageViewInternalSelectionLevel,
+            InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel)
         {
             AppUserSettings appUserSettings = new AppUserSettings()
             {
                 AppUserSettingsId = Guid.NewGuid(),
                 AppUserId = appUserId,
-                GlobalMaxDistance = globalMaxDistance,
-                GlobalMaxAge = globalMaxAge,
-                GlobalInternalSelectionLevel = globalInternalSelectionLevel,
-                GlobalExternalSelectionLevel = globalExternalSelectionLevel,
-                AvailableListingGeneralInfoMaxDistance = availableListingGeneralInfoMaxDistance,
-                AvailableListingRecentMaxDistance = availableListingRecentMaxDistance,
-                AvailableListingRecentMaxAge = availableListingRecentMaxAge,
+                RequiredListingDashboardMaxDistance = requiredListingDashboardMaxDistance,
+                RequiredListingDashboardMaxAge = requiredListingDashboardMaxAge,
+                AvailableListingDashboardMaxDistance = availableListingDashboardMaxDistance,
+                AvailableListingDashboardMaxAge = availableListingDashboardMaxAge,
+                RequiredListingDashboardExternalSelectionLevel = requiredListingDashboardExternalSelectionLevel,
+                AvailableListingDashboardExternalSelectionLevel = availableListingDashboardExternalSelectionLevel,
                 RequiredListingGeneralInfoMaxDistance = requiredListingGeneralInfoMaxDistance,
-                RequiredListingRecentMaxDistance = requiredListingRecentMaxDistance,
-                RequiredListingRecentMaxAge = requiredListingRecentMaxAge,
-                AvailableListingManageViewInternalSelectionLevel = availableListingManageViewInternalSelectionLevel,
+                AvailableListingGeneralInfoMaxDistance = availableListingGeneralInfoMaxDistance,
                 RequiredListingManageViewInternalSelectionLevel = requiredListingManageViewInternalSelectionLevel,
-                AvailableListingGeneralInfoExternalSelectionLevel = availableListingGeneralInfoExternalSelectionLevel,
+                AvailableListingManageViewInternalSelectionLevel = availableListingManageViewInternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = requiredListingGeneralInfoExternalSelectionLevel,
-                AvailableListingRecentExternalSelectionLevel = availableListingRecentExternalSelectionLevel,
-                RequiredListingRecentExternalSelectionLevel = requiredListingRecentExternalSelectionLevel
+                AvailableListingGeneralInfoExternalSelectionLevel = availableListingGeneralInfoExternalSelectionLevel
             };
             db.AppUserSettings.Add(appUserSettings);
             db.SaveChanges();
@@ -107,22 +121,18 @@ namespace Distributor.Helpers
             {
                 AppUserSettingsId = Guid.NewGuid(),
                 AppUserId = appUserId,
-                GlobalMaxDistance = template.GlobalMaxDistance,
-                GlobalMaxAge = template.GlobalMaxAge,
-                GlobalInternalSelectionLevel = template.GlobalInternalSelectionLevel,
-                GlobalExternalSelectionLevel = template.GlobalExternalSelectionLevel,
-                AvailableListingGeneralInfoMaxDistance = template.AvailableListingGeneralInfoMaxDistance,
-                AvailableListingRecentMaxDistance = template.AvailableListingRecentMaxDistance,
-                AvailableListingRecentMaxAge = template.AvailableListingRecentMaxAge,
+                RequiredListingDashboardMaxDistance = template.RequiredListingDashboardMaxDistance,
+                RequiredListingDashboardMaxAge = template.RequiredListingDashboardMaxAge,
+                AvailableListingDashboardMaxDistance = template.AvailableListingDashboardMaxDistance,
+                AvailableListingDashboardMaxAge = template.AvailableListingDashboardMaxAge,
+                RequiredListingDashboardExternalSelectionLevel = template.RequiredListingDashboardExternalSelectionLevel,
+                AvailableListingDashboardExternalSelectionLevel = template.AvailableListingDashboardExternalSelectionLevel,
                 RequiredListingGeneralInfoMaxDistance = template.RequiredListingGeneralInfoMaxDistance,
-                RequiredListingRecentMaxDistance = template.RequiredListingRecentMaxDistance,
-                RequiredListingRecentMaxAge = template.RequiredListingRecentMaxAge,
-                AvailableListingManageViewInternalSelectionLevel = template.AvailableListingManageViewInternalSelectionLevel,
+                AvailableListingGeneralInfoMaxDistance = template.AvailableListingGeneralInfoMaxDistance,
                 RequiredListingManageViewInternalSelectionLevel = template.RequiredListingManageViewInternalSelectionLevel,
-                AvailableListingGeneralInfoExternalSelectionLevel = template.AvailableListingGeneralInfoExternalSelectionLevel,
+                AvailableListingManageViewInternalSelectionLevel = template.AvailableListingManageViewInternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = template.RequiredListingGeneralInfoExternalSelectionLevel,
-                AvailableListingRecentExternalSelectionLevel = template.AvailableListingRecentExternalSelectionLevel,
-                RequiredListingRecentExternalSelectionLevel = template.RequiredListingRecentExternalSelectionLevel
+                AvailableListingGeneralInfoExternalSelectionLevel = template.AvailableListingGeneralInfoExternalSelectionLevel
             };
             db.AppUserSettings.Add(appUserSettings);
             db.SaveChanges();
@@ -145,23 +155,19 @@ namespace Distributor.Helpers
         public static AppUserSettings UpdateUserSettingsFromAppUserEditView(ApplicationDbContext db, AppUserEditView view)
         {
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettings(db, view.AppUserSettingsId);
-
-            settings.GlobalMaxDistance = view.GlobalMaxDistance;
-            settings.GlobalMaxAge = view.GlobalMaxAge;
-            settings.GlobalInternalSelectionLevel = view.GlobalInternalSelectionLevel;
-            settings.GlobalExternalSelectionLevel = view.GlobalExternalSelectionLevel;
-            settings.AvailableListingGeneralInfoMaxDistance = view.AvailableListingGeneralInfoMaxDistance;
-            settings.AvailableListingRecentMaxDistance = view.AvailableListingRecentMaxDistance;
-            settings.AvailableListingRecentMaxAge = view.AvailableListingRecentMaxAge;
+            
+            settings.RequiredListingDashboardMaxDistance = view.RequiredListingDashboardMaxDistance;
+            settings.RequiredListingDashboardMaxAge = view.RequiredListingDashboardMaxAge;
+            settings.AvailableListingDashboardMaxDistance = view.AvailableListingDashboardMaxDistance;
+            settings.AvailableListingDashboardMaxAge = view.AvailableListingDashboardMaxAge;
+            settings.RequiredListingDashboardExternalSelectionLevel = view.RequiredListingDashboardExternalSelectionLevel;
+            settings.AvailableListingDashboardExternalSelectionLevel = view.AvailableListingDashboardExternalSelectionLevel;
             settings.RequiredListingGeneralInfoMaxDistance = view.RequiredListingGeneralInfoMaxDistance;
-            settings.RequiredListingRecentMaxDistance = view.RequiredListingRecentMaxDistance;
-            settings.RequiredListingRecentMaxAge = view.RequiredListingRecentMaxAge;
-            settings.AvailableListingManageViewInternalSelectionLevel = view.AvailableListingManageViewInternalSelectionLevel;
+            settings.AvailableListingGeneralInfoMaxDistance = view.AvailableListingGeneralInfoMaxDistance;
             settings.RequiredListingManageViewInternalSelectionLevel = view.RequiredListingManageViewInternalSelectionLevel;
-            settings.AvailableListingGeneralInfoExternalSelectionLevel = view.AvailableListingGeneralInfoExternalSelectionLevel;
+            settings.AvailableListingManageViewInternalSelectionLevel = view.AvailableListingManageViewInternalSelectionLevel;
             settings.RequiredListingGeneralInfoExternalSelectionLevel = view.RequiredListingGeneralInfoExternalSelectionLevel;
-            settings.AvailableListingRecentExternalSelectionLevel = view.AvailableListingRecentExternalSelectionLevel;
-            settings.RequiredListingRecentExternalSelectionLevel = view.RequiredListingRecentExternalSelectionLevel;
+            settings.AvailableListingGeneralInfoExternalSelectionLevel = view.AvailableListingGeneralInfoExternalSelectionLevel;
 
             db.Entry(settings).State = EntityState.Modified;
             db.SaveChanges();

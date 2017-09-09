@@ -77,6 +77,24 @@ namespace Distributor.Helpers
             return GetBranchUser(db, appUser.AppUserId, appUser.CurrentBranchId);
         }
 
+        public static List<BranchUser> GetBranchUsersForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<BranchUser> list = GetBranchUsersForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<BranchUser> GetBranchUsersForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<BranchUser> list = (from bu in db.BranchUsers
+                                     where bu.UserId == appUserId
+                                     select bu).ToList();
+            var listDistinct = list.Distinct().ToList();
+
+            return listDistinct;
+        }
+
         #endregion
 
         #region Create

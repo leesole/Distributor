@@ -179,11 +179,11 @@ namespace Distributor.Controllers
 
             Branch userBranch = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
 
-            ////DropDowns
-            //ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(userBranch.CompanyId, userBranch.BranchId);
-            //ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
-            //ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
-            
+            //DropDowns
+            ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(userBranch.CompanyId, userBranch.BranchId);
+            ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
+            ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
+
             if (model == null)
             {
                 return HttpNotFound();

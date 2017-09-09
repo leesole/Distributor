@@ -46,6 +46,28 @@ namespace Distributor.Helpers
             return branchesForCompany;
         }
 
+        public static List<Branch> GetBranchesForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Branch> list = GetBranchesForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Branch> GetBranchesForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<BranchUser> branchUserForUser = BranchUserHelpers.GetBranchUsersForUser(db, appUserId);
+
+            List<Branch> branchesForUser = new List<Branch>();
+
+            foreach (BranchUser branchUser in branchUserForUser)
+                branchesForUser.Add(BranchHelpers.GetBranch(db, branchUser.BranchId));
+
+            List<Branch> branchesForUserDistinct = branchesForUser.Distinct().ToList();
+
+            return branchesForUserDistinct;
+        }
+
         public static Branch GetCurrentBranchForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();

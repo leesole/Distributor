@@ -71,39 +71,41 @@ namespace Distributor.ViewModels
 
         public Guid AppUserSettingsId { get; set; }
 
+        
         [Display(Name = "Max distance from current branch (miles)")]
-        public int? GlobalMaxDistance { get; set; }
+        public int? RequiredListingDashboardMaxDistance { get; set; }
 
         [Display(Name = "max age since listing added (days)")]
-        public double? GlobalMaxAge { get; set; }
+        public double? RequiredListingDashboardMaxAge { get; set; }
 
-        [Required]
-        [Display(Name = "Internal selection level")]
-        public InternalSearchLevelEnum GlobalInternalSelectionLevel { get; set; }
+        [Display(Name = "Max distance from current branch (miles)")]
+        public int? AvailableListingDashboardMaxDistance { get; set; }
+
+        [Display(Name = "max age since listing added (days)")]
+        public double? AvailableListingDashboardMaxAge { get; set; }
 
         [Required]
         [Display(Name = "External selection level")]
-        public ExternalSearchLevelEnum GlobalExternalSelectionLevel { get; set; }
+        public ExternalSearchLevelEnum AvailableListingDashboardExternalSelectionLevel { get; set; }
 
-
-        [Display(Name = "Max distance from current branch (miles)")]
-        public int? AvailableListingGeneralInfoMaxDistance { get; set; }
-
-        [Display(Name = "Max distance from current branch (miles)")]
-        public int? AvailableListingRecentMaxDistance { get; set; }
-
-        [Display(Name = "max age since listing added (days)")]
-        public double? AvailableListingRecentMaxAge { get; set; }
+        [Required]
+        [Display(Name = "External selection level")]
+        public ExternalSearchLevelEnum RequiredListingDashboardExternalSelectionLevel { get; set; }
 
 
         [Display(Name = "Max distance from current branch (miles)")]
         public int? RequiredListingGeneralInfoMaxDistance { get; set; }
 
         [Display(Name = "Max distance from current branch (miles)")]
-        public int? RequiredListingRecentMaxDistance { get; set; }
+        public int? AvailableListingGeneralInfoMaxDistance { get; set; }
 
-        [Display(Name = "max age since listing added (days)")]
-        public double? RequiredListingRecentMaxAge { get; set; }
+        [Required]
+        [Display(Name = "External selection level")]
+        public ExternalSearchLevelEnum RequiredListingGeneralInfoExternalSelectionLevel { get; set; }
+
+        [Required]
+        [Display(Name = "External selection level")]
+        public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel { get; set; }
 
 
         [Required]
@@ -113,22 +115,5 @@ namespace Distributor.ViewModels
         [Required]
         [Display(Name = "Internal selection level")]
         public InternalSearchLevelEnum RequiredListingManageViewInternalSelectionLevel { get; set; }
-
-
-        [Required]
-        [Display(Name = "External selection level")]
-        public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel { get; set; }
-
-        [Required]
-        [Display(Name = "External selection level")]
-        public ExternalSearchLevelEnum RequiredListingGeneralInfoExternalSelectionLevel { get; set; }
-
-        [Required]
-        [Display(Name = "External selection level")]
-        public ExternalSearchLevelEnum AvailableListingRecentExternalSelectionLevel { get; set; }
-
-        [Required]
-        [Display(Name = "External selection level")]
-        public ExternalSearchLevelEnum RequiredListingRecentExternalSelectionLevel { get; set; }
     }
 }

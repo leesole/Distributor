@@ -37,6 +37,11 @@ namespace Distributor.Helpers
             return new SelectList(BranchHelpers.GetBranchesForCompany(companyId), "BranchId", "BranchName");
         }
 
+        public static SelectList AllBranchesForUserListDropDown(Guid appUserId, Guid branchId)
+        {
+            return new SelectList(BranchHelpers.GetBranchesForUser(appUserId), "BranchId", "BranchName", branchId);
+        }
+
         #region BranchEnums
 
         public static SelectList BusinessTypeEnumListDropDown()
