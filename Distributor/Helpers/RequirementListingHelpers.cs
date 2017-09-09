@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.ItemEnums;
 
 namespace Distributor.Helpers
@@ -42,24 +43,69 @@ namespace Distributor.Helpers
             return db.RequirementListings.ToList();
         }
 
-        public static List<RequirementListing> GetAllRequirementListingsForPastXDays(double days)
+        public static List<RequirementListing> GetAllDashboardFilteredRequirementListings(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<RequirementListing> list = GetAllRequirementListingsForPastXDays(db, days);
+            List<RequirementListing> list = GetAllDashboardFilteredRequirementListings(db, appUserId);
             db.Dispose();
             return list;
         }
 
-        public static List<RequirementListing> GetAllRequirementListingsForPastXDays(ApplicationDbContext db, double days)
+        public static List<RequirementListing> GetAllDashboardFilteredRequirementListings(ApplicationDbContext db, Guid appUserId)
         {
-            double negativeDays = 0 - days;
-            var dateCheck = DateTime.Now.AddDays(negativeDays);
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
 
+            var dateCheck = DateTime.MinValue;
+            double settingsMaxAge = settings.RequiredListingDashboardMaxAge ?? 0;
+            int settingsMaxDistance = settings.RequiredListingDashboardMaxDistance ?? 0;
+
+            if (settingsMaxAge > 0)
+            {
+                double negativeDays = 0 - settingsMaxAge;
+                dateCheck = DateTime.Now.AddDays(negativeDays);
+            }
+
+            //Create list within the time frame if setting set
             List<RequirementListing> list = (from rl in db.RequirementListings
-                                            where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
-                                                   && rl.ListingOriginatorDateTime >= dateCheck)
-                                            select rl).ToList();
+                                             where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
+                                             && rl.ListingOriginatorDateTime >= dateCheck)
+                                             select rl).ToList();
+
+            //Now bring in the Selection Level sort
+            switch (settings.RequiredListingDashboardExternalSelectionLevel)
+            {
+                case ExternalSearchLevelEnum.All: //do nothing
+                    break;
+                case ExternalSearchLevelEnum.Branch: //user's current branch to filter
+                    list = list.Where(l => l.ListingOriginatorBranchId == branch.BranchId).ToList();
+                    break;
+                case ExternalSearchLevelEnum.Company: //user's current company to filter
+                    list = list.Where(l => l.ListingOriginatorCompanyId == branch.CompanyId).ToList();
+                    break;
+                case ExternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                    break;
+            }
+
+            //Now sort by distance
+            if (settingsMaxDistance > 0)
+            {
+                List<RequirementListing> removeList = new List<RequirementListing>();
+
+                foreach (RequirementListing listing in list)
+                {
+                    DistanceHelpers distance = new DistanceHelpers();
+                    int distanceValue = distance.GetDistance(branch.AddressPostcode, listing.ListingBranchPostcode);
+
+                    if (distanceValue > settingsMaxDistance)
+                        removeList.Add(listing);
+                }
+
+                if (removeList.Count > 0)
+                    list.RemoveAll(l => removeList.Contains(l));
+            }
 
             return list;
         }

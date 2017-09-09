@@ -18,6 +18,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Distributor.Controllers
 {
+    [Authorize]
     public class AppUsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

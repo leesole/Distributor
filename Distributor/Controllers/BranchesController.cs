@@ -11,6 +11,7 @@ using Distributor.Helpers;
 
 namespace Distributor.Controllers
 {
+    [Authorize]
     public class BranchesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

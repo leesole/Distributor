@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Distributor.Controllers
 {
+    [Authorize]
     public class DataController : Controller
     {
         // GET: Data

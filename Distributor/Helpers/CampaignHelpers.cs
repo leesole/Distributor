@@ -42,18 +42,16 @@ namespace Distributor.Helpers
             return db.Campaigns.ToList();
         }
 
-        
-
-        public static List<Campaign> GetAllRecentCampaigns(Guid appUserId)
+        public static List<Campaign> GetAllDashboardFilteredCampaigns(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Campaign> list = GetAllRecentCampaigns(db, appUserId);
+            List<Campaign> list = GetAllDashboardFilteredCampaigns(db, appUserId);
             db.Dispose();
             return list;
         }
 
-        public static List<Campaign> GetAllRecentCampaigns(ApplicationDbContext db, Guid appUserId)
+        public static List<Campaign> GetAllDashboardFilteredCampaigns(ApplicationDbContext db, Guid appUserId)
         {
             AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
             Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
@@ -65,7 +63,7 @@ namespace Distributor.Helpers
 
             if (settingsMaxAge > 0)
             {
-                double negativeDays = 0 - settings.CampaignDashboardMaxAge.Value;
+                double negativeDays = 0 - settingsMaxAge;
                 dateCheck = DateTime.Now.AddDays(negativeDays);
             }
 

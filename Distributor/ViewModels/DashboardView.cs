@@ -11,11 +11,11 @@ namespace Distributor.ViewModels
         public List<UserTask> UserTaskList { get; set; }
         //action list
         public List<Campaign> CampaignList { get; set; }
-        public List<Campaign> CampaignRecentList { get; set; }
+        public List<Campaign> CampaignDashboardList { get; set; }
         public List<RequirementListing> RequirementListingList { get; set; }
-        public List<RequirementListing> RequirementListingRecentList { get; set; }
+        public List<RequirementListing> RequirementListingDashboardList { get; set; }
         public List<AvailableListing> AvailableListingList { get; set; }
-        public List<AvailableListing> AvailableListingRecentList { get; set; }
+        public List<AvailableListing> AvailableListingDashboardList { get; set; }
         public List<Offer> OfferList { get; set; }
         public List<Order> OrderList { get; set; }
     }

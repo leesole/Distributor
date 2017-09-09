@@ -55,20 +55,20 @@ namespace Distributor.Helpers
             List<Campaign> campaignsForUser = CampaignHelpers.GetAllCampaignsForUser(db, appUser.AppUserId);
             dashboardView.CampaignList = campaignsForUser;
 
-            List<Campaign> campaignsRecentList = CampaignHelpers.GetAllRecentCampaigns(db, appUser.AppUserId);
-            dashboardView.CampaignRecentList = campaignsRecentList;
+            List<Campaign> campaignsDashboardList = CampaignHelpers.GetAllDashboardFilteredCampaigns(db, appUser.AppUserId);
+            dashboardView.CampaignDashboardList = campaignsDashboardList;
 
             List<RequirementListing> requirementListingsForUser = RequirementListingHelpers.GetAllRequirementListingsForUser(db, appUser.AppUserId);
             dashboardView.RequirementListingList = requirementListingsForUser;
 
-            List<RequirementListing> requirementListingRecentList = RequirementListingHelpers.GetAllRequirementListingsForPastXDays(db, 14);
-            dashboardView.RequirementListingRecentList = requirementListingRecentList;
+            List<RequirementListing> requirementListingDashboardList = RequirementListingHelpers.GetAllDashboardFilteredRequirementListings(db, appUser.AppUserId);
+            dashboardView.RequirementListingDashboardList = requirementListingDashboardList;
 
             List<AvailableListing> availableListingsForUser = AvailableListingHelpers.GetAllAvailableListingsForUser(db, appUser.AppUserId);
             dashboardView.AvailableListingList = availableListingsForUser;
 
-            List<AvailableListing> availableListingRecentList = AvailableListingHelpers.GetAllAvailableListingsForPastXDays(db, 14);
-            dashboardView.AvailableListingRecentList = availableListingRecentList;
+            List<AvailableListing> availableListingDashboardList = AvailableListingHelpers.GetAllDashboardFilteredAvailableListings(db, appUser.AppUserId);
+            dashboardView.AvailableListingDashboardList = availableListingDashboardList;
 
             List<Offer> offersForUser = OfferHelpers.GetAllOffersForUser(db, appUser.AppUserId);
             dashboardView.OfferList = offersForUser;

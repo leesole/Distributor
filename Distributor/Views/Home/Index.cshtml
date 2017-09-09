@@ -40,13 +40,13 @@
                     </div>
                 </div>
             }
-            <div class="col-md-6" style="padding:0px 5px 5px 0px">
+            <div class="col-md-6" style="padding:0px 5px 5px 0px" onclick = "location.href='@Url.Action("Offers", "ManageListings")'">
                 <div class="card bg-warning text-center" style="padding:10px">
                     <h4>Outstanding Offers</h4>
                     <h1><b>@ViewBag.OutstandingOffers</b></h1>
                 </div>
             </div>
-            <div class="col-md-6" style="padding:0px 5px 5px 0px">
+            <div class="col-md-6" style="padding:0px 5px 5px 0px" onclick = "location.href='@Url.Action("Orders", "ManageListings")'">
                 <div class="card bg-warning text-center" style="padding:10px">
                     <h4>Outstanding Orders</h4>
                     <h1><b>@ViewBag.Orders</b></h1>
@@ -94,7 +94,7 @@
                         <h3 class="panel-title">Recent campaigns</h3>
                     </div>
                     <div class="panel-body">
-                        @if (Model.CampaignRecentList == null || Model.CampaignRecentList.Count == 0)
+                        @if (Model.CampaignDashboardList == null || Model.CampaignDashboardList.Count == 0)
                         {
                             <p>No recent campaigns to show</p>
                         }
@@ -108,7 +108,7 @@
                                         <th>Website</th>
                                         <th>Start date</th>
                                     </tr>
-                                    @foreach (var item in Model.CampaignRecentList)
+                                    @foreach (var item in Model.CampaignDashboardList)
                                     {
                                         <tr id=@item.CampaignId>
                                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
@@ -160,7 +160,7 @@
                     </div>
                     <div class="col-md-12">
                         <br />
-                        @if (Model.RequirementListingRecentList == null || Model.RequirementListingRecentList.Count == 0)
+                        @if (Model.RequirementListingDashboardList == null || Model.RequirementListingDashboardList.Count == 0)
                         {
                             <p>No recent requirements to show</p>
                         }
@@ -174,7 +174,7 @@
                                         <th>Quantity required</th>
                                         <th>UoM</th>
                                     </tr>
-                                    @foreach (var item in Model.RequirementListingRecentList)
+                                    @foreach (var item in Model.RequirementListingDashboardList)
                                     {
                                         <tr id=@item.ListingId>
                                             <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
@@ -225,7 +225,7 @@
                     </div>
                     <div class="col-md-12">
                         <br />
-                        @if (Model.AvailableListingRecentList == null || Model.AvailableListingRecentList.Count == 0)
+                        @if (Model.AvailableListingDashboardList == null || Model.AvailableListingDashboardList.Count == 0)
                         {
                             <p>No available items to show</p>
                         }
@@ -239,7 +239,7 @@
                                         <th>Quantity available</th>
                                         <th>UoM</th>
                                     </tr>
-                                    @foreach (var item in Model.AvailableListingRecentList)
+                                    @foreach (var item in Model.AvailableListingDashboardList)
                                     {
                                         <tr id=@item.ListingId>
                                             <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>

@@ -12,6 +12,7 @@ using Distributor.ViewModels;
 
 namespace Distributor.Controllers
 {
+    [Authorize]
     public class OffersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

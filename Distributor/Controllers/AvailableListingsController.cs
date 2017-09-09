@@ -12,6 +12,7 @@ using Distributor.Helpers;
 
 namespace Distributor.Controllers
 {
+    [Authorize]
     public class AvailableListingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

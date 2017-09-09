@@ -13,6 +13,7 @@ using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
