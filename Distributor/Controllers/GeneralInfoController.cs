@@ -32,7 +32,7 @@ namespace Distributor.Controllers
 
         public ActionResult Campaigns()
         {
-            List<CampaignGeneralInfoView> model = CampaignGeneralInfoViewHelpers.GetAllCampaignsGeneralInfoView();
+            List<CampaignGeneralInfoView> model = CampaignGeneralInfoViewHelpers.GetAllCampaignsGeneralInfoView(User);
 
             //Do any filtering
 

@@ -42,6 +42,67 @@ namespace Distributor.Helpers
         {
             return db.AvailableListings.ToList();
         }
+        
+        public static List<AvailableListing> GetAllGeneralInfoFilteredAvailableListings(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<AvailableListing> list = GetAllGeneralInfoFilteredAvailableListings(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AvailableListing> GetAllGeneralInfoFilteredAvailableListings(ApplicationDbContext db, Guid appUserId)
+        {
+
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
+
+            var dateCheck = DateTime.MinValue;
+            int settingsMaxDistance = settings.AvailableListingGeneralInfoMaxDistance ?? 0;
+
+            //Create list within the time frame if setting set
+            List<AvailableListing> list = (from rl in db.AvailableListings
+                                           where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
+                                                   && rl.ListingOriginatorDateTime >= dateCheck)
+                                           select rl).ToList();
+
+            //Now bring in the Selection Level sort
+            switch (settings.AvailableListingGeneralInfoExternalSelectionLevel)
+            {
+                case ExternalSearchLevelEnum.All: //do nothing
+                    break;
+                case ExternalSearchLevelEnum.Branch: //user's current branch to filter
+                    list = list.Where(l => l.ListingOriginatorBranchId == branch.BranchId).ToList();
+                    break;
+                case ExternalSearchLevelEnum.Company: //user's current company to filter
+                    list = list.Where(l => l.ListingOriginatorCompanyId == branch.CompanyId).ToList();
+                    break;
+                case ExternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                    break;
+            }
+
+            //Now sort by distance
+            if (settingsMaxDistance > 0)
+            {
+                List<AvailableListing> removeList = new List<AvailableListing>();
+
+                foreach (AvailableListing listing in list)
+                {
+                    DistanceHelpers distance = new DistanceHelpers();
+                    int distanceValue = distance.GetDistance(branch.AddressPostcode, listing.ListingBranchPostcode);
+
+                    if (distanceValue > settingsMaxDistance)
+                        removeList.Add(listing);
+                }
+
+                if (removeList.Count > 0)
+                    list.RemoveAll(l => removeList.Contains(l));
+            }
+
+            return list;
+        }
 
         public static List<AvailableListing> GetAllDashboardFilteredAvailableListings(Guid appUserId)
         {
@@ -289,7 +350,7 @@ namespace Distributor.Helpers
         {
             List<AvailableListingGeneralInfoView> allAvailableListingsGeneralInfoView = new List<AvailableListingGeneralInfoView>();
 
-            List<AvailableListing> allAvailableListings = AvailableListingHelpers.GetAllAvailableListings(db);
+            List<AvailableListing> allAvailableListings = AvailableListingHelpers.GetAllGeneralInfoFilteredAvailableListings(db, AppUserHelpers.GetAppUserIdFromUser(user));
 
             foreach (AvailableListing AvailableListing in allAvailableListings)
             {

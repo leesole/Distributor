@@ -41,6 +41,65 @@ namespace Distributor.Helpers
         {
             return db.Campaigns.ToList();
         }
+        
+        public static List<Campaign> GetAllGeneralInfoFilteredCampaigns(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Campaign> list = GetAllGeneralInfoFilteredCampaigns(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Campaign> GetAllGeneralInfoFilteredCampaigns(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserId);
+
+            var dateCheck = DateTime.MinValue;
+            int settingsMaxDistance = settings.CampaignGeneralInfoMaxDistance ?? 0;
+
+            //Create list within the time frame if setting set
+            List<Campaign> list = (from c in db.Campaigns
+                                   where (c.EntityStatus == EntityStatusEnum.Active && c.CampaignOriginatorDateTime >= dateCheck)
+                                   select c).ToList();
+
+            //Now bring in the Selection Level sort
+            switch (settings.CampaignGeneralInfoExternalSelectionLevel)
+            {
+                case ExternalSearchLevelEnum.All: //do nothing
+                    break;
+                case ExternalSearchLevelEnum.Branch: //user's current branch to filter
+                    list = list.Where(l => l.CampaignOriginatorBranchId == branch.BranchId).ToList();
+                    break;
+                case ExternalSearchLevelEnum.Company: //user's current company to filter
+                    list = list.Where(l => l.CampaignOriginatorCompanyId == branch.CompanyId).ToList();
+                    break;
+                case ExternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                    break;
+            }
+
+            //Now sort by distance
+            if (settingsMaxDistance > 0)
+            {
+                List<Campaign> removeList = new List<Campaign>();
+
+                foreach (Campaign campaign in list)
+                {
+                    DistanceHelpers distance = new DistanceHelpers();
+                    int distanceValue = distance.GetDistance(branch.AddressPostcode, campaign.LocationAddressPostcode);
+
+                    if (distanceValue > settingsMaxDistance)
+                        removeList.Add(campaign);
+                }
+
+                if (removeList.Count > 0)
+                    list.RemoveAll(l => removeList.Contains(l));
+            }
+
+            return list;
+        }
 
         public static List<Campaign> GetAllDashboardFilteredCampaigns(Guid appUserId)
         {
@@ -263,20 +322,20 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<CampaignGeneralInfoView> GetAllCampaignsGeneralInfoView()
+        public static List<CampaignGeneralInfoView> GetAllCampaignsGeneralInfoView(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<CampaignGeneralInfoView> list = GetAllCampaignsGeneralInfoView(db);
+            List<CampaignGeneralInfoView> list = GetAllCampaignsGeneralInfoView(db, user);
             db.Dispose();
             return list;
         }
 
-        public static List<CampaignGeneralInfoView> GetAllCampaignsGeneralInfoView(ApplicationDbContext db)
+        public static List<CampaignGeneralInfoView> GetAllCampaignsGeneralInfoView(ApplicationDbContext db, IPrincipal user)
         {
             List<CampaignGeneralInfoView> allCampaignsGeneralInfoView = new List<CampaignGeneralInfoView>();
 
-            List<Campaign> allCampaigns = CampaignHelpers.GetAllCampaigns(db);
+            List<Campaign> allCampaigns = CampaignHelpers.GetAllGeneralInfoFilteredCampaigns(db, AppUserHelpers.GetAppUserIdFromUser(user));
 
             foreach (Campaign campaign in allCampaigns)
             {
