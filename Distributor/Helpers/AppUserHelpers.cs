@@ -254,6 +254,7 @@ namespace Distributor.Helpers
 
         public static AppUserEditView GetAppUserEditViewForUser(ApplicationDbContext db, AppUser appUserDetails)
         {
+            Branch branch = BranchHelpers.GetBranch(db, appUserDetails.CurrentBranchId);
             BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, appUserDetails.AppUserId, appUserDetails.CurrentBranchId);
 
             AppUserSettings appUserSettings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUserDetails.AppUserId);
@@ -267,6 +268,14 @@ namespace Distributor.Helpers
                 SelectedBranchId = appUserDetails.CurrentBranchId,
                 UserRole = branchUser.UserRole,
                 AppUserSettingsId = appUserSettings.AppUserSettingsId,
+                BranchName = branch.BranchName,
+                BranchBusinessType = branch.BusinessType,
+                BranchAddressLine1 = branch.AddressLine1,
+                BranchAddressLine2 = branch.AddressLine2,
+                BranchAddressLine3 = branch.AddressLine3,
+                BranchAddressTownCity = branch.AddressTownCity,
+                BranchAddressCounty = branch.AddressCounty,
+                BranchAddressPostcode = branch.AddressPostcode,
                 CampaignDashboardMaxDistance = appUserSettings.CampaignDashboardMaxDistance,
                 CampaignDashboardMaxAge = appUserSettings.CampaignDashboardMaxAge,
                 RequiredListingDashboardMaxDistance = appUserSettings.RequiredListingDashboardMaxDistance,

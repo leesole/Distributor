@@ -71,6 +71,32 @@ namespace Distributor.ViewModels
 
         public Guid AppUserSettingsId { get; set; }
 
+        //Branch Details
+        [Display(Name = "Branch name")]
+        public string BranchName { get; set; }
+
+        [Display(Name = "Business type")]
+        public BusinessTypeEnum BranchBusinessType { get; set; }
+
+        [Display(Name = "Address line 1")]
+        public string BranchAddressLine1 { get; set; }
+
+        [Display(Name = "Address line 2")]
+        public string BranchAddressLine2 { get; set; }
+
+        [Display(Name = "Address line 3")]
+        public string BranchAddressLine3 { get; set; }
+
+        [Display(Name = "Address town/city")]
+        public string BranchAddressTownCity { get; set; }
+
+        [Display(Name = "Address county")]
+        public string BranchAddressCounty { get; set; }
+
+        [Required]
+        [Display(Name = "Address postcode")]
+        public string BranchAddressPostcode { get; set; }
+
 
         [Display(Name = "Max distance from current branch (miles)")]
         public int? CampaignDashboardMaxDistance { get; set; }
