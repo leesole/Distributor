@@ -65,7 +65,7 @@ namespace Distributor.Controllers
         //}
 
         // GET: Orders/Edit/5
-        public ActionResult Edit(Guid? id)
+        public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
@@ -76,6 +76,22 @@ namespace Distributor.Controllers
             {
                 return HttpNotFound();
             }
+
+            //Get the user's company ID so we can differentiate between our company orders and orders coming to us in the view
+            ViewBag.CurrentCompanyId = CompanyHelpers.GetCompanyForUser(User).CompanyId;
+
+            //Set the authorisation levels and IDs for button activation on form
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(User);
+
+            ViewBag.DespatchedAuthorisationLevel = settings.OrdersDespatchedAuthorisationManageViewLevel;
+            ViewBag.DespatchedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDespatchedAuthorisationManageViewLevel, User);
+            ViewBag.DeliveredAuthorisationLevel = settings.OrdersDeliveredAuthorisationManageViewLevel;
+            ViewBag.DeliveredAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDeliveredAuthorisationManageViewLevel, User);
+            ViewBag.CollectedAuthorisationLevel = settings.OrdersCollectedAuthorisationManageViewLevel;
+            ViewBag.CollectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersCollectedAuthorisationManageViewLevel, User);
+            ViewBag.ClosedAuthorisationLevel = settings.OrdersClosedAuthorisationManageViewLevel;
+            ViewBag.ClosedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersClosedAuthorisationManageViewLevel, User);
+
             return View(order);
         }
 
@@ -84,20 +100,40 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(OrderEditView order)
+        public ActionResult Details(OrderEditView order)
         {
             if (ModelState.IsValid)
             {
-                //If the 'Submit' button pressed then update tables, else leave as are so that on reload it takes original values once again.
-                if (Request.Form["submitbutton"] != null)
+                if (Request.Form["despatchedbutton"] != null)
                 {
                     //Update tables
-                    OrderHelpers.UpdateOrderFromOrderEditView(db, order);
-
+                    OrderHelpers.ChangeOrderStatus(db, order.OrderId, OrderStatusEnum.Despatched, User);
                     return RedirectToAction("Orders", "ManageListings");
                 }
-
-                return RedirectToAction("Edit");
+                if (Request.Form["delivereddbutton"] != null)
+                {
+                    //Update tables
+                    OrderHelpers.ChangeOrderStatus(db, order.OrderId, OrderStatusEnum.Delivered, User);
+                    return RedirectToAction("Orders", "ManageListings");
+                }
+                if (Request.Form["collectedbutton"] != null)
+                {
+                    //Update tables
+                    OrderHelpers.ChangeOrderStatus(db, order.OrderId, OrderStatusEnum.Collected, User);
+                    return RedirectToAction("Orders", "ManageListings");
+                }
+                if (Request.Form["receivedbutton"] != null)
+                {
+                    //Update tables
+                    OrderHelpers.ChangeOrderStatus(db, order.OrderId, OrderStatusEnum.Received, User);
+                    return RedirectToAction("Orders", "ManageListings");
+                }
+                if (Request.Form["closedbutton"] != null)
+                {
+                    //Update tables
+                    OrderHelpers.ChangeOrderStatus(db, order.OrderId, OrderStatusEnum.Closed, User);
+                    return RedirectToAction("Orders", "ManageListings");
+                }
             }
 
             //rebuild the missing details before returning to screen to show errors

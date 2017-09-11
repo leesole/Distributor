@@ -40,12 +40,15 @@ namespace Distributor.ViewModels
         [Display(Name = "Collection date")]
         public DateTime? OrderCollectedDateTime { get; set; }
 
+        [Display(Name = "Received date")]
+        public DateTime? OrderReceivedDateTime { get; set; }
+
         [Display(Name = "Closed date")]
         public DateTime? OrderClosedDateTime { get; set; }
 
         public AppUser OrderAppUser { get; set; }
         public Branch OrderBranchDetails { get; set; }
-
+        
         public Guid OfferId { get; set; }
         public AppUser OfferAppUser { get; set; }
         public Branch OfferBranchDetails { get; set; }
