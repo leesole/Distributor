@@ -23,16 +23,24 @@ namespace Distributor.Models
 
         [Display(Name = "Distribution date")]
         public DateTime? OrderDistributionDateTime { get; set; }
+        public Guid? OrderDistributedBy { get; set; }
 
         [Display(Name = "Delivered date")]
         public DateTime? OrderDeliveredDateTime { get; set; }
+        public Guid? OrderDeliveredBy { get; set; }
 
 
         [Display(Name = "Collection date")]
         public DateTime? OrderCollectedDateTime { get; set; }
+        public Guid? OrderCollectedBy { get; set; }
+
+        [Display(Name = "Received date")]
+        public DateTime? OrderReceivedDateTime { get; set; }
+        public Guid? OrderReceivedBy { get; set; }
 
         [Display(Name = "Closed date")]
         public DateTime? OrderClosedDateTime { get; set; }
+        public Guid? OrderClosedBy { get; set; }
 
         public Guid? OrderOriginatorAppUserId { get; set; }
         public Guid? OrderOriginatorBranchId { get; set; }

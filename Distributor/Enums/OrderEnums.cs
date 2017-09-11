@@ -18,8 +18,10 @@ namespace Distributor.Enums
             Delivered = 2,
             [Description("Collected")]
             Collected = 3,
+            [Description("Received")]
+            Received = 4,
             [Description("Closed")]
-            Closed = 4
+            Closed = 5
         }
     }
 }

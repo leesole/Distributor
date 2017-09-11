@@ -27,7 +27,7 @@
                         document.getElementById("branchaddresscounty").innerText = data.branchDetails.AddressCounty;
                         document.getElementById("branchaddresspostcode").innerText = data.branchDetails.AddressPostcode;
                     } else {
-                        alert('This branch appears to be invalid, pleasee re-select.');
+                        alert('This branch appears to be invalid, please re-select.');
                     }
                 }
             });
@@ -129,54 +129,7 @@
             </div>
 
 
-            <div class="col-md-4">
-                @*<div class="login-panel panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">User details</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.SelectedBranchId, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.DropDownListFor(model => model.SelectedBranchId, (SelectList)ViewBag.BranchList, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.SelectedBranchId, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.DropDownListFor(model => model.UserRole, (SelectList)ViewBag.UserRoleList, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.EntityStatus, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.DropDownListFor(model => model.EntityStatus, (SelectList)ViewBag.EntityStatusList, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.EntityStatus, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>*@   
-                
+            <div class="col-md-4">                
                 <div class="login-panel panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">Manage listings settings</h3>
@@ -217,6 +170,27 @@
                                 @Html.ValidationMessageFor(model => model.OffersManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OffersAcceptedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EnumDropDownListFor(model => model.OffersAcceptedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OffersAcceptedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OffersRejectedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EnumDropDownListFor(model => model.OffersRejectedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OffersRejectedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OffersReturnedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EnumDropDownListFor(model => model.OffersReturnedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OffersReturnedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                         <br />
                         <h4>Order settings</h4>
                         <div class="form-group">
@@ -224,6 +198,34 @@
                             <div class="col-md-8">
                                 @Html.EnumDropDownListFor(model => model.OrdersManageViewInternalSelectionLevel, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.OrdersManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersDespatchedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EnumDropDownListFor(model => model.OrdersDespatchedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersDespatchedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersDeliveredAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EnumDropDownListFor(model => model.OrdersDeliveredAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersDeliveredAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersCollectedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EnumDropDownListFor(model => model.OrdersCollectedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersCollectedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersClosedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EnumDropDownListFor(model => model.OrdersClosedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersClosedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>

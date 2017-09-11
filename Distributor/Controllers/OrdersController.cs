@@ -10,6 +10,7 @@ using Distributor.Models;
 using Distributor.ViewModels;
 using Distributor.Helpers;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.OrderEnums;
 
 namespace Distributor.Controllers
 {
@@ -186,5 +187,38 @@ namespace Distributor.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region Data Manipulation
+
+        public ActionResult ChangeOrderStatus(string orderId, string orderStatus)
+        {
+            if (orderId != null && orderStatus != null)
+            {
+                switch (orderStatus)
+                {
+                    case "Despatched":
+                        OrderHelpers.ChangeOrderStatus(GeneralHelpers.GetGuidFromStringId(orderId), OrderStatusEnum.Despatched, User);
+                        break;
+                    case "Delivered":
+                        OrderHelpers.ChangeOrderStatus(GeneralHelpers.GetGuidFromStringId(orderId), OrderStatusEnum.Delivered, User);
+                        break;
+                    case "Collected":
+                        OrderHelpers.ChangeOrderStatus(GeneralHelpers.GetGuidFromStringId(orderId), OrderStatusEnum.Collected, User);
+                        break;
+                    case "Received":
+                        OrderHelpers.ChangeOrderStatus(GeneralHelpers.GetGuidFromStringId(orderId), OrderStatusEnum.Received, User);
+                        break;
+                    case "Closed":
+                        OrderHelpers.ChangeOrderStatus(GeneralHelpers.GetGuidFromStringId(orderId), OrderStatusEnum.Closed, User);
+                        break;
+                }
+
+                return Json(new { success = true });
+            }
+            else
+                return Json(new { success = false });
+        }
+
+        #endregion
     }
 }

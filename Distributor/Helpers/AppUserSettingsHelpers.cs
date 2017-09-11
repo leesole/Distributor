@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.GeneralEnums;
 
@@ -31,6 +32,21 @@ namespace Distributor.Helpers
         {
             ApplicationDbContext db = new ApplicationDbContext();
             AppUserSettings appUserSettings = GetAppUserSettingsForUser(db, appUserId);
+            db.Dispose();
+            return appUserSettings;
+        }
+
+        public static AppUserSettings GetAppUserSettingsForUser(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            AppUserSettings appUserSettings = GetAppUserSettingsForUser(db, AppUserHelpers.GetAppUserIdFromUser(user));
+            db.Dispose();
+            return appUserSettings;
+        }
+
+        public static AppUserSettings GetAppUserSettingsForUser(ApplicationDbContext db, IPrincipal user)
+        {
+            AppUserSettings appUserSettings = GetAppUserSettingsForUser(db, AppUserHelpers.GetAppUserIdFromUser(user));
             db.Dispose();
             return appUserSettings;
         }
@@ -68,10 +84,23 @@ namespace Distributor.Helpers
             InternalSearchLevelEnum requiredListingManageViewInternalSelectionLevel,
             InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel,
             InternalSearchLevelEnum offersManageViewInternalSelectionLevel,
-            InternalSearchLevelEnum ordersManageViewInternalSelectionLevel)
+            InternalSearchLevelEnum offersAcceptedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum offersRejectedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum offersReturnedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersManageViewInternalSelectionLevel,
+            InternalSearchLevelEnum ordersDespatchedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersDeliveredAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersCollectedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersClosedAuthorisationManageViewLevel)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUserSettings appUserSettings = CreateAppUserSettings(db, appUserId, campaignDashboardMaxDistance, campaignDashboardMaxAge, requiredListingDashboardMaxDistance, requiredListingDashboardMaxAge, availableListingDashboardMaxDistance, availableListingDashboardMaxAge, campaignDashboardExternalSelectionLevel, requiredListingDashboardtExternalSelectionLevel, availableListingDashboardExternalSelectionLevel, campaignGeneralInfoMaxDistance, requiredListingGeneralInfoMaxDistance, availableListingGeneralInfoMaxDistance, campaignGeneralInfoExternalSelectionLevel, requiredListingGeneralInfoExternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, campaignManageViewInternalSelectionLevel, requiredListingManageViewInternalSelectionLevel, availableListingManageViewInternalSelectionLevel, offersManageViewInternalSelectionLevel, ordersManageViewInternalSelectionLevel);
+            AppUserSettings appUserSettings = CreateAppUserSettings(db, appUserId, campaignDashboardMaxDistance, campaignDashboardMaxAge, requiredListingDashboardMaxDistance, 
+                requiredListingDashboardMaxAge, availableListingDashboardMaxDistance, availableListingDashboardMaxAge, campaignDashboardExternalSelectionLevel, 
+                requiredListingDashboardtExternalSelectionLevel, availableListingDashboardExternalSelectionLevel, campaignGeneralInfoMaxDistance, requiredListingGeneralInfoMaxDistance, 
+                availableListingGeneralInfoMaxDistance, campaignGeneralInfoExternalSelectionLevel, requiredListingGeneralInfoExternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, 
+                campaignManageViewInternalSelectionLevel, requiredListingManageViewInternalSelectionLevel, availableListingManageViewInternalSelectionLevel, offersManageViewInternalSelectionLevel, 
+                offersAcceptedAuthorisationManageViewLevel, offersRejectedAuthorisationManageViewLevel, offersReturnedAuthorisationManageViewLevel, ordersManageViewInternalSelectionLevel, 
+                ordersDespatchedAuthorisationManageViewLevel, ordersDeliveredAuthorisationManageViewLevel, ordersCollectedAuthorisationManageViewLevel, ordersClosedAuthorisationManageViewLevel);
             db.Dispose();
             return appUserSettings;
         }
@@ -96,7 +125,14 @@ namespace Distributor.Helpers
             InternalSearchLevelEnum requiredListingManageViewInternalSelectionLevel,
             InternalSearchLevelEnum availableListingManageViewInternalSelectionLevel,
             InternalSearchLevelEnum offersManageViewInternalSelectionLevel,
-            InternalSearchLevelEnum ordersManageViewInternalSelectionLevel)
+            InternalSearchLevelEnum offersAcceptedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum offersRejectedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum offersReturnedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersManageViewInternalSelectionLevel,
+            InternalSearchLevelEnum ordersDespatchedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersDeliveredAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersCollectedAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersClosedAuthorisationManageViewLevel)
         {
             AppUserSettings appUserSettings = new AppUserSettings()
             {
@@ -119,7 +155,9 @@ namespace Distributor.Helpers
                 AvailableListingManageViewInternalSelectionLevel = availableListingManageViewInternalSelectionLevel,
                 CampaignGeneralInfoExternalSelectionLevel = campaignGeneralInfoExternalSelectionLevel,
                 OffersManageViewInternalSelectionLevel = offersManageViewInternalSelectionLevel,
+
                 OrdersManageViewInternalSelectionLevel = ordersManageViewInternalSelectionLevel,
+
                 RequiredListingGeneralInfoExternalSelectionLevel = requiredListingGeneralInfoExternalSelectionLevel,
                 AvailableListingGeneralInfoExternalSelectionLevel = availableListingGeneralInfoExternalSelectionLevel
             };
@@ -161,7 +199,14 @@ namespace Distributor.Helpers
                 RequiredListingManageViewInternalSelectionLevel = template.RequiredListingManageViewInternalSelectionLevel,
                 AvailableListingManageViewInternalSelectionLevel = template.AvailableListingManageViewInternalSelectionLevel,
                 OffersManageViewInternalSelectionLevel = template.OffersManageViewInternalSelectionLevel,
+                OffersAcceptedAuthorisationManageViewLevel = template.OffersAcceptedAuthorisationManageViewLevel,
+                OffersRejectedAuthorisationManageViewLevel = template.OffersRejectedAuthorisationManageViewLevel,
+                OffersReturnedAuthorisationManageViewLevel = template.OffersReturnedAuthorisationManageViewLevel,
                 OrdersManageViewInternalSelectionLevel = template.OrdersManageViewInternalSelectionLevel,
+                OrdersDespatchedAuthorisationManageViewLevel = template.OrdersDespatchedAuthorisationManageViewLevel,
+                OrdersDeliveredAuthorisationManageViewLevel = template.OrdersDeliveredAuthorisationManageViewLevel,
+                OrdersCollectedAuthorisationManageViewLevel = template.OrdersCollectedAuthorisationManageViewLevel,
+                OrdersClosedAuthorisationManageViewLevel = template.OrdersClosedAuthorisationManageViewLevel,
                 CampaignGeneralInfoExternalSelectionLevel = template.CampaignGeneralInfoExternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = template.RequiredListingGeneralInfoExternalSelectionLevel,
                 AvailableListingGeneralInfoExternalSelectionLevel = template.AvailableListingGeneralInfoExternalSelectionLevel
@@ -203,7 +248,14 @@ namespace Distributor.Helpers
             settings.RequiredListingManageViewInternalSelectionLevel = view.RequiredListingManageViewInternalSelectionLevel;
             settings.AvailableListingManageViewInternalSelectionLevel = view.AvailableListingManageViewInternalSelectionLevel;
             settings.OffersManageViewInternalSelectionLevel = view.OffersManageViewInternalSelectionLevel;
+            settings.OffersAcceptedAuthorisationManageViewLevel = view.OffersAcceptedAuthorisationManageViewLevel;
+            settings.OffersRejectedAuthorisationManageViewLevel = view.OffersRejectedAuthorisationManageViewLevel;
+            settings.OffersReturnedAuthorisationManageViewLevel = view.OffersReturnedAuthorisationManageViewLevel;
             settings.OrdersManageViewInternalSelectionLevel = view.OrdersManageViewInternalSelectionLevel;
+            settings.OrdersDespatchedAuthorisationManageViewLevel = view.OrdersDespatchedAuthorisationManageViewLevel;
+            settings.OrdersDeliveredAuthorisationManageViewLevel = view.OrdersDeliveredAuthorisationManageViewLevel;
+            settings.OrdersCollectedAuthorisationManageViewLevel = view.OrdersCollectedAuthorisationManageViewLevel;
+            settings.OrdersClosedAuthorisationManageViewLevel = view.OrdersClosedAuthorisationManageViewLevel;
             settings.CampaignGeneralInfoExternalSelectionLevel = view.CampaignGeneralInfoExternalSelectionLevel;
             settings.RequiredListingGeneralInfoExternalSelectionLevel = view.RequiredListingGeneralInfoExternalSelectionLevel;
             settings.AvailableListingGeneralInfoExternalSelectionLevel = view.AvailableListingGeneralInfoExternalSelectionLevel;

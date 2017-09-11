@@ -1,4 +1,41 @@
-﻿@model IEnumerable<Distributor.ViewModels.OrderManageView>
+﻿@using Distributor.Extenstions;
+@using Distributor.Enums;
+
+@model IEnumerable<Distributor.ViewModels.OrderManageView>
+
+@{
+    var orderId = Guid.Empty;
+    var despatchedButton = "";
+    var deliveredButton = "";
+    var receivedButton = "";
+    var collectedButton = "";
+    var closedButton = "";
+    var currentAppUserId = User.Identity.GetAppUserId();
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function buttonClick(id, type) {
+            var thisOfferId = id.substr(12, 43);
+            if (window.confirm(type + " selected.  Proceed?")) {
+                var url = "/Orders/ChangeOrderStatus";
+
+                $.ajax({
+                    url: url,
+                    data: { orderId: id, orderStatus: type },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}
 
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
@@ -62,6 +99,7 @@
 <div class="table-responsive">
     <table class="table table-hover">
         <tr class="info">
+            <th colspan="3">Actions</th>
             <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
             <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
             <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
@@ -79,7 +117,56 @@
         {
             foreach (var item in Model)
             {
-                <tr>
+                orderId = item.OrderDetails.OrderId;
+                despatchedButton = "despatchedbutton" + orderId.ToString();
+                deliveredButton = "deliveredbutton" + orderId.ToString();
+                receivedButton = "receivedbutton" + orderId.ToString();
+                collectedButton = "collectedbutton" + orderId.ToString();
+                closedButton = "closedbutton" + orderId.ToString();
+
+                <tr id=@orderId>
+                    @if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentCompanyId) //our order
+                    {
+                        if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
+                        {
+                            <td><input type="button" value="Despatched" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Despatched')" /></td>
+                            <td><input type="button" value="Delivered" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Delivered')" /></td>
+                            <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                        }
+                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
+                        {
+                            <td></td>
+                            <td><input type="button" value="Delivered" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Delivered')" /></td>
+                            <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                        }
+                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
+                        {
+                            <td></td>
+                            <td></td>
+                            <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                        }
+                        else
+                        {
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        }
+                    }
+                    else
+                    {
+                        if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
+                        {
+                            <td><input type="button" value="Collected" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Collected')" /></td>
+                            <td><input type="button" value="Received" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Received')" /></td>
+                            <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                        }
+                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
+                        {
+                            <td></td>
+                            <td><input type="button" value="Received" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Received')" /></td>
+                            <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                        }
+                    }
                     <td onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
                     <td onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
                     <td onclick="location.href='@Url.Action("Edit", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
@@ -92,7 +179,3 @@
         }
     </table>
 </div>
-
-@*<div class="form-group">
-        @Html.ActionLink("Create campaign", "Create", "Campaigns", "", new { @class = "btn btn-primary" })
-    </div>*@

@@ -54,7 +54,7 @@ namespace Distributor.Helpers
         public static List<Order> GetAllOrdersForUser(ApplicationDbContext db, Guid appUserId)
         {
             List<Order> allOrdersForUser = (from o in db.Orders
-                                            where (o.OrderOriginatorAppUserId == appUserId && o.OrderStatus == OrderStatusEnum.New)
+                                            where (o.OrderOriginatorAppUserId == appUserId && (o.OrderStatus == OrderStatusEnum.New || o.OrderStatus == OrderStatusEnum.Despatched))
                                             select o).ToList();
 
             return allOrdersForUser;
@@ -72,7 +72,7 @@ namespace Distributor.Helpers
         public static List<Order> GetAllOrdersForBranch(ApplicationDbContext db, Guid branchId)
         {
             List<Order> list = (from o in db.Orders
-                                where (o.OrderOriginatorBranchId == branchId && o.OrderStatus == OrderStatusEnum.New)
+                                where (o.OrderOriginatorBranchId == branchId && (o.OrderStatus == OrderStatusEnum.New || o.OrderStatus == OrderStatusEnum.Despatched))
                                 select o).ToList();
 
             return list;
@@ -90,7 +90,7 @@ namespace Distributor.Helpers
         public static List<Order> GetAllOrdersForCompany(ApplicationDbContext db, Guid companyId)
         {
             List<Order> list = (from o in db.Orders
-                                where (o.OrderOriginatorCompanyId == companyId && o.OrderStatus == OrderStatusEnum.New)
+                                where (o.OrderOriginatorCompanyId == companyId && (o.OrderStatus == OrderStatusEnum.New || o.OrderStatus == OrderStatusEnum.Despatched))
                                 select o).ToList();
 
             return list;
@@ -108,7 +108,7 @@ namespace Distributor.Helpers
         public static List<Order> GetAllOrdersForBranchUser(ApplicationDbContext db, BranchUser branchUser)
         {
             List<Order> allOrdersForBranchUser = (from o in db.Orders
-                                                  where (o.OrderOriginatorAppUserId == branchUser.UserId && o.OrderStatus == OrderStatusEnum.New)
+                                                  where (o.OrderOriginatorAppUserId == branchUser.UserId && (o.OrderStatus == OrderStatusEnum.New || o.OrderStatus == OrderStatusEnum.Despatched))
                                                   select o).ToList();
 
             return allOrdersForBranchUser;
@@ -228,6 +228,50 @@ namespace Distributor.Helpers
             orderDetails.OrderDeliveredDateTime = view.OrderDeliveredDateTime;
             orderDetails.OrderCollectedDateTime = view.OrderCollectedDateTime;
             orderDetails.OrderClosedDateTime = view.OrderClosedDateTime;
+
+            db.Entry(orderDetails).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return orderDetails;
+        }
+
+        public static Order ChangeOrderStatus(Guid orderId, OrderStatusEnum newStatus, IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Order orderDetails = ChangeOrderStatus(db, orderId, newStatus, user);
+            db.Dispose();
+            return orderDetails;
+        }
+
+        public static Order ChangeOrderStatus(ApplicationDbContext db, Guid orderId, OrderStatusEnum newStatus, IPrincipal user)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            Order orderDetails = GetOrder(db, orderId);
+            orderDetails.OrderStatus = newStatus;
+
+            switch (newStatus)
+            {
+                case OrderStatusEnum.Despatched:
+                    orderDetails.OrderDistributionDateTime = DateTime.Now;
+                    orderDetails.OrderDistributedBy = appUser.AppUserId;
+                    break;
+                case OrderStatusEnum.Collected:
+                    orderDetails.OrderCollectedDateTime = DateTime.Now;
+                    orderDetails.OrderCollectedBy = appUser.AppUserId;
+                    break;
+                case OrderStatusEnum.Delivered:
+                    orderDetails.OrderDeliveredDateTime = DateTime.Now;
+                    orderDetails.OrderDeliveredBy = appUser.AppUserId;
+                    break;
+                case OrderStatusEnum.Received:
+                    orderDetails.OrderReceivedDateTime = DateTime.Now;
+                    orderDetails.OrderReceivedBy = appUser.AppUserId;
+                    break;
+                case OrderStatusEnum.Closed:
+                    orderDetails.OrderClosedDateTime = DateTime.Now;
+                    orderDetails.OrderClosedBy = appUser.AppUserId;
+                    break;
+            }
 
             db.Entry(orderDetails).State = EntityState.Modified;
             db.SaveChanges();

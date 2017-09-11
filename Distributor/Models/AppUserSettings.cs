@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.OfferEnums;
+using static Distributor.Enums.OrderEnums;
 
 namespace Distributor.Models
 {
@@ -34,15 +36,15 @@ namespace Distributor.Models
         public double? AvailableListingDashboardMaxAge { get; set; }
 
         [Required]
-        [Display(Name = "External selection level")]
+        [Display(Name = "Selection level")]
         public ExternalSearchLevelEnum CampaignDashboardExternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "External selection level")]
+        [Display(Name = "Selection level")]
         public ExternalSearchLevelEnum RequiredListingDashboardExternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "External selection level")]
+        [Display(Name = "Selection level")]
         public ExternalSearchLevelEnum AvailableListingDashboardExternalSelectionLevel { get; set; }
 
 
@@ -57,36 +59,64 @@ namespace Distributor.Models
 
 
         [Required]
-        [Display(Name = "External selection level")]
+        [Display(Name = "Selection level")]
         public ExternalSearchLevelEnum CampaignGeneralInfoExternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "External selection level")]
+        [Display(Name = "Selection level")]
         public ExternalSearchLevelEnum RequiredListingGeneralInfoExternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "External selection level")]
+        [Display(Name = "Selection level")]
         public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel { get; set; }
 
 
         [Required]
-        [Display(Name = "Internal selection level")]
+        [Display(Name = "Selection level")]
         public InternalSearchLevelEnum CampaignManageViewInternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "Internal selection level")]
+        [Display(Name = "Selection level")]
         public InternalSearchLevelEnum AvailableListingManageViewInternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "Internal selection level")]
+        [Display(Name = "Selection level")]
         public InternalSearchLevelEnum RequiredListingManageViewInternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "Internal selection level")]
+        [Display(Name = "Selection level")]
         public InternalSearchLevelEnum OffersManageViewInternalSelectionLevel { get; set; }
 
         [Required]
-        [Display(Name = "Internal selection level")]
+        [Display(Name = "'Accepted' authorisation Level")]
+        public InternalSearchLevelEnum OffersAcceptedAuthorisationManageViewLevel { get; set; }
+
+        [Required]
+        [Display(Name = "'Rejected' authorisation Level")]
+        public InternalSearchLevelEnum OffersRejectedAuthorisationManageViewLevel { get; set; }
+
+        [Required]
+        [Display(Name = "'Returned' authorisation Level")]
+        public InternalSearchLevelEnum OffersReturnedAuthorisationManageViewLevel { get; set; }
+
+        [Required]
+        [Display(Name = "Selection level")]
         public InternalSearchLevelEnum OrdersManageViewInternalSelectionLevel { get; set; }
+
+        [Required]
+        [Display(Name = "'Despatched' authorisation Level")]
+        public InternalSearchLevelEnum OrdersDespatchedAuthorisationManageViewLevel { get; set; }
+
+        [Required]
+        [Display(Name = "'Delivered' authorisation Level")]
+        public InternalSearchLevelEnum OrdersDeliveredAuthorisationManageViewLevel { get; set; }
+
+        [Required]
+        [Display(Name = "'Collected' authorisation Level")]
+        public InternalSearchLevelEnum OrdersCollectedAuthorisationManageViewLevel { get; set; }
+
+        [Required]
+        [Display(Name = "'Closed' authorisation Level")]
+        public InternalSearchLevelEnum OrdersClosedAuthorisationManageViewLevel { get; set; }
     }
 }
