@@ -373,6 +373,7 @@ namespace Distributor.Helpers
             AvailableListing availableListing = null;
             RequirementListing requirementListing = null;
             AppUser listingAppUser = null;
+            AppUserSettings listingAppUserSettings = null;
 
             switch (offer.ListingType)
             {
@@ -394,8 +395,10 @@ namespace Distributor.Helpers
                 OfferAppUserDetails = offerAppUser,
                 ListingAppUserDetails = listingAppUser,
                 OfferBranchDetails = BranchHelpers.GetBranch(db, offerAppUser.CurrentBranchId),
-                ListingBranchDetails = BranchHelpers.GetBranch(db, listingAppUser.CurrentBranchId)
-            };
+                ListingBranchDetails = BranchHelpers.GetBranch(db, listingAppUser.CurrentBranchId),
+                OfferAppUserSettings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, offerAppUser.AppUserId),
+                ListingAppUserSettings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, listingAppUser.AppUserId)
+        };
 
             return offerManageView;
         }

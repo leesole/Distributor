@@ -54,17 +54,18 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
 
-    <div class="row">
-        <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.AppUserId)
+        @Html.HiddenFor(model => model.AppUserSettingsId)
+        @Html.HiddenFor(model => model.CallingAction)
+        @Html.HiddenFor(model => model.CallingController)
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.AppUserId)
-            @Html.HiddenFor(model => model.AppUserSettingsId)
-            @Html.HiddenFor(model => model.CallingAction)
-            @Html.HiddenFor(model => model.CallingController)
+        <div class="row">
 
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="login-panel panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">User details</h3>
@@ -125,11 +126,27 @@
                             </div>
                         </div>
                     </div>
-                </div>   
+                </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("Index", "Groups") + "'");">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Your groups</h3>
+                    </div>
+                    <div class="panel-body">
+                        list groups - click to go to group area
+                    </div>
+                    @*<div class="panel-footer">
+                        <input type="button" value="Add group" name="addgroupbutton" class="btn btn-success" />
+                    </div>*@
+                </div>
+            </div>
 
-            <div class="col-md-4">                
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
                 <div class="login-panel panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">Manage listings settings</h3>

@@ -196,7 +196,7 @@ namespace Distributor.Controllers
                 }
 
                 //Create a new AppUser then write here
-                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, Guid.Empty, statusForUser, model.Email);
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, Guid.Empty, statusForUser, model.Email, userRoleForUser);
 
                 Company company = null;
                 Branch branch = null;
@@ -221,7 +221,7 @@ namespace Distributor.Controllers
                             createCompany = false;
 
                     if (createCompany)
-                        company = CompanyHelpers.CreateCompany(Guid.Empty, model.CompanyName, model.CompanyRegistrationDetails, model.CharityRegistrationDetails, model.VATRegistrationDetails, statusForUser);
+                        company = CompanyHelpers.CreateCompany(Guid.Empty, model.CompanyName, model.CompanyRegistrationDetails, model.CharityRegistrationDetails, model.VATRegistrationDetails, model.AllowBranchTrading, statusForUser);
                     else
                         company = CompanyHelpers.GetCompany(model.SelectedCompanyId.Value);
                     

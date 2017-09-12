@@ -61,6 +61,7 @@ namespace Distributor.Helpers
                     companyAdminView.CompanyDetails.CompanyRegistrationDetails, 
                     companyAdminView.CompanyDetails.CharityRegistrationDetails, 
                     companyAdminView.CompanyDetails.VATRegistrationDetails, 
+                    companyAdminView.CompanyDetails.AllowBranchTrading,
                     companyAdminView.CompanyDetails.EntityStatus
                     );
                 

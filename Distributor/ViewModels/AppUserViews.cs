@@ -201,5 +201,7 @@ namespace Distributor.ViewModels
         [Required]
         [Display(Name = "Selection level")]
         public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel { get; set; }
+
+        public List<Group> UserGroups { get; set; }
     }
 }

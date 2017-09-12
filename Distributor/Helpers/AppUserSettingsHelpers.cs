@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Helpers
 {
@@ -167,17 +168,29 @@ namespace Distributor.Helpers
             return appUserSettings;
         }
 
-        public static AppUserSettings CreateAppUserSettingsForNewUser(Guid appUserId)
+        public static AppUserSettings CreateAppUserSettingsForNewUser(Guid appUserId, UserRoleEnum userRole)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUserSettings appUserSettings = CreateAppUserSettingsForNewUser(db, appUserId);
+            AppUserSettings appUserSettings = CreateAppUserSettingsForNewUser(db, appUserId, userRole);
             db.Dispose();
             return appUserSettings;
         }
 
-        public static AppUserSettings CreateAppUserSettingsForNewUser(ApplicationDbContext db, Guid appUserId)
+        public static AppUserSettings CreateAppUserSettingsForNewUser(ApplicationDbContext db, Guid appUserId, UserRoleEnum userRole)
         {
-            AppUserSettingsTemplate template = new AppUserSettingsTemplate();
+            AppUserSettingsUserTemplate template = new AppUserSettingsUserTemplate();
+
+            //Use the USER template as the standard but override for Admin and Managers
+            switch (userRole)
+            {
+                case UserRoleEnum.SuperUser:
+                case UserRoleEnum.Admin:
+                    template = new AppUserSettingsAdminTemplate();
+                    break;
+                case UserRoleEnum.Manager:
+                    template = new AppUserSettingsManagerTemplate();
+                    break;
+            }
 
             AppUserSettings appUserSettings = new AppUserSettings()
             {

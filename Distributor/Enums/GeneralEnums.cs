@@ -52,5 +52,20 @@ namespace Distributor.Enums
             [Description("Group")]  //These are user built closed groups
             Group = 3
         }
+
+        /// <summary>
+        /// The Level of which an ID may refer, i.e. User = AppUserId
+        /// </summary>
+        public enum LevelEnum
+        {
+            [Description("User")]
+            User = 0,
+
+            [Description("Branch")]
+            Branch = 1,
+
+            [Description("Company")]
+            Company = 2
+        }
     }
 }

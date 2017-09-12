@@ -202,6 +202,7 @@
     <Compile Include="Controllers\CampaignsController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\GeneralInfoController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageListingsController.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Enums\BranchEnums.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
+    <Compile Include="Enums\FriendEnums.cs" />
     <Compile Include="Enums\GeneralEnums.cs" />
     <Compile Include="Enums\ItemEnums.cs" />
     <Compile Include="Enums\OfferEnums.cs" />
@@ -405,6 +407,14 @@
     <Compile Include="Migrations\201709111559395_42nd.Designer.cs">
       <DependentUpon>201709111559395_42nd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709120725514_43rd.cs" />
+    <Compile Include="Migrations\201709120725514_43rd.Designer.cs">
+      <DependentUpon>201709120725514_43rd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709121920566_44th.cs" />
+    <Compile Include="Migrations\201709121920566_44th.Designer.cs">
+      <DependentUpon>201709121920566_44th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -412,11 +422,14 @@
     <Compile Include="Models\AvailableListing.cs" />
     <Compile Include="Models\AvailableOffer.cs" />
     <Compile Include="Models\BaseViewWithCallingFields.cs" />
+    <Compile Include="Models\Block.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\BranchUser.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupHelpers.cs" />
     <Compile Include="Models\GroupMember.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -426,12 +439,13 @@
     <Compile Include="Models\UserTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Templates\AppUserSettingsTemplate.cs" />
+    <Compile Include="Templates\AppUserSettingsTemplates.cs" />
     <Compile Include="ViewModels\AppUserViews.cs" />
     <Compile Include="ViewModels\AvailableListingViews.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CampaignViews.cs" />
     <Compile Include="ViewModels\DashboardView.cs" />
+    <Compile Include="ViewModels\GroupViews.cs" />
     <Compile Include="ViewModels\OfferViews.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
     <Compile Include="ViewModels\OrderViews.cs" />
@@ -569,6 +583,11 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Groups\Create.cshtml" />
+    <Content Include="Views\Groups\Delete.cshtml" />
+    <Content Include="Views\Groups\Details.cshtml" />
+    <Content Include="Views\Groups\Edit.cshtml" />
+    <Content Include="Views\Groups\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -713,6 +732,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709111559395_42nd.resx">
       <DependentUpon>201709111559395_42nd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709120725514_43rd.resx">
+      <DependentUpon>201709120725514_43rd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709121920566_44th.resx">
+      <DependentUpon>201709121920566_44th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

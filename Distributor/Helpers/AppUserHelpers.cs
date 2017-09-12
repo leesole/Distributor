@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Helpers
 {
@@ -48,15 +49,15 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AppUser CreateAppUser(string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail)
+        public static AppUser CreateAppUser(string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail, UserRoleEnum userRole)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUser appUser = CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus, loginEmail);
+            AppUser appUser = CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus, loginEmail, userRole);
             db.Dispose();
             return appUser;
         }
 
-        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail)
+        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail, UserRoleEnum userRole)
         {
             AppUser appUser = new AppUser()
             {
@@ -70,7 +71,7 @@ namespace Distributor.Helpers
             db.AppUsers.Add(appUser);
 
             //Create initial settings values from the settings template
-            AppUserSettingsHelpers.CreateAppUserSettingsForNewUser(db, appUser.AppUserId);
+            AppUserSettingsHelpers.CreateAppUserSettingsForNewUser(db, appUser.AppUserId, userRole);
 
             db.SaveChanges();
 

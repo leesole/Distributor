@@ -26,5 +26,9 @@ namespace Distributor.ViewModels
         public Branch OfferBranchDetails { get; set; }
 
         public Branch ListingBranchDetails { get; set; }
+
+        public AppUserSettings OfferAppUserSettings { get; set; }
+
+        public AppUserSettings ListingAppUserSettings { get; set; }
     }
 }

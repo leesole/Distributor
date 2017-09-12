@@ -48,7 +48,7 @@ namespace Distributor.ViewModels
 
         public AppUser OrderAppUser { get; set; }
         public Branch OrderBranchDetails { get; set; }
-        
+
         public Guid OfferId { get; set; }
         public AppUser OfferAppUser { get; set; }
         public Branch OfferBranchDetails { get; set; }

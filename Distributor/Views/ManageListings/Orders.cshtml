@@ -16,6 +16,7 @@
     var closedButton = "";
     var displayClosedButton = true;
     var currentAppUserId = User.Identity.GetAppUserId();
+    var inhouseOrder = false;
 }
 
 @section Scripts {
@@ -234,14 +235,28 @@
                         }
                     }
 
-                    @if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentCompanyId) //our order
+                    @if (ViewBag.AllowBranchTrading)
+                    {
+                        if (item.OrderDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                        {
+                            inhouseOrder = true;
+                        }
+                    }
+                    else
+                    {
+                        if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                        {
+                            inhouseOrder = true;
+                        }
+                    }
+
+                    @if (inhouseOrder) //our order
                     {
                         if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
                         {
                             if (displayDespatchButton)
                             {
                                 <td><input type="button" value="Despatched" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Despatched')" /></td>
-
                             }
                             else
                             {

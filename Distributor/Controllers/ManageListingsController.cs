@@ -36,6 +36,23 @@ namespace Distributor.Controllers
         public ActionResult Offers()
         {
             List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageView(User);
+
+            //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
+ 
+            Company company = CompanyHelpers.GetCompanyForUser(User);
+            ViewBag.AllowBranchTrading = company.AllowBranchTrading;
+            if (company.AllowBranchTrading)
+                ViewBag.CurrentBranchOrCompanyId = AppUserHelpers.GetAppUser(User).CurrentBranchId;
+            else
+                ViewBag.CurrentBranchOrCompanyId = company.CompanyId;
+
+            //Set the authorisation levels and IDs for button activation on form
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(User);
+
+            ViewBag.AcceptedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersAcceptedAuthorisationManageViewLevel, User);
+            ViewBag.RejectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersRejectedAuthorisationManageViewLevel, User);
+            ViewBag.ReturnedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersReturnedAuthorisationManageViewLevel, User);
+
             return View(model);
         }
 
@@ -43,8 +60,13 @@ namespace Distributor.Controllers
         {
             List<OrderManageView> model = OrderManageHelpers.GetAllOrdersManageView(User);
 
-            //Get the user's company ID so we can differentiate between our company orders and orders coming to us in the view
-            ViewBag.CurrentCompanyId = CompanyHelpers.GetCompanyForUser(User).CompanyId;
+            //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
+            Company company = CompanyHelpers.GetCompanyForUser(User);
+            ViewBag.AllowBranchTrading = company.AllowBranchTrading;
+            if (company.AllowBranchTrading)
+                ViewBag.CurrentBranchOrCompanyId = AppUserHelpers.GetAppUser(User).CurrentBranchId;
+            else
+                ViewBag.CurrentBranchOrCompanyId = company.CompanyId;
 
             //Set the authorisation levels and IDs for button activation on form
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(User);

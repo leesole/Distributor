@@ -143,6 +143,9 @@ namespace Distributor.Models
         [Display(Name = "VAT registration details")]
         public string VATRegistrationDetails { get; set; }
 
+        [Display(Name = "Allow in-house trading between branches?")]
+        public bool AllowBranchTrading { get; set; }
+
         //Branch
         public Guid? SelectedBranchId { get; set; }
 

@@ -5,6 +5,7 @@
 @{
     var uoM = "";
     var description = "";
+    var inhouseOrder = false;
 }
 
 @section Scripts {
@@ -352,7 +353,23 @@
                                 break;
                         }
                     }
-                    @if (Model.OrderBranchDetails.CompanyId == ViewBag.CurrentCompanyId) //our order
+
+                    @if (ViewBag.AllowBranchTrading)
+                    {
+                        if (Model.OrderBranchDetails.BranchId == ViewBag.CurrentBranchOrCompanyId)
+                        {
+                            inhouseOrder = true;
+                        }
+                    }
+                    else
+                    {
+                        if (Model.OrderBranchDetails.CompanyId == ViewBag.CurrentBranchOrCompanyId)
+                        {
+                            inhouseOrder = true;
+                        }
+                    }
+
+                    @if (inhouseOrder) //our order
                     {
                         if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
                         {

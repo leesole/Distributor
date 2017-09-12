@@ -72,15 +72,15 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
+        public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            Company company = CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
+            Company company = CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, allowBranchTrading, entityStatus);
             db.Dispose();
             return company;
         }
 
-        public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
+        public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, EntityStatusEnum entityStatus)
         {
             Company company = new Company()
             {
@@ -90,6 +90,7 @@ namespace Distributor.Helpers
                 CompanyRegistrationDetails = companyRegistrationDetails,
                 CharityRegistrationDetails = charityRegistrationDetails,
                 VATRegistrationDetails = vatRegistrationDetails,
+                AllowBranchTrading = allowBranchTrading,
                 EntityStatus = entityStatus
             };
             db.Companies.Add(company);
@@ -102,15 +103,15 @@ namespace Distributor.Helpers
 
         #region Update
 
-        public static Company UpdateCompany(Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
+        public static Company UpdateCompany(Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            Company company = UpdateCompany(db, companyId, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, entityStatus);
+            Company company = UpdateCompany(db, companyId, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, allowBranchTrading, entityStatus);
             db.Dispose();
             return company;
         }
 
-        public static Company UpdateCompany(ApplicationDbContext db, Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, EntityStatusEnum entityStatus)
+        public static Company UpdateCompany(ApplicationDbContext db, Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, EntityStatusEnum entityStatus)
         {
             Company company = CompanyHelpers.GetCompany(companyId);
             company.HeadOfficeBranchId = headOfficeBranchId;
@@ -118,6 +119,7 @@ namespace Distributor.Helpers
             company.CompanyRegistrationDetails = companyRegistrationDetails;
             company.CharityRegistrationDetails = charityRegistrationDetails;
             company.VATRegistrationDetails = vatRegistrationDetails;
+            company.AllowBranchTrading = allowBranchTrading;
             company.EntityStatus = entityStatus;
 
             db.Entry(company).State = EntityState.Modified;
