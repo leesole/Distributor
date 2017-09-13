@@ -122,47 +122,110 @@
     <div class="col-md-6">
         <div class="login-panel panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Listee details</h3>
+                <h3 class="panel-title">Listing created by</h3>
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.FirstName)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.FirstName)</div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">User</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingAppUser.FirstName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingAppUser.LastName)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Model.Buttons.UserBlockButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.UserAddFriendButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.UserAddToGroupButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.LastName)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.LastName)</div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Company</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingCompanyDetails.CompanyName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingCompanyDetails.CompanyRegistrationDetails)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingCompanyDetails.CharityRegistrationDetails)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingCompanyDetails.VATRegistrationDetails)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Model.Buttons.CompanyBlockButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.CompanyAddFriendButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.CompanyAddToGroupButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }
+                        </div>
+                    </div>
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingCompanyDetails.CompanyName)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingCompanyDetails.CompanyName)</div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.BranchName)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.BranchName)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressLine1)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressTownCity)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressCounty)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressPostcode)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)</div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.ListingOriginatorDateTime)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingOriginatorDateTime)</div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Branch</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.BranchName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Model.Buttons.BranchBlockButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.BranchAddFriendButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.BranchAddToGroupButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

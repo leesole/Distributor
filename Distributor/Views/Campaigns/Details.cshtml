@@ -60,7 +60,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div class="login-panel panel panel-primary">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Listing details</h3>
             </div>
@@ -145,7 +145,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="login-panel panel panel-primary">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Campaign poster</h3>
             </div>
@@ -160,50 +160,112 @@
                 </div>
             </div>
         </div>
-        <div class="login-panel panel panel-info">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Campaign created by</h3>
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignAppUser.FirstName)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => model.CampaignAppUser.FirstName)</div>
-                    <div class="col-md-1">
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            <span class="glyphicon glyphicon-remove"></span>Block
-                        </button>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">User</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignAppUser.FirstName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignAppUser.LastName)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">   
+                            @if (Model.Buttons.UserBlockButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.UserAddFriendButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.UserAddToGroupButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }                         
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignAppUser.LastName)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignAppUser.LastName)</div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Company</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignCompanyDetails.CompanyName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignCompanyDetails.CompanyRegistrationDetails)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignCompanyDetails.CharityRegistrationDetails)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignCompanyDetails.VATRegistrationDetails)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Model.Buttons.CompanyBlockButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.CompanyAddFriendButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.CompanyAddToGroupButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }    
+                        </div>
+                    </div>
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignCompanyDetails.CompanyName)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => model.CampaignCompanyDetails.CompanyName)</div>
-                    <div class="col-md-1"><input type="submit" value="Block" name="blockcompanybutton" class="btn btn-danger glyphicon glyphicon-search" /></div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.BranchName)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.BranchName)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.AddressLine1)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressLine1)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.AddressTownCity)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressTownCity)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.AddressCounty)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressCounty)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">@Html.LabelFor(model => model.CampaignBranchDetails.AddressPostcode)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressPostcode)</div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Branch</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignBranchDetails.BranchName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressLine1)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressTownCity)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressCounty)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.CampaignBranchDetails.AddressPostcode)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Model.Buttons.BranchBlockButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.BranchAddFriendButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.BranchAddToGroupButton)
+                            {
+                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }    
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
