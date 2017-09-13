@@ -105,6 +105,9 @@ namespace Distributor.ViewModels
 
         public AppUser ListingAppUser { get; set; }
         public Branch ListingBranchDetails { get; set; }
+        public Company ListingCompanyDetails { get; set; }
         public Campaign CampaignDetails { get; set; }
+
+        public ViewButtons Buttons { get; set; }
     }
 }

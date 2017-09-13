@@ -30,7 +30,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CampaignEditView campaign = CampaignEditHelpers.GetCampaignEditView(db, id.Value);
+            CampaignEditView campaign = CampaignEditHelpers.GetCampaignEditView(db, id.Value, User);
             if (campaign == null)
             {
                 return HttpNotFound();
@@ -88,7 +88,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CampaignEditView campaign = CampaignEditHelpers.GetCampaignEditView(db, id.Value);
+            CampaignEditView campaign = CampaignEditHelpers.GetCampaignEditView(db, id.Value, User);
             if (campaign == null)
             {
                 return HttpNotFound();

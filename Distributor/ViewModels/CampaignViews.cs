@@ -141,5 +141,8 @@ namespace Distributor.ViewModels
         public DateTime CampaignOriginatorDateTime { get; set; }
         public AppUser CampaignAppUser { get; set; }
         public Branch CampaignBranchDetails { get; set; }
+        public Company CampaignCompanyDetails { get; set; }
+
+        public ViewButtons Buttons { get; set; }
     }
 }

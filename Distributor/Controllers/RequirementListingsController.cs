@@ -30,7 +30,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RequirementListingEditView requirementListing = RequirementListingEditHelpers.GetRequirementListingEditView(db, id.Value);
+            RequirementListingEditView requirementListing = RequirementListingEditHelpers.GetRequirementListingEditView(db, id.Value, User);
             if (requirementListing == null)
             {
                 return HttpNotFound();
@@ -87,7 +87,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RequirementListingEditView requirementListing = RequirementListingEditHelpers.GetRequirementListingEditView(db, id.Value);
+            RequirementListingEditView requirementListing = RequirementListingEditHelpers.GetRequirementListingEditView(db, id.Value, User);
             if (requirementListing == null)
             {
                 return HttpNotFound();

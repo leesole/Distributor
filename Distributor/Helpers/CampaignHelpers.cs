@@ -493,20 +493,23 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static CampaignEditView GetCampaignEditView(Guid campaignId)
+        public static CampaignEditView GetCampaignEditView(Guid campaignId, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            CampaignEditView view = GetCampaignEditView(db, campaignId);
+            CampaignEditView view = GetCampaignEditView(db, campaignId, user);
             db.Dispose();
             return view;
         }
 
-        public static CampaignEditView GetCampaignEditView(ApplicationDbContext db, Guid campaignId)
+        public static CampaignEditView GetCampaignEditView(ApplicationDbContext db, Guid campaignId, IPrincipal user)
         {
             Campaign campaignDetails = CampaignHelpers.GetCampaign(db, campaignId);
             AppUser campaignAppUser = AppUserHelpers.GetAppUser(db, campaignDetails.CampaignOriginatorAppUserId);
             Branch campaignBranch = BranchHelpers.GetBranch(db, campaignDetails.CampaignOriginatorBranchId);
+            Company campaignCompany = CompanyHelpers.GetCompany(db, campaignDetails.CampaignOriginatorCompanyId);
+
+            ViewButtons buttons = ViewButtonsHelpers.GetAvailableButtonsForSingleView(db, campaignAppUser, campaignBranch, campaignCompany, user);
 
             CampaignEditView view = new CampaignEditView()
             {
@@ -532,7 +535,9 @@ namespace Distributor.Helpers
                 EntityStatus = campaignDetails.EntityStatus,
                 CampaignOriginatorDateTime = campaignDetails.CampaignOriginatorDateTime,
                 CampaignAppUser = campaignAppUser,
-                CampaignBranchDetails = campaignBranch
+                CampaignBranchDetails = campaignBranch,
+                CampaignCompanyDetails = campaignCompany,
+                Buttons = buttons
             };
 
             return view;

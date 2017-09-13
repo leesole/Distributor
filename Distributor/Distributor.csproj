@@ -226,6 +226,7 @@
     <Compile Include="Helpers\AppUserHelpers.cs" />
     <Compile Include="Helpers\AppUserSettingsHelpers.cs" />
     <Compile Include="Helpers\AvailableListingHelpers.cs" />
+    <Compile Include="Helpers\BlockHelpers.cs" />
     <Compile Include="Helpers\BranchAdminHelpers.cs" />
     <Compile Include="Helpers\BranchHelpers.cs" />
     <Compile Include="Helpers\BranchUserHelpers.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Helpers\DashboardHelpers.cs" />
     <Compile Include="Helpers\DataHelpers.cs" />
     <Compile Include="Helpers\DistanceHelpers.cs" />
+    <Compile Include="Helpers\FriendHelpers.cs" />
     <Compile Include="Helpers\GeneralHelpers.cs" />
     <Compile Include="Helpers\OrderHelpers.cs" />
     <Compile Include="Helpers\CompanyAdminHelpers.cs" />
@@ -243,6 +245,7 @@
     <Compile Include="Helpers\RequirementListingHelpers.cs" />
     <Compile Include="Helpers\UserAdminHelpers.cs" />
     <Compile Include="Helpers\UserTaskHelpers.cs" />
+    <Compile Include="Helpers\ViewButtonsHelpers.cs" />
     <Compile Include="Migrations\201707271720127_1st.cs" />
     <Compile Include="Migrations\201707271720127_1st.Designer.cs">
       <DependentUpon>201707271720127_1st.cs</DependentUpon>
@@ -429,7 +432,7 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\GroupHelpers.cs" />
+    <Compile Include="Helpers\GroupHelpers.cs" />
     <Compile Include="Models\GroupMember.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -452,6 +455,7 @@
     <Compile Include="ViewModels\RequirementListingViews.cs" />
     <Compile Include="ViewModels\UserAdminView.cs" />
     <Compile Include="ViewModels\UserTaskView.cs" />
+    <Compile Include="ViewModels\ViewButtons.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

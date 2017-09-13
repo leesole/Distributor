@@ -480,21 +480,24 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static RequirementListingEditView GetRequirementListingEditView(Guid listingId)
+        public static RequirementListingEditView GetRequirementListingEditView(Guid listingId, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            RequirementListingEditView view = GetRequirementListingEditView(db, listingId);
+            RequirementListingEditView view = GetRequirementListingEditView(db, listingId, user);
             db.Dispose();
             return view;
         }
 
-        public static RequirementListingEditView GetRequirementListingEditView(ApplicationDbContext db, Guid listingId)
+        public static RequirementListingEditView GetRequirementListingEditView(ApplicationDbContext db, Guid listingId, IPrincipal user)
         {
             RequirementListing requirementListing = RequirementListingHelpers.GetRequirementListing(db, listingId);
             AppUser listingAppUser = AppUserHelpers.GetAppUser(db, requirementListing.ListingOriginatorAppUserId);
             Branch listingBranch = BranchHelpers.GetBranch(db, requirementListing.ListingOriginatorBranchId);
+            Company listingCompany = CompanyHelpers.GetCompany(db, requirementListing.ListingOriginatorCompanyId);
             Campaign listingCampaign = null;
+
+            ViewButtons buttons = ViewButtonsHelpers.GetAvailableButtonsForSingleView(db, listingAppUser, listingBranch, listingCompany, user);
 
             if (requirementListing.CampaignId != null)
                 if (requirementListing.CampaignId.Value != Guid.Empty)
@@ -518,7 +521,9 @@ namespace Distributor.Helpers
                 ListingOriginatorDateTime = requirementListing.ListingOriginatorDateTime,
                 ListingAppUser = listingAppUser,
                 ListingBranchDetails = listingBranch,
-                CampaignDetails = listingCampaign
+                ListingCompanyDetails = listingCompany,
+                CampaignDetails = listingCampaign,
+                Buttons = buttons
             };
 
             return view;

@@ -30,7 +30,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AvailableListingEditView availableListing = AvailableListingEditHelpers.GetAvailableListingEditView(db, id.Value);
+            AvailableListingEditView availableListing = AvailableListingEditHelpers.GetAvailableListingEditView(db, id.Value, User);
             if (availableListing == null)
             {
                 return HttpNotFound();
@@ -87,7 +87,7 @@ namespace Distributor.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AvailableListingEditView availableListing = AvailableListingEditHelpers.GetAvailableListingEditView(db, id.Value);
+            AvailableListingEditView availableListing = AvailableListingEditHelpers.GetAvailableListingEditView(db, id.Value, User);
             if (availableListing == null)
             {
                 return HttpNotFound();

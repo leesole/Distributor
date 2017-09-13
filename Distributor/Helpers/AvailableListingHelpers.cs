@@ -519,20 +519,23 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static AvailableListingEditView GetAvailableListingEditView(Guid listingId)
+        public static AvailableListingEditView GetAvailableListingEditView(Guid listingId, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            AvailableListingEditView view = GetAvailableListingEditView(db, listingId);
+            AvailableListingEditView view = GetAvailableListingEditView(db, listingId, user);
             db.Dispose();
             return view;
         }
 
-        public static AvailableListingEditView GetAvailableListingEditView(ApplicationDbContext db, Guid listingId)
+        public static AvailableListingEditView GetAvailableListingEditView(ApplicationDbContext db, Guid listingId, IPrincipal user)
         {
             AvailableListing availableListing = AvailableListingHelpers.GetAvailableListing(db, listingId);
             AppUser listingAppUser = AppUserHelpers.GetAppUser(db, availableListing.ListingOriginatorAppUserId);
             Branch listingBranch = BranchHelpers.GetBranch(db, availableListing.ListingOriginatorBranchId);
+            Company listingCompany = CompanyHelpers.GetCompany(db, availableListing.ListingOriginatorCompanyId);
+
+            ViewButtons buttons = ViewButtonsHelpers.GetAvailableButtonsForSingleView(db, listingAppUser, listingBranch, listingCompany, user);
 
             AvailableListingEditView view = new AvailableListingEditView()
             {
@@ -553,7 +556,9 @@ namespace Distributor.Helpers
                 ListingStatus = availableListing.ListingStatus,
                 ListingOriginatorDateTime = availableListing.ListingOriginatorDateTime,
                 ListingAppUser = listingAppUser,
-                ListingBranchDetails = listingBranch
+                ListingBranchDetails = listingBranch,
+                ListingCompanyDetails = listingCompany,
+                Buttons = buttons
             };
 
             return view;
