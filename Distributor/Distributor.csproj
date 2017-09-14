@@ -210,6 +210,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\RequirementListingsController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Enums\UserActionEnums.cs" />
     <Compile Include="Enums\BranchEnums.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
     <Compile Include="Enums\FriendEnums.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\UserActionHelpers.cs" />
     <Compile Include="Helpers\AppUserHelpers.cs" />
     <Compile Include="Helpers\AppUserSettingsHelpers.cs" />
     <Compile Include="Helpers\AvailableListingHelpers.cs" />
@@ -418,6 +420,14 @@
     <Compile Include="Migrations\201709121920566_44th.Designer.cs">
       <DependentUpon>201709121920566_44th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709140647172_45th.cs" />
+    <Compile Include="Migrations\201709140647172_45th.Designer.cs">
+      <DependentUpon>201709140647172_45th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709141034523_46th.cs" />
+    <Compile Include="Migrations\201709141034523_46th.Designer.cs">
+      <DependentUpon>201709141034523_46th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -439,6 +449,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\RequirementListing.cs" />
     <Compile Include="Models\Offer.cs" />
+    <Compile Include="Models\UserAction.cs" />
     <Compile Include="Models\UserTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -742,6 +753,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709121920566_44th.resx">
       <DependentUpon>201709121920566_44th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709140647172_45th.resx">
+      <DependentUpon>201709140647172_45th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709141034523_46th.resx">
+      <DependentUpon>201709141034523_46th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

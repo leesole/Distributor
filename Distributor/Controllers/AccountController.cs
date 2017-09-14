@@ -277,7 +277,7 @@ namespace Distributor.Controllers
                     if (model.SelectedCompanyId.HasValue)
                         return RedirectToAction("Confirmation");
                     else
-                        return RedirectToAction("Dashboard", "Home");
+                        return RedirectToAction("Index", "Home");
                 }
 
                 //Delete the appUser account as this has not gone through

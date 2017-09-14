@@ -30,6 +30,33 @@ namespace Distributor.Helpers
 
         #endregion
 
+        #region Create
+
+        public static Block CreateBlock(LevelEnum level, Guid ofReferenceId, Guid byReferenceId, Guid byAppUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Block block = CreateBlock(db, level, ofReferenceId, byReferenceId, byAppUserId);
+            db.Dispose();
+            return block;
+        }
+
+        public static Block CreateBlock(ApplicationDbContext db, LevelEnum level, Guid ofReferenceId, Guid byReferenceId, Guid byAppUserId)
+        {
+            Block block = new Block()
+            {
+                BlockId = Guid.NewGuid(),
+                Type = level,
+                BlockedOfId = ofReferenceId,
+                BlockedById = byReferenceId,
+                BlockedByUserId = byAppUserId,
+                BlockedOn = DateTime.Now
+            };
+
+            return block;
+        }
+
+        #endregion
+
         #region Processing
 
         public static bool IsReferenceBlocked(LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)

@@ -45,6 +45,44 @@ namespace Distributor.Helpers
             return GetAppUser(db, appUserId);
         }
 
+        public static List<AppUser> GetManagerAppUsersForBranch(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<AppUser> list = GetManagerAppUsersForBranch(db, branchId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AppUser> GetManagerAppUsersForBranch(ApplicationDbContext db, Guid branchId)
+        {
+            List<AppUser> list = (from bu in db.BranchUsers
+                                  join au in db.AppUsers on bu.UserId equals au.AppUserId
+                                  where (bu.BranchId == branchId && bu.UserRole == UserRoleEnum.Manager)
+                                  select au).ToList();
+            var listDistinct = list.Distinct();
+
+            return list;
+        }
+
+        public static List<AppUser> GetAdminAppUsersForCompany(Guid companyId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<AppUser> list = GetAdminAppUsersForCompany(db, companyId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AppUser> GetAdminAppUsersForCompany(ApplicationDbContext db, Guid companyId)
+        {
+            List<AppUser> list = (from bu in db.BranchUsers
+                                  join au in db.AppUsers on bu.UserId equals au.AppUserId
+                                  where (bu.CompanyId == companyId && bu.UserRole == UserRoleEnum.Admin)
+                                  select au).ToList();
+            var listDistinct = list.Distinct();
+
+            return list;
+        }
+
         #endregion
 
         #region Create

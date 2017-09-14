@@ -1,10 +1,12 @@
 ﻿using Distributor.Helpers;
 using Distributor.Models;
+using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Controllers
 {
@@ -39,6 +41,61 @@ namespace Distributor.Controllers
                 return Json(new { success = false });
             }
             return Json(new { success = false });
+        }
+
+
+        /// <summary>
+        /// This will process the 'Block', 'Add Friend', 'Add to Group' button presses on the General Info screens.
+        /// </summary>
+        /// <param name="buttonName"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ProcessButton(string buttonName)
+        {
+            string[] keys = buttonName.Split(':');
+
+            string buttonType = keys[0];
+            string buttonLevel = keys[1];
+            Guid ofReferenceId = Guid.Empty;
+            Guid byAppUserId = Guid.Empty;
+            Guid.TryParse(keys[2], out ofReferenceId);
+            Guid.TryParse(keys[3], out byAppUserId);
+
+            Guid byReferenceId = Guid.Empty;
+            LevelEnum levelEnum = LevelEnum.User;
+
+            //Set the byReference to be either the user, the user's branch or the user's company depending on level
+            switch (buttonLevel)
+            {
+                case "company":
+                    levelEnum = LevelEnum.Company;
+                    byReferenceId = CompanyHelpers.GetCompanyForUser(byAppUserId).CompanyId;
+                    break;
+                case "branch":
+                    levelEnum = LevelEnum.Branch;
+                    byReferenceId = AppUserHelpers.GetAppUser(byAppUserId).CurrentBranchId;
+                    break;
+                case "user":
+                    levelEnum = LevelEnum.User;
+                    byReferenceId = byAppUserId;
+                    break;
+            }
+
+            switch (buttonType)
+            {
+                case "block":
+                    BlockHelpers.CreateBlock(levelEnum, ofReferenceId, byReferenceId, byAppUserId);
+                    break;
+                case "friend":
+                    FriendHelpers.CreateFriend(levelEnum, ofReferenceId, byReferenceId, byAppUserId);
+                    break;
+                case "group":
+                    ///need to go to Group screen to select a group or allow adding of a new group
+                    break;
+
+            }
+
+            return Json(new { success = true });
         }
     }
 }

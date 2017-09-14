@@ -68,6 +68,22 @@ namespace Distributor.Helpers
             return company;
         }
 
+        public static Company GetCompanyForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Company company = GetCompanyForUser(db, appUserId);
+            db.Dispose();
+            return company;
+        }
+
+        public static Company GetCompanyForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
+            BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, appUser.AppUserId, appUser.CurrentBranchId);
+            Company company = GetCompany(db, branchUser.CompanyId);
+            return company;
+        }
+
         #endregion
 
         #region Create

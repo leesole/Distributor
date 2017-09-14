@@ -22,6 +22,10 @@ namespace Distributor.Models
         public Guid RequestedById { get; set; }//will hold the appUserId or CompanyId or BranchId depending on the type of the requestor
 
         [Required]
+        [Display(Name = "User requesting friend")]
+        public Guid RequestedByUserId { get; set; }//will hold the appUserId of the requestor
+
+        [Required]
         [Display(Name = "Requested of")]
         public Guid RequestedOfId { get; set; }  //will hold the appUserId or CompanyId or BranchId depending on the type of the requested
         

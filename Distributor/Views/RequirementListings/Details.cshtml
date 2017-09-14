@@ -1,4 +1,35 @@
-﻿@model Distributor.ViewModels.RequirementListingEditView
+﻿@using Distributor.Extenstions;
+
+@model Distributor.ViewModels.RequirementListingEditView
+
+@{ 
+    var buttonId = "";
+    var currentAppUserId = User.Identity.GetAppUserId();
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function buttonClick(id) {
+            if (window.confirm("Proceed?")) {
+                var url = "/Data/ProcessButton";
+
+                $.ajax({
+                    url: url,
+                    data: { buttonName: id },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}
+
 
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
@@ -141,15 +172,18 @@
                         <div class="panel-footer">
                             @if (Model.Buttons.UserBlockButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                                buttonId="block:user:" + Model.ListingAppUser.AppUserId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Block</button>
                             }
                             @if (Model.Buttons.UserAddFriendButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                                buttonId = "friend:user:" + Model.ListingAppUser.AppUserId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Friend</button>
                             }
                             @if (Model.Buttons.UserAddToGroupButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                                buttonId = "group:user:" + Model.ListingAppUser.AppUserId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Group</button>
                             }
                         </div>
                     </div>
@@ -176,15 +210,18 @@
                         <div class="panel-footer">
                             @if (Model.Buttons.CompanyBlockButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                                buttonId = "block:company:" + Model.ListingCompanyDetails.CompanyId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Block</button>
                             }
                             @if (Model.Buttons.CompanyAddFriendButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                                buttonId = "friend:company:" + Model.ListingCompanyDetails.CompanyId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Friend</button>
                             }
                             @if (Model.Buttons.CompanyAddToGroupButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                                buttonId = "group:company:" + Model.ListingCompanyDetails.CompanyId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Group</button>
                             }
                         </div>
                     </div>
@@ -214,15 +251,18 @@
                         <div class="panel-footer">
                             @if (Model.Buttons.BranchBlockButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                                buttonId = "block:branch:" + Model.ListingBranchDetails.BranchId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Block</button>
                             }
                             @if (Model.Buttons.BranchAddFriendButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                                buttonId = "friend:branch:" + Model.ListingBranchDetails.BranchId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Friend</button>
                             }
                             @if (Model.Buttons.BranchAddToGroupButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                                buttonId = "group:branch:" + Model.ListingBranchDetails.BranchId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-sm btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Group</button>
                             }
                         </div>
                     </div>

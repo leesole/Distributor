@@ -43,6 +43,8 @@ namespace Distributor.Models
         public DbSet<BranchUser> BranchUsers { get; set; }
         public DbSet<UserTask> UserTasks { get; set; }
         public DbSet<UserTaskAssignment> UserTaskAssignments { get; set; }
+        public DbSet<UserAction> UserActions { get; set; }
+        public DbSet<UserActionAssignment> UserActionAssignments { get; set; }
 
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<RequirementListing> RequirementListings { get; set; }

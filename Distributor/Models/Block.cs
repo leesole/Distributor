@@ -22,9 +22,12 @@ namespace Distributor.Models
         public Guid BlockedById { get; set; }//will hold the appUserId or CompanyId or BranchId depending on the type of the blocker
 
         [Required]
+        [Display(Name = "User requesting block")]
+        public Guid BlockedByUserId { get; set; } //will hold the appUserId of the blocker
+
+        [Required]
         [Display(Name = "Blocked of")]
         public Guid BlockedOfId { get; set; }  //will hold the appUserId or CompanyId or BranchId depending on the type of the blocked
-
 
         [Display(Name = "Blocked date")]
         public DateTime BlockedOn { get; set; }
