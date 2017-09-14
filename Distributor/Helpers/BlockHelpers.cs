@@ -42,6 +42,15 @@ namespace Distributor.Helpers
 
         public static Block CreateBlock(ApplicationDbContext db, LevelEnum level, Guid ofReferenceId, Guid byReferenceId, Guid byAppUserId)
         {
+            //LSLSLS Remove from friend list if there (at the correct level)
+            // - company - blats all company, branch and users
+            // - branch - blats the branch and it's users (even if users on other branches)
+            // - users - blats that user
+
+            //LSLSLS NOTE - adding friends - only show in buttons if not on block at company/branch/user level...it will make sense
+
+            //LSLSLS Remove from Group if there (at the correct level)
+
             Block block = new Block()
             {
                 BlockId = Guid.NewGuid(),
@@ -72,18 +81,7 @@ namespace Distributor.Helpers
             bool blocked = false;
             Block block = null;
 
-            switch (referenceLevel)
-            {
-                case LevelEnum.Company:
-                    block = GetBlockForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
-                    break;
-                case LevelEnum.Branch:
-                    block = GetBlockForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
-                    break;
-                case LevelEnum.User:
-                    block = GetBlockForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
-                    break;
-            }
+            block = GetBlockForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
 
             if (block != null)
                 blocked = true;

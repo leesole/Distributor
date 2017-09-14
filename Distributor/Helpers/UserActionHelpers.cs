@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
 using static Distributor.Enums.GeneralEnums;
@@ -12,6 +13,38 @@ namespace Distributor.Helpers
     public static class UserActionHelpers
     {
         #region Get
+
+        public static List<UserAction> GetActionsForUser(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<UserAction> list = GetActionsForUser(db, user);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<UserAction> GetActionsForUser(ApplicationDbContext db, IPrincipal user)
+        {
+            List<UserAction> list = GetActionsForUser(db, AppUserHelpers.GetAppUserIdFromUser(user));
+            return list;
+        }
+
+        public static List<UserAction> GetActionsForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<UserAction> list = GetActionsForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<UserAction> GetActionsForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<UserAction> list = (from uaa in db.UserActionAssignments
+                                     join ua in db.UserActions on uaa.UserActionId equals ua.UserActionId
+                                     where (uaa.AppUserId == appUserId && ua.EntityStatus == EntityStatusEnum.Active)
+                                     select ua).Distinct().ToList();
+
+            return list;
+        }
 
         public static UserActionAssignment GetActionAssignmentForActionAndUser(Guid userActionId, Guid appUserId)
         {
@@ -108,10 +141,10 @@ namespace Distributor.Helpers
             switch (level)
             {
                 case LevelEnum.Company:
-                    CreateUserAssignmentForAction(db, action.UserActionId, level, ofReferenceId, CompanyHelpers.GetCompanyForUser(byReferenceId).CompanyId);
+                    CreateUserAssignmentForAction(db, action.UserActionId, level, ofReferenceId, byReferenceId);
                     break;
                 case LevelEnum.Branch:
-                    CreateUserAssignmentForAction(db, action.UserActionId, level, ofReferenceId, AppUserHelpers.GetAppUser(db, byReferenceId).CurrentBranchId);
+                    CreateUserAssignmentForAction(db, action.UserActionId, level, ofReferenceId, byReferenceId);
                     break;
                 case LevelEnum.User:
                     CreateUserAssignmentForAction(db, action.UserActionId, level, ofReferenceId, byReferenceId);

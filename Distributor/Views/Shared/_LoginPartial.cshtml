@@ -16,6 +16,7 @@
         <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
         <li>@Html.ActionLink("General Info", "General", "Home")</li>
         <li>@Html.ActionLink("Manage Listings", "Manage", "Home")</li>
+        <li>@Html.ActionLink("Actions", "Index", "Action")</li>
         @if (userRole == "Admin" || userRole == "SuperUser")
         {
             <li>@Html.ActionLink("Admin", "Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")</li>

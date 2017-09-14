@@ -23,10 +23,28 @@ namespace Distributor.Helpers
         public static Friend GetFriendForReferenceIdAndType(ApplicationDbContext db, LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
         {
             Friend friend = (from f in db.Friends
-                           where (f.Type == referenceLevel && f.RequestedOfId == ofReferenceId && f.RequestedById == byReferenceId)
-                           select f).FirstOrDefault();
+                             where (f.Type == referenceLevel && f.RequestedOfId == ofReferenceId && f.RequestedById == byReferenceId && f.Status == FriendStatusEnum.Accepted)
+                             select f).FirstOrDefault();
 
             return friend;
+        }
+
+        public static Friend GetFriendRequestForReferenceIdAndType(LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Friend friendRequest = GetFriendRequestForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
+            db.Dispose();
+            return friendRequest;
+        }
+
+        //This will bring back if this is a friend ORis currently requested OR Rejected
+        public static Friend GetFriendRequestForReferenceIdAndType(ApplicationDbContext db, LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
+        {
+            Friend friendRequest = (from f in db.Friends
+                                    where (f.Type == referenceLevel && f.RequestedOfId == ofReferenceId && f.RequestedById == byReferenceId && f.Status != FriendStatusEnum.Closed)
+                                    select f).FirstOrDefault();
+
+            return friendRequest;
         }
 
         #endregion
@@ -67,33 +85,25 @@ namespace Distributor.Helpers
 
         #endregion
 
+        #region Remove
+        #endregion
+
         #region Processing
 
-        public static bool IsReferenceFriend(LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
+        public static bool IsReferenceAnActiveFriendRequest(LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            bool friend = IsReferenceFriend(db, referenceLevel, ofReferenceId, byReferenceId);
+            bool friend = IsReferenceAnActiveFriendRequest(db, referenceLevel, ofReferenceId, byReferenceId);
             db.Dispose();
             return friend;
         }
 
-        public static bool IsReferenceFriend(ApplicationDbContext db, LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
+        public static bool IsReferenceAnActiveFriendRequest(ApplicationDbContext db, LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
         {
             bool friend = false;
             Friend friendDetails = null;
 
-            switch (referenceLevel)
-            {
-                case LevelEnum.Company:
-                    friendDetails = GetFriendForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
-                    break;
-                case LevelEnum.Branch:
-                    friendDetails = GetFriendForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
-                    break;
-                case LevelEnum.User:
-                    friendDetails = GetFriendForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
-                    break;
-            }
+            friendDetails = GetFriendRequestForReferenceIdAndType(db, referenceLevel, ofReferenceId, byReferenceId);
 
             if (friendDetails != null)
                 friend = true;

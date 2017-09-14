@@ -58,8 +58,7 @@ namespace Distributor.Helpers
             List<AppUser> list = (from bu in db.BranchUsers
                                   join au in db.AppUsers on bu.UserId equals au.AppUserId
                                   where (bu.BranchId == branchId && bu.UserRole == UserRoleEnum.Manager)
-                                  select au).ToList();
-            var listDistinct = list.Distinct();
+                                  select au).Distinct().ToList();
 
             return list;
         }

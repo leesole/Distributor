@@ -75,6 +75,9 @@ namespace Distributor.Helpers
 
         #endregion
 
+        #region Remove
+        #endregion
+
         #region Processing
 
         public static bool IsReferenceInGroup(LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)

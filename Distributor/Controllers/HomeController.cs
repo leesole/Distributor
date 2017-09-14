@@ -29,6 +29,7 @@ namespace Distributor.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 dashboardView = DashboardHelpers.GetDashboardViewLogin(User);
+                ViewBag.OutstandingActions = UserActionHelpers.GetActionsForUser(User).Count();
                 if (dashboardView.UserTaskList != null)
                     ViewBag.OustandingTasks = dashboardView.UserTaskList.Count();
                 if (dashboardView.RequirementListingList != null)

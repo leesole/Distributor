@@ -25,30 +25,40 @@
 
     <div class="row">
         <div class="col-md-4">
+            
             @if (userRole == "Manager" || userRole == "Admin" || userRole == "SuperUser")
             {
                 <div class="col-md-6" style="padding:0px 5px 5px 0px">
-                    <div class="card bg-danger text-center" style="padding:10px" onclick = "location.href='@Url.Action("Tasks", "Admin", new { redirect = Request.Url.ToString() })'">
-                        <h4>Outstanding Tasks</h4>
+                    <div class="card bg-danger text-center" style="padding:10px" onclick="location.href='@Url.Action("Tasks", "Admin", new { redirect = Request.Url.ToString() })'">
+                        <h4>Tasks</h4>
                         <h1><b>@ViewBag.OutstandingTasks</b></h1>
                     </div>
                 </div>
                 <div class="col-md-6" style="padding:0px 5px 5px 0px">
-                    <div class="card bg-danger text-center" style="padding:10px">
-                        <h4>Outstanding Actions</h4>
+                    <div class="card bg-danger text-center" style="padding:10px" onclick="location.href='@Url.Action("Index", "Action", new { redirect = Request.Url.ToString() })'">
+                        <h4>Actions</h4>
+                        <h1><b>@ViewBag.OutstandingActions</b></h1>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-12" style="padding:0px 5px 5px 0px">
+                    <div class="card bg-danger text-center" style="padding:10px" onclick="location.href='@Url.Action("Index", "Action", new { redirect = Request.Url.ToString() })'">
+                        <h4>Actions</h4>
                         <h1><b>@ViewBag.OutstandingActions</b></h1>
                     </div>
                 </div>
             }
             <div class="col-md-6" style="padding:0px 5px 5px 0px" onclick = "location.href='@Url.Action("Offers", "ManageListings")'">
                 <div class="card bg-warning text-center" style="padding:10px">
-                    <h4>Outstanding Offers</h4>
+                    <h4>Offers</h4>
                     <h1><b>@ViewBag.OutstandingOffers</b></h1>
                 </div>
             </div>
             <div class="col-md-6" style="padding:0px 5px 5px 0px" onclick = "location.href='@Url.Action("Orders", "ManageListings")'">
                 <div class="card bg-warning text-center" style="padding:10px">
-                    <h4>Outstanding Orders</h4>
+                    <h4>Orders</h4>
                     <h1><b>@ViewBag.Orders</b></h1>
                 </div>
             </div>

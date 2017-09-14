@@ -56,6 +56,7 @@ namespace Distributor.Helpers
             BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, appUser.AppUserId, branch.BranchId, company.CompanyId);
             switch (branchUser.UserRole)
             {
+                //Note - must be in this order as there are override checks the lower down the ranking/role you go
                 case UserRoleEnum.SuperUser:
                 case UserRoleEnum.Admin:
                     buttons = SetCompanyButtons(db, buttons, company.CompanyId, currentUserBranch.CompanyId);
@@ -78,27 +79,55 @@ namespace Distributor.Helpers
 
         #region Processing
 
+        //NOTE - SetCompanyButtons, SetBranchButtons, SetUserButtons, must run in that order as the user rely on the branch rely on the company
+
         public static ViewButtons SetCompanyButtons(ApplicationDbContext db, ViewButtons buttons, Guid viewItemcompanyId, Guid currentCompanyId)
         {
             buttons.CompanyBlockButton = !BlockHelpers.IsReferenceBlocked(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
-            buttons.CompanyAddFriendButton = !FriendHelpers.IsReferenceFriend(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
+            buttons.CompanyAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
             buttons.CompanyAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
             return buttons;
         }
 
         public static ViewButtons SetBranchButtons(ApplicationDbContext db, ViewButtons buttons, Guid viewItemBranchId, Guid currentBranchId)
         {
-            buttons.BranchBlockButton = !BlockHelpers.IsReferenceBlocked(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
-            buttons.BranchAddFriendButton = !FriendHelpers.IsReferenceFriend(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
-            buttons.BranchAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
+            //if the button is hidden at company level then hide at branch level
+            if (!buttons.CompanyBlockButton)
+                buttons.BranchBlockButton = buttons.CompanyBlockButton;
+            else
+                buttons.BranchBlockButton = !BlockHelpers.IsReferenceBlocked(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
+
+            if (!buttons.CompanyAddFriendButton)
+                buttons.BranchAddFriendButton = buttons.CompanyAddFriendButton;
+            else
+                buttons.BranchAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
+
+            if (!buttons.CompanyAddToGroupButton)
+                buttons.BranchAddToGroupButton = buttons.CompanyAddToGroupButton;
+            else
+                buttons.BranchAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
+
             return buttons;
         }
 
         public static ViewButtons SetUserButtons(ApplicationDbContext db, ViewButtons buttons, Guid viewItemUserId, Guid currentUserId)
         {
-            buttons.UserBlockButton = !BlockHelpers.IsReferenceBlocked(db, LevelEnum.User, viewItemUserId, currentUserId);
-            buttons.UserAddFriendButton = !FriendHelpers.IsReferenceFriend(db, LevelEnum.User, viewItemUserId, currentUserId);
-            buttons.UserAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.User, viewItemUserId, currentUserId);
+            //if the button is hidden at branch level then hide at user level
+            if (!buttons.BranchBlockButton)
+                buttons.UserBlockButton = buttons.BranchBlockButton;
+            else
+                buttons.UserBlockButton = !BlockHelpers.IsReferenceBlocked(db, LevelEnum.User, viewItemUserId, currentUserId);
+
+            if (!buttons.BranchAddFriendButton)
+                buttons.UserAddFriendButton = buttons.BranchAddFriendButton;
+            else
+                buttons.UserAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.User, viewItemUserId, currentUserId);
+
+            if (!buttons.BranchAddToGroupButton)
+                buttons.UserAddToGroupButton = buttons.BranchAddToGroupButton;
+            else
+                buttons.UserAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.User, viewItemUserId, currentUserId);
+
             return buttons;
         }
 
