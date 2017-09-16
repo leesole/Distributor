@@ -11,30 +11,55 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
-        function GetListForType(typeDropDownValueId) {
-            var typeDropDownValue = $("#typedropdown option:selected").text();
-            var groupName = $("#groupname").val();
+        //This will hide/display company details depending if the company has been selected or not
+        function GetUserList() {
+            var userTable = document.getElementById("usertable");
+            userTable.style.display = "block";
 
+            var url = "/Data/GetUserList";
+
+            $.ajax({
+                url: url,
+                data: {  },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    //$('#usertablelist').append(data.html);
+                    for (var i in data) {
+                        alert(data[i].users.AppUserId.toString());
+                    }
+                },
+                error: function (response) {
+                    alert("error : " + response);
+                }
+            });
+        };
+
+        function GetListForType(typeDropDownValueId, calledFromFormLoad) {
+            var typeDropDownValue = $("#typedropdown option:selected").text();
             switch (typeDropDownValue) {
                 case "Company":
-                    $("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=Company');
+                    GetCompanyList();
                     break;
                 case "Branch":
-                    $("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=Branch');
+                    GetBranchList();
                     break;
                 case "User":
-                    $("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=User');
+                    GetUserList();
                     break;
             }
         };
-
-        //$(document).ready(function () {
-        //    var typeDropDownValueId = $("#typedropdown option:selected").val();
-        //    var typeDropDownValue = $("#typedropdown option:selected").text();
-        //    GetListForType(typeDropDownValueId, true);  //set to true as this is called when form loads
-        //});
+                
+        $(document).ready(function () {
+            var typeDropDownValueId = $("#typedropdown option:selected").val();
+            var typeDropDownValue = $("#typedropdown option:selected").text();
+            GetListForType(typeDropDownValueId, true);  //set to true as this is called when form loads
+        });
     </script>
 }
+
+
+
 
 <div class="row">
     <div class="col-lg-12">
@@ -51,10 +76,10 @@
     </div>
 </div>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="row">
         <div class="col-md-6">
             <div class="form-horizontal">
@@ -62,12 +87,10 @@
 
                 <h4>Group details</h4>
 
-                @Html.HiddenFor(model => model.scratchEntry)
-
                 <div class="form-group">
                     <div class="col-md-4">@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })</div>
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id = "groupname" } })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -92,19 +115,34 @@
 
         <div class="col-md-6">
             <h4>Add members</h4>
-            <div id="usertable">
+            <div id="usertable" style="display:none">
                 <div class="table-responsive">
                     <table class="table table-hover" id="usertablelist">
                         <tr class="info">
                             <th>Select</th>
-                            <th>Name</th>
-                            <th>Id</th>
+                            <th>User name</th>
+                            <th></th>
                         </tr>
-                        <tbody id="memberlist">
-                            @{
-                                Html.RenderPartial("AddGroupMembers", Model);
-                            }
-                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="branchtable" style="display:none">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tr class="info">
+                            <th>Select</th>
+                            <th>Branch name</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="companytable" style="display:none">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tr class="info">
+                            <th>Select</th>
+                            <th>Company name</th>
+                        </tr>
                     </table>
                 </div>
             </div>

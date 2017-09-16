@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Models
 {
@@ -14,12 +15,16 @@ namespace Distributor.Models
 
         public Guid GroupId { get; set; }
 
-        public Guid AppUserId { get; set; }
+        [Display(Name = "Type of group")]
+        public LevelEnum Type { get; set; }
 
-        public Guid BranchId { get; set; }
+        [Display(Name = "Member reference Id")]
+        public Guid ReferenceId { get; set; }
 
-        public Guid CompanyId { get; set; }
+        [Display(Name = "Record added by" )]
+        public Guid AddedBy { get; set; }
 
-        public DateTime UserAddedDateTime { get; set; }
+        [Display(Name = "Record added on")]
+        public DateTime AddedDateTime { get; set; }
     }
 }

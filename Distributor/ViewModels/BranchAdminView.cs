@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.ViewModels
 {
@@ -47,6 +48,9 @@ namespace Distributor.ViewModels
 
         [Display(Name = "Contact name")]
         public string ContactName { get; set; }
+
+        [Display(Name = "Privacy level")]
+        public PrivacyLevelEnum PrivacyLevel { get; set; }
 
         [Display(Name = "Status")]
         public EntityStatusEnum EntityStatus { get; set; }

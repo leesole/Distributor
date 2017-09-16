@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.UserEnums;
 
 namespace Distributor.ViewModels
@@ -28,6 +29,9 @@ namespace Distributor.ViewModels
 
         [Display(Name = "Login email")]
         public string LoginEmail { get; set; }
+
+        [Display(Name = "Privacy level")]
+        public PrivacyLevelEnum PrivacyLevel { get; set; }
 
         public List<UserAdminRelatedBranchesView> RelatedBranches { get; set; }
     }

@@ -7,6 +7,7 @@ using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Helpers
@@ -68,6 +69,38 @@ namespace Distributor.Helpers
             return branchesForUserDistinct;
         }
 
+        public static List<Branch> GetAllBranches()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Branch> list = GetAllBranches(db);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Branch> GetAllBranches(ApplicationDbContext db)
+        {
+            return db.Branches.ToList();
+        }
+
+        public static List<Branch> GetAllBranchesForGroupForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Branch> list = GetAllBranchesForGroupForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Branch> GetAllBranchesForGroupForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<Branch> allBranches = GetAllBranches(db);
+
+            //Remove branches for current user
+            List<Branch> userBranches = BranchHelpers.GetBranchesForUser(db, appUserId);
+            allBranches.RemoveAll(x => userBranches.Any(y => y.BranchId == x.BranchId));
+
+            return allBranches;
+        }
+
         public static Branch GetCurrentBranchForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -108,15 +141,15 @@ namespace Distributor.Helpers
 
         }
 
-        public static Branch CreateBranch(Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
+        public static Branch CreateBranch(Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, PrivacyLevelEnum privacyLevel, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            Branch newBranch = CreateBranch(db, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
+            Branch newBranch = CreateBranch(db, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, privacyLevel, entityStatus);
             db.Dispose();
             return newBranch;
         }
 
-        public static Branch CreateBranch(ApplicationDbContext db, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
+        public static Branch CreateBranch(ApplicationDbContext db, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, PrivacyLevelEnum privacyLevel, EntityStatusEnum entityStatus)
         {
             Branch branch = new Branch()
             {
@@ -133,6 +166,7 @@ namespace Distributor.Helpers
                 TelephoneNumber = telephoneNumber,
                 Email = email,
                 ContactName = contactName,
+                PrivacyLevel = privacyLevel,
                 EntityStatus = entityStatus
             };
             db.Branches.Add(branch);
@@ -145,15 +179,15 @@ namespace Distributor.Helpers
 
         #region Update
 
-        public static Branch UpdateBranch(Guid branchId, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
+        public static Branch UpdateBranch(Guid branchId, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, PrivacyLevelEnum privacyLevel, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            Branch branch = UpdateBranch(db, branchId, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, entityStatus);
+            Branch branch = UpdateBranch(db, branchId, companyId, businessType, branchName, addressLine1, addressLine2, addressLine3, addressTownCity, addressCounty, addressPostcode, telephoneNumber, email, contactName, privacyLevel, entityStatus);
             db.Dispose();
             return branch;
         }
 
-        public static Branch UpdateBranch(ApplicationDbContext db, Guid branchId, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, EntityStatusEnum entityStatus)
+        public static Branch UpdateBranch(ApplicationDbContext db, Guid branchId, Guid companyId, BusinessTypeEnum businessType, string branchName, string addressLine1, string addressLine2, string addressLine3, string addressTownCity, string addressCounty, string addressPostcode, string telephoneNumber, string email, string contactName, PrivacyLevelEnum privacyLevel, EntityStatusEnum entityStatus)
         {
             Branch branch = GetBranch(db, branchId);
             branch.CompanyId = companyId;
@@ -168,6 +202,7 @@ namespace Distributor.Helpers
             branch.TelephoneNumber = telephoneNumber;
             branch.Email = email;
             branch.ContactName = contactName;
+            branch.PrivacyLevel = privacyLevel;
             branch.EntityStatus = entityStatus;
             
             db.Entry(branch).State = EntityState.Modified;

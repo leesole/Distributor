@@ -80,12 +80,22 @@ namespace Distributor.Helpers
         #region Processing
 
         //NOTE - SetCompanyButtons, SetBranchButtons, SetUserButtons, must run in that order as the user rely on the branch rely on the company
-
+        //There is also a check on block as if Block is set then no buttons should be shown for that level downwards.
         public static ViewButtons SetCompanyButtons(ApplicationDbContext db, ViewButtons buttons, Guid viewItemcompanyId, Guid currentCompanyId)
         {
             buttons.CompanyBlockButton = !BlockHelpers.IsReferenceBlocked(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
-            buttons.CompanyAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
-            buttons.CompanyAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
+
+            //if company block then do not show company and lower add buttons
+            if (!buttons.CompanyBlockButton)
+            {
+                buttons.CompanyAddFriendButton = buttons.CompanyBlockButton;
+                buttons.CompanyAddToGroupButton = buttons.CompanyBlockButton;
+            }
+            else
+            {
+                buttons.CompanyAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
+                buttons.CompanyAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.Company, viewItemcompanyId, currentCompanyId);
+            }
             return buttons;
         }
 
@@ -97,16 +107,24 @@ namespace Distributor.Helpers
             else
                 buttons.BranchBlockButton = !BlockHelpers.IsReferenceBlocked(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
 
-            if (!buttons.CompanyAddFriendButton)
-                buttons.BranchAddFriendButton = buttons.CompanyAddFriendButton;
+            //if branch block then do not show branch and lower add buttons
+            if (!buttons.BranchBlockButton)
+            {
+                buttons.BranchAddFriendButton = buttons.BranchBlockButton;
+                buttons.BranchAddToGroupButton = buttons.BranchBlockButton;
+            }
             else
-                buttons.BranchAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
+            {
+                if (!buttons.CompanyAddFriendButton)
+                    buttons.BranchAddFriendButton = buttons.CompanyAddFriendButton;
+                else
+                    buttons.BranchAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
 
-            if (!buttons.CompanyAddToGroupButton)
-                buttons.BranchAddToGroupButton = buttons.CompanyAddToGroupButton;
-            else
-                buttons.BranchAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
-
+                if (!buttons.CompanyAddToGroupButton)
+                    buttons.BranchAddToGroupButton = buttons.CompanyAddToGroupButton;
+                else
+                    buttons.BranchAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.Branch, viewItemBranchId, currentBranchId);
+            }
             return buttons;
         }
 

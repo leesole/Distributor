@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Models
 {
@@ -29,6 +30,9 @@ namespace Distributor.Models
 
         [Display(Name = "Allow in-house trading between branches?")]
         public bool AllowBranchTrading { get; set; }
+
+        [Display(Name = "Privacy level")]
+        public PrivacyLevelEnum PrivacyLevel { get; set; }
 
         [Display(Name = "Status")]
         public EntityStatusEnum EntityStatus { get; set; }

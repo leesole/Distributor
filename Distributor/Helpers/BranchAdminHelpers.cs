@@ -94,6 +94,7 @@ namespace Distributor.Helpers
                     TelephoneNumber = branch.TelephoneNumber,
                     Email = branch.Email,
                     ContactName = branch.ContactName,
+                    PrivacyLevel = branch.PrivacyLevel,
                     EntityStatus = branch.EntityStatus,
                     CompanyUserListId = Guid.NewGuid(),  //used to identify the following list in the view (can't use BranchId as that is used for a different block in the table)
                     RelatedCompanyUsers = branchAdminCompanyUsers
@@ -145,6 +146,7 @@ namespace Distributor.Helpers
                         branchAdminVeiw.TelephoneNumber,
                         branchAdminVeiw.Email,
                         branchAdminVeiw.ContactName,
+                        branchAdminVeiw.PrivacyLevel,
                         branchAdminVeiw.EntityStatus);
 
                     //if change of status from on-hold - anything then look for outstanding task and set to closed

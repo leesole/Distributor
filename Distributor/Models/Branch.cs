@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Models
 {
@@ -55,6 +56,9 @@ namespace Distributor.Models
         [Required]
         [Display(Name = "Contact name")]
         public string ContactName { get; set; }
+
+        [Display(Name = "Privacy level")]
+        public PrivacyLevelEnum PrivacyLevel { get; set; }
 
         [Display(Name = "Status")]
         public EntityStatusEnum EntityStatus { get; set; }

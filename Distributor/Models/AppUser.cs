@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Models
 {
@@ -28,5 +29,8 @@ namespace Distributor.Models
 
         [Display(Name = "Login email")]
         public string LoginEmail { get; set; }
+
+        [Display(Name = "Privacy level")]
+        public PrivacyLevelEnum PrivacyLevel { get; set; }
     }
 }

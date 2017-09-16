@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using static Distributor.Enums.EntityEnums;
 using System.Data.Entity.Core.Metadata.Edm;
 using static Distributor.Enums.UserTaskEnums;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Controllers
 {
@@ -196,7 +197,7 @@ namespace Distributor.Controllers
                 }
 
                 //Create a new AppUser then write here
-                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, Guid.Empty, statusForUser, model.Email, userRoleForUser);
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, Guid.Empty, statusForUser, model.Email, PrivacyLevelEnum.None, userRoleForUser);
 
                 Company company = null;
                 Branch branch = null;
@@ -221,7 +222,7 @@ namespace Distributor.Controllers
                             createCompany = false;
 
                     if (createCompany)
-                        company = CompanyHelpers.CreateCompany(Guid.Empty, model.CompanyName, model.CompanyRegistrationDetails, model.CharityRegistrationDetails, model.VATRegistrationDetails, model.AllowBranchTrading, statusForUser);
+                        company = CompanyHelpers.CreateCompany(Guid.Empty, model.CompanyName, model.CompanyRegistrationDetails, model.CharityRegistrationDetails, model.VATRegistrationDetails, model.AllowBranchTrading, PrivacyLevelEnum.None, statusForUser);
                     else
                         company = CompanyHelpers.GetCompany(model.SelectedCompanyId.Value);
                     
@@ -240,10 +241,10 @@ namespace Distributor.Controllers
                             branchName = "Head Office";
 
                         if (createCompany) //use details stored against company part of model
-                            branch = BranchHelpers.CreateBranch(company.CompanyId, model.CompanyBusinessType.Value, branchName, model.CompanyAddressLine1, model.CompanyAddressLine2, model.CompanyAddressLine3, model.CompanyAddressTownCity, model.CompanyAddressCounty, model.CompanyAddressPostcode, model.CompanyTelephoneNumber, model.CompanyEmail, model.CompanyContactName, statusForUser);
+                            branch = BranchHelpers.CreateBranch(company.CompanyId, model.CompanyBusinessType.Value, branchName, model.CompanyAddressLine1, model.CompanyAddressLine2, model.CompanyAddressLine3, model.CompanyAddressTownCity, model.CompanyAddressCounty, model.CompanyAddressPostcode, model.CompanyTelephoneNumber, model.CompanyEmail, model.CompanyContactName, company.PrivacyLevel, statusForUser);
                         else
                         {
-                            branch = BranchHelpers.CreateBranch(company.CompanyId, model.BranchBusinessType.Value, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, statusForUser);
+                            branch = BranchHelpers.CreateBranch(company.CompanyId, model.BranchBusinessType.Value, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, company.PrivacyLevel, statusForUser);
                             createBranchOnHoldTask = true;
                         }
 

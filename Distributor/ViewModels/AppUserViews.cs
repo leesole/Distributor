@@ -39,6 +39,9 @@ namespace Distributor.ViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Privacy level")]
+        public PrivacyLevelEnum PrivacyLevel { get; set; }
+
         //BranchUser
         public EntityStatusEnum EntityStatus { get; set; }
 
@@ -60,6 +63,9 @@ namespace Distributor.ViewModels
         [Required]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
+
+        [Display(Name = "Privacy level")]
+        public PrivacyLevelEnum PrivacyLevel { get; set; }
 
         //BranchUser
         public EntityStatusEnum EntityStatus { get; set; }

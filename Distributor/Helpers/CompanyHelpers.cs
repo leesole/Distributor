@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Helpers
 {
@@ -24,6 +25,25 @@ namespace Distributor.Helpers
         public static List<Company> GetAllCompanies(ApplicationDbContext db)
         {
             return db.Companies.OrderBy(x => x.CompanyName).ToList(); 
+        }
+
+        public static List<Company> GetAllCompaniesForGroupForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Company> list = GetAllCompaniesForGroupForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Company> GetAllCompaniesForGroupForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<Company> allCompanies = GetAllCompanies(db);
+
+            //Remove company for current user
+            Company userCompany = CompanyHelpers.GetCompanyForUser(db, appUserId);
+            allCompanies.Remove(userCompany);
+
+            return allCompanies;
         }
 
         public static Company GetCompany(Guid companyId)
@@ -88,15 +108,15 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, EntityStatusEnum entityStatus)
+        public static Company CreateCompany(Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, PrivacyLevelEnum privacyLevel, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            Company company = CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, allowBranchTrading, entityStatus);
+            Company company = CreateCompany(db, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, allowBranchTrading, privacyLevel, entityStatus);
             db.Dispose();
             return company;
         }
 
-        public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, EntityStatusEnum entityStatus)
+        public static Company CreateCompany(ApplicationDbContext db, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, PrivacyLevelEnum privacyLevel, EntityStatusEnum entityStatus)
         {
             Company company = new Company()
             {
@@ -107,6 +127,7 @@ namespace Distributor.Helpers
                 CharityRegistrationDetails = charityRegistrationDetails,
                 VATRegistrationDetails = vatRegistrationDetails,
                 AllowBranchTrading = allowBranchTrading,
+                PrivacyLevel = privacyLevel,
                 EntityStatus = entityStatus
             };
             db.Companies.Add(company);
@@ -119,15 +140,15 @@ namespace Distributor.Helpers
 
         #region Update
 
-        public static Company UpdateCompany(Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, EntityStatusEnum entityStatus)
+        public static Company UpdateCompany(Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, PrivacyLevelEnum privacyLevel, EntityStatusEnum entityStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            Company company = UpdateCompany(db, companyId, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, allowBranchTrading, entityStatus);
+            Company company = UpdateCompany(db, companyId, headOfficeBranchId, companyName, companyRegistrationDetails, charityRegistrationDetails, vatRegistrationDetails, allowBranchTrading, privacyLevel, entityStatus);
             db.Dispose();
             return company;
         }
 
-        public static Company UpdateCompany(ApplicationDbContext db, Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, EntityStatusEnum entityStatus)
+        public static Company UpdateCompany(ApplicationDbContext db, Guid companyId, Guid headOfficeBranchId, string companyName, string companyRegistrationDetails, string charityRegistrationDetails, string vatRegistrationDetails, bool allowBranchTrading, PrivacyLevelEnum privacyLevel, EntityStatusEnum entityStatus)
         {
             Company company = CompanyHelpers.GetCompany(companyId);
             company.HeadOfficeBranchId = headOfficeBranchId;
@@ -136,6 +157,7 @@ namespace Distributor.Helpers
             company.CharityRegistrationDetails = charityRegistrationDetails;
             company.VATRegistrationDetails = vatRegistrationDetails;
             company.AllowBranchTrading = allowBranchTrading;
+            company.PrivacyLevel = privacyLevel;
             company.EntityStatus = entityStatus;
 
             db.Entry(company).State = EntityState.Modified;

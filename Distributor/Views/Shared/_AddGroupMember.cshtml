@@ -1,0 +1,22 @@
+﻿@model Distributor.ViewModels.GroupAddView
+
+<h4>Add members</h4>
+<div id="usertable" style="display:none">
+    <div class="table-responsive">
+        <table class="table table-hover" id="usertablelist">
+            <tr class="info">
+                <th>Select</th>
+                <th>User name</th>
+                <th>Id</th>
+            </tr>
+            @foreach (var item in Model.Members)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.SelectedUser)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ReferenceName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ReferenceId)</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

@@ -42,14 +42,11 @@ namespace Distributor.Helpers
 
         public static Block CreateBlock(ApplicationDbContext db, LevelEnum level, Guid ofReferenceId, Guid byReferenceId, Guid byAppUserId)
         {
-            //LSLSLS Remove from friend list if there (at the correct level)
-            // - company - blats all company, branch and users
-            // - branch - blats the branch and it's users (even if users on other branches)
-            // - users - blats that user
-
-            //LSLSLS NOTE - adding friends - only show in buttons if not on block at company/branch/user level...it will make sense
+            //Remove Friends for those to be blocked
+            FriendHelpers.RemoveFriendItemsDueToBlock(db, level, ofReferenceId, byReferenceId, byAppUserId);
 
             //LSLSLS Remove from Group if there (at the correct level)
+
 
             Block block = new Block()
             {

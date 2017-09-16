@@ -94,7 +94,7 @@ namespace Distributor.Controllers
                 Branch branch = BranchHelpers.GetBranch(db, model.SelectedBranchId.Value);
 
                 //Create a new AppUser then write here
-                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, branch.BranchId, model.EntityStatus, model.Email, model.UserRole);
+                AppUser appUser = AppUserHelpers.CreateAppUser(model.FirstName, model.LastName, branch.BranchId, model.EntityStatus, model.Email, model.PrivacyLevel, model.UserRole);
 
                 BranchUser branchUser = null;
 

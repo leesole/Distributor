@@ -67,5 +67,23 @@ namespace Distributor.Enums
             [Description("Company")]
             Company = 2
         }
+
+        /// <summary>
+        /// The level of privacy for the Company, Branch or User
+        /// </summary>
+        public enum PrivacyLevelEnum
+        {
+            [Description("None")]
+            None = 0,
+
+            [Description("User")]
+            User = 1,
+
+            [Description("Branch")]
+            Branch = 2,
+
+            [Description("Company")]
+            Company = 3
+        }
     }
 }

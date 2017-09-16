@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Helpers
@@ -82,19 +83,86 @@ namespace Distributor.Helpers
             return list;
         }
 
+        public static List<AppUser> GetAppUsersForBranch(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<AppUser> list = GetAppUsersForBranch(db, branchId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AppUser> GetAppUsersForBranch(ApplicationDbContext db, Guid branchId)
+        {
+            List<AppUser> list = (from bu in db.BranchUsers
+                                  join au in db.AppUsers on bu.UserId equals au.AppUserId
+                                  where (bu.BranchId == branchId)
+                                  select au).Distinct().ToList();
+
+            return list;
+        }
+
+        public static List<AppUser> GetAppUsersForCompany(Guid companyId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<AppUser> list = GetAppUsersForCompany(db, companyId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AppUser> GetAppUsersForCompany(ApplicationDbContext db, Guid companyId)
+        {
+            List<AppUser> list = (from bu in db.BranchUsers
+                                  join au in db.AppUsers on bu.UserId equals au.AppUserId
+                                  where (bu.CompanyId == companyId)
+                                  select au).Distinct().ToList();
+
+            return list;
+        }
+
+        public static List<AppUser> GetAllAppUsers()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<AppUser> list = GetAllAppUsers(db);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AppUser> GetAllAppUsers(ApplicationDbContext db)
+        {
+            return db.AppUsers.ToList();
+        }
+
+        public static List<AppUser> GetAllAppUsersForGroupForUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<AppUser> list = GetAllAppUsersForGroupForUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<AppUser> GetAllAppUsersForGroupForUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<AppUser> list = GetAllAppUsers(db);
+
+            //remove current user from list
+            list.Remove(AppUserHelpers.GetAppUser(db, appUserId));
+
+            return list;
+        }
+
         #endregion
 
         #region Create
 
-        public static AppUser CreateAppUser(string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail, UserRoleEnum userRole)
+        public static AppUser CreateAppUser(string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail, PrivacyLevelEnum privacyLevel, UserRoleEnum userRole)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUser appUser = CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus, loginEmail, userRole);
+            AppUser appUser = CreateAppUser(db, firstName, lastName, currentBranchId, entityStatus, loginEmail, privacyLevel, userRole);
             db.Dispose();
             return appUser;
         }
 
-        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail, UserRoleEnum userRole)
+        public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail, PrivacyLevelEnum privacyLevel, UserRoleEnum userRole)
         {
             AppUser appUser = new AppUser()
             {
@@ -103,6 +171,7 @@ namespace Distributor.Helpers
                 LastName = lastName,
                 CurrentBranchId = currentBranchId,
                 EntityStatus = entityStatus,
+                PrivacyLevel = privacyLevel,
                 LoginEmail = loginEmail
             };
             db.AppUsers.Add(appUser);
@@ -155,20 +224,22 @@ namespace Distributor.Helpers
             return appUser;
         }
 
-        public static AppUser UpdateAppUserExcludingCurrentBranchField(Guid appUserId, string firstName, string lastName, EntityStatusEnum entityStatus)
+        public static AppUser UpdateAppUserExcludingCurrentBranchField(Guid appUserId, string firstName, string lastName, EntityStatusEnum entityStatus, PrivacyLevelEnum privacyLevel)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUser appUser = UpdateAppUserExcludingCurrentBranchField(db, appUserId, firstName, lastName, entityStatus);
+            AppUser appUser = UpdateAppUserExcludingCurrentBranchField(db, appUserId, firstName, lastName, entityStatus, privacyLevel);
             db.Dispose();
             return appUser;
         }
 
-        public static AppUser UpdateAppUserExcludingCurrentBranchField(ApplicationDbContext db, Guid appUserId, string firstName, string lastName, EntityStatusEnum entityStatus)
+        public static AppUser UpdateAppUserExcludingCurrentBranchField(ApplicationDbContext db, Guid appUserId, string firstName, string lastName, EntityStatusEnum entityStatus, PrivacyLevelEnum privacyLevel)
         {
             AppUser appUser = GetAppUser(db, appUserId);
             appUser.FirstName = firstName;
             appUser.LastName = lastName;
             appUser.EntityStatus = entityStatus;
+            appUser.PrivacyLevel = privacyLevel;
+
             db.Entry(appUser).State = EntityState.Modified;
             db.SaveChanges();
 
@@ -190,6 +261,8 @@ namespace Distributor.Helpers
             appUser.FirstName = view.FirstName;
             appUser.LastName = view.LastName;
             appUser.EntityStatus = view.EntityStatus;
+            appUser.PrivacyLevel = view.PrivacyLevel;
+
             if (view.SelectedBranchId != null)
                 appUser.CurrentBranchId = view.SelectedBranchId.Value;
             db.Entry(appUser).State = EntityState.Modified;
@@ -303,6 +376,7 @@ namespace Distributor.Helpers
                 FirstName = appUserDetails.FirstName,
                 LastName = appUserDetails.LastName,
                 EntityStatus = appUserDetails.EntityStatus,
+                PrivacyLevel = appUserDetails.PrivacyLevel,
                 SelectedBranchId = appUserDetails.CurrentBranchId,
                 UserRole = branchUser.UserRole,
                 AppUserSettingsId = appUserSettings.AppUserSettingsId,

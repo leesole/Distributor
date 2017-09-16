@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Distributor.Models;
 using Distributor.Helpers;
 using Distributor.ViewModels;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Controllers
 {
@@ -56,9 +57,17 @@ namespace Distributor.Controllers
         }
 
         // GET: Groups/Create
-        public ActionResult Create()
+        //first 4 variables come from the +Button on the general info screens.
+        public ActionResult Create(LevelEnum? level, Guid? ofReferenceId, Guid? byReferenceId, Guid? byAppUserId, Guid? appUserId)
         {
-            return View();
+            if (appUserId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            GroupAddView model = GroupViewHelpers.GetGroupAddView(level, ofReferenceId, byReferenceId, byAppUserId, appUserId.Value);
+
+            return View(model);
         }
 
         // POST: Groups/Create
@@ -66,17 +75,24 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GroupId,Name,GroupOriginatorAppUserId,GroupOriginatorDateTime")] Group group)
+        public ActionResult Create(GroupAddView model)
         {
             if (ModelState.IsValid)
             {
-                group.GroupId = Guid.NewGuid();
-                db.Groups.Add(group);
-                db.SaveChanges();
+                GroupHelpers.CreateGroupFromGroupAddView(db, model, User);
+
                 return RedirectToAction("Index");
             }
 
-            return View(group);
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult GetMemberList(string groupName, string memberType)
+        {
+            GroupAddView model = GroupViewHelpers.GetGroupAddView(groupName, memberType, User);
+
+            return PartialView("AddGroupMembers", model);
         }
 
         // GET: Groups/Edit/5

@@ -180,7 +180,8 @@ namespace Distributor.Helpers
                         userAdminView.AppUserId,
                         userAdminView.FirstName,
                         userAdminView.LastName,
-                        userAdminView.AppUserEntityStatus);
+                        userAdminView.AppUserEntityStatus,
+                        userAdminView.PrivacyLevel);
 
                     //if change of status from on-hold - anything then look for outstanding task and set to closed
                     if (userAdminView.AppUserEntityStatus != EntityStatusEnum.OnHold && previousEntityStatus == EntityStatusEnum.OnHold)
