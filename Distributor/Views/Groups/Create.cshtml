@@ -17,13 +17,19 @@
 
             switch (typeDropDownValue) {
                 case "Company":
-                    $("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=Company');
+                    @*$("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=Company');*@
+                    var url = "/Groups/GetMemberList/?groupName=" + groupName + "&memberType=Company";
+                    $("#memberlist").load(url);
                     break;
                 case "Branch":
-                    $("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=Branch');
+                    @*$("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=Branch');*@
+                    var url = "/Groups/GetMemberList/?groupName=" + groupName + "&memberType=Branch";
+                    $("#memberlist").load(url);
                     break;
                 case "User":
-                    $("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=User');
+                    @*$("#memberlist").load('@(Url.Action("GetMemberList", "Groups"))?groupName=' + groupName + '&memberType=User');*@
+                    var url = "/Groups/GetMemberList/?groupName=" + groupName + "&memberType=User";
+                    $("#memberlist").load(url);
                     break;
             }
         };

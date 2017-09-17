@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Models
 {
@@ -14,6 +15,9 @@ namespace Distributor.Models
         [Required]
         [Display(Name = "Group name")]
         public string Name { get; set; }
+
+        [Display(Name = "Type of group")]
+        public LevelEnum Type { get; set; }
 
         //references to the listing originator
         public Guid GroupOriginatorAppUserId { get; set; }

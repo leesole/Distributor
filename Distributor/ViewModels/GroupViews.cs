@@ -16,10 +16,8 @@ namespace Distributor.ViewModels
 
     public class GroupEditView
     {
-        [Display(Name = "Group name")]
-        public string Name { get; set; }
-
-        public List<GroupListView> GroupListViewsForUser { get; set; }
+        public List<GroupListView> GroupListViewsCreatedByUser { get; set; }
+        public List<GroupListView> GroupListViewsRelevantToUser { get; set; }
     }
 
 

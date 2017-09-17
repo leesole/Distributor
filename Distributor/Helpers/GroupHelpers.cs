@@ -14,6 +14,23 @@ namespace Distributor.Helpers
     {
         #region Get
 
+        public static List<Group> GetGroupsCreatedByUser(Guid appuserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Group> list = GetGroupsCreatedByUser(db, appuserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Group> GetGroupsCreatedByUser(ApplicationDbContext db, Guid appuserId)
+        {
+            List<Group> list = (from g in db.Groups
+                                where g.GroupOriginatorAppUserId == appuserId
+                                select g).ToList();
+
+            return list;
+        }
+
         public static List<Group> GetGroupsForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -70,6 +87,7 @@ namespace Distributor.Helpers
             {
                 GroupId = Guid.NewGuid(),
                 Name = view.Name,
+                Type = view.Type,
                 GroupOriginatorAppUserId = AppUserHelpers.GetAppUserIdFromUser(user),
                 GroupOriginatorDateTime = DateTime.Now
             };
@@ -122,35 +140,93 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static List<GroupListView> GetGroupListViewForUser(IPrincipal user)
+        public static List<GroupListView> GetGroupListViewsCreatedByUser(IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            List<GroupListView> view = GetGroupListViewForUser(db, user);
+            List<GroupListView> view = GetGroupListViewsCreatedByUser(db, user);
             db.Dispose();
             return view;
         }
 
-        public static List<GroupListView> GetGroupListViewForUser(ApplicationDbContext db, IPrincipal user)
+        public static List<GroupListView> GetGroupListViewsCreatedByUser(ApplicationDbContext db, IPrincipal user)
         {
-            return GetGroupListViewForUser(db, AppUserHelpers.GetAppUser(db, user).AppUserId);
+            return GetGroupListViewsCreatedByUser(db, AppUserHelpers.GetAppUser(db, user).AppUserId);
         }
 
-        public static List<GroupListView> GetGroupListViewForUser(Guid appUserId)
+        public static List<GroupListView> GetGroupListViewsCreatedByUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            List<GroupListView> view = GetGroupListViewForUser(db, appUserId);
+            List<GroupListView> view = GetGroupListViewsCreatedByUser(db, appUserId);
             db.Dispose();
             return view;
         }
 
-        public static List<GroupListView> GetGroupListViewForUser(ApplicationDbContext db, Guid appUserId)
+        public static List<GroupListView> GetGroupListViewsCreatedByUser(ApplicationDbContext db, Guid appUserId)
         {
             List<GroupListView> list = new List<GroupListView>();
 
-            //Get all groups this user is part of
-            List<Group> UserGroups = GroupHelpers.GetGroupsForUser(db, appUserId);
+            List<Group> allGroupsCreatedByUser = GroupHelpers.GetGroupsCreatedByUser(db, appUserId);
 
-            foreach (Group group in UserGroups)
+            foreach (Group group in allGroupsCreatedByUser)
+            {
+                //Get members of the group
+                List<GroupMember> groupMembers = GroupMemberHelpers.GetMembersForGroup(db, group.GroupId);
+
+                //create view record to add to list of view records
+                GroupListView view = new GroupListView();
+                view.Group = group;
+                view.Members = groupMembers;
+
+                list.Add(view);
+            }
+
+            return list;
+        }
+
+        public static List<GroupListView> GetGroupListViewsRelevantToUser(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<GroupListView> view = GetGroupListViewsRelevantToUser(db, user);
+            db.Dispose();
+            return view;
+        }
+
+        public static List<GroupListView> GetGroupListViewsRelevantToUser(ApplicationDbContext db, IPrincipal user)
+        {
+            return GetGroupListViewsRelevantToUser(db, AppUserHelpers.GetAppUser(db, user).AppUserId);
+        }
+
+        public static List<GroupListView> GetGroupListViewsRelevantToUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<GroupListView> view = GetGroupListViewsRelevantToUser(db, appUserId);
+            db.Dispose();
+            return view;
+        }
+
+        public static List<GroupListView> GetGroupListViewsRelevantToUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<GroupListView> list = new List<GroupListView>();
+
+            List<Group> allGroupsRelevantUser = new List<Group>();
+
+            //Get user groups containing this user
+            allGroupsRelevantUser = GroupHelpers.GetGroupsForUser(db, appUserId);
+            //Get branch groups containing this users branches
+            List<Branch> usersBranches = BranchHelpers.GetBranchesForUser(db, appUserId);
+            foreach (Branch branch in usersBranches)
+            {
+                List<Group> groups = GroupHelpers.GetGroupsForTypeAndReferenceId(db, LevelEnum.Branch, branch.BranchId);
+                foreach (Group group in groups)
+                    allGroupsRelevantUser.Add(group);
+            }
+            //Get company groups containing this users company
+            List<Group> companyGroups = GroupHelpers.GetGroupsForTypeAndReferenceId(db, LevelEnum.Company, CompanyHelpers.GetCompanyForUser(db, appUserId).CompanyId);
+            foreach (Group group in companyGroups)
+                allGroupsRelevantUser.Add(group);
+
+
+            foreach (Group group in allGroupsRelevantUser)
             {
                 //Get members of the group
                 List<GroupMember> groupMembers = GroupMemberHelpers.GetMembersForGroup(db, group.GroupId);
@@ -176,11 +252,13 @@ namespace Distributor.Helpers
 
         public static GroupEditView GetGroupEditViewForUser(ApplicationDbContext db, Guid appUserId)
         {
-            List<GroupListView> groupListView = GroupViewHelpers.GetGroupListViewForUser(db, appUserId);
+            List<GroupListView> groupListViewsCreatedByUser = GroupViewHelpers.GetGroupListViewsCreatedByUser(db, appUserId);
+            List<GroupListView> GroupListViewsRelevantToUser = GroupViewHelpers.GetGroupListViewsRelevantToUser(db, appUserId);
 
             GroupEditView view = new GroupEditView()
             {
-                GroupListViewsForUser = groupListView
+                GroupListViewsCreatedByUser = groupListViewsCreatedByUser,
+                GroupListViewsRelevantToUser = GroupListViewsRelevantToUser
             };
 
             return view;
