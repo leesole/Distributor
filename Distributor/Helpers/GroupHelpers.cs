@@ -242,6 +242,27 @@ namespace Distributor.Helpers
             return list;
         }
 
+        public static GroupEditView GetGroupEditViewForForUserOnly(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            GroupEditView view = GetGroupEditViewForForUserOnly(db, appUserId);
+            db.Dispose();
+            return view;
+        }
+
+        public static GroupEditView GetGroupEditViewForForUserOnly(ApplicationDbContext db, Guid appUserId)
+        {
+            List<GroupListView> groupListViewsCreatedByUser = GroupViewHelpers.GetGroupListViewsCreatedByUser(db, appUserId);
+
+            GroupEditView view = new GroupEditView()
+            {
+                GroupListViewsCreatedByUser = groupListViewsCreatedByUser,
+                GroupListViewsRelevantToUser = null
+            };
+
+            return view;
+        }
+
         public static GroupEditView GetGroupEditViewForUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();

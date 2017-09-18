@@ -442,7 +442,8 @@
     <Content Include="Views\Groups\Create.cshtml" />
     <Content Include="Views\Groups\Create - Copy.cshtml" />
     <Content Include="Views\Groups\AddGroupMembers.cshtml" />
-    <Content Include="Views\Shared\_AddGroupMember.cshtml" />
+    <Content Include="Views\Home\Campaigns.cshtml" />
+    <Content Include="Views\Home\Requests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

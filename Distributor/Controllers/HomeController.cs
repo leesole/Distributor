@@ -1,5 +1,6 @@
 ﻿using Distributor.Extenstions;
 using Distributor.Helpers;
+using Distributor.Models;
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -77,6 +78,18 @@ namespace Distributor.Controllers
         public ActionResult Manage()
         {
             return RedirectToAction("Requirements", "ManageListings");
+        }
+
+        public ActionResult Campaigns()
+        {
+            List<Campaign> model = CampaignHelpers.GetAllCampaigns();
+            return View(model);
+        }
+
+        public ActionResult Requests()
+        {
+            List<RequirementListing> model = RequirementListingHelpers.GetAllRequirementListings();
+            return View(model);
         }
     }
 }
