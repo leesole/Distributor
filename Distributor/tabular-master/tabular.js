@@ -1,1 +1,0 @@
-var tabular = window.tabular = {};
