@@ -2,11 +2,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $('#myTable').dataTable();
+            $('#myTable').dataTable({
+                "aaSorting": [[5, "asc"]]
+            });
         });
 
     </script>

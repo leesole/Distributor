@@ -93,6 +93,30 @@
                         }
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">@Html.LabelFor(model => model.VisibilityLevel, htmlAttributes: new { @class = "control-label" })</div>
+                    <div class="col-md-8">
+                        @Html.EnumDropDownListFor(model => model.VisibilityLevel, htmlAttributes: new { @class = "form-control", @id = "groupname" })
+                        @Html.ValidationMessageFor(model => model.VisibilityLevel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">@Html.LabelFor(model => model.InviteLevel, htmlAttributes: new { @class = "control-label" })</div>
+                    <div class="col-md-8">
+                        @Html.EnumDropDownListFor(model => model.InviteLevel, htmlAttributes: new { @class = "form-control", @id = "groupname" })
+                        @Html.ValidationMessageFor(model => model.InviteLevel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">@Html.LabelFor(model => model.AcceptanceLevel, htmlAttributes: new { @class = "control-label" })</div>
+                    <div class="col-md-8">
+                        @Html.EnumDropDownListFor(model => model.AcceptanceLevel, htmlAttributes: new { @class = "form-control", @id = "groupname" })
+                        @Html.ValidationMessageFor(model => model.AcceptanceLevel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
 

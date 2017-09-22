@@ -10,6 +10,15 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+                $('#yourRequestsTable').dataTable();
+                $('#availableListingsTable').dataTable();
+            });
+
+    </script>
 }
 
 @if (User.Identity.IsAuthenticated)
@@ -76,21 +85,25 @@
                         {
                             <div class="table-responsive">
                                 <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Website</th>
-                                        <th>Start date</th>
-                                    </tr>
-                                    @foreach (var item in Model.CampaignList)
-                                    {
-                                        <tr id=@item.CampaignId>
-                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Website)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
+                                    <thead>
+                                        <tr class="info">
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Website</th>
+                                            <th>Start date</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.CampaignList)
+                                        {
+                                            <tr id=@item.CampaignId>
+                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Website)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                         }
@@ -176,23 +189,27 @@
                         }
                         else
                         {
-                            <div class="table-responsive" onclick="location.href='@Url.Action("Requirements", "GeneralInfo")'">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Description</th>
-                                        <th>Type</th>
-                                        <th>Quantity required</th>
-                                        <th>UoM</th>
-                                    </tr>
-                                    @foreach (var item in Model.RequirementListingDashboardList)
-                                    {
-                                        <tr id=@item.ListingId>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                            <div class="table-responsive">
+                                <table id="yourRequestsTable" class="table table-condensed">
+                                    <thead>
+                                        <tr class="info">
+                                            <th>Description</th>
+                                            <th>Type</th>
+                                            <th>Quantity required</th>
+                                            <th>UoM</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody onclick="location.href='@Url.Action("Requirements", "GeneralInfo")'">
+                                        @foreach (var item in Model.RequirementListingDashboardList)
+                                        {
+                                            <tr id=@item.ListingId>
+                                                <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                         }
@@ -241,23 +258,27 @@
                         }
                         else
                         {
-                            <div class="table-responsive" onclick="location.href='@Url.Action("Available", "GeneralInfo")'">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Description</th>
-                                        <th>Type</th>
-                                        <th>Quantity available</th>
-                                        <th>UoM</th>
-                                    </tr>
-                                    @foreach (var item in Model.AvailableListingDashboardList)
-                                    {
-                                        <tr id=@item.ListingId>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                            <div class="table-responsive">
+                                <table id="availableListingsTable" class="table table-condensed">
+                                    <thead>
+                                        <tr class="info">
+                                            <th>Description</th>
+                                            <th>Type</th>
+                                            <th>Quantity available</th>
+                                            <th>UoM</th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody onclick="location.href='@Url.Action("Available", "GeneralInfo")'">
+                                        @foreach (var item in Model.AvailableListingDashboardList)
+                                        {
+                                            <tr id=@item.ListingId>
+                                                <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                         }

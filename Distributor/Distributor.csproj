@@ -211,6 +211,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\RequirementListingsController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Enums\GroupEnums.cs" />
     <Compile Include="Enums\UserActionEnums.cs" />
     <Compile Include="Enums\BranchEnums.cs" />
     <Compile Include="Enums\EntityEnums.cs" />
@@ -264,6 +265,10 @@
     <Compile Include="Migrations\201709171330328_4th.cs" />
     <Compile Include="Migrations\201709171330328_4th.Designer.cs">
       <DependentUpon>201709171330328_4th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709220658171_5th.cs" />
+    <Compile Include="Migrations\201709220658171_5th.Designer.cs">
+      <DependentUpon>201709220658171_5th.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -385,7 +390,6 @@
     <Content Include="Views\Branches\Edit.cshtml" />
     <Content Include="Views\Branches\Index.cshtml" />
     <Content Include="Views\Account\Confirmation.cshtml" />
-    <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\AppUsers\Delete.cshtml" />
     <Content Include="Views\AppUsers\Details.cshtml" />
     <Content Include="Views\AppUsers\Edit.cshtml" />
@@ -477,6 +481,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709171330328_4th.resx">
       <DependentUpon>201709171330328_4th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709220658171_5th.resx">
+      <DependentUpon>201709220658171_5th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

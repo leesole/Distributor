@@ -90,10 +90,8 @@ namespace Distributor.Controllers
                     FriendHelpers.CreateFriend(levelEnum, ofReferenceId, byReferenceId, byAppUserId);
                     break;
                 case "group":
-                    ///LSLSLS need to go to Group screen to select a group or allow adding of a new group
+                    //Need to go to Group screen to select a group or allow adding of a new group
                     return RedirectToAction("Create", "Groups", new { levelEnum = levelEnum, ofReferenceId = ofReferenceId, byReferenceId = byReferenceId, appUserid = byAppUserId });
-                    break;
-
             }
 
             return Json(new { success = true });

@@ -38,7 +38,6 @@ namespace Distributor.Controllers
             List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageView(User);
 
             //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
- 
             Company company = CompanyHelpers.GetCompanyForUser(User);
             ViewBag.AllowBranchTrading = company.AllowBranchTrading;
             if (company.AllowBranchTrading)

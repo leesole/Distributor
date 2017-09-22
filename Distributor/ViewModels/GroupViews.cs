@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.GroupEnums;
 
 namespace Distributor.ViewModels
 {
@@ -29,6 +30,15 @@ namespace Distributor.ViewModels
 
         [Display(Name = "Type of group")]
         public LevelEnum Type { get; set; }
+
+        [Display(Name = "Group visibility")]
+        public GroupVisibilityEnum VisibilityLevel { get; set; }
+
+        [Display(Name = "Group invite level")]
+        public GroupInviteLevelEnum InviteLevel { get; set; }
+
+        [Display(Name = "Group invite acceptance level")]
+        public GroupInviteAcceptanceLevelEnum AcceptanceLevel { get; set; }
 
         public bool scratchEntry { get; set; }
 

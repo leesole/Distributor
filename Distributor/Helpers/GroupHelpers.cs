@@ -88,6 +88,9 @@ namespace Distributor.Helpers
                 GroupId = Guid.NewGuid(),
                 Name = view.Name,
                 Type = view.Type,
+                VisibilityLevel = view.VisibilityLevel,
+                InviteLevel = view.InviteLevel,
+                AcceptanceLevel = view.AcceptanceLevel,
                 GroupOriginatorAppUserId = AppUserHelpers.GetAppUserIdFromUser(user),
                 GroupOriginatorDateTime = DateTime.Now
             };
@@ -103,6 +106,9 @@ namespace Distributor.Helpers
         #endregion
 
         #region Remove
+
+
+
         #endregion
 
         #region Processing
