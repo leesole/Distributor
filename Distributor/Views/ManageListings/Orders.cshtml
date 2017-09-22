@@ -45,7 +45,7 @@
 
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -64,7 +64,7 @@
         </div>
     </div>
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -87,7 +87,7 @@
                     <li class="active">@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
                 </ul>
             </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+        </div><!-- /.container -->
     </nav>
 </nav>
 
@@ -256,7 +256,7 @@
                         {
                             if (displayDespatchButton)
                             {
-                                <td><input type="button" value="Despatched" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Despatched')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Despatched')"><span class="glyphicon glyphicon-ok"></span> Despatched</button></td>
                             }
                             else
                             {
@@ -264,7 +264,7 @@
                             }
                             if (displayDeliveredButton)
                             {
-                                <td><input type="button" value="Delivered" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Delivered')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button></td>
                             }
                             else
                             {
@@ -272,7 +272,7 @@
                             }
                             if (displayClosedButton)
                             {
-                                <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
                             }
                             else
                             {
@@ -285,7 +285,7 @@
 
                             if (displayDeliveredButton)
                             {
-                                <td><input type="button" value="Delivered" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Delivered')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button></td>
                             }
                             else
                             {
@@ -293,7 +293,7 @@
                             }
                             if (displayClosedButton)
                             {
-                                <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
                             }
                             else
                             {
@@ -306,7 +306,7 @@
                             <td></td>
                             if (displayClosedButton)
                             {
-                                <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
                             }
                             else
                             {
@@ -326,7 +326,7 @@
                         {
                             if (displayCollectedButton)
                             {
-                                <td><input type="button" value="Collected" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Collected')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button></td>
                             }
                             else
                             {
@@ -334,7 +334,7 @@
                             }
                             if (displayReceivedButton)
                             {
-                                <td><input type="button" value="Received" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Received')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button></td>
                             }
                             else
                             {
@@ -342,7 +342,7 @@
                             }
                             if (displayClosedButton)
                             {
-                                <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
                             }
                             else
                             {
@@ -354,7 +354,7 @@
                             <td></td>
                             if (displayReceivedButton)
                             {
-                                <td><input type="button" value="Received" class="btn btn-sm btn-success btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Received')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button></td>
                             }
                             else
                             {
@@ -362,7 +362,7 @@
                             }
                             if (displayClosedButton)
                             {
-                                <td><input type="button" value="Closed" class="btn btn-sm btn-danger btn-block buttondetails" id=@orderId onclick="buttonClick(id, 'Closed')" /></td>
+                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
                             }
                             else
                             {

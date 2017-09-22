@@ -506,17 +506,17 @@
             @if (Model.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity > 0)
             {
                 <div class="panel-footer">
-                    <input type = "button" value="Accept" class="btn btn-sm btn-success" onclick="acceptButtonClick()" />
-                    <input type = "button" value="Reject" class="btn btn-sm btn-danger" onclick="rejectButtonClick()" />
-                    <input type = "button" value="Save offer" class="btn btn-sm btn-success" onclick="saveOfferField()" />
+                    <button type="submit" class="btn btn-sm btn-success" onclick="acceptButtonClick()"><span class="glyphicon glyphicon-ok"></span> Accept</button>
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="rejectButtonClick()"><span class="glyphicon glyphicon-remove"></span> Reject</button>
+                    <button type="submit" class="btn btn-sm btn-success" onclick="saveOfferField()"><span class="glyphicon glyphicon-ok"></span> Save offer</button>
                 </div>
             }
             else if (Model.OfferDetails.ListingOriginatorAppUserId.ToString() == currentAppUserId && Model.OfferDetails.CurrentOfferQuantity > 0)
             {
                 <div class="panel-footer">
-                    <input type = "button" value="Accept" class="btn btn-sm btn-success" onclick="acceptButtonClick()" />
-                    <input type = "button" value="Reject" class="btn btn-sm btn-danger" onclick="rejectButtonClick()" />
-                    <input type = "button" value="Save counter offer" class="btn btn-sm btn-success" onclick="saveCounterOfferField()" />
+                    <button type="submit" class="btn btn-sm btn-success" onclick="acceptButtonClick()"><span class="glyphicon glyphicon-ok"></span> Accept</button>
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="rejectButtonClick()"><span class="glyphicon glyphicon-remove"></span> Reject</button>
+                    <button type="submit" class="btn btn-sm btn-success" onclick="saveCounterOfferField()"><span class="glyphicon glyphicon-ok"></span> Save counter offer</button>
                 </div>
             }
         </div>

@@ -6,6 +6,7 @@ using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.EntityEnums;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.GroupEnums;
 using static Distributor.Enums.UserActionEnums;
 
 namespace Distributor.Helpers
@@ -208,6 +209,94 @@ namespace Distributor.Helpers
                     UserActionAssignment assignment = CreateActionAssignment(db, userActionId, ofReferenceId);
                     list.Add(assignment);
                     break;
+            }
+
+            return list;
+        }
+
+        public static UserAction CreateActionForGroupMemberAccceptance(Group group, GroupMember member)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserAction action = CreateActionForGroupMemberAccceptance(db, group, member);
+            db.Dispose();
+            return action;
+        }
+
+        public static UserAction CreateActionForGroupMemberAccceptance(ApplicationDbContext db, Group group, GroupMember member)
+        {
+            //Create action for group member acceptance....
+            UserAction action = CreateAction(db, ActionTypeEnum.AwaitGroupMemberAcceptance, EnumHelpers.GetDescription(group.Type) + " level request.", group.GroupOriginatorAppUserId, group.GroupOriginatorAppUserId, DateTime.Now, EntityStatusEnum.Active);
+
+            //..then assign action to users... it will only add actions to those members that are active on the list (Should really have this level set for new groups, only adding new members)
+            List<UserActionAssignment> list = new List<UserActionAssignment>();
+            switch (group.AcceptanceLevel)
+            {
+                case GroupInviteAcceptanceLevelEnum.Owner:
+                case GroupInviteAcceptanceLevelEnum.Invitee:
+                    UserActionAssignment userAssignment = CreateActionAssignment(db, action.UserActionId, group.GroupOriginatorAppUserId);
+                    break;
+                case GroupInviteAcceptanceLevelEnum.Member:
+                    List<UserActionAssignment> userAssignmentList = CreateActionAssignmentForGroupMembers(db, action.UserActionId, group);
+                    break;
+            }
+
+            return action;
+        }
+
+        public static List<UserActionAssignment> CreateActionAssignmentForGroupMembers(Guid userActionId, Group group)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<UserActionAssignment> list = CreateActionAssignmentForGroupMembers(db, userActionId, group);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<UserActionAssignment> CreateActionAssignmentForGroupMembers(ApplicationDbContext db, Guid userActionId, Group group)
+        {
+            List<UserActionAssignment> list = new List<UserActionAssignment>();
+
+            //get list of members that are accepted within this group only
+            List<GroupMember> groupMembers = (from gm in db.GroupMembers
+                                              where gm.Status == GroupMemberStatusEnum.Accepted
+                                              select gm).ToList();
+
+            //depdending on type of group will depend on the users we need to find, i.e. branch group = members are branches, therefore only find SuperAdmin, Admin or Manager for that branch to send this to
+            foreach (GroupMember member in groupMembers)
+            {
+                switch (group.Type)
+                {
+                    case LevelEnum.Company:
+                        List<AppUser> adminUsers = AppUserHelpers.GetAdminAppUsersForCompany(db, member.ReferenceId);
+                        foreach (AppUser adminUser in adminUsers)
+                        {
+                            UserActionAssignment adminUserAssignment = CreateActionAssignment(db, userActionId, adminUser.AppUserId);
+                            list.Add(adminUserAssignment);
+                        }
+                        break;
+                    case LevelEnum.Branch:
+                        List<AppUser> branchUsers = AppUserHelpers.GetManagerAppUsersForBranch(db, member.ReferenceId);
+                        foreach (AppUser branchUser in branchUsers)
+                        {
+                            UserActionAssignment branchUserAssignment = CreateActionAssignment(db, userActionId, branchUser.AppUserId);
+                            list.Add(branchUserAssignment);
+                        }
+                        //Note, Admin users can also approve these requests so list them in the assignment list also
+                        List<AppUser> adminUsersForBranchApproval = AppUserHelpers.GetAdminAppUsersForCompany(db, BranchHelpers.GetBranch(member.ReferenceId).CompanyId);
+                        foreach (AppUser adminUser in adminUsersForBranchApproval)
+                        {
+                            //Don't duplicate user entries
+                            if (GetActionAssignmentForActionAndUser(db, userActionId, adminUser.AppUserId) == null)
+                            {
+                                UserActionAssignment adminUserAssignment = CreateActionAssignment(db, userActionId, adminUser.AppUserId);
+                                list.Add(adminUserAssignment);
+                            }
+                        }
+                        break;
+                    case LevelEnum.User:
+                        UserActionAssignment assignment = CreateActionAssignment(db, userActionId, member.ReferenceId);
+                        list.Add(assignment);
+                        break;
+                }
             }
 
             return list;

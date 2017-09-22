@@ -375,33 +375,33 @@
                         {
                             if (displayDespatchButton)
                             {
-                                <input type="submit" value="Despatched" class="btn btn-sm btn-success" name="despatchedbutton" />
+                                <button type="submit" class="btn btn-sm btn-success" name="despatchedbutton"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
                             }
                             if (displayDeliveredButton)
                             {
-                                <input type="submit" value="Delivered" class="btn btn-sm btn-success" name="delivereddbutton" />
+                                <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
                             }
                             if (displayClosedButton)
                             {
-                                <input type="submit" value="Closed" class="btn btn-sm btn-danger" name="closedbutton" />
+                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                         else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
                         {
                             if (displayDeliveredButton)
                             {
-                                <input type="submit" value="Delivered" class="btn btn-sm btn-success" name="delivereddbutton" />
+                                <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
                             }
                             if (displayClosedButton)
                             {
-                                <input type="submit" value="Closed" class="btn btn-sm btn-danger" name="closedbutton" />
+                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                         else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
                         {
                             if (displayClosedButton)
                             {
-                                <input type="submit" value="Closed" class="btn btn-sm btn-danger" name="closedbutton" />
+                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                     }
@@ -411,26 +411,26 @@
                         {
                             if (displayCollectedButton)
                             {
-                                <input type="submit" value="Collected" class="btn btn-sm btn-success" name="collectedbutton" />
+                                <button type="submit" class="btn btn-sm btn-success" name="collectedbutton"><span class="glyphicon glyphicon-ok"></span> Collected</button>
                             }
                             if (displayReceivedButton)
                             {
-                                <input type="submit" value="Received" class="btn btn-sm btn-success" name="receivedbutton" />
+                                <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
                             }
                             if (displayClosedButton)
                             {
-                                <input type="submit" value="Closed" class="btn btn-sm btn-danger" name="closedbutton" />
+                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                         else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
                         {
                             if (displayReceivedButton)
                             {
-                                <input type="submit" value="Received" class="btn btn-sm btn-success" name="receivedbutton" />
+                                <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
                             }
                             if (displayClosedButton)
                             {
-                                <input type="submit" value="Closed" class="btn btn-sm btn-danger" name="closedbutton" />
+                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                     }

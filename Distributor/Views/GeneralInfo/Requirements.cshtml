@@ -133,14 +133,14 @@
             <tr id=@listingId>
                 @if (offerQuanity == 0 && appUserId != currentAppUserId)
                 {
-                    <td><input type="button" value="Offer" class="btn btn-sm btn-primary btn-block showhideofferdetails" id=@offerButton /></td>
+                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
                 }
                 else
                 {
-                    <td><input type="button" value="Offer" class="btn btn-sm btn-primary btn-block showhideofferdetails" id=@offerButton disabled/></td>
+                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
                 }
                 <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                <td><input type="button" value="Save" class="btn btn-sm btn-success btn-block showhideofferdetails" id=@saveButton disabled /></td>
+                <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
                 <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
                 <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                 <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>

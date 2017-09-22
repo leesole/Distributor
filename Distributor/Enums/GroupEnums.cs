@@ -38,5 +38,15 @@ namespace Distributor.Enums
             [Description("Group owner acceptance")]
             Owner = 3
         }
+
+        public enum GroupMemberStatusEnum
+        {
+            [Description("Awaiting acceptance")]
+            Awaiting = 0,
+            [Description("Accepted")]
+            Accepted = 1,
+            [Description("Rejected")]
+            Rejected = 2
+        }
     }
 }

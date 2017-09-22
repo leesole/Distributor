@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.GroupEnums;
 
 namespace Distributor.Models
 {
@@ -26,5 +27,8 @@ namespace Distributor.Models
 
         [Display(Name = "Record added on")]
         public DateTime AddedDateTime { get; set; }
+
+        [Display(Name = "Group member status")]
+        public GroupMemberStatusEnum Status { get; set; }
     }
 }

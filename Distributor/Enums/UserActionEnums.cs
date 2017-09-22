@@ -11,7 +11,9 @@ namespace Distributor.Enums
         public enum ActionTypeEnum
         {
             [Description("Awaiting friend request")]
-            AwaitFriendRequest = 0
+            AwaitFriendRequest = 0,
+            [Description("Awaiting group member acceptance")]
+            AwaitGroupMemberAcceptance = 1
         }
     }
 }

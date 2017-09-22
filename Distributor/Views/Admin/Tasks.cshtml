@@ -100,27 +100,15 @@
                 }
 
                 <tr id=@item.UserTaskId>
-                    <td>
-                        <input type="button" value="Approve" class="btn btn-sm btn-success btn-block confirmapprove" />
-                    </td>
-                    <td>
-                        <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirmcancel" />
-                    </td>
-                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                        @taskTypeDescription
-                    </td>
-                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                        @Html.DisplayFor(modelItem => item.TaskDescription)
-                    </td>
-                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                        @referenceDescription
-                    </td>
-                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                    </td>
-                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">
-                        @(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)
-                    </td>
+                    @*<td><input type="button" value="Approve" class="btn btn-sm btn-success btn-block confirmapprove" /></td>*@
+                    <td><button type="submit" class="btn btn-xs btn-success btn-block confirmapprove" ><span class="glyphicon glyphicon-ok"></span> Approve</button></td>
+                    @*<td><input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirmcancel" /></td>*@
+                    <td><button type="submit" class="btn btn-xs btn-danger btn-block confirmcancel"><span class="glyphicon glyphicon-remove"></span> Cancel</button></td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">@taskTypeDescription</td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">@Html.DisplayFor(modelItem => item.TaskDescription)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">@referenceDescription</td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">@Html.DisplayFor(modelItem => item.CreatedOn)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Task", new { userTaskId = item.UserTaskId })'">@(item.CreatedBy.FirstName + " " + item.CreatedBy.LastName)</td>
                 </tr>
             }
         }

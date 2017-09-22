@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.GroupEnums;
 
 namespace Distributor.Helpers
 {
@@ -393,28 +394,32 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static GroupMember CreateGroupMember(Guid groupId, LevelEnum type, Guid referenceId, Guid addedBy)
+        public static GroupMember CreateGroupMember(Group group, Guid referenceId, GroupMemberStatusEnum status)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            GroupMember member = CreateGroupMember(db, groupId, type, referenceId, addedBy);
+            GroupMember member = CreateGroupMember(db, group, referenceId, status);
             db.Dispose();
             return member;
         }
 
-        public static GroupMember CreateGroupMember(ApplicationDbContext db, Guid groupId, LevelEnum type, Guid referenceId, Guid addedBy)
+        public static GroupMember CreateGroupMember(ApplicationDbContext db, Group group, Guid referenceId, GroupMemberStatusEnum status)
         {
             GroupMember member = new GroupMember()
             {
                 GroupMemberId = Guid.NewGuid(),
-                GroupId = groupId,
-                Type = type,
+                GroupId = group.GroupId,
+                Type = group.Type,
                 ReferenceId = referenceId,
-                AddedBy = addedBy,
-                AddedDateTime = DateTime.Now
+                AddedBy = group.GroupOriginatorAppUserId,
+                AddedDateTime = DateTime.Now,
+                Status = status
             };
 
             db.GroupMembers.Add(member);
             db.SaveChanges();
+
+            //Create ACTION if this is created with a waiting status - actions created dependent on group acceptancelevel
+            UserActionHelpers.CreateActionForGroupMemberAccceptance(db, group, member);
 
             return member;
         }
@@ -432,8 +437,19 @@ namespace Distributor.Helpers
             List<GroupMember> members = new List<GroupMember>();
 
             foreach (GroupAddMemberView member in view.Members)
+            {
                 if (member.SelectedUser)
-                    members.Add(CreateGroupMember(db, group.GroupId, view.Type, member.ReferenceId, group.GroupOriginatorAppUserId));
+                {
+                    if (view.AcceptanceLevel == GroupInviteAcceptanceLevelEnum.Automatic)
+                    {
+                        members.Add(CreateGroupMember(db, group, member.ReferenceId, GroupMemberStatusEnum.Accepted));
+                    }
+                    else
+                    {
+                        members.Add(CreateGroupMember(db, group, member.ReferenceId, GroupMemberStatusEnum.Awaiting));
+                    }
+                }
+            }
 
             return members;
         }

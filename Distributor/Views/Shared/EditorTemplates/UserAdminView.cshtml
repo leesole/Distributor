@@ -10,7 +10,7 @@
     @Html.HiddenFor(modelItem => modelItem.CurrentBranchId)
 
     <tr id=@appUserId class="active">
-        <td><input type="button" value="Branches" class="btn btn-sm btn-primary btn-block showhidebranch" /></td>
+        <td><input type="button" value="Branches" class="btn btn-xs btn-primary btn-block showhidebranch" /></td>
         <td>@Html.EnumDropDownListFor(modelItem => modelItem.AppUserEntityStatus, "", new { @class = "form-control" })</td>
         <td>@Html.EditorFor(modelItem => modelItem.FirstName, new { @class = "form-control" })</td>
         <td>@Html.EditorFor(modelItem => modelItem.LastName, new { @class = "form-control" })</td>
