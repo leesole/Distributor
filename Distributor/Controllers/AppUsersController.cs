@@ -183,6 +183,11 @@ namespace Distributor.Controllers
             ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
             ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
 
+            //Counters
+            ViewBag.UserBlockCount = model.UserBlockListView.Count();
+            ViewBag.UserBranchBlockCount = model.UserBranchBlockListView.Count();
+            ViewBag.UserCompanyBlockCount = model.UserCompanyBlockListView.Count();
+
             if (model == null)
             {
                 return HttpNotFound();
@@ -235,6 +240,14 @@ namespace Distributor.Controllers
         //    db.SaveChanges();
         //    return RedirectToAction("Index");
         //}
+
+        // GET: AppUsers Blocks
+        public ActionResult BlockIndex(AppUserEditView appUserEditView)
+        {
+            BlockViewList model = BlockViewHelpers.CreateBlockViewListFromAppUserEditView(db, appUserEditView);
+
+            return View(model);
+        }
 
         protected override void Dispose(bool disposing)
         {

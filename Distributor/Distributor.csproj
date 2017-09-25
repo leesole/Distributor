@@ -453,6 +453,7 @@
     <Content Include="Views\Groups\AddGroupMembers.cshtml" />
     <Content Include="Views\Home\Campaigns.cshtml" />
     <Content Include="Views\Home\Requests.cshtml" />
+    <Content Include="Views\AppUsers\BlockIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

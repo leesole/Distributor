@@ -11,13 +11,6 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
-        $(function () {
-            //show/hide branch details to edit
-            $('.showhidemembers').click(function () {
-                $(this).closest('tbody').next('tbody').toggle();
-            });
-        });
-
         function GetBranchDetails(branchId) {
             $.ajax('@Url.Action("GetBranchAddressDetailsForBranch", "Data")', {
                 type: 'POST',
@@ -69,6 +62,29 @@
         @Html.HiddenFor(model => model.AppUserSettingsId)
         @Html.HiddenFor(model => model.CallingAction)
         @Html.HiddenFor(model => model.CallingController)
+        @{ 
+            if (Model.UserBlockListView.Count > 0)
+            {
+                for (int i=0; i < Model.UserBlockListView.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.UserBlockListView[i])
+                }
+            }
+            if (Model.UserBranchBlockListView.Count > 0)
+            {
+                for (int i = 0; i < Model.UserBranchBlockListView.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.UserBranchBlockListView[i])
+                }
+            }
+            if (Model.UserCompanyBlockListView.Count > 0)
+            {
+                for (int i = 0; i < Model.UserCompanyBlockListView.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.UserCompanyBlockListView[i])
+                }
+            }
+        }
 
         <div class="row">
 
@@ -137,63 +153,67 @@
             </div>
 
             <div class="col-md-4">
-                <div class="login-panel panel panel-info">
-                    <div class="panel-heading" onclick="@("window.location.href='" + @Url.Action("Index", "Groups") + "'");">
-                        <h3 class="panel-title">Your groups</h3>
-                    </div>
-                    <div class="panel-body">
-                        @if (Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser == null || Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser.Count == 0)
-                        {
-                            <p>No groups to show</p>
-                        }
-                        else
-                        {
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <tr class="info">
-                                        <th style="width:60px"></th>
-                                        <th>Group name</th>
-                                        <th>Type</th>
-                                    </tr>
-                                    @for (int i = 0; i < Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser.Count; i++)
-                                    {
-                                        <tr>
-                                            <td><input style="width:60px" type="button" value="Members" class="btn btn-xs btn-primary btn-block showhidemembers" /></td>
-                                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Group.Name)</td>
-                                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Group.Type)</td>
+                <div class="col-md-12">
+                    <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("Index", "Groups") + "'");">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Your groups</h3>
+                        </div>
+                        <div class="panel-body">
+                            @if (Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser == null || Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser.Count == 0)
+                            {
+                                <p>No groups to show</p>
+                            }
+                            else
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <tr class="info">
+                                            <th>Group name</th>
+                                            <th>Type</th>
                                         </tr>
-                                        <tbody id="byuserbody" style="display:none">
-                                            <tr class="info">
-                                                <th>Members</th>
-                                                <th>ReferenceId</th>
-                                                <th>Type</th>
+                                        @for (int i = 0; i < Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Group.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Group.Type)</td>
                                             </tr>
-                                            @for (int z = 0; z < Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Members.Count; z++)
-                                            {
-                                                <tr>
-                                                    <th></th>
-                                                    <th>@Html.DisplayFor(modelItem => Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Members[z].ReferenceId)</th>
-                                                    <th>@Html.DisplayFor(modelItem => Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Members[z].Type)</th>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    }
-                                </table>
+                                        }
+                                    </table>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("BlockIndex", "AppUsers", Model) + "'");">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Your blocks</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                                <div class="card bg-danger text-center" style="padding:10px">
+                                    <h4>User</h4>
+                                    <h1><b>@ViewBag.UserBlockCount</b></h1>
+                                </div>
                             </div>
-                        }
+                            <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                                <div class="card bg-danger text-center" style="padding:10px">
+                                    <h4>Branch</h4>
+                                    <h1><b>@ViewBag.UserBranchBlockCount</b></h1>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                                <div class="card bg-danger text-center" style="padding:10px">
+                                    <h4>Company</h4>
+                                    <h1><b>@ViewBag.UserCompanyBlockCount</b></h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="login-panel panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Your blocks</h3>
-                    </div>
-                    <div class="panel-body">
-                        hello
-                    </div>
-                </div>
             </div>
-
         </div>
 
         <div class="row">

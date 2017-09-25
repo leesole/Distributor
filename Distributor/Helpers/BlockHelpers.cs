@@ -1,10 +1,10 @@
 ﻿using Distributor.Models;
+using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.GeneralEnums;
-using static Distributor.ViewModels.BlockViews;
 
 namespace Distributor.Helpers
 {
@@ -40,7 +40,7 @@ namespace Distributor.Helpers
         public static List<Block> GetBlocksCreatedByUser(ApplicationDbContext db, Guid appUserId)
         {
             List<Block> list = (from b in db.Blocks
-                                where b.BlockedByUserId == appUserId
+                                where b.BlockedById == appUserId
                                 select b).ToList();
 
             return list;
@@ -113,6 +113,9 @@ namespace Distributor.Helpers
                 BlockedByUserId = byAppUserId,
                 BlockedOn = DateTime.Now
             };
+
+            db.Blocks.Add(block);
+            db.SaveChanges();
 
             return block;
         }
@@ -199,7 +202,12 @@ namespace Distributor.Helpers
                         break;
                 }
 
-                string blockedByUserName = AppUserHelpers.GetAppUserName(db, appUserId);
+                string blockedByUserName = AppUserHelpers.GetAppUserName(db, block.BlockedByUserId);
+
+                bool blockedByLoggedInUser = false;
+
+                if (block.BlockedByUserId == appUserId)
+                    blockedByLoggedInUser = true;
 
                 BlockView view = new BlockView()
                 {
@@ -208,11 +216,32 @@ namespace Distributor.Helpers
                     BlockedByName = nameBy,
                     BlockedByUserName = blockedByUserName,
                     BlockedOfName = nameOn,
-                    BlockedOn = block.BlockedOn
+                    BlockedOn = block.BlockedOn,
+                    BlockedByLoggedInUser = blockedByLoggedInUser
                 };
 
                 list.Add(view);
             }
+
+            return list;
+        }
+
+        #endregion
+
+        #region Create
+
+        public static BlockViewList CreateBlockViewListFromAppUserEditView(ApplicationDbContext db, AppUserEditView appUserEditView)
+        {
+            List<BlockView> userBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserEditView.AppUserId, LevelEnum.User);
+            List<BlockView> userBranchBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserEditView.AppUserId, LevelEnum.Branch);
+            List<BlockView> userCompanyBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserEditView.AppUserId, LevelEnum.Company);
+
+            BlockViewList list = new BlockViewList()
+            {
+                UserBlockListView = userBlockListView,
+                UserBranchBlockListView = userBranchBlockListView,
+                UserCompanyBlockListView = userCompanyBlockListView
+            };
 
             return list;
         }
