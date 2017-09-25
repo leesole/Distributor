@@ -113,5 +113,17 @@ namespace Distributor.Controllers
             }
             return Json(new { success = false });
         }
+
+        /// <summary>
+        /// This will remove the 'Block' from a given blockId
+        /// </summary>
+        /// <param name="buttonName"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult RemoveBlock(Guid blockId)
+        {
+            BlockHelpers.RemoveBlock(blockId);
+            return Json(new { success = true });
+        }
     }
 }

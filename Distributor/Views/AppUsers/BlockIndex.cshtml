@@ -5,6 +5,30 @@
 
 @{
     var userRole = User.Identity.GetCurrentUserRole();
+    var buttonId = Guid.Empty;
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function buttonClick(id) {
+            if (window.confirm("Proceed?")) {
+                var url = "/Data/RemoveBlock";
+
+                $.ajax({
+                    url: url,
+                    data: { blockId: id },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
 }
 
 <div class="row">
@@ -15,7 +39,7 @@
         </h1>
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("User changes", "Edit", "AppUsers")</li>
+            <li><a href=@Model.CallingUrl>User changes</a></li>
             <li class="active">User blocks</li>
         </ol>
     </div>
@@ -37,6 +61,7 @@
                     <div class="table-responsive">
                         <table class="table">
                             <tr class="info">
+                                <th style="width:100px">Action</th>
                                 <th>Blocked by</th>
                                 <th>Blocked</th>
                                 <th>Blocked on</th>
@@ -46,7 +71,9 @@
                             {
                                 if (Model.UserBlockListView[i].BlockedByLoggedInUser)
                                 {
+                                    buttonId = Model.UserBlockListView[i].BlockId;
                                     <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Remove</button></td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedByName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedOfName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedOn)</td>
@@ -56,6 +83,7 @@
                                 else
                                 {
                                     <tr>
+                                        <th></th>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedByName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedOfName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedOn)</td>
@@ -87,6 +115,7 @@
                     <div class="table-responsive">
                         <table class="table">
                             <tr class="info">
+                                <th style="width:100px">Action</th>
                                 <th>Blocked by</th>
                                 <th>Blocked</th>
                                 <th>Blocked on</th>
@@ -96,7 +125,9 @@
                             {
                                 if (Model.UserBranchBlockListView[i].BlockedByLoggedInUser)
                                 {
+                                    buttonId = Model.UserBranchBlockListView[i].BlockId;
                                     <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Remove</button></td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedByName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedOfName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedOn)</td>
@@ -106,6 +137,7 @@
                                 else
                                 {
                                     <tr>
+                                        <td></td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedByName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedOfName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedOn)</td>
@@ -137,6 +169,7 @@
                     <div class="table-responsive">
                         <table class="table">
                             <tr class="info">
+                                <th style="width:100px">Action</th>
                                 <th>Blocked by</th>
                                 <th>Blocked</th>
                                 <th>Blocked on</th>
@@ -146,7 +179,9 @@
                             {
                                 if (Model.UserCompanyBlockListView[i].BlockedByLoggedInUser)
                                 {
+                                    buttonId = Model.UserCompanyBlockListView[i].BlockId;
                                     <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Remove</button></td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedByName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedOfName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedOn)</td>
@@ -156,6 +191,7 @@
                                 else
                                 {
                                     <tr>
+                                        <td></td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedByName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedOfName)</td>
                                         <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedOn)</td>

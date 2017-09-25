@@ -37,5 +37,7 @@ namespace Distributor.ViewModels
         public List<BlockView> UserBranchBlockListView { get; set; }
 
         public List<BlockView> UserCompanyBlockListView { get; set; }
+
+        public string CallingUrl { get; set; }
     }
 }

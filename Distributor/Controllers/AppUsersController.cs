@@ -242,9 +242,9 @@ namespace Distributor.Controllers
         //}
 
         // GET: AppUsers Blocks
-        public ActionResult BlockIndex(AppUserEditView appUserEditView)
+        public ActionResult BlockIndex(Guid appUserId, string url)
         {
-            BlockViewList model = BlockViewHelpers.CreateBlockViewListFromAppUserEditView(db, appUserEditView);
+            BlockViewList model = BlockViewHelpers.CreateBlockViewListFromAppUserEditView(db, appUserId, url);
 
             return View(model);
         }

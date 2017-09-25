@@ -11,7 +11,7 @@ namespace Distributor.Helpers
     public static class BlockHelpers
     {
         #region Get
-
+        
         public static Block GetBlockForReferenceIdAndType(LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -118,6 +118,24 @@ namespace Distributor.Helpers
             db.SaveChanges();
 
             return block;
+        }
+
+        #endregion
+
+        #region Remove
+
+        public static void RemoveBlock(Guid blockId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            RemoveBlock(db, blockId);
+            db.Dispose();
+        }
+
+        public static void RemoveBlock(ApplicationDbContext db, Guid blockId)
+        {
+            Block block = db.Blocks.Find(blockId);
+            db.Blocks.Remove(block);
+            db.SaveChanges();
         }
 
         #endregion
@@ -230,22 +248,25 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static BlockViewList CreateBlockViewListFromAppUserEditView(ApplicationDbContext db, AppUserEditView appUserEditView)
+        public static BlockViewList CreateBlockViewListFromAppUserEditView(ApplicationDbContext db, Guid appUserId, string url)
         {
-            List<BlockView> userBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserEditView.AppUserId, LevelEnum.User);
-            List<BlockView> userBranchBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserEditView.AppUserId, LevelEnum.Branch);
-            List<BlockView> userCompanyBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserEditView.AppUserId, LevelEnum.Company);
+            List<BlockView> userBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserId, LevelEnum.User);
+            List<BlockView> userBranchBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserId, LevelEnum.Branch);
+            List<BlockView> userCompanyBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserId, LevelEnum.Company);
 
             BlockViewList list = new BlockViewList()
             {
                 UserBlockListView = userBlockListView,
                 UserBranchBlockListView = userBranchBlockListView,
-                UserCompanyBlockListView = userCompanyBlockListView
+                UserCompanyBlockListView = userCompanyBlockListView,
+                CallingUrl = url
             };
 
             return list;
         }
 
         #endregion
+
+        
     }
 }
