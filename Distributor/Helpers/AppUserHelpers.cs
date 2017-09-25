@@ -46,6 +46,20 @@ namespace Distributor.Helpers
             return GetAppUser(db, appUserId);
         }
 
+        public static string GetAppUserName(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string name = GetAppUserName(db, appUserId);
+            db.Dispose();
+            return name;
+        }
+
+        public static string GetAppUserName(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser appUser = GetAppUser(db, appUserId);
+            return appUser.FirstName + " " + appUser.LastName;
+        }
+
         public static List<AppUser> GetManagerAppUsersForBranch(Guid branchId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -414,7 +428,11 @@ namespace Distributor.Helpers
                 OrdersClosedAuthorisationManageViewLevel = appUserSettings.OrdersClosedAuthorisationManageViewLevel,
                 CampaignGeneralInfoExternalSelectionLevel = appUserSettings.CampaignGeneralInfoExternalSelectionLevel,
                 RequiredListingGeneralInfoExternalSelectionLevel = appUserSettings.RequiredListingGeneralInfoExternalSelectionLevel,
-                AvailableListingGeneralInfoExternalSelectionLevel = appUserSettings.AvailableListingGeneralInfoExternalSelectionLevel
+                AvailableListingGeneralInfoExternalSelectionLevel = appUserSettings.AvailableListingGeneralInfoExternalSelectionLevel,
+                GroupListViewsForUserOnly = GroupViewHelpers.GetGroupEditViewForForUserOnly(db, appUserDetails.AppUserId),
+                UserBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserDetails.AppUserId, LevelEnum.User),
+                UserBranchBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserDetails.AppUserId, LevelEnum.Branch),
+                UserCompanyBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserDetails.AppUserId, LevelEnum.Company)
             };
 
             return view;

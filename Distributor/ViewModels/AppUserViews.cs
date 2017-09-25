@@ -10,6 +10,7 @@ using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.OfferEnums;
 using static Distributor.Enums.OrderEnums;
 using static Distributor.Enums.UserEnums;
+using static Distributor.ViewModels.BlockViews;
 
 namespace Distributor.ViewModels
 {
@@ -209,5 +210,11 @@ namespace Distributor.ViewModels
         public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel { get; set; }
 
         public GroupEditView GroupListViewsForUserOnly { get; set; }
+
+        public List<BlockView> UserBlockListView { get; set; }
+
+        public List<BlockView> UserBranchBlockListView { get; set; }
+
+        public List<BlockView> UserCompanyBlockListView { get; set; }
     }
 }

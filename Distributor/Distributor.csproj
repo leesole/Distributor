@@ -302,6 +302,7 @@
     <Compile Include="Templates\AppUserSettingsTemplates.cs" />
     <Compile Include="ViewModels\AppUserViews.cs" />
     <Compile Include="ViewModels\AvailableListingViews.cs" />
+    <Compile Include="ViewModels\BlockViews.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CampaignViews.cs" />
     <Compile Include="ViewModels\DashboardView.cs" />
@@ -455,6 +456,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\" />
     <Folder Include="Views\Data\" />
     <Folder Include="Views\General\" />
   </ItemGroup>

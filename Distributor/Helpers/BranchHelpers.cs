@@ -29,6 +29,20 @@ namespace Distributor.Helpers
             return db.Branches.Find(branchId);
         }
 
+        public static string GetBranchNameTownPostCode(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string name = GetBranchNameTownPostCode(db, branchId);
+            db.Dispose();
+            return name;
+        }
+
+        public static string GetBranchNameTownPostCode(ApplicationDbContext db, Guid branchId)
+        {
+            Branch branch = GetBranch(db, branchId);
+            return branch.BranchName + ", " + branch.AddressTownCity + ", " + branch.AddressPostcode;
+        }
+
         public static List<Branch> GetBranchesForCompany(Guid companyId)
         {
             ApplicationDbContext db = new ApplicationDbContext();

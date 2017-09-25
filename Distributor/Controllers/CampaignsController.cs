@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Distributor.Models;
 using Distributor.Helpers;
 using Distributor.ViewModels;
+using System.IO;
 
 namespace Distributor.Controllers
 {
@@ -68,11 +69,32 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,CallingAction,CallingController")] CampaignAddView campaign)
-        { 
-
+        public ActionResult Create([Bind(Include = "Name,StrapLine,Description,Image,ImageLocation,Website,CampaignStartDateTime,CampaignEndDateTime,LocationName,LocationAddressLine1,LocationAddressLine2,LocationAddressLine3,LocationAddressTownCity,LocationAddressCounty,LocationAddressPostcode,LocationTelephoneNumber,LocationEmail,LocationContactName,CallingAction,CallingController")] CampaignAddView campaign, HttpPostedFileBase file)
+        {
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    string pic = System.IO.Path.GetFileName(file.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/images"), pic);
+                    // file is uploaded
+                    //file.SaveAs(path);
+
+                    //campaign.ImageLocation = path;
+
+                    // save the image path path to the database or you can send image 
+                    // directly to database
+                    // in-case if you want to store byte[] ie. for DB
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        file.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+
+                        campaign.Image = array;
+                    }
+
+                }
+
                 CampaignHelpers.CreateCampaignFromCampaignAddView(campaign, User);
                 
                 return RedirectToAction(campaign.CallingAction, campaign.CallingController);

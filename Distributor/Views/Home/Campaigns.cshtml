@@ -7,9 +7,67 @@
 
         $(document).ready(function () {
             $('#myTable').dataTable({
-                "aaSorting": [[5, "asc"]]
+                "aaSorting": [[2, "asc"]]
             });
         });
+
+        function rowSelect(campaignId) {
+            $.ajax('@Url.Action("GetCampaignForHomeCampaignView", "Data")', {
+                type: 'POST',
+                dataType: 'json',
+                data: { 'campaignId': campaignId },
+                success: function (data, status, jqXHR) {
+                    if ("success" === status) {
+                        var imgSrc = null;
+                        try {
+                            var base64 = btoa(data.campaignDetails.Image);
+                            imgSrc = "data:image/png;base64," + base64;
+                        }
+                        finally {
+                            document.getElementById("campaignImage").src = imgSrc;
+                            if (data.campaignDetails.Description != null && data.campaignDetails.Description != "") {
+                                document.getElementById("campaignDescription").innerText = data.campaignDetails.Description;
+                            } else {
+                                document.getElementById("campaignDescription").innerText = "";
+                            }
+                            if (data.campaignDetails.LocationName != null && data.campaignDetails.LocationName != "") {
+                                document.getElementById("campaignLocationName").innerText = data.campaignDetails.LocationName;
+                            } else {
+                                document.getElementById("campaignLocationName").innerText = "";
+                            }
+                            var address = "";
+                            if (data.campaignDetails.LocationAddressLine1 != null && data.campaignDetails.LocationAddressLine1 != "") {
+                                address += data.campaignDetails.LocationAddressLine1;
+                            }
+                            if (data.campaignDetails.LocationAddressTownCity != null && data.campaignDetails.LocationAddressTownCity != "") {
+                                if (address != null && address != "") {
+                                    address += ", ";
+                                }
+                                address += data.campaignDetails.LocationAddressTownCity
+                            }
+                            if (data.campaignDetails.LocationAddressPostcode != null && data.campaignDetails.LocationAddressPostcode != "") {
+                                if (address != null && address != "") {
+                                    address += ", ";
+                                }
+                                address += data.campaignDetails.LocationAddressPostcode;
+                            }
+                            if (address != null && address != "") {
+                                document.getElementById("campaignLocationAddress").innerText = address;
+                            } else {
+                                document.getElementById("campaignLocationAddress").innerText = "";
+                            }
+                            if (data.campaignDetails.Website != null && data.campaignDetails.Website != "") {
+                                document.getElementById("campaignWebsite").innerText = data.campaignDetails.Website;
+                            } else {
+                                document.getElementById("campaignWebsite").innerText = "";
+                            }
+                        }
+                    } else {
+                        alert('This campaign appears to be invalid, please re-select.');
+                    }
+                }
+            });
+        }
 
     </script>
 }
@@ -20,40 +78,44 @@
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
-<div class="table-responsive">
-    <table id="myTable" class="table table-hover">
-        <thead>
-            <tr class="info">
-                <th>@Html.DisplayNameFor(model => model.Name)</th>
-                <th>@Html.DisplayNameFor(model => model.StrapLine)</th>
-                <th>@Html.DisplayNameFor(model => model.Description)</th>
-                <th>@Html.DisplayNameFor(model => model.Website)</th>
-                <th>@Html.DisplayNameFor(model => model.CampaignStartDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.CampaignEndDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.LocationName)</th>
-                <th>@Html.DisplayNameFor(model => model.LocationAddressLine1)</th>
-                <th>@Html.DisplayNameFor(model => model.LocationAddressTownCity)</th>
-                <th>@Html.DisplayNameFor(model => model.LocationAddressPostcode)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.StrapLine)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Website)</td>
-                    <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
-                    <td>@Html.DisplayFor(modelItem => item.CampaignEndDateTime)</td>
-                    <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.LocationAddressLine1)</td>
-                    <td>@Html.DisplayFor(modelItem => item.LocationAddressTownCity)</td>
-                    <td>@Html.DisplayFor(modelItem => item.LocationAddressPostcode)</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="row">
+    <div class="col-md-6">
+        <div class="table-responsive">
+            <table id="myTable" class="table table-hover">
+                <thead>
+                    <tr class="info">
+                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                        <th>@Html.DisplayNameFor(model => model.StrapLine)</th>
+                        <th>@Html.DisplayNameFor(model => model.CampaignStartDateTime)</th>
+                        <th>@Html.DisplayNameFor(model => model.CampaignEndDateTime)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id=@item.CampaignId onclick="rowSelect(id)">
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.StrapLine)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CampaignEndDateTime)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img id="campaignImage" style="max-height: 100%; max-width: 100%;" />
+        <p><b>Description</b></p>
+        <p id="campaignDescription"></p>
+        <p><b>Location</b></p>
+        <p id="campaignLocationName"></p>
+        <p id="campaignLocationAddress"></p>
+        <p><b>Website</b></p>
+        <p id="campaignWebsite"></p>
+    </div>
 </div>
 
-<p><a class="btn btn-default" href=@Url.Action("Index", "Home")>&laquo; Return</a></p>
+<div class="row">
+    <p><a class="btn btn-default" href=@Url.Action("Index", "Home")>&laquo; Return</a></p>
+</div>

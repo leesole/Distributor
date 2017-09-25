@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.ViewModels.BlockViews;
 
 namespace Distributor.Helpers
 {
@@ -21,11 +22,66 @@ namespace Distributor.Helpers
 
         public static Block GetBlockForReferenceIdAndType(ApplicationDbContext db, LevelEnum referenceLevel, Guid ofReferenceId, Guid byReferenceId)
         {
-            Block block = (from b in db.Blocked
+            Block block = (from b in db.Blocks
                            where (b.Type == referenceLevel && b.BlockedOfId == ofReferenceId && b.BlockedById == byReferenceId)
                            select b).FirstOrDefault();
 
             return block;
+        }
+
+        public static List<Block> GetBlocksCreatedByUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Block> list = GetBlocksCreatedByUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Block> GetBlocksCreatedByUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<Block> list = (from b in db.Blocks
+                                where b.BlockedByUserId == appUserId
+                                select b).ToList();
+
+            return list;
+        }
+
+        public static List<Block> GetBlocksCreatedByUserBranches(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Block> list = GetBlocksCreatedByUserBranches(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Block> GetBlocksCreatedByUserBranches(ApplicationDbContext db, Guid appUserId)
+        {
+            List<Branch> userBranches = BranchHelpers.GetBranchesForUser(db, appUserId);
+
+            List<Block> list = (from ub in userBranches
+                                join b in db.Blocks on ub.BranchId equals b.BlockedById
+                                select b).Distinct().ToList();
+
+            return list;
+        }
+
+        public static List<Block> GetBlocksCreatedByUserCompany(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Block> list = GetBlocksCreatedByUserCompany(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Block> GetBlocksCreatedByUserCompany(ApplicationDbContext db, Guid appUserId)
+        {
+            Company userCompany = CompanyHelpers.GetCompanyForUser(db, appUserId);
+
+            List<Block> list = (from b in db.Blocks
+                                where b.BlockedById == userCompany.CompanyId
+                                select b).ToList();
+
+            return list;
         }
 
         #endregion
@@ -84,6 +140,81 @@ namespace Distributor.Helpers
                 blocked = true;
 
             return blocked;
+        }
+
+        #endregion
+    }
+
+    public static class BlockViewHelpers
+    {
+        #region Get
+
+        public static List<BlockView> GetBlockViewByType(Guid appUserId, LevelEnum type)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<BlockView> list = GetBlockViewByType(db, appUserId, type);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<BlockView> GetBlockViewByType(ApplicationDbContext db, Guid appUserId, LevelEnum type)
+        {
+            List<BlockView> list = new List<BlockView>();
+
+            List<Block> blockList = null;
+
+            //Depending on type passed through will depend on what level of blocks we are collecting
+            switch (type)
+            {
+                case LevelEnum.User:
+                    blockList = BlockHelpers.GetBlocksCreatedByUser(db, appUserId);
+                    break;
+                case LevelEnum.Branch:
+                    blockList = BlockHelpers.GetBlocksCreatedByUserBranches(db, appUserId);
+                    break;
+                case LevelEnum.Company:
+                    blockList = BlockHelpers.GetBlocksCreatedByUserCompany(db, appUserId);
+                    break;
+            }
+
+            foreach (Block block in blockList)
+            {
+                //get the user/branch/company names depending on the block type
+                string nameBy = "";
+                string nameOn = "";
+
+                switch (block.Type)
+                {
+                    case LevelEnum.User:
+                        nameBy = AppUserHelpers.GetAppUserName(db, block.BlockedById);
+                        nameOn = AppUserHelpers.GetAppUserName(db, block.BlockedOfId);
+                        break;
+                    case LevelEnum.Branch:
+                        nameBy = BranchHelpers.GetBranchNameTownPostCode(db, block.BlockedById);
+                        nameOn = BranchHelpers.GetBranchNameTownPostCode(db, block.BlockedOfId);
+                        break;
+                    case LevelEnum.Company:
+                        nameBy = CompanyHelpers.GetCompanyNameTownPostCode(db, block.BlockedById);
+                        nameOn = CompanyHelpers.GetCompanyNameTownPostCode(db, block.BlockedOfId);
+                        break;
+                }
+
+                string blockedByUserName = AppUserHelpers.GetAppUserName(db, appUserId);
+
+                BlockView view = new BlockView()
+                {
+                    BlockId = block.BlockId,
+                    Type = block.Type,
+                    BlockedByName = nameBy,
+                    BlockedByUserName = blockedByUserName,
+                    BlockedOfName = nameOn,
+                    BlockedOn = block.BlockedOn
+                };
+
+                list.Add(view);
+            }
+
+            return list;
         }
 
         #endregion

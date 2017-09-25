@@ -178,8 +178,6 @@ namespace Distributor.Controllers
 
             Branch userBranch = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
 
-            model.GroupListViewsForUserOnly = GroupViewHelpers.GetGroupEditViewForForUserOnly(db, AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
-
             //DropDowns
             ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(userBranch.CompanyId, userBranch.BranchId);
             ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();

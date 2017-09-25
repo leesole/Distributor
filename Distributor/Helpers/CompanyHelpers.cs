@@ -104,6 +104,21 @@ namespace Distributor.Helpers
             return company;
         }
 
+        public static string GetCompanyNameTownPostCode(Guid companyId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string name = GetCompanyNameTownPostCode(db, companyId);
+            db.Dispose();
+            return name;
+        }
+
+        public static string GetCompanyNameTownPostCode(ApplicationDbContext db, Guid companyId)
+        {
+            Company company = GetCompany(db, companyId);
+            Branch headOffice = BranchHelpers.GetBranch(db, company.HeadOfficeBranchId);
+            return headOffice.BranchName + ", " + headOffice.AddressTownCity + ", " + headOffice.AddressPostcode;
+        }
+
         #endregion
 
         #region Create

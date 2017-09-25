@@ -96,5 +96,22 @@ namespace Distributor.Controllers
 
             return Json(new { success = true });
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult GetCampaignForHomeCampaignView(Guid campaignId)
+        {
+            if (campaignId != null)
+            {
+                Campaign campaignDetails = CampaignHelpers.GetCampaign(campaignId);
+
+                if (campaignDetails != null)
+                {
+                    return Json(new { campaignDetails, success = true });
+                }
+                return Json(new { success = false });
+            }
+            return Json(new { success = false });
+        }
     }
 }

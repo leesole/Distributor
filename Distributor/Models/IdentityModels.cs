@@ -57,7 +57,7 @@ namespace Distributor.Models
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupMember> GroupMembers { get; set; }
         public DbSet<Friend> Friends { get; set; }
-        public DbSet<Block> Blocked { get; set; }
+        public DbSet<Block> Blocks { get; set; }
 
         public static ApplicationDbContext Create()
         {
