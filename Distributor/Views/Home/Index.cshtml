@@ -127,17 +127,28 @@
                         else
                         {
                             <div class="w3-content w3-display-container">
-                                @foreach (var image in Model.CampaignList)
+                                @for (int b = 0; b < Model.CampaignList.Count; b++)
                                 {
                                     var userImageSource = "";
                                     try
                                     {
-                                        var userBase64 = Convert.ToBase64String(image.Image);
+                                        var userBase64 = Convert.ToBase64String(Model.CampaignList[b].Image);
                                         userImageSource = String.Format("data:image/gif;base64,{0}", userBase64);
+                                        <img class="userCampaignImage" src=@userImageSource style="width:100%" />
                                     }
-                                    catch { }
-                                    <img class="userCampaignImage" src=@userImageSource style="width:100%" />
-                                    <p class="userCampaignWebsite">@Html.DisplayFor(modelItem => image.Website)</p>
+                                    catch
+                                    {
+                                        <img class="userCampaignImage" src="~/images/NoImage.png" style="width:100%" />
+                                    }
+                                    if (Model.CampaignList[b].Website != null && Model.CampaignList[b].Website != "")
+                                    {
+                                        var userWebAddress = "http://" + @Model.CampaignList[b].Website;
+                                        <p class="userCampaignWebsite"><a href=@userWebAddress>Visit website</a></p>
+                                    }
+                                    else
+                                    {
+                                        <p class="userCampaignWebsite"></p>
+                                    }
                                     <button class="w3-button w3-black w3-display-left" onclick="plusDivsUser(-1)">&#10094;</button>
                                     <button class="w3-button w3-black w3-display-right" onclick="plusDivsUser(1)">&#10095;</button>
                                 }
@@ -160,12 +171,12 @@
                         else
                         {
                             <div class="w3-content w3-display-container">
-                                @foreach (var image in Model.CampaignDashboardList)
+                                @for (int a = 0; a < Model.CampaignDashboardList.Count; a++)
                                 {
                                     var imageSource = "";
                                     try
                                     {
-                                        var base64 = Convert.ToBase64String(image.Image);
+                                        var base64 = Convert.ToBase64String(Model.CampaignDashboardList[a].Image);
                                         imageSource = String.Format("data:image/gif;base64,{0}", base64);
                                         <img class="campaignImage" src=@imageSource style="width:100%" />
                                     }
@@ -173,9 +184,15 @@
                                     {
                                         <img class="campaignImage" src="~/images/NoImage.png" style="width:100%" />
                                     }
-                                    @*<img class="campaignImage" src=@imageSource style="width:100%" />*@
-
-                                    <p class="campaignWebsite">@Html.DisplayFor(modelItem => image.Website)</p>
+                                    if (Model.CampaignDashboardList[a].Website != null && Model.CampaignDashboardList[a].Website != "")
+                                    {
+                                        var webAddress = "http://" + @Model.CampaignDashboardList[a].Website;
+                                        <p class="campaignWebsite"><a href=@webAddress>Visit website</a></p>
+                                    }
+                                    else
+                                    {
+                                        <p class="campaignWebsite"></p>
+                                    }
                                     <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
                                     <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
                                 }
