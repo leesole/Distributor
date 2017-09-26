@@ -13,11 +13,53 @@
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
 
-            $(document).ready(function () {
-                $('#yourRequestsTable').dataTable();
-                $('#availableListingsTable').dataTable();
-            });
+        $(document).ready(function () {
+            $('#yourRequestsTable').dataTable();
+            $('#availableListingsTable').dataTable();
+        });
 
+        var slideIndexUser = 1;
+        showDivsUser(slideIndexUser);
+
+        function plusDivsUser(z) {
+            showDivsUser(slideIndexUser += z);
+        }
+
+        function showDivsUser(z) {
+            var y;
+            var xImageUser = document.getElementsByClassName("userCampaignImage");
+            var xWebsiteUser = document.getElementsByClassName("userCampaignWebsite");
+            if (z > xImageUser.length) { slideIndexUser = 1 }
+            if (z < 1) { slideIndexUser = xImageUser.length }
+            for (y = 0; y < xImageUser.length; y++) {
+                xImageUser[y].style.display = "none";
+                xWebsiteUser[y].style.display = "none";
+            }
+            xImageUser[slideIndexUser - 1].style.display = "block";
+            xWebsiteUser[slideIndexUser - 1].style.display = "block";
+        }
+
+
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var xImage = document.getElementsByClassName("campaignImage");
+            var xWebsite = document.getElementsByClassName("campaignWebsite");
+            if (n > xImage.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = xImage.length }
+            for (i = 0; i < xImage.length; i++) {
+                xImage[i].style.display = "none";
+                xWebsite[i].style.display = "none";
+            }
+            xImage[slideIndex - 1].style.display = "block";
+            xWebsite[slideIndex - 1].style.display = "block";
+        }
     </script>
 }
 
@@ -71,9 +113,10 @@
                     <h1><b>@ViewBag.Orders</b></h1>
                 </div>
             </div>
+
             <div class="col-md-12" style="padding:0px 5px 5px 0px">
-                <div class="login-panel panel panel-info" onclick="location.href='@Url.Action("Campaigns", "ManageListings")'">
-                    <div class="panel-heading">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading" onclick="location.href='@Url.Action("Campaigns", "ManageListings")'">
                         <h3 class="panel-title">Your campaigns</h3>
                     </div>
                     <div class="panel-body">
@@ -83,28 +126,21 @@
                         }
                         else
                         {
-                            <div class="table-responsive">
-                                <table class="table table-condensed">
-                                    <thead>
-                                        <tr class="info">
-                                            <th>Name</th>
-                                            <th>Description</th>
-                                            <th>Website</th>
-                                            <th>Start date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model.CampaignList)
-                                        {
-                                            <tr id=@item.CampaignId>
-                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Website)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                            <div class="w3-content w3-display-container">
+                                @foreach (var image in Model.CampaignList)
+                                {
+                                    var userImageSource = "";
+                                    try
+                                    {
+                                        var userBase64 = Convert.ToBase64String(image.Image);
+                                        userImageSource = String.Format("data:image/gif;base64,{0}", userBase64);
+                                    }
+                                    catch { }
+                                    <img class="userCampaignImage" src=@userImageSource style="width:100%" />
+                                    <p class="userCampaignWebsite">@Html.DisplayFor(modelItem => image.Website)</p>
+                                    <button class="w3-button w3-black w3-display-left" onclick="plusDivsUser(-1)">&#10094;</button>
+                                    <button class="w3-button w3-black w3-display-right" onclick="plusDivsUser(1)">&#10095;</button>
+                                }
                             </div>
                         }
                     </div>
@@ -112,8 +148,8 @@
             </div>
 
             <div class="col-md-12" style="padding:0px 5px 5px 0px">
-                <div class="login-panel panel panel-info" onclick="location.href='@Url.Action("Campaigns", "GeneralInfo")'">
-                    <div class="panel-heading">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading" onclick="location.href='@Url.Action("Campaigns", "GeneralInfo")'">
                         <h3 class="panel-title">Recent campaigns</h3>
                     </div>
                     <div class="panel-body">
@@ -123,29 +159,27 @@
                         }
                         else
                         {
-                            <div class="table-responsive">
-                                <table class="table table-condensed">
-                                    <tr class="info">
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Website</th>
-                                        <th>Start date</th>
-                                    </tr>
-                                    @foreach (var item in Model.CampaignDashboardList)
+                            <div class="w3-content w3-display-container">
+                                @foreach (var image in Model.CampaignDashboardList)
+                                {
+                                    var imageSource = "";
+                                    try
                                     {
-                                        <tr id=@item.CampaignId>
-                                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Website)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.CampaignStartDateTime)</td>
-                                        </tr>
+                                        var base64 = Convert.ToBase64String(image.Image);
+                                        imageSource = String.Format("data:image/gif;base64,{0}", base64);
                                     }
-                                </table>
+                                    catch { }
+                                    <img class="campaignImage" src=@imageSource style="width:100%" />
+                                    <p class="campaignWebsite">@Html.DisplayFor(modelItem => image.Website)</p>
+                                    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                                    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                                }
                             </div>
                         }
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="col-md-8">
             <div class="login-panel panel panel-info">

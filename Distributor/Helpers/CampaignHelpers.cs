@@ -179,7 +179,7 @@ namespace Distributor.Helpers
                 case ExternalSearchLevelEnum.Company: //user's current company to filter
                     list = list.Where(l => l.CampaignOriginatorCompanyId == branch.CompanyId).ToList();
                     break;
-                case ExternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                case ExternalSearchLevelEnum.Group: //user's built group sets to filter ***LSLSLS TO BE DONE***
                     break;
             }
 
