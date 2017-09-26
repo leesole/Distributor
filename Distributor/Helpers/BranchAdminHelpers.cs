@@ -31,12 +31,9 @@ namespace Distributor.Helpers
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
 
             //Get the list of branches this User is linked to
-            List<Branch> branchesForAppUser = (from bu in db.BranchUsers
-                                               join b in db.Branches on bu.UserId equals appUser.AppUserId
-                                               select b).ToList();
-            var branchesForAppUserDistinct = branchesForAppUser.Distinct();
+            List<Branch> branchesForAppUser = BranchHelpers.GetBranchesForUser(db, appUser.AppUserId);
 
-            foreach (Branch branch in branchesForAppUserDistinct)
+            foreach (Branch branch in branchesForAppUser)
             {
                 //Build list of company users to add to this branchView
                 List<BranchAdminViewCompanyUser> branchAdminCompanyUsers = new List<BranchAdminViewCompanyUser>();
