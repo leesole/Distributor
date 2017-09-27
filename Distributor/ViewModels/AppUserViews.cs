@@ -52,7 +52,7 @@ namespace Distributor.ViewModels
         public UserRoleEnum UserRole { get; set; }
     }
 
-    public class AppUserEditView : BaseViewWithCallingFields
+    public class AppUserEditView : CallingFields
     {
         public Guid AppUserId { get; set; }
 
@@ -107,6 +107,15 @@ namespace Distributor.ViewModels
         public string BranchAddressPostcode { get; set; }
 
 
+        [Display(Name = "Display blocked listings")]
+        public bool CampaignDashboardDisplayBlockedListings { get; set; }
+
+        [Display(Name = "Display blocked listings")]
+        public bool RequiredListingDashboardDisplayBlockedListings { get; set; }
+
+        [Display(Name = "Display blocked listings")]
+        public bool AvailableListingDashboardDisplayBlockedListings { get; set; }
+
         [Display(Name = "Max distance from current branch (miles)")]
         public int? CampaignDashboardMaxDistance { get; set; }
 
@@ -137,6 +146,15 @@ namespace Distributor.ViewModels
         [Display(Name = "Selection level")]
         public ExternalSearchLevelEnum RequiredListingDashboardExternalSelectionLevel { get; set; }
 
+
+        [Display(Name = "Display blocked listings")]
+        public bool CampaignGeneralInfoDisplayBlockedListings { get; set; }
+
+        [Display(Name = "Display blocked listings")]
+        public bool RequiredListingGeneralInfoDisplayBlockedListings { get; set; }
+
+        [Display(Name = "Display blocked listings")]
+        public bool AvailableListingGeneralInfoDisplayBlockedListings { get; set; }
 
         [Display(Name = "Max distance from current branch (miles)")]
         public int? CampaignGeneralInfoMaxDistance { get; set; }

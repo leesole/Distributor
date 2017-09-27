@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -274,13 +275,16 @@
     <Compile Include="Migrations\201709220937468_6th.Designer.cs">
       <DependentUpon>201709220937468_6th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709270655445_7th.cs" />
+    <Compile Include="Migrations\201709270655445_7th.Designer.cs">
+      <DependentUpon>201709270655445_7th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\AppUserSettings.cs" />
     <Compile Include="Models\AvailableListing.cs" />
     <Compile Include="Models\AvailableOffer.cs" />
-    <Compile Include="Models\BaseViewWithCallingFields.cs" />
     <Compile Include="Models\Block.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\BranchUser.cs" />
@@ -302,8 +306,10 @@
     <Compile Include="Templates\AppUserSettingsTemplates.cs" />
     <Compile Include="ViewModels\AppUserViews.cs" />
     <Compile Include="ViewModels\AvailableListingViews.cs" />
+    <Compile Include="ViewModels\Blocks.cs" />
     <Compile Include="ViewModels\BlockViews.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
+    <Compile Include="ViewModels\CallingFields.cs" />
     <Compile Include="ViewModels\CampaignViews.cs" />
     <Compile Include="ViewModels\DashboardView.cs" />
     <Compile Include="ViewModels\GroupViews.cs" />
@@ -494,6 +500,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709220937468_6th.resx">
       <DependentUpon>201709220937468_6th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709270655445_7th.resx">
+      <DependentUpon>201709270655445_7th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

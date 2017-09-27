@@ -29,6 +29,28 @@ namespace Distributor.Helpers
             return block;
         }
 
+        public static void GetBlocksForAllTypesForSpecificOfBy(ApplicationDbContext db, Guid userOfId, Guid userById, Guid branchOfId, Guid branchById, Guid companyOfId, Guid companyById, out bool userBlocked, out bool branchBlocked, out bool companyBlocked)
+        {
+            Block userBlock = GetBlockForReferenceIdAndType(db, LevelEnum.User, userOfId, userById);
+            Block branchBlock = GetBlockForReferenceIdAndType(db, LevelEnum.Branch, branchOfId, branchById);
+            Block companyBlock = GetBlockForReferenceIdAndType(db, LevelEnum.Company, companyOfId, companyById);
+
+            if (userBlock != null)
+                userBlocked = true;
+            else
+                userBlocked = false;
+
+            if (branchBlock != null)
+                branchBlocked = true;
+            else
+                branchBlocked = false;
+
+            if (companyBlock != null)
+                companyBlocked = true;
+            else
+                companyBlocked = false;
+        }
+
         public static List<Block> GetBlocksCreatedByUser(Guid appUserId)
         {
             ApplicationDbContext db = new ApplicationDbContext();

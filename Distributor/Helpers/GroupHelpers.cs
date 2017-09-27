@@ -264,7 +264,7 @@ namespace Distributor.Helpers
             GroupEditView view = new GroupEditView()
             {
                 GroupListViewsCreatedByUser = groupListViewsCreatedByUser,
-                GroupListViewsRelevantToUser = null
+                GroupListViewsRelevantToUser = new List<GroupListView>()
             };
 
             return view;

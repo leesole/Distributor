@@ -212,6 +212,29 @@ namespace Distributor.Controllers
 
                 return RedirectToAction("Edit");
             }
+
+            Branch userBranch = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
+
+            //DropDowns
+            ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(userBranch.CompanyId, userBranch.BranchId);
+            ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
+            ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
+
+            //Counters
+            if (model.UserBlockListView == null)
+                model.UserBlockListView = new List<BlockView>();
+            if (model.UserBranchBlockListView == null)
+                model.UserBranchBlockListView = new List<BlockView>();
+            if (model.UserCompanyBlockListView == null)
+                model.UserCompanyBlockListView = new List<BlockView>();
+
+            ViewBag.UserBlockCount = model.UserBlockListView.Count();
+            ViewBag.UserBranchBlockCount = model.UserBranchBlockListView.Count();
+            ViewBag.UserCompanyBlockCount = model.UserCompanyBlockListView.Count();
+
+            //rebuild group model
+            model.GroupListViewsForUserOnly = GroupViewHelpers.GetGroupEditViewForForUserOnly(db, model.AppUserId);
+
             return View(model);
         }
 

@@ -78,7 +78,7 @@ namespace Distributor.Helpers
                 case ExternalSearchLevelEnum.Company: //user's current company to filter
                     list = list.Where(l => l.ListingOriginatorCompanyId == branch.CompanyId).ToList();
                     break;
-                case ExternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                case ExternalSearchLevelEnum.Group: //LSLSLSuser's built group sets to filter ***TO BE DONE***
                     break;
             }
 
@@ -415,7 +415,12 @@ namespace Distributor.Helpers
         {
             List<RequirementListingGeneralInfoView> allRequirementListingsGeneralInfoView = new List<RequirementListingGeneralInfoView>();
 
-            List<RequirementListing> allRequirementListings = RequirementListingHelpers.GetAllGeneralInfoFilteredRequirementListings(db, AppUserHelpers.GetAppUserIdFromUser(user));
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUser.AppUserId);
+            bool displayBlocks = settings.RequiredListingGeneralInfoDisplayBlockedListings;
+            Branch currentBranch = BranchHelpers.GetBranch(appUser.CurrentBranchId);
+
+            List<RequirementListing> allRequirementListings = RequirementListingHelpers.GetAllGeneralInfoFilteredRequirementListings(db, appUser.AppUserId);
 
             foreach (RequirementListing requirementListing in allRequirementListings)
             {
@@ -425,10 +430,20 @@ namespace Distributor.Helpers
                 if (offer != null)
                     offerQty = offer.CurrentOfferQuantity;
 
+                bool userBlocked = false;
+                bool branchBlocked = false;
+                bool companyBlocked = false;
+                
+                BlockHelpers.GetBlocksForAllTypesForSpecificOfBy(db, requirementListing.ListingOriginatorAppUserId, appUser.AppUserId, requirementListing.ListingOriginatorBranchId, currentBranch.BranchId, requirementListing.ListingOriginatorCompanyId, currentBranch.CompanyId, out userBlocked, out branchBlocked, out companyBlocked);
+
                 RequirementListingGeneralInfoView requirementListingGeneralInfoView = new RequirementListingGeneralInfoView()
                 {
                     RequirementListing = requirementListing,
-                    OfferQuantity = offerQty
+                    OfferQuantity = offerQty,
+                    UserLevelBlock = userBlocked,
+                    BranchLevelBlock = branchBlocked,
+                    CompanyLevelBlock = companyBlocked,
+                    DisplayBlocks = displayBlocks
                 };
 
                 allRequirementListingsGeneralInfoView.Add(requirementListingGeneralInfoView);

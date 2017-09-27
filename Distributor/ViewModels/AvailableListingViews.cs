@@ -8,7 +8,7 @@ using static Distributor.Enums.ItemEnums;
 
 namespace Distributor.ViewModels
 {
-    public class AvailableListingAddView : BaseViewWithCallingFields
+    public class AvailableListingAddView : CallingFields
     {
         [Required]
         [Display(Name = "Description")]

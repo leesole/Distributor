@@ -8,7 +8,7 @@ using static Distributor.Enums.ItemEnums;
 
 namespace Distributor.ViewModels
 {
-    public class RequirementListingAddView : BaseViewWithCallingFields
+    public class RequirementListingAddView : CallingFields
     {
         [Required]
         [Display(Name = "Description")]
@@ -46,7 +46,7 @@ namespace Distributor.ViewModels
         public Guid? SelectedCampaignId { get; set; }
     }
 
-    public class RequirementListingGeneralInfoView
+    public class RequirementListingGeneralInfoView : Blocks
     {
         public decimal OfferQuantity { get; set; }
 

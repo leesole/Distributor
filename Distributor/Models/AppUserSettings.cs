@@ -16,6 +16,15 @@ namespace Distributor.Models
 
         public Guid AppUserId { get; set; }
 
+        //Dashboard settings
+        [Display(Name = "Display blocked listings")]
+        public bool CampaignDashboardDisplayBlockedListings { get; set; }
+
+        [Display(Name = "Display blocked listings")]
+        public bool RequiredListingDashboardDisplayBlockedListings { get; set; }
+
+        [Display(Name = "Display blocked listings")]
+        public bool AvailableListingDashboardDisplayBlockedListings { get; set; }
 
         [Display(Name = "Max distance from current branch (miles)")]
         public int? CampaignDashboardMaxDistance { get; set; }
@@ -48,6 +57,16 @@ namespace Distributor.Models
         public ExternalSearchLevelEnum AvailableListingDashboardExternalSelectionLevel { get; set; }
 
 
+        //General Info settings
+        [Display(Name = "Display blocked listings")]
+        public bool CampaignGeneralInfoDisplayBlockedListings { get; set; }
+
+        [Display(Name = "Display blocked listings")]
+        public bool RequiredListingGeneralInfoDisplayBlockedListings { get; set; }
+
+        [Display(Name = "Display blocked listings")]
+        public bool AvailableListingGeneralInfoDisplayBlockedListings { get; set; }
+
         [Display(Name = "Max distance from current branch (miles)")]
         public int? CampaignGeneralInfoMaxDistance { get; set; }
 
@@ -71,6 +90,7 @@ namespace Distributor.Models
         public ExternalSearchLevelEnum AvailableListingGeneralInfoExternalSelectionLevel { get; set; }
 
 
+        //Manage View settings
         [Required]
         [Display(Name = "Selection level")]
         public InternalSearchLevelEnum CampaignManageViewInternalSelectionLevel { get; set; }

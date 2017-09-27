@@ -245,17 +245,23 @@ namespace Distributor.Helpers
         public static AppUserSettings UpdateUserSettingsFromAppUserEditView(ApplicationDbContext db, AppUserEditView view)
         {
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettings(db, view.AppUserSettingsId);
+            settings.CampaignDashboardDisplayBlockedListings = view.CampaignDashboardDisplayBlockedListings;
             settings.CampaignDashboardMaxDistance = view.CampaignDashboardMaxDistance;
             settings.CampaignDashboardMaxAge = view.CampaignDashboardMaxAge;
+            settings.RequiredListingDashboardDisplayBlockedListings = view.RequiredListingDashboardDisplayBlockedListings;
             settings.RequiredListingDashboardMaxDistance = view.RequiredListingDashboardMaxDistance;
             settings.RequiredListingDashboardMaxAge = view.RequiredListingDashboardMaxAge;
+            settings.RequiredListingDashboardDisplayBlockedListings = view.RequiredListingDashboardDisplayBlockedListings;
             settings.AvailableListingDashboardMaxDistance = view.AvailableListingDashboardMaxDistance;
             settings.AvailableListingDashboardMaxAge = view.AvailableListingDashboardMaxAge;
             settings.CampaignDashboardExternalSelectionLevel = view.CampaignDashboardExternalSelectionLevel;
             settings.RequiredListingDashboardExternalSelectionLevel = view.RequiredListingDashboardExternalSelectionLevel;
             settings.AvailableListingDashboardExternalSelectionLevel = view.AvailableListingDashboardExternalSelectionLevel;
+            settings.CampaignGeneralInfoDisplayBlockedListings = view.CampaignGeneralInfoDisplayBlockedListings;
             settings.CampaignGeneralInfoMaxDistance = view.CampaignGeneralInfoMaxDistance;
+            settings.RequiredListingGeneralInfoDisplayBlockedListings = view.RequiredListingGeneralInfoDisplayBlockedListings;
             settings.RequiredListingGeneralInfoMaxDistance = view.RequiredListingGeneralInfoMaxDistance;
+            settings.AvailableListingGeneralInfoDisplayBlockedListings = view.AvailableListingGeneralInfoDisplayBlockedListings;
             settings.AvailableListingGeneralInfoMaxDistance = view.AvailableListingGeneralInfoMaxDistance;
             settings.CampaignManageViewInternalSelectionLevel = view.CampaignManageViewInternalSelectionLevel;
             settings.RequiredListingManageViewInternalSelectionLevel = view.RequiredListingManageViewInternalSelectionLevel;

@@ -8,7 +8,7 @@ using static Distributor.Enums.EntityEnums;
 
 namespace Distributor.ViewModels
 {
-    public class CampaignAddView : BaseViewWithCallingFields
+    public class CampaignAddView : CallingFields
     {
         [Display(Name = "Campaign name")]
         public string Name { get; set; }
