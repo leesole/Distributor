@@ -425,7 +425,7 @@ namespace Distributor.Helpers
             foreach (RequirementListing requirementListing in allRequirementListings)
             {
                 //Find any related offers
-                Offer offer = OfferHelpers.GetOfferForListingAndUser(db, requirementListing.ListingId, AppUserHelpers.GetGuidFromUserGetAppUserId(user.Identity.GetAppUserId()));
+                Offer offer = OfferHelpers.GetOfferForListingAndUser(db, requirementListing.ListingId, appUser.AppUserId);
                 decimal offerQty = 0M;
                 if (offer != null)
                     offerQty = offer.CurrentOfferQuantity;

@@ -14,18 +14,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript">
 
-        //Render tables
-        $(document).ready(function () {
-            $('#requestsTable').dataTable();
-        });
+    <script type="text/javascript">
 
         $(function () {
             //show/hide offer details to edit
             $('.showhideofferdetails').click(function () {
-                alert("clicked");
                 var id = $(this).closest('tr').attr('id');
                 var offerButtonId = "offerbutton" + id.toString();
                 var saveButtonId = "savebutton" + id.toString();

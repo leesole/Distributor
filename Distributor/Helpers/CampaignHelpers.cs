@@ -406,13 +406,28 @@ namespace Distributor.Helpers
         {
             List<CampaignGeneralInfoView> allCampaignsGeneralInfoView = new List<CampaignGeneralInfoView>();
 
-            List<Campaign> allCampaigns = CampaignHelpers.GetAllGeneralInfoFilteredCampaigns(db, AppUserHelpers.GetAppUserIdFromUser(user));
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUser.AppUserId);
+            bool displayBlocks = settings.RequiredListingGeneralInfoDisplayBlockedListings;
+            Branch currentBranch = BranchHelpers.GetBranch(appUser.CurrentBranchId);
+
+            List<Campaign> allCampaigns = CampaignHelpers.GetAllGeneralInfoFilteredCampaigns(db, appUser.AppUserId);
 
             foreach (Campaign campaign in allCampaigns)
             {
+                bool userBlocked = false;
+                bool branchBlocked = false;
+                bool companyBlocked = false;
+
+                BlockHelpers.GetBlocksForAllTypesForSpecificOfBy(db, campaign.CampaignOriginatorAppUserId, appUser.AppUserId, campaign.CampaignOriginatorBranchId, currentBranch.BranchId, campaign.CampaignOriginatorCompanyId, currentBranch.CompanyId, out userBlocked, out branchBlocked, out companyBlocked);
+
                 CampaignGeneralInfoView campaignGeneralInfoView = new CampaignGeneralInfoView()
                 {
-                    Campaign = campaign
+                    Campaign = campaign,
+                    UserLevelBlock = userBlocked,
+                    BranchLevelBlock = branchBlocked,
+                    CompanyLevelBlock = companyBlocked,
+                    DisplayBlocks = displayBlocks
                 };
 
                 allCampaignsGeneralInfoView.Add(campaignGeneralInfoView);

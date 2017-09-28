@@ -74,18 +74,70 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Name)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.StrapLine)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Description)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Website)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignStartDateTime)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignEndDateTime)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationName)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressLine1)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressTownCity)</td>
-                <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressPostcode)</td>
-            </tr>
+            if (item.CompanyLevelBlock && item.DisplayBlocks)
+            {
+                <tr style="color:lightslategrey">
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Name)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.StrapLine)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Description)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Website)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignStartDateTime)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignEndDateTime)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationName)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressLine1)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressTownCity)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressPostcode)</td>
+                </tr>
+            }
+            else if (item.BranchLevelBlock && item.DisplayBlocks)
+            {
+                <tr style="color:lightsteelblue">
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Name)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.StrapLine)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Description)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Website)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignStartDateTime)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignEndDateTime)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationName)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressLine1)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressTownCity)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressPostcode)</td>
+                </tr>
+            }
+            else if (item.UserLevelBlock && item.DisplayBlocks)
+            {
+                <tr style="color:lightskyblue">
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Name)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.StrapLine)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Description)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Website)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignStartDateTime)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignEndDateTime)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationName)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressLine1)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressTownCity)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressPostcode)</td>
+                </tr>
+            }
+            else if ((item.CompanyLevelBlock || item.BranchLevelBlock || item.UserLevelBlock) && !item.DisplayBlocks)
+            {
+                //do nothing, don't show the row
+            }
+            else
+            {
+                <tr>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Name)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.StrapLine)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Description)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Website)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignStartDateTime)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignEndDateTime)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationName)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressLine1)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressTownCity)</td>
+                    <td onclick="location.href='@Url.Action("Details", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressPostcode)</td>
+                </tr>
+            }
         }
 
     </table>

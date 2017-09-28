@@ -425,20 +425,35 @@ namespace Distributor.Helpers
         {
             List<AvailableListingGeneralInfoView> allAvailableListingsGeneralInfoView = new List<AvailableListingGeneralInfoView>();
 
-            List<AvailableListing> allAvailableListings = AvailableListingHelpers.GetAllGeneralInfoFilteredAvailableListings(db, AppUserHelpers.GetAppUserIdFromUser(user));
+            AppUser appUser = AppUserHelpers.GetAppUser(db, user);
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUser.AppUserId);
+            bool displayBlocks = settings.RequiredListingGeneralInfoDisplayBlockedListings;
+            Branch currentBranch = BranchHelpers.GetBranch(appUser.CurrentBranchId);
 
-            foreach (AvailableListing AvailableListing in allAvailableListings)
+            List<AvailableListing> allAvailableListings = AvailableListingHelpers.GetAllGeneralInfoFilteredAvailableListings(db, appUser.AppUserId);
+
+            foreach (AvailableListing availableListing in allAvailableListings)
             {
                 //Find any related offers
-                Offer offer = OfferHelpers.GetOfferForListingAndUser(db, AvailableListing.ListingId, AppUserHelpers.GetGuidFromUserGetAppUserId(user.Identity.GetAppUserId()));
+                Offer offer = OfferHelpers.GetOfferForListingAndUser(db, availableListing.ListingId, appUser.AppUserId);
                 decimal offerQty = 0M;
                 if (offer != null)
                     offerQty = offer.CurrentOfferQuantity;
 
+                bool userBlocked = false;
+                bool branchBlocked = false;
+                bool companyBlocked = false;
+
+                BlockHelpers.GetBlocksForAllTypesForSpecificOfBy(db, availableListing.ListingOriginatorAppUserId, appUser.AppUserId, availableListing.ListingOriginatorBranchId, currentBranch.BranchId, availableListing.ListingOriginatorCompanyId, currentBranch.CompanyId, out userBlocked, out branchBlocked, out companyBlocked);
+
                 AvailableListingGeneralInfoView AvailableListingGeneralInfoView = new AvailableListingGeneralInfoView()
                 {
-                    AvailableListing = AvailableListing,
-                    OfferQuantity = offerQty
+                    AvailableListing = availableListing,
+                    OfferQuantity = offerQty,
+                    UserLevelBlock = userBlocked,
+                    BranchLevelBlock = branchBlocked,
+                    CompanyLevelBlock = companyBlocked,
+                    DisplayBlocks = displayBlocks
                 };
 
                 allAvailableListingsGeneralInfoView.Add(AvailableListingGeneralInfoView);
