@@ -15,6 +15,17 @@ namespace Distributor.Controllers
     {
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Dashboard", "Home");
+
+            return View();
+        }
+
+        public ActionResult Dashboard()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             DashboardView dashboardView = new DashboardView();
 
             ViewBag.OutstandingTasks = 0;

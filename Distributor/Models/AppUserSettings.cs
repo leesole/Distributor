@@ -17,15 +17,6 @@ namespace Distributor.Models
         public Guid AppUserId { get; set; }
 
         //Dashboard settings
-        [Display(Name = "Display blocked listings")]
-        public bool CampaignDashboardDisplayBlockedListings { get; set; }
-
-        [Display(Name = "Display blocked listings")]
-        public bool RequiredListingDashboardDisplayBlockedListings { get; set; }
-
-        [Display(Name = "Display blocked listings")]
-        public bool AvailableListingDashboardDisplayBlockedListings { get; set; }
-
         [Display(Name = "Max distance from current branch (miles)")]
         public int? CampaignDashboardMaxDistance { get; set; }
 

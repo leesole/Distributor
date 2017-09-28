@@ -13,7 +13,8 @@ namespace Distributor
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
-                        "~/Scripts/jquery-ui.min.js"));
+                        "~/Scripts/jquery-ui.min.js",
+                        "~/Scripts/jquery.dynatable.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -29,7 +30,8 @@ namespace Distributor
                       "~/css/bootstrap-theme.css",
                       "~/css/modern-business.css",
                       "~/css/jquery-ui.min.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/css/jquery.dynatable.css"));
 
             //bundles.Add(new StyleBundle("~/css").Include(
             //          "~/css/jquery-ui.min.css"));

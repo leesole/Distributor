@@ -9,13 +9,10 @@ namespace Distributor.Templates
 {
     public class AppUserSettingsUserTemplate
     {
-        public bool CampaignDashboardDisplayBlockedListings = true;
         public int? CampaignDashboardMaxDistance = null;
         public double? CampaignDashboardMaxAge = 7;
-        public bool RequiredListingDashboardDisplayBlockedListings = true;
         public int? RequiredListingDashboardMaxDistance = null;
         public double? RequiredListingDashboardMaxAge = 7;
-        public bool AvailableListingDashboardDisplayBlockedListings = true;
         public int? AvailableListingDashboardMaxDistance = null;
         public double? AvailableListingDashboardMaxAge = 7;
         public ExternalSearchLevelEnum CampaignDashboardExternalSelectionLevel = ExternalSearchLevelEnum.All;

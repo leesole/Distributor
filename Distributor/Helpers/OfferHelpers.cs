@@ -373,7 +373,6 @@ namespace Distributor.Helpers
             AvailableListing availableListing = null;
             RequirementListing requirementListing = null;
             AppUser listingAppUser = null;
-            AppUserSettings listingAppUserSettings = null;
 
             switch (offer.ListingType)
             {

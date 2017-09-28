@@ -75,8 +75,11 @@ namespace Distributor.Helpers
             ExternalSearchLevelEnum campaignDashboardExternalSelectionLevel,
             ExternalSearchLevelEnum requiredListingDashboardtExternalSelectionLevel,
             ExternalSearchLevelEnum availableListingDashboardExternalSelectionLevel,
+            bool campaignGeneralInfoDisplayBlockedListings,
             int? campaignGeneralInfoMaxDistance,
+            bool requiredListingGeneralInfoDisplayBlockedListings,
             int? requiredListingGeneralInfoMaxDistance,
+            bool availableListingGeneralInfoDisplayBlockedListings,
             int? availableListingGeneralInfoMaxDistance,
             ExternalSearchLevelEnum campaignGeneralInfoExternalSelectionLevel,
             ExternalSearchLevelEnum requiredListingGeneralInfoExternalSelectionLevel,
@@ -97,8 +100,8 @@ namespace Distributor.Helpers
             ApplicationDbContext db = new ApplicationDbContext();
             AppUserSettings appUserSettings = CreateAppUserSettings(db, appUserId, campaignDashboardMaxDistance, campaignDashboardMaxAge, requiredListingDashboardMaxDistance, 
                 requiredListingDashboardMaxAge, availableListingDashboardMaxDistance, availableListingDashboardMaxAge, campaignDashboardExternalSelectionLevel, 
-                requiredListingDashboardtExternalSelectionLevel, availableListingDashboardExternalSelectionLevel, campaignGeneralInfoMaxDistance, requiredListingGeneralInfoMaxDistance, 
-                availableListingGeneralInfoMaxDistance, campaignGeneralInfoExternalSelectionLevel, requiredListingGeneralInfoExternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, 
+                requiredListingDashboardtExternalSelectionLevel, availableListingDashboardExternalSelectionLevel, campaignGeneralInfoDisplayBlockedListings, campaignGeneralInfoMaxDistance, requiredListingGeneralInfoDisplayBlockedListings, requiredListingGeneralInfoMaxDistance,
+                availableListingGeneralInfoDisplayBlockedListings, availableListingGeneralInfoMaxDistance, campaignGeneralInfoExternalSelectionLevel, requiredListingGeneralInfoExternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, 
                 campaignManageViewInternalSelectionLevel, requiredListingManageViewInternalSelectionLevel, availableListingManageViewInternalSelectionLevel, offersManageViewInternalSelectionLevel, 
                 offersAcceptedAuthorisationManageViewLevel, offersRejectedAuthorisationManageViewLevel, offersReturnedAuthorisationManageViewLevel, ordersManageViewInternalSelectionLevel, 
                 ordersDespatchedAuthorisationManageViewLevel, ordersDeliveredAuthorisationManageViewLevel, ordersCollectedAuthorisationManageViewLevel, ordersClosedAuthorisationManageViewLevel);
@@ -116,8 +119,11 @@ namespace Distributor.Helpers
             ExternalSearchLevelEnum campaignDashboardExternalSelectionLevel,
             ExternalSearchLevelEnum requiredListingDashboardExternalSelectionLevel,
             ExternalSearchLevelEnum availableListingDashboardExternalSelectionLevel,
+            bool campaignGeneralInfoDisplayBlockedListings,
             int? campaignGeneralInfoMaxDistance,
+            bool requiredListingGeneralInfoDisplayBlockedListings,
             int? requiredListingGeneralInfoMaxDistance,
+            bool availableListingGeneralInfoDisplayBlockedListings,
             int? availableListingGeneralInfoMaxDistance,
             ExternalSearchLevelEnum campaignGeneralInfoExternalSelectionLevel,
             ExternalSearchLevelEnum requiredListingGeneralInfoExternalSelectionLevel,
@@ -205,8 +211,11 @@ namespace Distributor.Helpers
                 CampaignDashboardExternalSelectionLevel = template.CampaignDashboardExternalSelectionLevel,
                 RequiredListingDashboardExternalSelectionLevel = template.RequiredListingDashboardExternalSelectionLevel,
                 AvailableListingDashboardExternalSelectionLevel = template.AvailableListingDashboardExternalSelectionLevel,
+                CampaignGeneralInfoDisplayBlockedListings = template.CampaignGeneralInfoDisplayBlockedListings,
                 CampaignGeneralInfoMaxDistance = template.CampaignGeneralInfoMaxDistance,
+                RequiredListingGeneralInfoDisplayBlockedListings = template.RequiredListingGeneralInfoDisplayBlockedListings,
                 RequiredListingGeneralInfoMaxDistance = template.RequiredListingGeneralInfoMaxDistance,
+                AvailableListingGeneralInfoDisplayBlockedListings = template.AvailableListingGeneralInfoDisplayBlockedListings,
                 AvailableListingGeneralInfoMaxDistance = template.AvailableListingGeneralInfoMaxDistance,
                 CampaignManageViewInternalSelectionLevel = template.CampaignManageViewInternalSelectionLevel,
                 RequiredListingManageViewInternalSelectionLevel = template.RequiredListingManageViewInternalSelectionLevel,
@@ -245,13 +254,10 @@ namespace Distributor.Helpers
         public static AppUserSettings UpdateUserSettingsFromAppUserEditView(ApplicationDbContext db, AppUserEditView view)
         {
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettings(db, view.AppUserSettingsId);
-            settings.CampaignDashboardDisplayBlockedListings = view.CampaignDashboardDisplayBlockedListings;
             settings.CampaignDashboardMaxDistance = view.CampaignDashboardMaxDistance;
             settings.CampaignDashboardMaxAge = view.CampaignDashboardMaxAge;
-            settings.RequiredListingDashboardDisplayBlockedListings = view.RequiredListingDashboardDisplayBlockedListings;
             settings.RequiredListingDashboardMaxDistance = view.RequiredListingDashboardMaxDistance;
             settings.RequiredListingDashboardMaxAge = view.RequiredListingDashboardMaxAge;
-            settings.RequiredListingDashboardDisplayBlockedListings = view.RequiredListingDashboardDisplayBlockedListings;
             settings.AvailableListingDashboardMaxDistance = view.AvailableListingDashboardMaxDistance;
             settings.AvailableListingDashboardMaxAge = view.AvailableListingDashboardMaxAge;
             settings.CampaignDashboardExternalSelectionLevel = view.CampaignDashboardExternalSelectionLevel;

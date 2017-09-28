@@ -279,6 +279,10 @@
     <Compile Include="Migrations\201709270655445_7th.Designer.cs">
       <DependentUpon>201709270655445_7th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709280638459_8th.cs" />
+    <Compile Include="Migrations\201709280638459_8th.Designer.cs">
+      <DependentUpon>201709280638459_8th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -335,6 +339,7 @@
     <Content Include="css\jquery-ui.structure.min.css" />
     <Content Include="css\jquery-ui.theme.css" />
     <Content Include="css\jquery-ui.theme.min.css" />
+    <Content Include="css\jquery.dynatable.css" />
     <Content Include="css\modern-business.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -354,6 +359,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.dynatable.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -460,6 +466,7 @@
     <Content Include="Views\Home\Campaigns.cshtml" />
     <Content Include="Views\Home\Requests.cshtml" />
     <Content Include="Views\AppUsers\BlockIndex.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -503,6 +510,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709270655445_7th.resx">
       <DependentUpon>201709270655445_7th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709280638459_8th.resx">
+      <DependentUpon>201709280638459_8th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
