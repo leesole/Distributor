@@ -136,16 +136,24 @@ namespace Distributor.Helpers
             else
                 buttons.UserBlockButton = !BlockHelpers.IsReferenceBlocked(db, LevelEnum.User, viewItemUserId, currentUserId);
 
-            if (!buttons.BranchAddFriendButton)
-                buttons.UserAddFriendButton = buttons.BranchAddFriendButton;
+            //If user block then do not show user buttons
+            if (!buttons.UserBlockButton)
+            {
+                buttons.UserAddFriendButton = buttons.UserBlockButton;
+                buttons.UserAddToGroupButton = buttons.UserBlockButton;
+            }
             else
-                buttons.UserAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.User, viewItemUserId, currentUserId);
+            {
+                if (!buttons.BranchAddFriendButton)
+                    buttons.UserAddFriendButton = buttons.BranchAddFriendButton;
+                else
+                    buttons.UserAddFriendButton = !FriendHelpers.IsReferenceAnActiveFriendRequest(db, LevelEnum.User, viewItemUserId, currentUserId);
 
-            if (!buttons.BranchAddToGroupButton)
-                buttons.UserAddToGroupButton = buttons.BranchAddToGroupButton;
-            else
-                buttons.UserAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.User, viewItemUserId, currentUserId);
-
+                if (!buttons.BranchAddToGroupButton)
+                    buttons.UserAddToGroupButton = buttons.BranchAddToGroupButton;
+                else
+                    buttons.UserAddToGroupButton = !GroupHelpers.IsReferenceInGroup(db, LevelEnum.User, viewItemUserId, currentUserId);
+            }
             return buttons;
         }
 

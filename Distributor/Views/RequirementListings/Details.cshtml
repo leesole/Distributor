@@ -186,7 +186,7 @@
                             @if (Model.Buttons.CompanyAddFriendButton)
                             {
                                 buttonId = "friend:company:" + Model.ListingCompanyDetails.CompanyId + ":" + currentAppUserId;
-                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-user"></span>Friend</button>
                             }
                             @if (Model.Buttons.CompanyAddToGroupButton)
                             {
@@ -227,7 +227,7 @@
                             @if (Model.Buttons.BranchAddFriendButton)
                             {
                                 buttonId = "friend:branch:" + Model.ListingBranchDetails.BranchId + ":" + currentAppUserId;
-                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-user"></span>Friend</button>
                             }
                             @if (Model.Buttons.BranchAddToGroupButton)
                             {
@@ -259,7 +259,7 @@
                             @if (Model.Buttons.UserAddFriendButton)
                             {
                                 buttonId = "friend:user:" + Model.ListingAppUser.AppUserId + ":" + currentAppUserId;
-                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Friend</button>
+                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-user"></span>Friend</button>
                             }
                             @if (Model.Buttons.UserAddToGroupButton)
                             {
