@@ -66,6 +66,7 @@ namespace Distributor.Helpers
             List<AvailableListing> list = (from rl in db.AvailableListings
                                            where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
                                                    && rl.ListingOriginatorDateTime >= dateCheck)
+                                           orderby rl.AvailableTo
                                            select rl).ToList();
 
             //Now bring in the Selection Level sort
@@ -427,7 +428,6 @@ namespace Distributor.Helpers
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUser.AppUserId);
-            bool displayBlocks = settings.RequiredListingGeneralInfoDisplayBlockedListings;
             Branch currentBranch = BranchHelpers.GetBranch(appUser.CurrentBranchId);
 
             List<AvailableListing> allAvailableListings = AvailableListingHelpers.GetAllGeneralInfoFilteredAvailableListings(db, appUser.AppUserId);
@@ -446,6 +446,17 @@ namespace Distributor.Helpers
 
                 BlockHelpers.GetBlocksForAllTypesForSpecificOfBy(db, availableListing.ListingOriginatorAppUserId, appUser.AppUserId, availableListing.ListingOriginatorBranchId, currentBranch.BranchId, availableListing.ListingOriginatorCompanyId, currentBranch.CompanyId, out userBlocked, out branchBlocked, out companyBlocked);
 
+                bool userMatchedOwner = false;
+                bool branchMatchedOwner = false;
+                bool companyMatchedOwner = false;
+
+                if (appUser.AppUserId == availableListing.ListingOriginatorAppUserId)
+                    userMatchedOwner = true;
+                if (currentBranch.BranchId == availableListing.ListingOriginatorBranchId)
+                    branchMatchedOwner = true;
+                if (currentBranch.CompanyId == availableListing.ListingOriginatorCompanyId)
+                    companyMatchedOwner = true;
+
                 AvailableListingGeneralInfoView AvailableListingGeneralInfoView = new AvailableListingGeneralInfoView()
                 {
                     AvailableListing = availableListing,
@@ -453,7 +464,13 @@ namespace Distributor.Helpers
                     UserLevelBlock = userBlocked,
                     BranchLevelBlock = branchBlocked,
                     CompanyLevelBlock = companyBlocked,
-                    DisplayBlocks = displayBlocks
+                    DisplayBlocks = settings.AvailableListingGeneralInfoDisplayBlockedListings,
+                    CompanyLevelOwner = companyMatchedOwner,
+                    DisplayMyCompanyRecords = settings.AvailableListingGeneralInfoDisplayMyUserListings,
+                    BranchLevelOwner = branchMatchedOwner,
+                    DisplayMyBranchRecords = settings.AvailableListingGeneralInfoDisplayMyBranchListings,
+                    UserLevelOwner = userMatchedOwner,
+                    DisplayMyRecords = settings.AvailableListingGeneralInfoDisplayMyUserListings
                 };
 
                 allAvailableListingsGeneralInfoView.Add(AvailableListingGeneralInfoView);

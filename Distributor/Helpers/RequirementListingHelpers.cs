@@ -65,6 +65,7 @@ namespace Distributor.Helpers
             List<RequirementListing> list = (from rl in db.RequirementListings
                                              where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
                                              && rl.ListingOriginatorDateTime >= dateCheck)
+                                             orderby rl.RequiredTo
                                              select rl).ToList();
 
             //Now bring in the Selection Level sort
@@ -417,7 +418,6 @@ namespace Distributor.Helpers
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUser.AppUserId);
-            bool displayBlocks = settings.RequiredListingGeneralInfoDisplayBlockedListings;
             Branch currentBranch = BranchHelpers.GetBranch(appUser.CurrentBranchId);
 
             List<RequirementListing> allRequirementListings = RequirementListingHelpers.GetAllGeneralInfoFilteredRequirementListings(db, appUser.AppUserId);
@@ -436,6 +436,17 @@ namespace Distributor.Helpers
                 
                 BlockHelpers.GetBlocksForAllTypesForSpecificOfBy(db, requirementListing.ListingOriginatorAppUserId, appUser.AppUserId, requirementListing.ListingOriginatorBranchId, currentBranch.BranchId, requirementListing.ListingOriginatorCompanyId, currentBranch.CompanyId, out userBlocked, out branchBlocked, out companyBlocked);
 
+                bool userMatchedOwner = false;
+                bool branchMatchedOwner = false;
+                bool companyMatchedOwner = false;
+
+                if (appUser.AppUserId == requirementListing.ListingOriginatorAppUserId)
+                    userMatchedOwner = true;
+                if (currentBranch.BranchId == requirementListing.ListingOriginatorBranchId)
+                    branchMatchedOwner = true;
+                if (currentBranch.CompanyId == requirementListing.ListingOriginatorCompanyId)
+                    companyMatchedOwner = true;
+
                 RequirementListingGeneralInfoView requirementListingGeneralInfoView = new RequirementListingGeneralInfoView()
                 {
                     RequirementListing = requirementListing,
@@ -443,7 +454,13 @@ namespace Distributor.Helpers
                     UserLevelBlock = userBlocked,
                     BranchLevelBlock = branchBlocked,
                     CompanyLevelBlock = companyBlocked,
-                    DisplayBlocks = displayBlocks
+                    DisplayBlocks = settings.RequiredListingGeneralInfoDisplayBlockedListings,
+                    CompanyLevelOwner = companyMatchedOwner,
+                    DisplayMyCompanyRecords = settings.RequiredListingGeneralInfoDisplayMyUserListings,
+                    BranchLevelOwner = branchMatchedOwner,
+                    DisplayMyBranchRecords = settings.RequiredListingGeneralInfoDisplayMyBranchListings,
+                    UserLevelOwner = userMatchedOwner,
+                    DisplayMyRecords = settings.RequiredListingGeneralInfoDisplayMyUserListings
                 };
 
                 allRequirementListingsGeneralInfoView.Add(requirementListingGeneralInfoView);

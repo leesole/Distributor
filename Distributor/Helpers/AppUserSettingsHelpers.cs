@@ -75,10 +75,19 @@ namespace Distributor.Helpers
             ExternalSearchLevelEnum campaignDashboardExternalSelectionLevel,
             ExternalSearchLevelEnum requiredListingDashboardtExternalSelectionLevel,
             ExternalSearchLevelEnum availableListingDashboardExternalSelectionLevel,
+            bool campaignGeneralInfoDisplayMyUserListings,
+            bool campaignGeneralInfoDisplayMyBranchListings,
+            bool campaignGeneralInfoDisplayMyCompanyListings,
             bool campaignGeneralInfoDisplayBlockedListings,
             int? campaignGeneralInfoMaxDistance,
+            bool requiredListingGeneralInfoDisplayMyUserListings,
+            bool requiredListingGeneralInfoDisplayMyBranchListings,
+            bool requiredListingGeneralInfoDisplayMyCompanyListings,
             bool requiredListingGeneralInfoDisplayBlockedListings,
             int? requiredListingGeneralInfoMaxDistance,
+            bool availableListingGeneralInfoDisplayMyUserListings,
+            bool availableListingGeneralInfoDisplayMyBranchListings,
+            bool availableListingGeneralInfoDisplayMyCompanyListings,
             bool availableListingGeneralInfoDisplayBlockedListings,
             int? availableListingGeneralInfoMaxDistance,
             ExternalSearchLevelEnum campaignGeneralInfoExternalSelectionLevel,
@@ -98,13 +107,47 @@ namespace Distributor.Helpers
             InternalSearchLevelEnum ordersClosedAuthorisationManageViewLevel)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            AppUserSettings appUserSettings = CreateAppUserSettings(db, appUserId, campaignDashboardMaxDistance, campaignDashboardMaxAge, requiredListingDashboardMaxDistance, 
-                requiredListingDashboardMaxAge, availableListingDashboardMaxDistance, availableListingDashboardMaxAge, campaignDashboardExternalSelectionLevel, 
-                requiredListingDashboardtExternalSelectionLevel, availableListingDashboardExternalSelectionLevel, campaignGeneralInfoDisplayBlockedListings, campaignGeneralInfoMaxDistance, requiredListingGeneralInfoDisplayBlockedListings, requiredListingGeneralInfoMaxDistance,
-                availableListingGeneralInfoDisplayBlockedListings, availableListingGeneralInfoMaxDistance, campaignGeneralInfoExternalSelectionLevel, requiredListingGeneralInfoExternalSelectionLevel, availableListingGeneralInfoExternalSelectionLevel, 
-                campaignManageViewInternalSelectionLevel, requiredListingManageViewInternalSelectionLevel, availableListingManageViewInternalSelectionLevel, offersManageViewInternalSelectionLevel, 
-                offersAcceptedAuthorisationManageViewLevel, offersRejectedAuthorisationManageViewLevel, offersReturnedAuthorisationManageViewLevel, ordersManageViewInternalSelectionLevel, 
-                ordersDespatchedAuthorisationManageViewLevel, ordersDeliveredAuthorisationManageViewLevel, ordersCollectedAuthorisationManageViewLevel, ordersClosedAuthorisationManageViewLevel);
+            AppUserSettings appUserSettings = CreateAppUserSettings(db, 
+                appUserId, 
+                campaignDashboardMaxDistance, 
+                campaignDashboardMaxAge, 
+                requiredListingDashboardMaxDistance, 
+                requiredListingDashboardMaxAge, 
+                availableListingDashboardMaxDistance, 
+                availableListingDashboardMaxAge, 
+                campaignDashboardExternalSelectionLevel, 
+                requiredListingDashboardtExternalSelectionLevel, 
+                availableListingDashboardExternalSelectionLevel,
+                campaignGeneralInfoDisplayMyUserListings,
+                campaignGeneralInfoDisplayMyBranchListings,
+                campaignGeneralInfoDisplayMyCompanyListings,
+                campaignGeneralInfoDisplayBlockedListings, 
+                campaignGeneralInfoMaxDistance,
+                requiredListingGeneralInfoDisplayMyUserListings,
+                requiredListingGeneralInfoDisplayMyBranchListings,
+                requiredListingGeneralInfoDisplayMyCompanyListings,
+                requiredListingGeneralInfoDisplayBlockedListings, 
+                requiredListingGeneralInfoMaxDistance,
+                availableListingGeneralInfoDisplayMyUserListings,
+                availableListingGeneralInfoDisplayMyBranchListings,
+                availableListingGeneralInfoDisplayMyCompanyListings,
+                availableListingGeneralInfoDisplayBlockedListings, 
+                availableListingGeneralInfoMaxDistance, 
+                campaignGeneralInfoExternalSelectionLevel, 
+                requiredListingGeneralInfoExternalSelectionLevel, 
+                availableListingGeneralInfoExternalSelectionLevel, 
+                campaignManageViewInternalSelectionLevel, 
+                requiredListingManageViewInternalSelectionLevel, 
+                availableListingManageViewInternalSelectionLevel, 
+                offersManageViewInternalSelectionLevel, 
+                offersAcceptedAuthorisationManageViewLevel, 
+                offersRejectedAuthorisationManageViewLevel, 
+                offersReturnedAuthorisationManageViewLevel, 
+                ordersManageViewInternalSelectionLevel, 
+                ordersDespatchedAuthorisationManageViewLevel, 
+                ordersDeliveredAuthorisationManageViewLevel, 
+                ordersCollectedAuthorisationManageViewLevel, 
+                ordersClosedAuthorisationManageViewLevel);
             db.Dispose();
             return appUserSettings;
         }
@@ -119,10 +162,19 @@ namespace Distributor.Helpers
             ExternalSearchLevelEnum campaignDashboardExternalSelectionLevel,
             ExternalSearchLevelEnum requiredListingDashboardExternalSelectionLevel,
             ExternalSearchLevelEnum availableListingDashboardExternalSelectionLevel,
+            bool campaignGeneralInfoDisplayMyUserListings,
+            bool campaignGeneralInfoDisplayMyBranchListings,
+            bool campaignGeneralInfoDisplayMyCompanyListings,
             bool campaignGeneralInfoDisplayBlockedListings,
             int? campaignGeneralInfoMaxDistance,
+            bool requiredListingGeneralInfoDisplayMyUserListings,
+            bool requiredListingGeneralInfoDisplayMyBranchListings,
+            bool requiredListingGeneralInfoDisplayMyCompanyListings,
             bool requiredListingGeneralInfoDisplayBlockedListings,
             int? requiredListingGeneralInfoMaxDistance,
+            bool availableListingGeneralInfoDisplayMyUserListings,
+            bool availableListingGeneralInfoDisplayMyBranchListings,
+            bool availableListingGeneralInfoDisplayMyCompanyListings,
             bool availableListingGeneralInfoDisplayBlockedListings,
             int? availableListingGeneralInfoMaxDistance,
             ExternalSearchLevelEnum campaignGeneralInfoExternalSelectionLevel,
@@ -154,19 +206,36 @@ namespace Distributor.Helpers
                 CampaignDashboardExternalSelectionLevel = campaignDashboardExternalSelectionLevel,
                 RequiredListingDashboardExternalSelectionLevel = requiredListingDashboardExternalSelectionLevel,
                 AvailableListingDashboardExternalSelectionLevel = availableListingDashboardExternalSelectionLevel,
+                CampaignGeneralInfoDisplayMyUserListings = campaignGeneralInfoDisplayMyUserListings,
+                CampaignGeneralInfoDisplayMyBranchListings = campaignGeneralInfoDisplayMyBranchListings,
+                CampaignGeneralInfoDisplayMyCompanyListings = campaignGeneralInfoDisplayMyCompanyListings,
+                CampaignGeneralInfoDisplayBlockedListings = campaignGeneralInfoDisplayBlockedListings,
                 CampaignGeneralInfoMaxDistance = campaignGeneralInfoMaxDistance,
+                RequiredListingGeneralInfoDisplayMyUserListings = requiredListingGeneralInfoDisplayMyUserListings,
+                RequiredListingGeneralInfoDisplayMyBranchListings = requiredListingGeneralInfoDisplayMyBranchListings,
+                RequiredListingGeneralInfoDisplayMyCompanyListings = requiredListingGeneralInfoDisplayMyCompanyListings,
+                RequiredListingGeneralInfoDisplayBlockedListings = requiredListingGeneralInfoDisplayBlockedListings,
                 RequiredListingGeneralInfoMaxDistance = requiredListingGeneralInfoMaxDistance,
+                AvailableListingGeneralInfoDisplayMyUserListings = availableListingGeneralInfoDisplayMyUserListings,
+                AvailableListingGeneralInfoDisplayMyBranchListings = availableListingGeneralInfoDisplayMyBranchListings,
+                AvailableListingGeneralInfoDisplayMyCompanyListings = availableListingGeneralInfoDisplayMyCompanyListings,
+                AvailableListingGeneralInfoDisplayBlockedListings = availableListingGeneralInfoDisplayBlockedListings,
                 AvailableListingGeneralInfoMaxDistance = availableListingGeneralInfoMaxDistance,
+                CampaignGeneralInfoExternalSelectionLevel = campaignGeneralInfoExternalSelectionLevel,
+                RequiredListingGeneralInfoExternalSelectionLevel = requiredListingGeneralInfoExternalSelectionLevel,
+                AvailableListingGeneralInfoExternalSelectionLevel = availableListingGeneralInfoExternalSelectionLevel,
                 CampaignManageViewInternalSelectionLevel = campaignManageViewInternalSelectionLevel,
                 RequiredListingManageViewInternalSelectionLevel = requiredListingManageViewInternalSelectionLevel,
                 AvailableListingManageViewInternalSelectionLevel = availableListingManageViewInternalSelectionLevel,
-                CampaignGeneralInfoExternalSelectionLevel = campaignGeneralInfoExternalSelectionLevel,
                 OffersManageViewInternalSelectionLevel = offersManageViewInternalSelectionLevel,
-
+                OffersAcceptedAuthorisationManageViewLevel = offersAcceptedAuthorisationManageViewLevel,
+                OffersRejectedAuthorisationManageViewLevel = offersRejectedAuthorisationManageViewLevel,
+                OffersReturnedAuthorisationManageViewLevel = offersReturnedAuthorisationManageViewLevel,
                 OrdersManageViewInternalSelectionLevel = ordersManageViewInternalSelectionLevel,
-
-                RequiredListingGeneralInfoExternalSelectionLevel = requiredListingGeneralInfoExternalSelectionLevel,
-                AvailableListingGeneralInfoExternalSelectionLevel = availableListingGeneralInfoExternalSelectionLevel
+                OrdersDespatchedAuthorisationManageViewLevel = ordersDespatchedAuthorisationManageViewLevel,
+                OrdersDeliveredAuthorisationManageViewLevel = ordersDeliveredAuthorisationManageViewLevel,
+                OrdersCollectedAuthorisationManageViewLevel = ordersCollectedAuthorisationManageViewLevel,
+                OrdersClosedAuthorisationManageViewLevel = ordersClosedAuthorisationManageViewLevel
             };
             db.AppUserSettings.Add(appUserSettings);
             db.SaveChanges();
@@ -211,10 +280,19 @@ namespace Distributor.Helpers
                 CampaignDashboardExternalSelectionLevel = template.CampaignDashboardExternalSelectionLevel,
                 RequiredListingDashboardExternalSelectionLevel = template.RequiredListingDashboardExternalSelectionLevel,
                 AvailableListingDashboardExternalSelectionLevel = template.AvailableListingDashboardExternalSelectionLevel,
+                CampaignGeneralInfoDisplayMyUserListings = template.CampaignGeneralInfoDisplayMyUserListings,
+                CampaignGeneralInfoDisplayMyBranchListings = template.CampaignGeneralInfoDisplayMyBranchListings,
+                CampaignGeneralInfoDisplayMyCompanyListings = template.CampaignGeneralInfoDisplayMyCompanyListings,
                 CampaignGeneralInfoDisplayBlockedListings = template.CampaignGeneralInfoDisplayBlockedListings,
                 CampaignGeneralInfoMaxDistance = template.CampaignGeneralInfoMaxDistance,
+                RequiredListingGeneralInfoDisplayMyUserListings = template.RequiredListingGeneralInfoDisplayMyUserListings,
+                RequiredListingGeneralInfoDisplayMyBranchListings = template.RequiredListingGeneralInfoDisplayMyBranchListings,
+                RequiredListingGeneralInfoDisplayMyCompanyListings = template.RequiredListingGeneralInfoDisplayMyCompanyListings,
                 RequiredListingGeneralInfoDisplayBlockedListings = template.RequiredListingGeneralInfoDisplayBlockedListings,
                 RequiredListingGeneralInfoMaxDistance = template.RequiredListingGeneralInfoMaxDistance,
+                AvailableListingGeneralInfoDisplayMyUserListings = template.AvailableListingGeneralInfoDisplayMyUserListings,
+                AvailableListingGeneralInfoDisplayMyBranchListings = template.AvailableListingGeneralInfoDisplayMyBranchListings,
+                AvailableListingGeneralInfoDisplayMyCompanyListings = template.AvailableListingGeneralInfoDisplayMyCompanyListings,
                 AvailableListingGeneralInfoDisplayBlockedListings = template.AvailableListingGeneralInfoDisplayBlockedListings,
                 AvailableListingGeneralInfoMaxDistance = template.AvailableListingGeneralInfoMaxDistance,
                 CampaignManageViewInternalSelectionLevel = template.CampaignManageViewInternalSelectionLevel,
@@ -263,10 +341,19 @@ namespace Distributor.Helpers
             settings.CampaignDashboardExternalSelectionLevel = view.CampaignDashboardExternalSelectionLevel;
             settings.RequiredListingDashboardExternalSelectionLevel = view.RequiredListingDashboardExternalSelectionLevel;
             settings.AvailableListingDashboardExternalSelectionLevel = view.AvailableListingDashboardExternalSelectionLevel;
+            settings.CampaignGeneralInfoDisplayMyUserListings = view.CampaignGeneralInfoDisplayMyUserListings;
+            settings.CampaignGeneralInfoDisplayMyBranchListings = view.CampaignGeneralInfoDisplayMyBranchListings;
+            settings.CampaignGeneralInfoDisplayMyCompanyListings = view.CampaignGeneralInfoDisplayMyCompanyListings;
             settings.CampaignGeneralInfoDisplayBlockedListings = view.CampaignGeneralInfoDisplayBlockedListings;
             settings.CampaignGeneralInfoMaxDistance = view.CampaignGeneralInfoMaxDistance;
+            settings.RequiredListingGeneralInfoDisplayMyUserListings = view.RequiredListingGeneralInfoDisplayMyUserListings;
+            settings.RequiredListingGeneralInfoDisplayMyBranchListings = view.RequiredListingGeneralInfoDisplayMyBranchListings;
+            settings.RequiredListingGeneralInfoDisplayMyCompanyListings = view.RequiredListingGeneralInfoDisplayMyCompanyListings;
             settings.RequiredListingGeneralInfoDisplayBlockedListings = view.RequiredListingGeneralInfoDisplayBlockedListings;
             settings.RequiredListingGeneralInfoMaxDistance = view.RequiredListingGeneralInfoMaxDistance;
+            settings.AvailableListingGeneralInfoDisplayMyUserListings = view.AvailableListingGeneralInfoDisplayMyUserListings;
+            settings.AvailableListingGeneralInfoDisplayMyBranchListings = view.AvailableListingGeneralInfoDisplayMyBranchListings;
+            settings.AvailableListingGeneralInfoDisplayMyCompanyListings = view.AvailableListingGeneralInfoDisplayMyCompanyListings;
             settings.AvailableListingGeneralInfoDisplayBlockedListings = view.AvailableListingGeneralInfoDisplayBlockedListings;
             settings.AvailableListingGeneralInfoMaxDistance = view.AvailableListingGeneralInfoMaxDistance;
             settings.CampaignManageViewInternalSelectionLevel = view.CampaignManageViewInternalSelectionLevel;

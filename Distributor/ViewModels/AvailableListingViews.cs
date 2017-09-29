@@ -49,7 +49,7 @@ namespace Distributor.ViewModels
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }
     }
 
-    public class AvailableListingGeneralInfoView : Blocks
+    public class AvailableListingGeneralInfoView : BlocksAndOwners
     {
         public decimal OfferQuantity { get; set; }
 

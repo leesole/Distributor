@@ -63,6 +63,7 @@ namespace Distributor.Helpers
             //Create list within the time frame if setting set
             List<Campaign> list = (from c in db.Campaigns
                                    where (c.EntityStatus == EntityStatusEnum.Active && c.CampaignOriginatorDateTime >= dateCheck)
+                                   orderby c.CampaignEndDateTime
                                    select c).ToList();
 
             //Now bring in the Selection Level sort
@@ -408,7 +409,6 @@ namespace Distributor.Helpers
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, appUser.AppUserId);
-            bool displayBlocks = settings.RequiredListingGeneralInfoDisplayBlockedListings;
             Branch currentBranch = BranchHelpers.GetBranch(appUser.CurrentBranchId);
 
             List<Campaign> allCampaigns = CampaignHelpers.GetAllGeneralInfoFilteredCampaigns(db, appUser.AppUserId);
@@ -421,13 +421,30 @@ namespace Distributor.Helpers
 
                 BlockHelpers.GetBlocksForAllTypesForSpecificOfBy(db, campaign.CampaignOriginatorAppUserId, appUser.AppUserId, campaign.CampaignOriginatorBranchId, currentBranch.BranchId, campaign.CampaignOriginatorCompanyId, currentBranch.CompanyId, out userBlocked, out branchBlocked, out companyBlocked);
 
+                bool userMatchedOwner = false;
+                bool branchMatchedOwner = false;
+                bool companyMatchedOwner = false;
+
+                if (appUser.AppUserId == campaign.CampaignOriginatorAppUserId)
+                    userMatchedOwner = true;
+                if (currentBranch.BranchId == campaign.CampaignOriginatorBranchId)
+                    branchMatchedOwner = true;
+                if (currentBranch.CompanyId == campaign.CampaignOriginatorCompanyId)
+                    companyMatchedOwner = true;
+
                 CampaignGeneralInfoView campaignGeneralInfoView = new CampaignGeneralInfoView()
                 {
                     Campaign = campaign,
                     UserLevelBlock = userBlocked,
                     BranchLevelBlock = branchBlocked,
                     CompanyLevelBlock = companyBlocked,
-                    DisplayBlocks = displayBlocks
+                    DisplayBlocks = settings.CampaignGeneralInfoDisplayBlockedListings,
+                    CompanyLevelOwner = companyMatchedOwner,
+                    DisplayMyCompanyRecords = settings.CampaignGeneralInfoDisplayMyUserListings,
+                    BranchLevelOwner = branchMatchedOwner,
+                    DisplayMyBranchRecords = settings.CampaignGeneralInfoDisplayMyBranchListings,
+                    UserLevelOwner = userMatchedOwner,
+                    DisplayMyRecords = settings.CampaignGeneralInfoDisplayMyUserListings
                 };
 
                 allCampaignsGeneralInfoView.Add(campaignGeneralInfoView);

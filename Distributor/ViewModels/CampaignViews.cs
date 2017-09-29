@@ -65,7 +65,7 @@ namespace Distributor.ViewModels
         public string LocationContactName { get; set; }
     }
 
-    public class CampaignGeneralInfoView : Blocks
+    public class CampaignGeneralInfoView : BlocksAndOwners
     {
         public Campaign Campaign { get; set; }
     }

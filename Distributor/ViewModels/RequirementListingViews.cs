@@ -46,7 +46,7 @@ namespace Distributor.ViewModels
         public Guid? SelectedCampaignId { get; set; }
     }
 
-    public class RequirementListingGeneralInfoView : Blocks
+    public class RequirementListingGeneralInfoView : BlocksAndOwners
     {
         public decimal OfferQuantity { get; set; }
 

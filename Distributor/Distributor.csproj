@@ -283,6 +283,10 @@
     <Compile Include="Migrations\201709280638459_8th.Designer.cs">
       <DependentUpon>201709280638459_8th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709291329351_9th.cs" />
+    <Compile Include="Migrations\201709291329351_9th.Designer.cs">
+      <DependentUpon>201709291329351_9th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -310,7 +314,7 @@
     <Compile Include="Templates\AppUserSettingsTemplates.cs" />
     <Compile Include="ViewModels\AppUserViews.cs" />
     <Compile Include="ViewModels\AvailableListingViews.cs" />
-    <Compile Include="ViewModels\Blocks.cs" />
+    <Compile Include="ViewModels\BlocksAndOwners.cs" />
     <Compile Include="ViewModels\BlockViews.cs" />
     <Compile Include="ViewModels\BranchAdminView.cs" />
     <Compile Include="ViewModels\CallingFields.cs" />
@@ -515,6 +519,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709280638459_8th.resx">
       <DependentUpon>201709280638459_8th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709291329351_9th.resx">
+      <DependentUpon>201709291329351_9th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

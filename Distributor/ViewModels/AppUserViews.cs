@@ -140,11 +140,41 @@ namespace Distributor.ViewModels
         public ExternalSearchLevelEnum RequiredListingDashboardExternalSelectionLevel { get; set; }
 
 
+
+        [Display(Name = "Display my listings")]
+        public bool CampaignGeneralInfoDisplayMyUserListings { get; set; }
+
+        [Display(Name = "Display my branch listings")]
+        public bool CampaignGeneralInfoDisplayMyBranchListings { get; set; }
+
+        [Display(Name = "Display my company listings")]
+        public bool CampaignGeneralInfoDisplayMyCompanyListings { get; set; }
+
         [Display(Name = "Display blocked listings")]
         public bool CampaignGeneralInfoDisplayBlockedListings { get; set; }
 
+
+        [Display(Name = "Display my listings")]
+        public bool RequiredListingGeneralInfoDisplayMyUserListings { get; set; }
+
+        [Display(Name = "Display my branch listings")]
+        public bool RequiredListingGeneralInfoDisplayMyBranchListings { get; set; }
+
+        [Display(Name = "Display my company listings")]
+        public bool RequiredListingGeneralInfoDisplayMyCompanyListings { get; set; }
+
         [Display(Name = "Display blocked listings")]
         public bool RequiredListingGeneralInfoDisplayBlockedListings { get; set; }
+
+
+        [Display(Name = "Display my listings")]
+        public bool AvailableListingGeneralInfoDisplayMyUserListings { get; set; }
+
+        [Display(Name = "Display my branch listings")]
+        public bool AvailableListingGeneralInfoDisplayMyBranchListings { get; set; }
+
+        [Display(Name = "Display my company listings")]
+        public bool AvailableListingGeneralInfoDisplayMyCompanyListings { get; set; }
 
         [Display(Name = "Display blocked listings")]
         public bool AvailableListingGeneralInfoDisplayBlockedListings { get; set; }

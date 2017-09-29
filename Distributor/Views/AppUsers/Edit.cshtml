@@ -315,15 +315,6 @@
                         <h3 class="panel-title">Manage listings settings</h3>
                     </div>
                     <div class="panel-body">
-                        <h4>Campaign settings</h4>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CampaignManageViewInternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-6">
-                                @Html.EnumDropDownListFor(model => model.CampaignManageViewInternalSelectionLevel, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.CampaignManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <br />
                         <h4>Required listing settings</h4>
                         <div class="form-group">
                             @Html.LabelFor(model => model.RequiredListingManageViewInternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
@@ -339,6 +330,15 @@
                             <div class="col-md-6">
                                 @Html.EnumDropDownListFor(model => model.AvailableListingManageViewInternalSelectionLevel, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.AvailableListingManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Campaign settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignManageViewInternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.CampaignManageViewInternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CampaignManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <br />
@@ -418,30 +418,28 @@
                         <h3 class="panel-title">General info settings</h3>
                     </div>
                     <div class="panel-body">
-                        <h4>Campaign settings</h4>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayBlockedListings, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayBlockedListings, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayBlockedListings, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CampaignGeneralInfoMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.CampaignGeneralInfoMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoMaxDistance, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CampaignGeneralInfoExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-6">
-                                @Html.EnumDropDownListFor(model => model.CampaignGeneralInfoExternalSelectionLevel, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoExternalSelectionLevel, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <br />
                         <h4>Required listing settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoDisplayMyUserListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingGeneralInfoDisplayMyUserListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoDisplayMyUserListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoDisplayMyBranchListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingGeneralInfoDisplayMyBranchListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoDisplayMyBranchListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoDisplayMyCompanyListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingGeneralInfoDisplayMyCompanyListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoDisplayMyCompanyListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.RequiredListingGeneralInfoDisplayBlockedListings, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
@@ -466,6 +464,27 @@
                         <br />
                         <h4>Available listing settings</h4>
                         <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoDisplayMyUserListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingGeneralInfoDisplayMyUserListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoDisplayMyUserListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoDisplayMyBranchListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingGeneralInfoDisplayMyBranchListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoDisplayMyBranchListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoDisplayMyCompanyListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingGeneralInfoDisplayMyCompanyListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoDisplayMyCompanyListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
                             @Html.LabelFor(model => model.AvailableListingGeneralInfoDisplayBlockedListings, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
                                 @Html.EditorFor(model => model.AvailableListingGeneralInfoDisplayBlockedListings, new { htmlAttributes = new { @class = "form-control" } })
@@ -486,6 +505,50 @@
                                 @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoExternalSelectionLevel, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        <br />
+                        <h4>Campaign settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayMyUserListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayMyUserListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayMyUserListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayMyBranchListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayMyBranchListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayMyBranchListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayMyCompanyListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayMyCompanyListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayMyCompanyListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayBlockedListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayBlockedListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayBlockedListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoMaxDistance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.CampaignGeneralInfoExternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoExternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -496,29 +559,6 @@
                         <h3 class="panel-title">Dashboard settings</h3>
                     </div>
                     <div class="panel-body">
-                        <h4>Campaign settings</h4>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CampaignDashboardMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.CampaignDashboardMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.CampaignDashboardMaxDistance, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CampaignDashboardMaxAge, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.CampaignDashboardMaxAge, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.CampaignDashboardMaxAge, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CampaignDashboardExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
-                            <div class="col-md-6">
-                                @Html.EnumDropDownListFor(model => model.CampaignDashboardExternalSelectionLevel, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.CampaignDashboardExternalSelectionLevel, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <br />
                         <h4>Required listing settings</h4>
                         <div class="form-group">
                             @Html.LabelFor(model => model.RequiredListingDashboardMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
@@ -562,6 +602,29 @@
                             <div class="col-md-6">
                                 @Html.EnumDropDownListFor(model => model.AvailableListingDashboardExternalSelectionLevel, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.AvailableListingDashboardExternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Campaign settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignDashboardMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignDashboardMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignDashboardMaxDistance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignDashboardMaxAge, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignDashboardMaxAge, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignDashboardMaxAge, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignDashboardExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.CampaignDashboardExternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CampaignDashboardExternalSelectionLevel, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
