@@ -316,6 +316,7 @@
     <Compile Include="ViewModels\CallingFields.cs" />
     <Compile Include="ViewModels\CampaignViews.cs" />
     <Compile Include="ViewModels\DashboardView.cs" />
+    <Compile Include="ViewModels\FriendViews.cs" />
     <Compile Include="ViewModels\GroupViews.cs" />
     <Compile Include="ViewModels\OfferViews.cs" />
     <Compile Include="ViewModels\CompanyAdminView.cs" />
@@ -467,6 +468,7 @@
     <Content Include="Views\Home\Requests.cshtml" />
     <Content Include="Views\AppUsers\BlockIndex.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\AppUsers\FriendIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

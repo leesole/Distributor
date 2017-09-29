@@ -184,6 +184,10 @@ namespace Distributor.Controllers
             ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
 
             //Counters
+            ViewBag.UserFriendCount = model.UserFriendListView.Count();
+            ViewBag.UserBranchFriendCount = model.UserBranchFriendListView.Count();
+            ViewBag.UserCompanyFriendCount = model.UserCompanyFriendListView.Count();
+
             ViewBag.UserBlockCount = model.UserBlockListView.Count();
             ViewBag.UserBranchBlockCount = model.UserBranchBlockListView.Count();
             ViewBag.UserCompanyBlockCount = model.UserCompanyBlockListView.Count();
@@ -221,6 +225,17 @@ namespace Distributor.Controllers
             ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
 
             //Counters
+            if (model.UserFriendListView == null)
+                model.UserFriendListView = new List<FriendView>();
+            if (model.UserBranchFriendListView == null)
+                model.UserBranchFriendListView = new List<FriendView>();
+            if (model.UserCompanyFriendListView == null)
+                model.UserCompanyFriendListView = new List<FriendView>();
+
+            ViewBag.UserFriendCount = model.UserFriendListView.Count();
+            ViewBag.UserBranchFriendCount = model.UserBranchFriendListView.Count();
+            ViewBag.UserCompanyFriendCount = model.UserCompanyFriendListView.Count();
+
             if (model.UserBlockListView == null)
                 model.UserBlockListView = new List<BlockView>();
             if (model.UserBranchBlockListView == null)
@@ -263,6 +278,14 @@ namespace Distributor.Controllers
         //    db.SaveChanges();
         //    return RedirectToAction("Index");
         //}
+
+        // GET: AppUsers Friends
+        public ActionResult FriendIndex(Guid appUserId, string url)
+        {
+            FriendViewList model = FriendViewHelpers.CreateFriendViewListFromAppUserEditView(db, appUserId, url);
+
+            return View(model);
+        }
 
         // GET: AppUsers Blocks
         public ActionResult BlockIndex(Guid appUserId, string url)

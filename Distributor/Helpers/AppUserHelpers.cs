@@ -433,6 +433,9 @@ namespace Distributor.Helpers
                 RequiredListingGeneralInfoExternalSelectionLevel = appUserSettings.RequiredListingGeneralInfoExternalSelectionLevel,
                 AvailableListingGeneralInfoExternalSelectionLevel = appUserSettings.AvailableListingGeneralInfoExternalSelectionLevel,
                 GroupListViewsForUserOnly = GroupViewHelpers.GetGroupEditViewForForUserOnly(db, appUserDetails.AppUserId),
+                UserFriendListView = FriendViewHelpers.GetFriendViewByType(db, appUserDetails.AppUserId, LevelEnum.User),
+                UserBranchFriendListView = FriendViewHelpers.GetFriendViewByType(db, appUserDetails.AppUserId, LevelEnum.Branch),
+                UserCompanyFriendListView = FriendViewHelpers.GetFriendViewByType(db, appUserDetails.AppUserId, LevelEnum.Company),
                 UserBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserDetails.AppUserId, LevelEnum.User),
                 UserBranchBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserDetails.AppUserId, LevelEnum.Branch),
                 UserCompanyBlockListView = BlockViewHelpers.GetBlockViewByType(db, appUserDetails.AppUserId, LevelEnum.Company)

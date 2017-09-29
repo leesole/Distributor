@@ -1,0 +1,226 @@
+﻿@using Microsoft.AspNet.Identity
+@using Distributor.Extenstions
+
+@model Distributor.ViewModels.FriendViewList
+
+@{
+    var userRole = User.Identity.GetCurrentUserRole();
+    var buttonId = Guid.Empty;
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function buttonClick(id) {
+            if (window.confirm("Proceed?")) {
+                var url = "/Data/RemoveFriend";
+
+                $.ajax({
+                    url: url,
+                    data: { friendId: id },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">
+            User friends
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li><a href=@Model.CallingUrl>User changes</a></li>
+            <li class="active">User friends</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">User friends</h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.UserFriendListView == null || Model.UserFriendListView.Count == 0)
+                {
+                    <p>No user friends to show</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr class="info">
+                                <th style="width:100px">Action</th>
+                                <th>Requested by</th>
+                                <th>Friend</th>
+                                <th>Requested on</th>
+                                <th>Accepted on</th>
+                                <th>Rejected on</th>
+                                <th>Requested by user</th>
+                            </tr>
+                            @for (int i = 0; i < Model.UserFriendListView.Count; i++)
+                            {
+                                if (Model.UserFriendListView[i].FriendedByLoggedInUser)
+                                {
+                                    buttonId = Model.UserFriendListView[i].FriendId;
+                                    <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span> Remove</button></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RequestedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RequestedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RequestedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].AccceptedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RejectedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RequestedByUserName)</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <th></th>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RequestedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RequestedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RequestedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].AccceptedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RejectedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserFriendListView[i].RequestedByUserName)</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Branch friends</h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.UserBranchFriendListView == null || Model.UserBranchFriendListView.Count == 0)
+                {
+                    <p>No user branch friends to show</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr class="info">
+                                <th style="width:100px">Action</th>
+                                <th>Requested by</th>
+                                <th>Friend</th>
+                                <th>Requested on</th>
+                                <th>Accepted on</th>
+                                <th>Rejected on</th>
+                                <th>Requested by user</th>
+                            </tr>
+                            @for (int i = 0; i < Model.UserBranchFriendListView.Count; i++)
+                            {
+                                if (Model.UserBranchFriendListView[i].FriendedByLoggedInUser)
+                                {
+                                    buttonId = Model.UserBranchFriendListView[i].FriendId;
+                                    <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span> Remove</button></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RequestedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RequestedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RequestedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].AccceptedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RejectedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RequestedByUserName)</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RequestedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RequestedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RequestedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].AccceptedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RejectedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchFriendListView[i].RequestedByUserName)</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Company friends</h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.UserCompanyFriendListView == null || Model.UserCompanyFriendListView.Count == 0)
+                {
+                    <p>No user company friends to show</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr class="info">
+                                <th style="width:100px">Action</th>
+                                <th>Requested by</th>
+                                <th>Friend</th>
+                                <th>Requested on</th>
+                                <th>Accepted on</th>
+                                <th>Rejected on</th>
+                                <th>Requested by user</th>
+                            </tr>
+                            @for (int i = 0; i < Model.UserCompanyFriendListView.Count; i++)
+                            {
+                                if (Model.UserCompanyFriendListView[i].FriendedByLoggedInUser)
+                                {
+                                    buttonId = Model.UserCompanyFriendListView[i].FriendId;
+                                    <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span> Remove</button></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RequestedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RequestedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RequestedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].AccceptedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RejectedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RequestedByUserName)</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RequestedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RequestedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RequestedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].AccceptedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RejectedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyFriendListView[i].RequestedByUserName)</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

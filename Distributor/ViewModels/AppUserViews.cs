@@ -222,6 +222,12 @@ namespace Distributor.ViewModels
 
         public GroupEditView GroupListViewsForUserOnly { get; set; }
 
+        public List<FriendView> UserFriendListView { get; set; }
+
+        public List<FriendView> UserBranchFriendListView { get; set; }
+
+        public List<FriendView> UserCompanyFriendListView { get; set; }
+
         public List<BlockView> UserBlockListView { get; set; }
 
         public List<BlockView> UserBranchBlockListView { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Distributor.Models;
+using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,61 @@ namespace Distributor.Helpers
             return friendRequest;
         }
 
+        public static List<Friend> GetFriendsCreatedByUser(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Friend> list = GetFriendsCreatedByUser(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Friend> GetFriendsCreatedByUser(ApplicationDbContext db, Guid appUserId)
+        {
+            List<Friend> list = (from f in db.Friends
+                                 where f.RequestedById == appUserId
+                                 select f).ToList();
+
+            return list;
+        }
+
+        public static List<Friend> GetFriendsCreatedByUserBranches(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Friend> list = GetFriendsCreatedByUserBranches(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Friend> GetFriendsCreatedByUserBranches(ApplicationDbContext db, Guid appUserId)
+        {
+            List<Branch> userBranches = BranchHelpers.GetBranchesForUser(db, appUserId);
+
+            List<Friend> list = (from ub in userBranches
+                                 join f in db.Friends on ub.BranchId equals f.RequestedById
+                                 select f).Distinct().ToList();
+
+            return list;
+        }
+
+        public static List<Friend> GetFriendsCreatedByUserCompany(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Friend> list = GetFriendsCreatedByUserCompany(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Friend> GetFriendsCreatedByUserCompany(ApplicationDbContext db, Guid appUserId)
+        {
+            Company userCompany = CompanyHelpers.GetCompanyForUser(db, appUserId);
+
+            List<Friend> list = (from f in db.Friends
+                                 where f.RequestedById == userCompany.CompanyId
+                                 select f).ToList();
+
+            return list;
+        }
+
         #endregion
 
         #region Create
@@ -86,6 +142,20 @@ namespace Distributor.Helpers
         #endregion
 
         #region Remove
+
+        public static void RemoveFriend(Guid friendId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            RemoveFriend(db, friendId);
+            db.Dispose();
+        }
+
+        public static void RemoveFriend(ApplicationDbContext db, Guid friendId)
+        {
+            Friend friend = db.Friends.Find(friendId);
+            db.Friends.Remove(friend);
+            db.SaveChanges();
+        }
 
         public static void RemoveFriend(LevelEnum level, Guid ofReferenceId, Guid byReferenceId)
         {
@@ -184,6 +254,113 @@ namespace Distributor.Helpers
                 friend = true;
 
             return friend;
+        }
+
+        #endregion
+    }
+
+    public static class FriendViewHelpers
+    {
+        #region Get
+
+        public static List<FriendView> GetFriendViewByType(Guid appUserId, LevelEnum type)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<FriendView> list = GetFriendViewByType(db, appUserId, type);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<FriendView> GetFriendViewByType(ApplicationDbContext db, Guid appUserId, LevelEnum type)
+        {
+            List<FriendView> list = new List<FriendView>();
+
+            List<Friend> friendList = null;
+
+            //Depending on type passed through will depend on what level of friends we are collecting
+            switch (type)
+            {
+                case LevelEnum.User:
+                    friendList = FriendHelpers.GetFriendsCreatedByUser(db, appUserId);
+                    break;
+                case LevelEnum.Branch:
+                    friendList = FriendHelpers.GetFriendsCreatedByUserBranches(db, appUserId);
+                    break;
+                case LevelEnum.Company:
+                    friendList = FriendHelpers.GetFriendsCreatedByUserCompany(db, appUserId);
+                    break;
+            }
+
+            foreach (Friend friend in friendList)
+            {
+                //get the user/branch/company names depending on the block type
+                string nameBy = "";
+                string nameOn = "";
+
+                switch (friend.Type)
+                {
+                    case LevelEnum.User:
+                        nameBy = AppUserHelpers.GetAppUserName(db, friend.RequestedById);
+                        nameOn = AppUserHelpers.GetAppUserName(db, friend.RequestedOfId);
+                        break;
+                    case LevelEnum.Branch:
+                        nameBy = BranchHelpers.GetBranchNameTownPostCode(db, friend.RequestedById);
+                        nameOn = BranchHelpers.GetBranchNameTownPostCode(db, friend.RequestedOfId);
+                        break;
+                    case LevelEnum.Company:
+                        nameBy = CompanyHelpers.GetCompanyNameTownPostCode(db, friend.RequestedById);
+                        nameOn = CompanyHelpers.GetCompanyNameTownPostCode(db, friend.RequestedOfId);
+                        break;
+                }
+
+                string friendedByUserName = AppUserHelpers.GetAppUserName(db, friend.RequestedByUserId);
+
+                bool friendedByLoggedInUser = false;
+
+                if (friend.RequestedByUserId == appUserId)
+                    friendedByLoggedInUser = true;
+
+                FriendView view = new FriendView()
+                {
+                    FriendId = friend.FriendId,
+                    Type = friend.Type,
+                    RequestedByName = nameBy,
+                    RequestedByUserName = friendedByUserName,
+                    RequestedOfName = nameOn,
+                    Status = friend.Status,
+                    RequestedOn = friend.RequestedOn,
+                    AccceptedOn = friend.AccceptedOn,
+                    RejectedOn = friend.RequestedOn,
+                    ClosedOn = friend.ClosedOn,
+                    ClosedBy = friend.ClosedBy,
+                    FriendedByLoggedInUser = friendedByLoggedInUser
+                };
+
+                list.Add(view);
+            }
+
+            return list;
+        }
+
+        #endregion
+
+        #region Create
+
+        public static FriendViewList CreateFriendViewListFromAppUserEditView(ApplicationDbContext db, Guid appUserId, string url)
+        {
+            List<FriendView> userFriendListView = FriendViewHelpers.GetFriendViewByType(db, appUserId, LevelEnum.User);
+            List<FriendView> userBranchFriendListView = FriendViewHelpers.GetFriendViewByType(db, appUserId, LevelEnum.Branch);
+            List<FriendView> userCompanyFriendListView = FriendViewHelpers.GetFriendViewByType(db, appUserId, LevelEnum.Company);
+
+            FriendViewList list = new FriendViewList()
+            {
+                UserFriendListView = userFriendListView,
+                UserBranchFriendListView = userBranchFriendListView,
+                UserCompanyFriendListView = userCompanyFriendListView,
+                CallingUrl = url
+            };
+
+            return list;
         }
 
         #endregion

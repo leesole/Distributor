@@ -115,6 +115,18 @@ namespace Distributor.Controllers
         }
 
         /// <summary>
+        /// This will remove the 'Friend' from a given FriendId
+        /// </summary>
+        /// <param name="buttonName"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult RemoveFriend(Guid friendId)
+        {
+            FriendHelpers.RemoveFriend(friendId);
+            return Json(new { success = true });
+        }
+
+        /// <summary>
         /// This will remove the 'Block' from a given blockId
         /// </summary>
         /// <param name="buttonName"></param>

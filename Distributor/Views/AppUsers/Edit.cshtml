@@ -72,7 +72,53 @@
         @Html.HiddenFor(model => model.BranchAddressCounty)
         @Html.HiddenFor(model => model.BranchAddressPostcode)
 
-        @{ 
+        @{
+            for (int q = 0; q < Model.UserFriendListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserFriendListView[q].FriendId)
+                @Html.HiddenFor(model => model.UserFriendListView[q].Type)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RequestedByName)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RequestedByUserName)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RequestedOfName)
+                @Html.HiddenFor(model => model.UserFriendListView[q].Status)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RequestedOn)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RejectedOn)
+                @Html.HiddenFor(model => model.UserFriendListView[q].AccceptedOn)
+                @Html.HiddenFor(model => model.UserFriendListView[q].ClosedOn)
+                @Html.HiddenFor(model => model.UserFriendListView[q].ClosedBy)
+                @Html.HiddenFor(model => model.UserFriendListView[q].FriendedByLoggedInUser)
+            }
+            for (int q = 0; q < Model.UserBranchFriendListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].FriendId)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].Type)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RequestedByName)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RequestedByUserName)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RequestedOfName)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].Status)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RequestedOn)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RejectedOn)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].AccceptedOn)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].ClosedOn)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].ClosedBy)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].FriendedByLoggedInUser)
+            }
+            for (int q = 0; q < Model.UserCompanyFriendListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].FriendId)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].Type)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RequestedByName)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RequestedByUserName)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RequestedOfName)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].Status)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RequestedOn)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RejectedOn)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].AccceptedOn)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].ClosedOn)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].ClosedBy)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].FriendedByLoggedInUser)
+            }
+
             for (int q = 0; q < Model.UserBlockListView.Count; q++)
             {
                 @Html.HiddenFor(model => model.UserBlockListView[q].BlockId)
@@ -106,8 +152,7 @@
         }
 
         <div class="row">
-
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="login-panel panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">User details</h3>
@@ -115,40 +160,40 @@
                     <div class="panel-body">
                         <div class="col-md-6">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-6" })
-                                <div class="col-md-6">
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
                                     @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-6" })
-                                <div class="col-md-6">
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
                                     @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.SelectedBranchId, htmlAttributes: new { @class = "control-label col-md-6" })
-                                <div class="col-md-6">
+                                @Html.LabelFor(model => model.SelectedBranchId, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
                                     @Html.DropDownListFor(model => model.SelectedBranchId, (SelectList)ViewBag.BranchList, new { @class = "form-control", @id = "branchdropdown", onchange = "javascipt:GetBranchDetails(this.value);" })
                                     @Html.ValidationMessageFor(model => model.SelectedBranchId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label col-md-6" })
-                                <div class="col-md-6">
+                                @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
                                     @Html.DropDownListFor(model => model.UserRole, (SelectList)ViewBag.UserRoleList, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.EntityStatus, htmlAttributes: new { @class = "control-label col-md-6" })
-                                <div class="col-md-6">
+                                @Html.LabelFor(model => model.EntityStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
                                     @Html.DropDownListFor(model => model.EntityStatus, (SelectList)ViewBag.EntityStatusList, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.EntityStatus, "", new { @class = "text-danger" })
                                 </div>
@@ -170,7 +215,8 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("Index", "Groups") + "'");">
                     <div class="panel-heading">
@@ -205,7 +251,35 @@
                         }
                     </div>
                 </div>
-
+            </div>
+            <div class="col-md-4">
+                <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("FriendIndex", "AppUsers", new { appUserId = Model.AppUserId, url = Request.Url.PathAndQuery}) + "'");">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Your friends</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-success text-center" style="padding:10px">
+                                <h4>User</h4>
+                                <h1><b>@ViewBag.UserFriendCount</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-success text-center" style="padding:10px">
+                                <h4>Branch</h4>
+                                <h1><b>@ViewBag.UserBranchFriendCount</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-success text-center" style="padding:10px">
+                                <h4>Company</h4>
+                                <h1><b>@ViewBag.UserCompanyFriendCount</b></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="col-md-4">
                 <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("BlockIndex", "AppUsers", new { appUserId = Model.AppUserId, url = Request.Url.PathAndQuery}) + "'");">
                     <div class="panel-heading">
                         <h3 class="panel-title">Your blocks</h3>
@@ -231,7 +305,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
