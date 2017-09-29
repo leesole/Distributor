@@ -96,7 +96,23 @@
             <div class="panel-body">
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.ListingId)                        
+                @Html.HiddenFor(model => model.ListingId)    
+                
+                @Html.HiddenFor(model => model.RequiredFrom)
+                @Html.HiddenFor(model => model.RequiredTo)
+
+                @{
+                    var dateFrom = "";
+                    var dateTo = "";
+                    if (Model.RequiredFrom != null)
+                    {
+                        dateFrom = Model.RequiredFrom.Value.ToShortDateString();
+                    }
+                    if (Model.RequiredTo != null)
+                    {
+                        dateTo = Model.RequiredTo.Value.ToShortDateString();
+                    }
+                }
 
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemDescription)</div></div>
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ItemDescription)</div></div>
@@ -117,10 +133,10 @@
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.UoM)</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.RequiredFrom)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.RequiredFrom)</div></div>
+                <div class="row"><div class="col-md-12">@dateFrom</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.RequiredTo)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.RequiredTo)</div></div>
+                <div class="row"><div class="col-md-12">@dateTo</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.AcceptDamagedItems)</div></div>
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.AcceptDamagedItems)</div></div>

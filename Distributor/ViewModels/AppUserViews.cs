@@ -68,6 +68,7 @@ namespace Distributor.ViewModels
         public PrivacyLevelEnum PrivacyLevel { get; set; }
 
         //BranchUser
+        [Display(Name = "Status")]
         public EntityStatusEnum EntityStatus { get; set; }
 
         //Branch
@@ -75,6 +76,7 @@ namespace Distributor.ViewModels
         public Guid? SelectedBranchId { get; set; }
 
         //UserRole
+        [Display(Name = "User role")]
         public UserRoleEnum UserRole { get; set; }
 
 
@@ -110,19 +112,19 @@ namespace Distributor.ViewModels
         [Display(Name = "Max distance from current branch (miles)")]
         public int? CampaignDashboardMaxDistance { get; set; }
 
-        [Display(Name = "max age since listing added (days)")]
+        [Display(Name = "Max age since listing added (days)")]
         public double? CampaignDashboardMaxAge { get; set; }
 
         [Display(Name = "Max distance from current branch (miles)")]
         public int? RequiredListingDashboardMaxDistance { get; set; }
 
-        [Display(Name = "max age since listing added (days)")]
+        [Display(Name = "Max age since listing added (days)")]
         public double? RequiredListingDashboardMaxAge { get; set; }
 
         [Display(Name = "Max distance from current branch (miles)")]
         public int? AvailableListingDashboardMaxDistance { get; set; }
 
-        [Display(Name = "max age since listing added (days)")]
+        [Display(Name = "Max age since listing added (days)")]
         public double? AvailableListingDashboardMaxAge { get; set; }
 
         [Required]
