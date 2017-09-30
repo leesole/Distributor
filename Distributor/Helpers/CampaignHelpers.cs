@@ -425,12 +425,19 @@ namespace Distributor.Helpers
                 bool branchMatchedOwner = false;
                 bool companyMatchedOwner = false;
 
-                if (appUser.AppUserId == campaign.CampaignOriginatorAppUserId)
-                    userMatchedOwner = true;
-                if (currentBranch.BranchId == campaign.CampaignOriginatorBranchId)
-                    branchMatchedOwner = true;
                 if (currentBranch.CompanyId == campaign.CampaignOriginatorCompanyId)
                     companyMatchedOwner = true;
+                if (currentBranch.BranchId == campaign.CampaignOriginatorBranchId)
+                {
+                    companyMatchedOwner = false;
+                    branchMatchedOwner = true;
+                }
+                if (appUser.AppUserId == campaign.CampaignOriginatorAppUserId)
+                {
+                    companyMatchedOwner = false;
+                    branchMatchedOwner = false;
+                    userMatchedOwner = true;
+                }
 
                 CampaignGeneralInfoView campaignGeneralInfoView = new CampaignGeneralInfoView()
                 {

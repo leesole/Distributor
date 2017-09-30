@@ -450,12 +450,19 @@ namespace Distributor.Helpers
                 bool branchMatchedOwner = false;
                 bool companyMatchedOwner = false;
 
-                if (appUser.AppUserId == availableListing.ListingOriginatorAppUserId)
-                    userMatchedOwner = true;
-                if (currentBranch.BranchId == availableListing.ListingOriginatorBranchId)
-                    branchMatchedOwner = true;
                 if (currentBranch.CompanyId == availableListing.ListingOriginatorCompanyId)
                     companyMatchedOwner = true;
+                if (currentBranch.BranchId == availableListing.ListingOriginatorBranchId)
+                {
+                    companyMatchedOwner = false;
+                    branchMatchedOwner = true;
+                }
+                if (appUser.AppUserId == availableListing.ListingOriginatorAppUserId)
+                {
+                    companyMatchedOwner = false;
+                    branchMatchedOwner = false;
+                    userMatchedOwner = true;
+                }
 
                 AvailableListingGeneralInfoView AvailableListingGeneralInfoView = new AvailableListingGeneralInfoView()
                 {

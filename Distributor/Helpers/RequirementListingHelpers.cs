@@ -440,12 +440,20 @@ namespace Distributor.Helpers
                 bool branchMatchedOwner = false;
                 bool companyMatchedOwner = false;
 
-                if (appUser.AppUserId == requirementListing.ListingOriginatorAppUserId)
-                    userMatchedOwner = true;
-                if (currentBranch.BranchId == requirementListing.ListingOriginatorBranchId)
-                    branchMatchedOwner = true;
                 if (currentBranch.CompanyId == requirementListing.ListingOriginatorCompanyId)
                     companyMatchedOwner = true;
+                if (currentBranch.BranchId == requirementListing.ListingOriginatorBranchId)
+                {
+                    companyMatchedOwner = false;
+                    branchMatchedOwner = true;
+                }
+                if (appUser.AppUserId == requirementListing.ListingOriginatorAppUserId)
+                {
+                    companyMatchedOwner = false;
+                    branchMatchedOwner = false;
+                    userMatchedOwner = true;
+                }
+
 
                 RequirementListingGeneralInfoView requirementListingGeneralInfoView = new RequirementListingGeneralInfoView()
                 {
