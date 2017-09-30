@@ -63,7 +63,7 @@ namespace Distributor.Helpers
             //Create list within the time frame if setting set
             List<Campaign> list = (from c in db.Campaigns
                                    where (c.EntityStatus == EntityStatusEnum.Active && c.CampaignOriginatorDateTime >= dateCheck)
-                                   orderby c.CampaignEndDateTime
+                                   orderby c.CampaignEndDateTime ?? DateTime.MaxValue
                                    select c).ToList();
 
             //Now bring in the Selection Level sort
@@ -218,6 +218,7 @@ namespace Distributor.Helpers
         {
             List<Campaign> allCampaignsForUser = (from c in db.Campaigns
                                                   where (c.CampaignOriginatorAppUserId == appUserId && c.EntityStatus == EntityStatusEnum.Active)
+                                                  orderby c.CampaignEndDateTime ?? DateTime.MaxValue
                                                   select c).ToList();
 
             return allCampaignsForUser;
@@ -236,6 +237,7 @@ namespace Distributor.Helpers
         {
             List<Campaign> allCampaignsForUser = (from c in db.Campaigns
                                                   where (c.CampaignOriginatorBranchId == branchId && c.EntityStatus == EntityStatusEnum.Active)
+                                                  orderby c.CampaignEndDateTime ?? DateTime.MaxValue
                                                   select c).ToList();
 
             return allCampaignsForUser;
@@ -254,6 +256,7 @@ namespace Distributor.Helpers
         {
             List<Campaign> allCampaignsForUser = (from c in db.Campaigns
                                                   where (c.CampaignOriginatorCompanyId == companyId && c.EntityStatus == EntityStatusEnum.Active)
+                                                  orderby c.CampaignEndDateTime ?? DateTime.MaxValue
                                                   select c).ToList();
 
             return allCampaignsForUser;

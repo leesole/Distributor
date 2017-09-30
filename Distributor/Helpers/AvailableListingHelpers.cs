@@ -66,7 +66,7 @@ namespace Distributor.Helpers
             List<AvailableListing> list = (from rl in db.AvailableListings
                                            where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
                                                    && rl.ListingOriginatorDateTime >= dateCheck)
-                                           orderby rl.AvailableTo
+                                           orderby rl.AvailableTo ?? DateTime.MaxValue
                                            select rl).ToList();
 
             //Now bring in the Selection Level sort
@@ -224,8 +224,9 @@ namespace Distributor.Helpers
         public static List<AvailableListing> GetAllAvailableListingsForUser(ApplicationDbContext db, Guid appUserId)
         {
             List<AvailableListing> allRequirementsListingForUser = (from rl in db.AvailableListings
-                                                                     where (rl.ListingOriginatorAppUserId == appUserId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
-                                                                     select rl).ToList();
+                                                                    where (rl.ListingOriginatorAppUserId == appUserId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                    orderby rl.AvailableTo ?? DateTime.MaxValue
+                                                                    select rl).ToList();
 
             return allRequirementsListingForUser;
         }
@@ -243,6 +244,7 @@ namespace Distributor.Helpers
         {
             List<AvailableListing> allRequirementsListingForUser = (from rl in db.AvailableListings
                                                                     where (rl.ListingOriginatorBranchId == branchId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                    orderby rl.AvailableTo ?? DateTime.MaxValue
                                                                     select rl).ToList();
 
             return allRequirementsListingForUser;
@@ -261,6 +263,7 @@ namespace Distributor.Helpers
         {
             List<AvailableListing> allRequirementsListingForUser = (from rl in db.AvailableListings
                                                                     where (rl.ListingOriginatorCompanyId == companyId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                    orderby rl.AvailableTo ?? DateTime.MaxValue
                                                                     select rl).ToList();
 
             return allRequirementsListingForUser;

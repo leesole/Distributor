@@ -161,8 +161,8 @@
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateFrom</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateTo</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
@@ -185,8 +185,8 @@
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateFrom</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateTo</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
@@ -209,8 +209,8 @@
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateFrom</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateTo</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
@@ -237,8 +237,8 @@
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateFrom</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateTo</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
@@ -261,8 +261,8 @@
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateFrom</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateTo</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
@@ -285,8 +285,8 @@
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateFrom</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateTo</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
@@ -313,8 +313,8 @@
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateFrom</td>
-                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateTo</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                    <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                     <td onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>

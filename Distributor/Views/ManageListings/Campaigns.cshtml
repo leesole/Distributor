@@ -69,10 +69,6 @@
             <th>@Html.DisplayNameFor(model => model.Campaign.Website)</th>
             <th>@Html.DisplayNameFor(model => model.Campaign.CampaignStartDateTime)</th>
             <th>@Html.DisplayNameFor(model => model.Campaign.CampaignEndDateTime)</th>
-            <th>@Html.DisplayNameFor(model => model.Campaign.LocationName)</th>
-            <th>@Html.DisplayNameFor(model => model.Campaign.LocationAddressLine1)</th>
-            <th>@Html.DisplayNameFor(model => model.Campaign.LocationAddressTownCity)</th>
-            <th>@Html.DisplayNameFor(model => model.Campaign.LocationAddressPostcode)</th>
         </tr>
 
         @foreach (var item in Model)
@@ -84,10 +80,6 @@
                 <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.Website)</td>
                 <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignStartDateTime)</td>
                 <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignEndDateTime)</td>
-                <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationName)</td>
-                <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressLine1)</td>
-                <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressTownCity)</td>
-                <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId })'">@Html.DisplayFor(modelItem => item.Campaign.LocationAddressPostcode)</td>
             </tr>
         }
 

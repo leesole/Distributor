@@ -132,21 +132,6 @@
                 offerQuanity = item.OfferQuantity;
                 appUserId = item.RequirementListing.ListingOriginatorAppUserId.ToString();
 
-                Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom);
-                Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo);
-
-                var dateFrom = "";
-                var dateTo = "";
-                if (item.RequirementListing.RequiredFrom != null)
-                {
-                    dateFrom = item.RequirementListing.RequiredFrom.Value.ToShortDateString();
-                }
-                if (item.RequirementListing.RequiredTo != null)
-                {
-                    dateTo = item.RequirementListing.RequiredTo.Value.ToShortDateString();
-                }
-
-
                 if (item.CompanyLevelBlock && item.DisplayBlocks)
                 {
                     <tr id=@listingId style="color:darkred">
@@ -164,8 +149,8 @@
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateFrom</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateTo</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
@@ -188,8 +173,8 @@
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateFrom</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateTo)</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
@@ -212,8 +197,8 @@
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateFrom</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateTo</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
@@ -240,8 +225,8 @@
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateFrom</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateTo</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
@@ -264,8 +249,8 @@
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateFrom</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateTo</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
@@ -288,8 +273,8 @@
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateFrom</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateTo</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
@@ -316,8 +301,8 @@
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateFrom</td>
-                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateTo</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                        <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                         <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>

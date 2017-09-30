@@ -65,7 +65,7 @@ namespace Distributor.Helpers
             List<RequirementListing> list = (from rl in db.RequirementListings
                                              where ((rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial)
                                              && rl.ListingOriginatorDateTime >= dateCheck)
-                                             orderby rl.RequiredTo
+                                             orderby rl.RequiredTo ?? DateTime.MaxValue
                                              select rl).ToList();
 
             //Now bring in the Selection Level sort
@@ -220,6 +220,7 @@ namespace Distributor.Helpers
         {
             List<RequirementListing> allRequirementsListingForUser = (from rl in db.RequirementListings
                                                                       where (rl.ListingOriginatorAppUserId == appUserId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                                                      orderby rl.RequiredTo ?? DateTime.MaxValue
                                                                       select rl).ToList();
 
             return allRequirementsListingForUser;
@@ -237,6 +238,7 @@ namespace Distributor.Helpers
         {
             List<RequirementListing> list = (from rl in db.RequirementListings
                                              where (rl.ListingOriginatorBranchId == branchId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                             orderby rl.RequiredTo ?? DateTime.MaxValue
                                              select rl).ToList();
 
             return list;
@@ -254,6 +256,7 @@ namespace Distributor.Helpers
         {
             List<RequirementListing> list = (from rl in db.RequirementListings
                                              where (rl.ListingOriginatorCompanyId == companyId && (rl.ListingStatus == ItemRequiredListingStatusEnum.Open || rl.ListingStatus == ItemRequiredListingStatusEnum.Partial))
+                                             orderby rl.RequiredTo ?? DateTime.MaxValue
                                              select rl).ToList();
 
             return list;

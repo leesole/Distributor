@@ -33,9 +33,11 @@ namespace Distributor.Models
         public string UoM { get; set; }
 
         [Display(Name = "Required from")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? RequiredFrom { get; set; }
 
         [Display(Name = "Required to")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? RequiredTo { get; set; }
 
         [Display(Name = "Accept damaged items?")]
