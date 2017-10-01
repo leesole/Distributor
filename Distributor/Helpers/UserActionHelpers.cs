@@ -1,4 +1,5 @@
 ﻿using Distributor.Models;
+using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,20 +69,21 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static UserAction CreateAction(ActionTypeEnum actionType, string actionDescription, Guid referenceKey, Guid createdBy, DateTime createdOn, EntityStatusEnum status)
+        public static UserAction CreateAction(ActionTypeEnum actionType, LevelEnum level, string actionDescription, Guid referenceKey, Guid createdBy, DateTime createdOn, EntityStatusEnum status)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            UserAction action = CreateAction(db, actionType, actionDescription, referenceKey,  createdBy, createdOn, status);
+            UserAction action = CreateAction(db, actionType, level, actionDescription, referenceKey,  createdBy, createdOn, status);
             db.Dispose();
             return action;
         }
 
-        public static UserAction CreateAction(ApplicationDbContext db, ActionTypeEnum actionType, string actionDescription, Guid referenceKey, Guid createdBy, DateTime createdOn, EntityStatusEnum status)
+        public static UserAction CreateAction(ApplicationDbContext db, ActionTypeEnum actionType, LevelEnum level, string actionDescription, Guid referenceKey, Guid createdBy, DateTime createdOn, EntityStatusEnum status)
         {
             UserAction action = new UserAction()
             {
                 UserActionId = Guid.NewGuid(),
                 ActionType = actionType,
+                ActionLevel = level,
                 ActionDescription = actionDescription,
                 ReferenceKey = referenceKey,
                 CreatedBy = createdBy,
@@ -136,7 +138,7 @@ namespace Distributor.Helpers
         /// <returns></returns>
         public static UserAction CreateActionForFriendRequestFromUser(ApplicationDbContext db, LevelEnum level, Guid ofReferenceId, Guid byReferenceId)
         {
-            UserAction action = CreateAction(ActionTypeEnum.AwaitFriendRequest, EnumHelpers.GetDescription(level) + " level request.", byReferenceId, byReferenceId, DateTime.Now, EntityStatusEnum.Active);
+            UserAction action = CreateAction(ActionTypeEnum.AwaitFriendRequest, level, EnumHelpers.GetDescription(level) + " level request.", byReferenceId, byReferenceId, DateTime.Now, EntityStatusEnum.Active);
 
             //Create assignment list for this UserAction
             switch (level)
@@ -225,7 +227,7 @@ namespace Distributor.Helpers
         public static UserAction CreateActionForGroupMemberAccceptance(ApplicationDbContext db, Group group, GroupMember member)
         {
             //Create action for group member acceptance....
-            UserAction action = CreateAction(db, ActionTypeEnum.AwaitGroupMemberAcceptance, EnumHelpers.GetDescription(group.Type) + " level request.", group.GroupOriginatorAppUserId, group.GroupOriginatorAppUserId, DateTime.Now, EntityStatusEnum.Active);
+            UserAction action = CreateAction(db, ActionTypeEnum.AwaitGroupMemberAcceptance, group.Type, EnumHelpers.GetDescription(group.Type) + " level request.", group.GroupOriginatorAppUserId, group.GroupOriginatorAppUserId, DateTime.Now, EntityStatusEnum.Active);
 
             //..then assign action to users... it will only add actions to those members that are active on the list (Should really have this level set for new groups, only adding new members)
             List<UserActionAssignment> list = new List<UserActionAssignment>();
@@ -300,6 +302,100 @@ namespace Distributor.Helpers
             }
 
             return list;
+        }
+
+        #endregion
+    }
+
+    public static class UserActionViewsHelpers
+    {
+        #region Get
+
+        public static List<UserActionView> GetActionsForViewsForUser(IPrincipal user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<UserActionView> list = GetActionsForViewsForUser(db, user);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<UserActionView> GetActionsForViewsForUser(ApplicationDbContext db, IPrincipal user)
+        {
+            List<UserActionView> list = new List<UserActionView>();
+
+            List<UserAction> userActionList = UserActionHelpers.GetActionsForUser(db, user);
+
+            foreach (UserAction userAction in userActionList)
+            {
+                string referenceName = "";
+
+                switch (userAction.ActionLevel)
+                {
+                    case LevelEnum.Company:
+                        referenceName = CompanyHelpers.GetCompanyNameTownPostCode(db, userAction.ReferenceKey);
+                        break;
+                    case LevelEnum.Branch:
+                        referenceName = BranchHelpers.GetBranchNameTownPostCode(db, userAction.ReferenceKey);
+                        break;
+                    case LevelEnum.User:
+                        referenceName = AppUserHelpers.GetAppUserName(db, userAction.ReferenceKey);
+                        break;
+                }
+
+                string createdByName = "";
+
+                //Get the user that created the action.  Note, this could be at Company or Branch level, so try the user first, if that
+                //fails then work through a switch
+                try
+                {
+                    createdByName = AppUserHelpers.GetAppUserName(db, userAction.CreatedBy);
+                }
+                catch
+                {
+                    switch (userAction.ActionLevel)
+                    {
+                        case LevelEnum.Company:
+                            createdByName = CompanyHelpers.GetCompanyNameTownPostCode(db, userAction.CreatedBy);
+                            break;
+                        case LevelEnum.Branch:
+                            createdByName = BranchHelpers.GetBranchNameTownPostCode(db, userAction.CreatedBy);
+                            break;
+                    }
+                }
+
+                list.Add(CreateUserActionView(userAction, referenceName, createdByName));
+            }
+
+            return list;
+        }
+
+        #endregion
+
+        #region Create
+
+        public static UserActionView CreateUserActionView (UserAction userAction, string referenceName, string createdByName)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserActionView view = CreateUserActionView(db, userAction, referenceName, createdByName);
+            db.Dispose();
+            return view;
+        }
+
+        public static UserActionView CreateUserActionView(ApplicationDbContext db, UserAction userAction, string referenceName, string createdByName)
+        {
+            UserActionView view = new UserActionView()
+            {
+                UserActionId = userAction.UserActionId,
+                ActionType = userAction.ActionType,
+                ActionLevel = userAction.ActionLevel,
+                ActionDescription = userAction.ActionDescription,
+                Reference = referenceName,
+                CreatedOn = userAction.CreatedOn,
+                CreatedBy = createdByName,
+                EntityStatus = userAction.EntityStatus
+            };
+
+            return view;
         }
 
         #endregion

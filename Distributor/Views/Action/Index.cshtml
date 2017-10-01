@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Distributor.Models.UserAction>
+﻿@using Distributor.Helpers;
+
+@model IEnumerable<Distributor.ViewModels.UserActionView>
 
 <div class="row">
     <div class="col-lg-12">
@@ -21,7 +23,7 @@
             <th colspan="2">Actions</th>
             <th>@Html.DisplayNameFor(model => model.ActionType)</th>
             <th>@Html.DisplayNameFor(model => model.ActionDescription)</th>
-            <th>@Html.DisplayNameFor(model => model.ReferenceKey)</th>
+            <th>@Html.DisplayNameFor(model => model.Reference)</th>
             <th>@Html.DisplayNameFor(model => model.CreatedOn)</th>
             <th>@Html.DisplayNameFor(model => model.CreatedBy)</th>
             <th>@Html.DisplayNameFor(model => model.EntityStatus)</th>
@@ -35,6 +37,9 @@
         {
             foreach (var item in Model)
             {
+                @Html.HiddenFor(modelItem => item.UserActionId)
+                @Html.HiddenFor(modelItem => item.ActionType)
+                @Html.HiddenFor(modelItem => item.EntityStatus)
                 <tr>
                     <td>
                         <button type="submit" class="btn btn-xs btn-success btn-block confirmapprove"><span class="glyphicon glyphicon-ok"></span> Approve</button>
@@ -42,24 +47,13 @@
                     <td>
                         <button type="submit" class="btn btn-xs btn-danger btn-block confirmcancel"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActionType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActionDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReferenceKey)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EntityStatus)
-                    </td>
+                    @*<td>@Html.DisplayFor(modelItem => item.ActionType)</td>*@
+                    <td>@item.ActionType.DisplayName()</td>
+                    <td>@Html.DisplayFor(modelItem => item.ActionDescription)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Reference)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
+                    <td>@item.EntityStatus.DisplayName()</td>
                 </tr>
             }
         }

@@ -287,6 +287,10 @@
     <Compile Include="Migrations\201709291329351_9th.Designer.cs">
       <DependentUpon>201709291329351_9th.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709302036454_10th.cs" />
+    <Compile Include="Migrations\201709302036454_10th.Designer.cs">
+      <DependentUpon>201709302036454_10th.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -326,8 +330,9 @@
     <Compile Include="ViewModels\CompanyAdminView.cs" />
     <Compile Include="ViewModels\OrderViews.cs" />
     <Compile Include="ViewModels\RequirementListingViews.cs" />
-    <Compile Include="ViewModels\UserAdminView.cs" />
-    <Compile Include="ViewModels\UserTaskView.cs" />
+    <Compile Include="ViewModels\UserActionViews.cs" />
+    <Compile Include="ViewModels\UserAdminViews.cs" />
+    <Compile Include="ViewModels\UserTaskViews.cs" />
     <Compile Include="ViewModels\ViewButtons.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -464,7 +469,6 @@
     <Content Include="Views\Groups\Details.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
-    <Content Include="Views\Action\Index.cshtml" />
     <Content Include="Views\Groups\Create.cshtml" />
     <Content Include="Views\Groups\Create - Copy.cshtml" />
     <Content Include="Views\Groups\AddGroupMembers.cshtml" />
@@ -473,6 +477,7 @@
     <Content Include="Views\AppUsers\BlockIndex.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\AppUsers\FriendIndex.cshtml" />
+    <Content Include="Views\Action\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -522,6 +527,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709291329351_9th.resx">
       <DependentUpon>201709291329351_9th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709302036454_10th.resx">
+      <DependentUpon>201709302036454_10th.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

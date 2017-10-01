@@ -1,5 +1,6 @@
 ﻿using Distributor.Helpers;
 using Distributor.Models;
+using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Distributor.Controllers
         // GET: Action
         public ActionResult Index()
         {
-            List<UserAction> model = UserActionHelpers.GetActionsForUser(db, User);
+            List<UserActionView> model = UserActionViewsHelpers.GetActionsForViewsForUser(db, User);
             return View(model);
         }
 
