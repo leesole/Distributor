@@ -7,7 +7,7 @@
     var offerButton = "";
     var saveButton = "";
     var offerQuantityField = "";
-    var offerQuanity = 0.00M;
+    var offerQuantity = 0.00M;
     var currentAppUserId = User.Identity.GetAppUserId().ToString();
     var appUserId = "";
 }
@@ -129,15 +129,36 @@
                 offerButton = "offerbutton" + listingId.ToString();
                 saveButton = "savebutton" + listingId.ToString();
                 offerQuantityField = "offerquantityfield" + listingId.ToString();
-                offerQuanity = item.OfferQuantity;
+                offerQuantity = item.OfferQuantity;
                 appUserId = item.RequirementListing.ListingOriginatorAppUserId.ToString();
 
                 if (item.CompanyLevelBlock && item.DisplayBlocks)
                 {
                     <tr id=@listingId style="color:darkred">
-                        @if (offerQuanity == 0 && appUserId != currentAppUserId)
-                                                            {
-                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                        @if (offerQuantity == 0)
+                        {
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
+                            else
+                            {
+                                if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
                         }
                         else
                         {
@@ -159,9 +180,30 @@
                 else if (item.BranchLevelBlock && item.DisplayBlocks)
                 {
                     <tr id=@listingId style="color:indianred">
-                        @if (offerQuanity == 0 && appUserId != currentAppUserId)
-            {
-                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                        @if (offerQuantity == 0)
+                        {
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
+                            else
+                            {
+                                if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
                         }
                         else
                         {
@@ -183,9 +225,30 @@
                 else if (item.UserLevelBlock && item.DisplayBlocks)
                 {
                     <tr id=@listingId style="color:red">
-                        @if (offerQuanity == 0 && appUserId != currentAppUserId)
-            {
-                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                        @if (offerQuantity == 0)
+                        {
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
+                            else
+                            {
+                                if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
                         }
                         else
                         {
@@ -211,9 +274,30 @@
                 else if (item.CompanyLevelOwner && item.DisplayMyCompanyRecords)
                 {
                     <tr id=@listingId style="color:darkgreen">
-                        @if (offerQuanity == 0 && appUserId != currentAppUserId)
+                        @if (offerQuantity == 0)
                         {
-                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
+                            else
+                            {
+                                if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
                         }
                         else
                         {
@@ -235,9 +319,30 @@
                 else if (item.BranchLevelOwner && item.DisplayMyBranchRecords)
                 {
                     <tr id=@listingId style="color:forestgreen">
-                        @if (offerQuanity == 0 && appUserId != currentAppUserId)
+                        @if (offerQuantity == 0)
                         {
-                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
+                            else
+                            {
+                                if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
                         }
                         else
                         {
@@ -259,9 +364,30 @@
                 else if (item.UserLevelOwner && item.DisplayMyRecords)
                 {
                     <tr id=@listingId style="color:green">
-                        @if (offerQuanity == 0 && appUserId != currentAppUserId)
+                        @if (offerQuantity == 0)
                         {
-                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
+                            else
+                            {
+                                if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
                         }
                         else
                         {
@@ -287,9 +413,30 @@
                 else
                 {
                     <tr id=@listingId>
-                        @if (offerQuanity == 0 && appUserId != currentAppUserId)
+                        @if (offerQuantity == 0)
+                        {
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
                                 {
-                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
+                            else
+                            {
+                                if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                                else
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                }
+                            }
                         }
                         else
                         {

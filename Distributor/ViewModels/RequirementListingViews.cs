@@ -33,13 +33,13 @@ namespace Distributor.ViewModels
         public DateTime? RequiredTo { get; set; }
 
         [Display(Name = "Accept damaged items?")]
-        public bool AcceptDamagedItems { get; set; }
+        public bool? AcceptDamagedItems { get; set; }
 
         [Display(Name = "Accept out-of-date items?")]
-        public bool AcceptOutOfDateItems { get; set; }
+        public bool? AcceptOutOfDateItems { get; set; }
 
         [Display(Name = "Can collect?")]
-        public bool CollectionAvailable { get; set; }
+        public bool? CollectionAvailable { get; set; }
 
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }
@@ -51,6 +51,8 @@ namespace Distributor.ViewModels
     public class RequirementListingGeneralInfoView : BlocksAndOwners
     {
         public decimal OfferQuantity { get; set; }
+
+        public bool AllowBranchTrading { get; set; }
 
         public RequirementListing RequirementListing { get; set; }
     }
@@ -93,13 +95,13 @@ namespace Distributor.ViewModels
         public DateTime? RequiredTo { get; set; }
 
         [Display(Name = "Accept damaged items?")]
-        public bool AcceptDamagedItems { get; set; }
+        public bool? AcceptDamagedItems { get; set; }
 
         [Display(Name = "Accept out-of-date items?")]
-        public bool AcceptOutOfDateItems { get; set; }
+        public bool? AcceptOutOfDateItems { get; set; }
 
         [Display(Name = "Can collect?")]
-        public bool CollectionAvailable { get; set; }
+        public bool? CollectionAvailable { get; set; }
 
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }

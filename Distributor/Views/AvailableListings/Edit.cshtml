@@ -1,4 +1,6 @@
-﻿@model Distributor.ViewModels.AvailableListingEditView
+﻿@using Distributor.Enums
+
+@model Distributor.ViewModels.AvailableListingEditView
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -90,92 +92,196 @@
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemDescription)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.ItemDescription, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.ItemDescription)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ItemDescription, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.ItemDescription)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemType)</div>
                             <div class="col-md-8">
-                                @Html.EnumDropDownListFor(model => model.ItemType, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.ItemType, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.ItemType)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EnumDropDownListFor(model => model.ItemType, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ItemType, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.ItemType)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityRequired)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.QuantityRequired, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.QuantityRequired, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.QuantityRequired)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.QuantityRequired, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.QuantityRequired, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.QuantityRequired)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityFulfilled)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.QuantityFulfilled, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.QuantityFulfilled, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.QuantityFulfilled)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.QuantityFulfilled, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.QuantityFulfilled, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.QuantityFulfilled)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityOutstanding)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.QuantityOutstanding, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.QuantityOutstanding, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.QuantityOutstanding)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.QuantityOutstanding, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.QuantityOutstanding, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.QuantityOutstanding)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.UoM)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.UoM, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.UoM, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.UoM)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.UoM, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UoM, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.UoM)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.AvailableFrom)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.AvailableFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                @Html.ValidationMessageFor(model => model.AvailableFrom, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.AvailableFrom)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.AvailableFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.AvailableFrom, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.AvailableFrom)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.AvailableTo)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.AvailableTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                @Html.ValidationMessageFor(model => model.AvailableTo, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.AvailableTo)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.AvailableTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.AvailableTo, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.AvailableTo)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemCondition)</div>
                             <div class="col-md-8">
-                                @Html.EnumDropDownListFor(model => model.ItemCondition, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.ItemCondition, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.ItemCondition)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EnumDropDownListFor(model => model.ItemCondition, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ItemCondition, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.ItemCondition)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.DisplayUntilDate)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.DisplayUntilDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                @Html.ValidationMessageFor(model => model.DisplayUntilDate, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.DisplayUntilDate)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.DisplayUntilDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.DisplayUntilDate, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.DisplayUntilDate)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.SellByDate)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.SellByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                @Html.ValidationMessageFor(model => model.SellByDate, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.SellByDate)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.SellByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.SellByDate, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.SellByDate)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.UseByDate)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.UseByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                @Html.ValidationMessageFor(model => model.UseByDate, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.UseByDate)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.UseByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.UseByDate, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => model.UseByDate)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.DeliveryAvailable)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.DeliveryAvailable, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.DeliveryAvailable, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.DeliveryAvailable)
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.DeliveryAvailable, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DeliveryAvailable, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    <p>@Model.DeliveryAvailable.Value</p>
+                                }
                             </div>
                         </div>
                         <div class="form-group">

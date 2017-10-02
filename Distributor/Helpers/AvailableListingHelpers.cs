@@ -293,7 +293,7 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static AvailableListing CreateAvailableListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, DateTime? displayUntilDate, DateTime? sellByDate, DateTime? useByDate, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
+        public static AvailableListing CreateAvailableListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, DateTime? displayUntilDate, DateTime? sellByDate, DateTime? useByDate, bool? deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             AvailableListing newAvailableListing = CreateAvailableListing(db, user, itemDescription, itemType, quantityRequired, uom, availableFrom, availableTo, itemCondition, displayUntilDate, sellByDate, useByDate, deliveryAvailable, listingStatus);
@@ -301,7 +301,7 @@ namespace Distributor.Helpers
             return newAvailableListing;
         }
 
-        public static AvailableListing CreateAvailableListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, DateTime? displayUntilDate, DateTime? sellByDate, DateTime? useByDate, bool deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
+        public static AvailableListing CreateAvailableListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? availableFrom, DateTime? availableTo, ItemConditionEnum itemCondition, DateTime? displayUntilDate, DateTime? sellByDate, DateTime? useByDate, bool? deliveryAvailable, ItemRequiredListingStatusEnum listingStatus)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
             Branch branch = BranchHelpers.GetBranch(db, branchUser.BranchId);
@@ -321,7 +321,7 @@ namespace Distributor.Helpers
                 DisplayUntilDate = displayUntilDate,
                 SellByDate = sellByDate,
                 UseByDate = useByDate,
-                DeliveryAvailable = deliveryAvailable,
+                DeliveryAvailable = deliveryAvailable ?? false,
                 ListingBranchPostcode = branch.AddressPostcode,
                 ListingOriginatorAppUserId = branchUser.UserId,
                 ListingOriginatorBranchId = branchUser.BranchId,
@@ -400,7 +400,7 @@ namespace Distributor.Helpers
             listing.DisplayUntilDate = view.DisplayUntilDate;
             listing.SellByDate = view.SellByDate;
             listing.UseByDate = view.UseByDate;
-            listing.DeliveryAvailable = view.DeliveryAvailable;
+            listing.DeliveryAvailable = view.DeliveryAvailable ?? false;
             listing.ListingStatus = view.ListingStatus;
 
             db.Entry(listing).State = EntityState.Modified;
@@ -467,10 +467,13 @@ namespace Distributor.Helpers
                     userMatchedOwner = true;
                 }
 
+                Company company = CompanyHelpers.GetCompany(db, availableListing.ListingOriginatorCompanyId);
+
                 AvailableListingGeneralInfoView AvailableListingGeneralInfoView = new AvailableListingGeneralInfoView()
                 {
                     AvailableListing = availableListing,
                     OfferQuantity = offerQty,
+                    AllowBranchTrading = company.AllowBranchTrading,
                     UserLevelBlock = userBlocked,
                     BranchLevelBlock = branchBlocked,
                     CompanyLevelBlock = companyBlocked,

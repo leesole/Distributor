@@ -16,7 +16,8 @@ namespace Distributor.Controllers
         {
             List<RequirementListingGeneralInfoView> model = RequirementListingGeneralInfoHelpers.GetAllRequirementListingsGeneralInfoView(User);
 
-            //Do any filtering
+            Company userCompany = CompanyHelpers.GetCompanyForUser(User);
+            ViewBag.CurrentCompanyId = userCompany.CompanyId;
 
             return View(model);
         }
@@ -25,7 +26,8 @@ namespace Distributor.Controllers
         {
             List<AvailableListingGeneralInfoView> model = AvailableListingGeneralInfoHelpers.GetAllAvailableListingsGeneralInfoView(User);
 
-            //Do filtering
+            Company userCompany = CompanyHelpers.GetCompanyForUser(User);
+            ViewBag.CurrentCompanyId = userCompany.CompanyId;
 
             return View(model);
         }

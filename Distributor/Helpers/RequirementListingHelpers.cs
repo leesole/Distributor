@@ -286,7 +286,7 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool acceptOutOfDateItems, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
+        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool? acceptDamagedItems, bool? acceptOutOfDateItems, bool? collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             RequirementListing newRequirementListing = CreateRequirementListing(db, user, itemDescription, itemType, quantityRequired, uom, requiredFrom, requiredTo, acceptDamagedItems, acceptOutOfDateItems, collectionAvailable, listingStatus, selectedCampaignId);
@@ -294,7 +294,7 @@ namespace Distributor.Helpers
             return newRequirementListing;
         }
 
-        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool acceptOutOfDateItems, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
+        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool? acceptDamagedItems, bool? acceptOutOfDateItems, bool? collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
             Branch branch = BranchHelpers.GetBranch(db, branchUser.BranchId);
@@ -310,9 +310,9 @@ namespace Distributor.Helpers
                 UoM = uom,
                 RequiredFrom = requiredFrom,
                 RequiredTo = requiredTo,
-                AcceptDamagedItems = acceptDamagedItems,
-                AcceptOutOfDateItems = acceptOutOfDateItems,
-                CollectionAvailable = collectionAvailable,
+                AcceptDamagedItems = acceptDamagedItems ?? false,
+                AcceptOutOfDateItems = acceptOutOfDateItems ?? false,
+                CollectionAvailable = collectionAvailable ?? false,
                 ListingBranchPostcode = branch.AddressPostcode,
                 ListingOriginatorAppUserId = branchUser.UserId,
                 ListingOriginatorBranchId = branchUser.BranchId,
@@ -388,9 +388,9 @@ namespace Distributor.Helpers
             listing.UoM = view.UoM;
             listing.RequiredFrom = view.RequiredFrom;
             listing.RequiredTo = view.RequiredTo;
-            listing.AcceptDamagedItems = view.AcceptDamagedItems;
-            listing.AcceptOutOfDateItems = view.AcceptOutOfDateItems;
-            listing.CollectionAvailable = view.CollectionAvailable;
+            listing.AcceptDamagedItems = view.AcceptDamagedItems ?? false;
+            listing.AcceptOutOfDateItems = view.AcceptOutOfDateItems ?? false;
+            listing.CollectionAvailable = view.CollectionAvailable ?? false;
             listing.ListingStatus = view.ListingStatus;
 
             db.Entry(listing).State = EntityState.Modified;
@@ -457,11 +457,13 @@ namespace Distributor.Helpers
                     userMatchedOwner = true;
                 }
 
+                Company company = CompanyHelpers.GetCompany(db, requirementListing.ListingOriginatorCompanyId);
 
                 RequirementListingGeneralInfoView requirementListingGeneralInfoView = new RequirementListingGeneralInfoView()
                 {
                     RequirementListing = requirementListing,
                     OfferQuantity = offerQty,
+                    AllowBranchTrading = company.AllowBranchTrading,
                     UserLevelBlock = userBlocked,
                     BranchLevelBlock = branchBlocked,
                     CompanyLevelBlock = companyBlocked,
