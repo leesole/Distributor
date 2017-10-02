@@ -94,6 +94,7 @@
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.CampaignId)
+                        @Html.HiddenFor(model => model.CampaignOriginatorDateTime)
 
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.Name)</div>
@@ -205,13 +206,6 @@
                             <div class="col-md-8">
                                 @Html.EditorFor(model => model.LocationContactName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.LocationContactName, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.CampaignOriginatorDateTime)</div>
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.CampaignOriginatorDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                @Html.ValidationMessageFor(model => model.CampaignOriginatorDateTime, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">

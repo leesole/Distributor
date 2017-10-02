@@ -1,6 +1,6 @@
-﻿@using Distributor.Enums;
-
-@using Distributor.Extenstions;
+﻿@using Distributor.Enums
+@using Distributor.Extenstions
+@using Distributor.Helpers
 
 @model Distributor.ViewModels.OfferManageView
 
@@ -163,11 +163,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.ItemType)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.ItemType)</div>
+                        <div class="col-md-8">@Model.AvailableListingDetails.ItemType.DisplayName()</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.ItemCondition)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.ItemCondition)</div>
+                        <div class="col-md-8">@Model.AvailableListingDetails.ItemCondition.DisplayName()</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.AvailableFrom)</div>
@@ -210,7 +210,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.ItemType)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.ItemType)</div>
+                        <div class="col-md-8">@Model.RequirementListingDetails.ItemType.DisplayName()</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.AcceptDamagedItems)</div>
@@ -293,7 +293,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.BusinessType) </div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.BusinessType)</div>
+                    <div class="col-md-8">@Model.ListingBranchDetails.BusinessType.DisplayName()</div>
                 </div>
             </div>
         </div>
@@ -566,7 +566,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.BusinessType)</div>
-                    <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.BusinessType)</div>
+                    <div class="col-md-8">@Model.OfferBranchDetails.BusinessType.DisplayName()</div>
                 </div>
             </div>
         </div>

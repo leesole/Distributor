@@ -361,6 +361,7 @@ namespace Distributor.Helpers
 
         public static Campaign UpdateCampaignFromCampaignEditView(ApplicationDbContext db, CampaignEditView view)
         {
+            
             Campaign campaignDetails = GetCampaign(db, view.CampaignId);
             campaignDetails.CampaignId = view.CampaignId;
             campaignDetails.Name = view.Name;
@@ -382,7 +383,8 @@ namespace Distributor.Helpers
             campaignDetails.LocationEmail = view.LocationEmail;
             campaignDetails.LocationContactName = view.LocationContactName;
             campaignDetails.EntityStatus = view.EntityStatus;
-            campaignDetails.CampaignOriginatorDateTime = view.CampaignOriginatorDateTime;
+            if (view.CampaignOriginatorDateTime != DateTime.MinValue) 
+                campaignDetails.CampaignOriginatorDateTime = view.CampaignOriginatorDateTime;
 
             db.Entry(campaignDetails).State = EntityState.Modified;
             db.SaveChanges();
