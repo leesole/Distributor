@@ -1,4 +1,5 @@
 ﻿@using Distributor.Enums
+@using Distributor.Helpers
 
 @model Distributor.ViewModels.RequirementListingEditView
 
@@ -86,11 +87,14 @@
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.ListingId)
+                        @Html.HiddenFor(model => model.ListingAppUser)
+                        @Html.HiddenFor(model => model.ListingBranchDetails)
+                        @Html.HiddenFor(model => model.ListingCompanyDetails)
+                        @Html.HiddenFor(model => model.CampaignDetails)
 
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemDescription)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.ItemDescription)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control" } })
@@ -98,6 +102,7 @@
                                 }
                                 else
                                 {
+                                    @Html.HiddenFor(model => model.ItemDescription)
                                     @Html.DisplayFor(model => model.ItemDescription)
                                 }
                             </div>
@@ -105,7 +110,6 @@
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemType)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.ItemType)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EnumDropDownListFor(model => model.ItemType, htmlAttributes: new { @class = "form-control" })
@@ -113,14 +117,14 @@
                                 }
                                 else
                                 {
-                                    @Html.DisplayFor(model => model.ItemType)
+                                    @Html.HiddenFor(model => model.ItemType)
+                                    <p>@Model.ItemType.DisplayName()</p>
                                 }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityRequired)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.QuantityRequired)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.QuantityRequired, new { htmlAttributes = new { @class = "form-control" } })
@@ -128,6 +132,7 @@
                                 }
                                 else
                                 {
+                                    @Html.HiddenFor(model => model.QuantityRequired)
                                     @Html.DisplayFor(model => model.QuantityRequired)
                                 }
                             </div>
@@ -135,7 +140,6 @@
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityFulfilled)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.QuantityFulfilled)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.QuantityFulfilled, new { htmlAttributes = new { @class = "form-control" } })
@@ -143,6 +147,7 @@
                                 }
                                 else
                                 {
+                                    @Html.HiddenFor(model => model.QuantityFulfilled)
                                     @Html.DisplayFor(model => model.QuantityFulfilled)
                                 }
                             </div>
@@ -150,7 +155,6 @@
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityOutstanding)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.QuantityOutstanding)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.QuantityOutstanding, new { htmlAttributes = new { @class = "form-control" } })
@@ -158,6 +162,7 @@
                                 }
                                 else
                                 {
+                                    @Html.HiddenFor(model => model.QuantityOutstanding)
                                     @Html.DisplayFor(model => model.QuantityOutstanding)
                                 }
                             </div>
@@ -165,7 +170,6 @@
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.UoM)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.UoM)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.UoM, new { htmlAttributes = new { @class = "form-control" } })
@@ -173,6 +177,7 @@
                                 }
                                 else
                                 {
+                                    @Html.HiddenFor(model => model.UoM)
                                     @Html.DisplayFor(model => model.UoM)
                                 }
                             </div>
@@ -180,7 +185,6 @@
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.RequiredFrom)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.RequiredFrom)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.RequiredFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
@@ -188,6 +192,7 @@
                                 }
                                 else
                                 {
+                                    @Html.HiddenFor(model => model.RequiredFrom)
                                     @Html.DisplayFor(model => model.RequiredFrom)
                                 }
                             </div>
@@ -195,7 +200,6 @@
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.RequiredTo)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.RequiredTo)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.RequiredTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
@@ -203,6 +207,7 @@
                                 }
                                 else
                                 {
+                                    @Html.HiddenFor(model => model.RequiredTo)
                                     @Html.DisplayFor(model => model.RequiredTo)
                                 }
                             </div>
@@ -210,7 +215,6 @@
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.AcceptDamagedItems)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.AcceptDamagedItems)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.AcceptDamagedItems, new { htmlAttributes = new { @class = "form-control" } })
@@ -218,14 +222,14 @@
                                 }
                                 else
                                 {
-                                    <p>@Model.AcceptDamagedItems.Value</p>
+                                    @Html.HiddenFor(model => model.AcceptDamagedItems)
+                                    <p>@Model.AcceptDamagedItems</p>
                                 }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.AcceptOutOfDateItems)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.AcceptOutOfDateItems)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.AcceptOutOfDateItems, new { htmlAttributes = new { @class = "form-control" } })
@@ -233,14 +237,14 @@
                                 }
                                 else
                                 {
-                                    <p>@Model.AcceptOutOfDateItems.Value</p>
+                                    @Html.HiddenFor(model => model.AcceptOutOfDateItems)
+                                    <p>@Model.AcceptOutOfDateItems</p>
                                 }
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.CollectionAvailable)</div>
                             <div class="col-md-8">
-                                @Html.HiddenFor(model => model.CollectionAvailable)
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
                                     @Html.EditorFor(model => model.CollectionAvailable, new { htmlAttributes = new { @class = "form-control" } })
@@ -248,7 +252,8 @@
                                 }
                                 else
                                 {
-                                    <p>@Model.CollectionAvailable.Value</p>
+                                    @Html.HiddenFor(model => model.CollectionAvailable)
+                                    <p>@Model.CollectionAvailable</p>
                                 }
                             </div>
                         </div>

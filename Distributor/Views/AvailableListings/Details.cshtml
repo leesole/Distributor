@@ -1,4 +1,5 @@
-﻿@using Distributor.Extenstions;
+﻿@using Distributor.Extenstions
+@using Distributor.Helpers
 
 @model Distributor.ViewModels.AvailableListingEditView
 
@@ -99,27 +100,11 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.ListingId)
 
-                @Html.HiddenFor(model => model.AvailableFrom)
-                @Html.HiddenFor(model => model.AvailableTo)
-
-                @{
-                    var dateFrom = "";
-                    var dateTo = "";
-                    if (Model.AvailableFrom != null)
-                    {
-                        dateFrom = Model.AvailableFrom.Value.ToShortDateString();
-                    }
-                    if (Model.AvailableTo != null)
-                    {
-                        dateTo = Model.AvailableTo.Value.ToShortDateString();
-                    }
-                }
-
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemDescription)</div></div>
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ItemDescription)</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemType)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ItemType)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ItemType.DisplayName()</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.QuantityRequired)</div></div>
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.QuantityRequired)</div></div>
@@ -140,7 +125,7 @@
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.AvailableTo)</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemCondition)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ItemCondition)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ItemCondition.DisplayName()</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.DisplayUntilDate)</div></div>
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.DisplayUntilDate)</div></div>
@@ -152,10 +137,10 @@
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.UseByDate)</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.DeliveryAvailable)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.DeliveryAvailable)</div></div>
+                <div class="row"><div class="col-md-12">@Model.DeliveryAvailable</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ListingStatus)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ListingStatus)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ListingStatus.DisplayName()</div></div>
             </div>
         </div>
     </div>

@@ -100,7 +100,7 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AvailableListingEditView availableListing)
+        public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,DisplayUntilDate,SellByDate,UseByDate,DeliveryAvailable,ListingStatus")]AvailableListingEditView availableListing)
         {
             if (ModelState.IsValid)
             {

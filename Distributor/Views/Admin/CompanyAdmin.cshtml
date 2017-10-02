@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Distributor.Extenstions
+@using Distributor.Helpers
 
 @model Distributor.ViewModels.CompanyAdminView
 
@@ -182,27 +183,13 @@
                                     }
                                 }
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelBranch => branch.BranchName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelBranch => branch.AddressLine1)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelBranch => branch.AddressTownCity)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelBranch => branch.AddressCounty)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelBranch => branch.AddressPostcode)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelBranch => branch.BusinessType)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelBranch => branch.EntityStatus)
-                            </td>
+                            <td>@Html.DisplayFor(modelBranch => branch.BranchName)</td>
+                            <td>@Html.DisplayFor(modelBranch => branch.AddressLine1)</td>
+                            <td>@Html.DisplayFor(modelBranch => branch.AddressTownCity)</td>
+                            <td>@Html.DisplayFor(modelBranch => branch.AddressCounty)</td>
+                            <td>@Html.DisplayFor(modelBranch => branch.AddressPostcode)</td>
+                            <td>@branch.BusinessType.DisplayName()</td>
+                            <td>@branch.EntityStatus.DisplayName()</td>
                         </tr>
                     }
                 </table>

@@ -1,4 +1,4 @@
-﻿@using Distributor.Helpers;
+﻿@using Distributor.Helpers
 
 @model IEnumerable<Distributor.ViewModels.UserActionView>
 
@@ -47,7 +47,6 @@
                     <td>
                         <button type="submit" class="btn btn-xs btn-danger btn-block confirmcancel"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                     </td>
-                    @*<td>@Html.DisplayFor(modelItem => item.ActionType)</td>*@
                     <td>@item.ActionType.DisplayName()</td>
                     <td>@Html.DisplayFor(modelItem => item.ActionDescription)</td>
                     <td>@Html.DisplayFor(modelItem => item.Reference)</td>

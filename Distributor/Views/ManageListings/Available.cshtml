@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Distributor.ViewModels.AvailableListingManageView>
+﻿@using Distributor.Helpers
+
+@model IEnumerable<Distributor.ViewModels.AvailableListingManageView>
 
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
@@ -91,12 +93,12 @@
             }
             <tr>
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemDescription)</td>
-                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemType)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@item.AvailableListing.ItemType.DisplayName()</td>
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateFrom</td>
-                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@dateTo</td>
-                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemCondition)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
+                <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@item.AvailableListing.ItemCondition.DisplayName()</td>
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
                 <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId })'">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
             </tr>

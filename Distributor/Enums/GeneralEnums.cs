@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,9 +12,11 @@ namespace Distributor.Enums
         public enum ListingTypeEnum
         {
             [Description("Requirement listing")]
+            [Display(Name = "Requirement listing")]
             Requirement = 0,
 
             [Description("Available listing")]
+            [Display(Name = "Available listing")]
             Available = 1
         }
 
@@ -23,15 +26,19 @@ namespace Distributor.Enums
         public enum InternalSearchLevelEnum
         {
             [Description("User")]
+            [Display(Name = "User")]
             User = 0,
 
             [Description("Branch")]
+            [Display(Name = "Branch")]
             Branch = 1,
 
             [Description("Company")]
+            [Display(Name = "Company")]
             Company = 2,
 
-            [Description("Group")]  //These are user built closed groups
+            [Description("Group")]
+            [Display(Name = "Group")]  //These are user built closed groups
             Group = 3
         }
 
@@ -41,15 +48,19 @@ namespace Distributor.Enums
         public enum ExternalSearchLevelEnum
         {
             [Description("All")]
+            [Display(Name = "All")]
             All = 0,
 
             [Description("Branch")]
+            [Display(Name = "Branch")]
             Branch = 1,
 
             [Description("Company")]
+            [Display(Name = "Company")]
             Company = 2,
 
-            [Description("Group")]  //These are user built closed groups
+            [Description("Group")]
+            [Display(Name = "Group")]  //These are user built closed groups
             Group = 3
         }
 
@@ -59,12 +70,15 @@ namespace Distributor.Enums
         public enum LevelEnum
         {
             [Description("User")]
+            [Display(Name = "User")]
             User = 0,
 
             [Description("Branch")]
+            [Display(Name = "Branch")]
             Branch = 1,
 
             [Description("Company")]
+            [Display(Name = "Company")]
             Company = 2
         }
 
@@ -74,15 +88,19 @@ namespace Distributor.Enums
         public enum PrivacyLevelEnum
         {
             [Description("None")]
+            [Display(Name = "None")]
             None = 0,
 
             [Description("User")]
+            [Display(Name = "User")]
             User = 1,
 
             [Description("Branch")]
+            [Display(Name = "Branch")]
             Branch = 2,
 
             [Description("Company")]
+            [Display(Name = "Company")]
             Company = 3
         }
     }

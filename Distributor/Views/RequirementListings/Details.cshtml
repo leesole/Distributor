@@ -1,4 +1,5 @@
-﻿@using Distributor.Extenstions;
+﻿@using Distributor.Extenstions
+@using Distributor.Helpers
 
 @model Distributor.ViewModels.RequirementListingEditView
 
@@ -102,7 +103,7 @@
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ItemDescription)</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemType)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ItemType)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ItemType.DisplayName()</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.QuantityRequired)</div></div>
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.QuantityRequired)</div></div>
@@ -123,16 +124,16 @@
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.RequiredTo)</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.AcceptDamagedItems)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.AcceptDamagedItems)</div></div>
+                <div class="row"><div class="col-md-12">@Model.AcceptDamagedItems</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.AcceptOutOfDateItems)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.AcceptOutOfDateItems)</div></div>
+                <div class="row"><div class="col-md-12">@Model.AcceptOutOfDateItems</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.CollectionAvailable)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.CollectionAvailable)</div></div>
+                <div class="row"><div class="col-md-12">@Model.CollectionAvailable</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ListingStatus)</div></div>
-                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ListingStatus)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ListingStatus.DisplayName()</div></div>
             </div>
         </div>
     </div>

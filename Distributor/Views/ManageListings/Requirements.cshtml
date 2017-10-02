@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Distributor.ViewModels.RequirementListingManageView>
+﻿@using Distributor.Helpers
+
+@model IEnumerable<Distributor.ViewModels.RequirementListingManageView>
 
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
@@ -76,27 +78,13 @@
 
         @foreach (var item in Model)
         {
-            Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom);
-            Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo);
-
-            var dateFrom = "";
-            var dateTo = "";
-            if (item.RequirementListing.RequiredFrom != null)
-            {
-                dateFrom = item.RequirementListing.RequiredFrom.Value.ToShortDateString();
-            }
-            if (item.RequirementListing.RequiredTo != null)
-            {
-                dateTo = item.RequirementListing.RequiredTo.Value.ToShortDateString();
-            }
-
             <tr>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
-                <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
+                <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@item.RequirementListing.ItemType.DisplayName()</td>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateFrom</td>
-                <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@dateTo</td>
+                <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.RequiredTo)</td>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                 <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
