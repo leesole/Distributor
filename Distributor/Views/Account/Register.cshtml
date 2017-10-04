@@ -234,10 +234,10 @@
 
         //set what fields to display depending on selection of company
         function DisplayHideCompanyDetails(companyId) {
-            DisplayHideCompanyDetails(companyId, false);  //this is called from the dropdown control
+            DisplayHideCompanyDetailsProcessing(companyId, false);  //this is called from the dropdown control
         };
 
-        function DisplayHideCompanyDetails(companyId, calledFromFormLoad) {
+        function DisplayHideCompanyDetailsProcessing(companyId, calledFromFormLoad) {
             var companyDropDownValue = $("#companydropdown option:selected").text();
             var companyDetails = document.getElementById("companydetails");
             var branchSelection = document.getElementById("branchselection");
@@ -387,7 +387,7 @@
             var companyDropDownValueId = $("#companydropdown option:selected").val();
             var companyDropDownValue = $("#companydropdown option:selected").text();
             if (companyDropDownValue != "" && companyDropDownValue != "Add new company") {
-                DisplayHideCompanyDetails(companyDropDownValueId, true);  //set to true as this is called when form loads
+                DisplayHideCompanyDetailsProcessing(companyDropDownValueId, true);  //set to true as this is called when form loads
             }
         });
     </script>

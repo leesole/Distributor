@@ -14,6 +14,8 @@ namespace Distributor.Controllers
     public class DataController : Controller
     {
         // GET: Data
+        [AllowAnonymous]
+        [HttpPost]
         public ActionResult GetBranchByCompany(Guid companyId)
         {
             return Json(ControlHelpers.AllBranchesForCompany(companyId));

@@ -43,7 +43,7 @@ namespace Distributor.Controllers
                 dashboardView = DashboardHelpers.GetDashboardViewLogin(User);
                 ViewBag.OutstandingActions = UserActionHelpers.GetActionsForUser(User).Count();
                 if (dashboardView.UserTaskList != null)
-                    ViewBag.OustandingTasks = dashboardView.UserTaskList.Count();
+                    ViewBag.OutstandingTasks = dashboardView.UserTaskList.Count();
                 if (dashboardView.RequirementListingList != null)
                 {
                     ViewBag.CurrentRequests = dashboardView.RequirementListingList.Count();

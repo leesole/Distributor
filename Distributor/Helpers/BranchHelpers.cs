@@ -151,6 +151,9 @@ namespace Distributor.Helpers
             db.Branches.Add(branch);
             db.SaveChanges();
 
+            //if addAdminUsersToThisBranch is true then add all admin users for the company to this branch
+            BranchUserHelpers.CreateBranchAdminUsersForNewBranch(db, branch, UserRoleEnum.Admin);
+
             return branch;
 
         }

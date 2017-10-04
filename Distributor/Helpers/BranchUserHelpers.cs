@@ -124,6 +124,58 @@ namespace Distributor.Helpers
             return branchUser;
         }
 
+        public static void CreateBranchAdminUsersForNewBranch(Branch branch, UserRoleEnum role)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            CreateBranchAdminUsersForNewBranch(db, branch, role);
+            db.Dispose();
+        }
+        
+        /// <summary>
+        /// Adds all Admin users for the company of the new branch to the new branch
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="branchId">new branch id</param>
+        public static void CreateBranchAdminUsersForNewBranch(ApplicationDbContext db, Branch branch, UserRoleEnum role)
+        {
+            List<AppUser> adminAppUsersForCompany = AppUserHelpers.GetAdminAppUsersForCompany(db, branch.CompanyId);
+
+            foreach (AppUser adminUser in adminAppUsersForCompany)
+            {
+                BranchUser branchUser = BranchUserHelpers.GetBranchUser(db, adminUser.AppUserId, branch.BranchId, branch.CompanyId);
+
+                //Only add if not already there
+                if (branchUser == null)
+                    BranchUserHelpers.CreateBranchUser(db, adminUser.AppUserId, branch.BranchId, branch.CompanyId, role, EntityStatusEnum.Active);
+            }
+        }
+
+        public static void CreateBranchUserAdminRolesForUserForAllBranches(BranchUser branchUser, UserRoleEnum userRole)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            CreateBranchUserAdminRolesForUserForAllBranches(db, branchUser, userRole);
+            db.Dispose();
+        }
+
+        public static void CreateBranchUserAdminRolesForUserForAllBranches(ApplicationDbContext db, BranchUser branchUser, UserRoleEnum userRole)
+        {
+            List<Branch> companyBranches = BranchHelpers.GetBranchesForCompany(db, branchUser.CompanyId);
+
+            foreach (Branch branch in companyBranches)
+            {
+                BranchUser thisBranchUser = BranchUserHelpers.GetBranchUser(db, branchUser.UserId, branch.BranchId, branch.CompanyId);
+
+                //Update if required else create new if missing
+                if (thisBranchUser != null)
+                {
+                    if (branchUser.UserRole != thisBranchUser.UserRole)
+                        BranchUserHelpers.UpdateBranchUserRole(db, thisBranchUser.BranchUserId, userRole);
+                }
+                else
+                    BranchUserHelpers.CreateBranchUser(db, branchUser.UserId, branch.BranchId, branch.CompanyId, userRole, EntityStatusEnum.Active);
+            }
+        }
+
         #endregion
 
         #region Update
@@ -182,6 +234,17 @@ namespace Distributor.Helpers
         public static BranchUser UpdateBranchUserRole(ApplicationDbContext db, Guid branchUserId, UserRoleEnum userRole)
         {
             BranchUser branchUser = GetBranchUser(db, branchUserId);
+
+            //if user role changing FROM or TO Super/Admin user then set appUser flags accordingly
+            if (userRole == UserRoleEnum.SuperUser)
+                AppUserHelpers.UpdateRoleFlags(db, branchUser.UserId, true, false);
+            if (userRole == UserRoleEnum.Admin)
+                AppUserHelpers.UpdateRoleFlags(db, branchUser.UserId, false, true);
+
+            //if role changes to Admin/Super user from anything else then add all company branches to user
+            if ((userRole == UserRoleEnum.SuperUser || userRole == UserRoleEnum.Admin) && (branchUser.UserRole != UserRoleEnum.SuperUser && branchUser.UserRole != UserRoleEnum.Admin))
+                BranchUserHelpers.CreateBranchUserAdminRolesForUserForAllBranches(db, branchUser, userRole);
+
             branchUser.UserRole = userRole;
             db.Entry(branchUser).State = EntityState.Modified;
             db.SaveChanges();

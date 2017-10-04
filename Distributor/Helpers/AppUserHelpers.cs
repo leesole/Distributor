@@ -178,6 +178,14 @@ namespace Distributor.Helpers
 
         public static AppUser CreateAppUser(ApplicationDbContext db, string firstName, string lastName, Guid currentBranchId, EntityStatusEnum entityStatus, string loginEmail, PrivacyLevelEnum privacyLevel, UserRoleEnum userRole)
         {
+            bool superUser = false;
+            bool adminUser = false;
+
+            if (userRole == UserRoleEnum.SuperUser)
+                superUser = true;
+            if (userRole == UserRoleEnum.Admin)
+                adminUser = true;
+
             AppUser appUser = new AppUser()
             {
                 AppUserId = Guid.NewGuid(),
@@ -186,7 +194,9 @@ namespace Distributor.Helpers
                 CurrentBranchId = currentBranchId,
                 EntityStatus = entityStatus,
                 PrivacyLevel = privacyLevel,
-                LoginEmail = loginEmail
+                LoginEmail = loginEmail,
+                SuperUser = superUser,
+                AdminUser = adminUser
             };
             db.AppUsers.Add(appUser);
 
@@ -288,6 +298,26 @@ namespace Distributor.Helpers
 
             //Update UserSettings
             AppUserSettingsHelpers.UpdateUserSettingsFromAppUserEditView(db, view);
+
+            return appUser;
+        }
+
+        public static AppUser UpdateRoleFlags(Guid appUserId, bool superUserFlag, bool adminUserFlag)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            AppUser user = UpdateRoleFlags(db, appUserId, superUserFlag, adminUserFlag);
+            db.Dispose();
+            return user;
+        }
+
+        public static AppUser UpdateRoleFlags(ApplicationDbContext db, Guid appUserId, bool superUserFlag, bool adminUserFlag)
+        {
+            AppUser appUser = GetAppUser(db, appUserId);
+            appUser.SuperUser = superUserFlag;
+            appUser.AdminUser = adminUserFlag;
+
+            db.Entry(appUser).State = EntityState.Modified;
+            db.SaveChanges();
 
             return appUser;
         }

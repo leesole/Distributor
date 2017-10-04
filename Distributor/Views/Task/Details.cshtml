@@ -106,27 +106,13 @@
                         }
                     }
                     <tr class="active" id=@userTaskId>
-                        <td>
-                            <input type="button" value="Approve" class="btn btn-sm btn-success btn-block confirmapprove" />
-                        </td>
-                        <td>
-                            <input type="button" value="Cancel" class="btn btn-sm btn-danger btn-block confirmcancel" />
-                        </td>
-                        <td>
-                            @taskTypeDescription
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.UserTaskView.TaskDescription)
-                        </td>
-                        <td>
-                            @referenceDescription
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.UserTaskView.CreatedOn)
-                        </td>
-                        <td>
-                            @(Model.UserTaskView.CreatedBy.FirstName + " " + Model.UserTaskView.CreatedBy.LastName)
-                        </td>
+                        <td><button type="submit" class="btn btn-sm btn-success btn-block confirmapprove"><span class="glyphicon glyphicon-ok"></span> Approve</button></td>
+                        <td><button type="submit" class="btn btn-sm btn-danger btn-block confirmcancel"><span class="glyphicon glyphicon-remove"></span> Cancel</button></td>
+                        <td>@taskTypeDescription</td>
+                        <td>@Html.DisplayFor(modelItem => Model.UserTaskView.TaskDescription)</td>
+                        <td>@referenceDescription</td>
+                        <td>@Html.DisplayFor(modelItem => Model.UserTaskView.CreatedOn)</td>
+                        <td>@(Model.UserTaskView.CreatedBy.FirstName + " " + Model.UserTaskView.CreatedBy.LastName)</td>
                     </tr>
                 </table>
             </div>

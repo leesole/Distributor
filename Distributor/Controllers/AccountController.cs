@@ -244,6 +244,7 @@ namespace Distributor.Controllers
                             branch = BranchHelpers.CreateBranch(company.CompanyId, model.CompanyBusinessType.Value, branchName, model.CompanyAddressLine1, model.CompanyAddressLine2, model.CompanyAddressLine3, model.CompanyAddressTownCity, model.CompanyAddressCounty, model.CompanyAddressPostcode, model.CompanyTelephoneNumber, model.CompanyEmail, model.CompanyContactName, company.PrivacyLevel, statusForUser);
                         else
                         {
+                            //set last addAdminUsers flag to true as this is a new branch on an existing company so all Admin users need to be associated with this branch
                             branch = BranchHelpers.CreateBranch(company.CompanyId, model.BranchBusinessType.Value, branchName, model.BranchAddressLine1, model.BranchAddressLine2, model.BranchAddressLine3, model.BranchAddressTownCity, model.BranchAddressCounty, model.BranchAddressPostcode, model.BranchTelephoneNumber, model.BranchEmail, model.BranchContactName, company.PrivacyLevel, statusForUser);
                             createBranchOnHoldTask = true;
                         }
@@ -257,6 +258,9 @@ namespace Distributor.Controllers
                     
                     //BranchUser - set the status as ACTIVE as the link is active even though the entities linked are not.
                     branchUser = BranchUserHelpers.CreateBranchUser(appUser.AppUserId, branch.BranchId, company.CompanyId, userRoleForUser, EntityStatusEnum.Active);
+                    
+                    //if addAdminUsersToThisBranch is true then add all admin users for the company to this branch
+                    BranchUserHelpers.CreateBranchAdminUsersForNewBranch(branch, userRoleForUser);
 
                     //Update AppUser with the branch we are adding/using to set as current branch for new user
                     appUser = AppUserHelpers.UpdateCurrentBranchId(appUser.AppUserId, branch.BranchId);
@@ -299,7 +303,9 @@ namespace Distributor.Controllers
             {
                 ViewBag.CompanyList = ControlHelpers.AllCompaniesListDropDown();
                 ViewBag.BranchList = new SelectList(Enumerable.Empty<SelectListItem>(), "BranchId", "BranchName");
-            }            
+            }
+
+            ViewBag.BusinessTypeList = ControlHelpers.BusinessTypeEnumListDropDown();
 
             return View(model);
         }

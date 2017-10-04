@@ -32,5 +32,11 @@ namespace Distributor.Models
 
         [Display(Name = "Privacy level")]
         public PrivacyLevelEnum PrivacyLevel { get; set; }
+
+        [Display(Name = "Admin user?")]
+        public bool AdminUser { get; set; }
+
+        [Display(Name = "Super user?")]
+        public bool SuperUser { get; set; }
     }
 }
