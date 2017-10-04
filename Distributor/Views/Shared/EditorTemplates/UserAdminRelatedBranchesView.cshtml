@@ -5,6 +5,7 @@
     string appUserId = ViewBag.AppUserId.ToString();
     var currentBranchId = ViewBag.CurrentBranchId;
     var branchId = Model.BranchId;
+    var combinedId = appUserId + ":" + branchId;
 }
 
 @Html.HiddenFor(modelBranch => modelBranch.AppUserId)
@@ -28,7 +29,7 @@
         }
 
     </td>
-    <td>@Html.EnumDropDownListFor(modelBranch => modelBranch.UserRole, "", new { @class = "form-control" })</td>
+    <td>@Html.EnumDropDownListFor(modelBranch => modelBranch.UserRole, "", new { @class = "form-control", @id = @combinedId, onchange = "javascipt:roleChange(this.value, this.id, this.name);"})</td>
     <td>@Html.DisplayFor(modelBranch => modelBranch.BranchName)</td>
     <td>@branchAddress;</td>
 </tr>

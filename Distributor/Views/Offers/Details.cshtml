@@ -52,7 +52,7 @@
             var offerId = @Html.Raw(Json.Encode(Model.OfferDetails.OfferId));
             var offerQuantityFieldId = "offerquantityfield";
             var offerQty = $("#" + offerQuantityFieldId).val();
-            alert("offer:" + offerQuantityFieldId + "," + offerQty);
+
             if (window.confirm("Submit this new offer?")) {
                 var url = "/Offers/SubmitNewOffer";
 

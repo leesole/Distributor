@@ -23,7 +23,7 @@
             if (window.confirm("This will update current branch selection but loose all other changes.  Do you wish to proceed?")) {
                 var url = '@Url.Action("ChangeCurrentBranchForUser", "Admin")';
                 var modelDataJSON = @Html.Raw(Json.Encode(Model));
-            
+
                 $.ajax({
                     url: url,
                     data: {
@@ -38,6 +38,45 @@
                     }
                 });
             }
+        }
+
+        function roleChange(role, combinedId, fieldName) {
+            var splitId = combinedId.split(':');
+            var appUserId = splitId[0];
+            var branchId = splitId[1];
+
+            var url = '/Data/OtherAdminUsersExistForCompany'
+
+            $.ajax({
+                url: url,
+                data: { appUserId: appUserId, branchId: branchId },
+                cache: false,
+                type: "POST",
+                success: function (response) {
+                    if (response.success) {
+                        //LSLSLS will need to give a message and then change all this users roles to the same as selected for any branch they appear in
+                        if (window.confirm("All branches will set this user to the same role as selected.  OK to proceed?")) {
+                            var roleurl = '/Data/SetUserToNewRole'
+                            $.ajax({
+                                url: roleurl,
+                                data: { appUserId: appUserId, branchId: branchId, newRoleId: role.toString() },
+                                cache: false,
+                                type: "POST",
+                                success: function (result) {
+                                    location.reload(true);
+                                }
+                            });
+                        } else {
+                            $('select[name="' + fieldName + '"] option:eq(' + response.originalRole + ')').prop("selected", true);
+                        }
+                    }
+                    else {
+                        //set the user role selection back to the original value and give error message as we cannot remove the last ADMIN user
+                        alert("You cannot remove the last ADMIN user.  Please select a new ADMIN user before changing the role of this user.")
+                        $('select[name="' + fieldName + '"] option:eq(' + response.originalRole + ')').prop("selected", true);
+                    }
+                }
+            });
         }
     </script>
 }

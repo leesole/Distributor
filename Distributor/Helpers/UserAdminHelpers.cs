@@ -80,7 +80,7 @@ namespace Distributor.Helpers
                         userAdminView.CurrentBranchId = appUserForCompany.CurrentBranchId;
                         userAdminView.LoginEmail = appUserForCompany.LoginEmail;
                         userAdminView.RelatedBranches = (from rb in relatedBranches
-                                                         where (rb.AppUserId == appUserForCompany.AppUserId && rb.BranchId == appUserForCompany.CurrentBranchId)
+                                                         where (rb.AppUserId == appUserForCompany.AppUserId)
                                                          select rb).ToList();
 
                         userAdminViewListForUser.Add(userAdminView);
@@ -138,7 +138,7 @@ namespace Distributor.Helpers
                         userAdminView.CurrentBranchId = appUserForBranch.CurrentBranchId;
                         userAdminView.LoginEmail = appUserForBranch.LoginEmail;
                         userAdminView.RelatedBranches = (from rb in relatedBranches
-                                                         where (rb.AppUserId == appUserForBranch.AppUserId && rb.BranchId == appUserForBranch.CurrentBranchId)
+                                                         where (rb.AppUserId == appUserForBranch.AppUserId)
                                                          select rb).ToList();
 
                         userAdminViewListForUser.Add(userAdminView);

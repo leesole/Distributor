@@ -89,10 +89,43 @@ namespace Distributor.Helpers
         {
             List<BranchUser> list = (from bu in db.BranchUsers
                                      where bu.UserId == appUserId
-                                     select bu).ToList();
-            var listDistinct = list.Distinct().ToList();
+                                     select bu).Distinct().ToList();
 
-            return listDistinct;
+            return list;
+        }
+
+        public static List<BranchUser> GetBranchUsersForBranch(Guid branchId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<BranchUser> list = GetBranchUsersForBranch(db, branchId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<BranchUser> GetBranchUsersForBranch(ApplicationDbContext db, Guid branchId)
+        {
+            List<BranchUser> list = (from bu in db.BranchUsers
+                                     where bu.BranchId == branchId
+                                     select bu).Distinct().ToList();
+
+            return list;
+        }
+
+        public static List<BranchUser> GetAdminBranchUsersForBranchExcludingUser(Guid branchId, Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<BranchUser> list = GetAdminBranchUsersForBranchExcludingUser(db, branchId, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<BranchUser> GetAdminBranchUsersForBranchExcludingUser(ApplicationDbContext db, Guid branchId, Guid appUserId)
+        {
+            List<BranchUser> list = (from bu in db.BranchUsers
+                                     where (bu.BranchId == branchId && bu.UserRole == UserRoleEnum.Admin && bu.UserId != appUserId)
+                                     select bu).Distinct().ToList();
+
+            return list;
         }
 
         #endregion
@@ -244,6 +277,8 @@ namespace Distributor.Helpers
             //if role changes to Admin/Super user from anything else then add all company branches to user
             if ((userRole == UserRoleEnum.SuperUser || userRole == UserRoleEnum.Admin) && (branchUser.UserRole != UserRoleEnum.SuperUser && branchUser.UserRole != UserRoleEnum.Admin))
                 BranchUserHelpers.CreateBranchUserAdminRolesForUserForAllBranches(db, branchUser, userRole);
+            else
+                branchUser.UserRole = userRole;
 
             branchUser.UserRole = userRole;
             db.Entry(branchUser).State = EntityState.Modified;
@@ -251,7 +286,22 @@ namespace Distributor.Helpers
 
             return branchUser;
         }
-        
+
+        public static void UpdateBranchUserRoleForAllBranches(Guid appUserId, UserRoleEnum userRole)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UpdateBranchUserRoleForAllBranches(db, appUserId, userRole);
+            db.Dispose();
+        }
+
+        public static void UpdateBranchUserRoleForAllBranches(ApplicationDbContext db, Guid appUserId, UserRoleEnum userRole)
+        {
+            List<BranchUser> branchUserEntriesForUser = BranchUserHelpers.GetBranchUsersForUser(appUserId);
+
+            foreach (BranchUser branchUser in branchUserEntriesForUser)
+                UpdateBranchUserRole(db, branchUser.BranchUserId, userRole);
+        }
+
         #endregion
     }
 }

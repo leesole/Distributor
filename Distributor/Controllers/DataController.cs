@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.Controllers
 {
@@ -137,6 +138,38 @@ namespace Distributor.Controllers
         public ActionResult RemoveBlock(Guid blockId)
         {
             BlockHelpers.RemoveBlock(blockId);
+            return Json(new { success = true });
+        }
+
+        /// <summary>
+        /// validate that an ADMIN user exists on the given branch if the current user (appUserId passed here) is changed from Admin
+        /// </summary>
+        /// <param name="branchId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult OtherAdminUsersExistForCompany(Guid appUserId, Guid branchId)
+        {
+            List<BranchUser> branchUsers = BranchUserHelpers.GetAdminBranchUsersForBranchExcludingUser(branchId, appUserId);
+            BranchUser branchUserForCallingUser = BranchUserHelpers.GetBranchUser(appUserId, branchId, BranchHelpers.GetBranch(branchId).CompanyId);
+
+            string originalSelectedItem = ((int)branchUserForCallingUser.UserRole + 1).ToString();
+
+            //Add 1 to the selected item as there is a blank option at the start
+            if (branchUsers == null)
+                return Json(new { success = false, originalRole = originalSelectedItem });
+            else
+                return Json(new { success = true, originalRole = originalSelectedItem });
+        }
+
+
+        [HttpPost]
+        public ActionResult SetUserToNewRole(Guid appUserId, Guid branchId, string newRoleId)
+        {
+            int roleId = 0;
+            int.TryParse(newRoleId, out roleId);
+
+            BranchUserHelpers.UpdateBranchUserRoleForAllBranches(appUserId, (UserRoleEnum)roleId);
+
             return Json(new { success = true });
         }
     }
