@@ -54,20 +54,22 @@
                 type: "POST",
                 success: function (response) {
                     if (response.success) {
-                        //LSLSLS will need to give a message and then change all this users roles to the same as selected for any branch they appear in
-                        if (window.confirm("All branches will set this user to the same role as selected.  OK to proceed?")) {
-                            var roleurl = '/Data/SetUserToNewRole'
-                            $.ajax({
-                                url: roleurl,
-                                data: { appUserId: appUserId, branchId: branchId, newRoleId: role.toString() },
-                                cache: false,
-                                type: "POST",
-                                success: function (result) {
-                                    location.reload(true);
-                                }
-                            });
-                        } else {
-                            $('select[name="' + fieldName + '"] option:eq(' + response.originalRole + ')').prop("selected", true);
+                        //if this has changed from ADMIN then give message that the role for this user on ALL branches will be changed.
+                        if (response.originalRole == "1") {
+                            if (window.confirm("All branches will set this user to the same role as selected.  OK to proceed?")) {
+                                var roleurl = '/Data/SetUserToNewRole'
+                                $.ajax({
+                                    url: roleurl,
+                                    data: { appUserId: appUserId, branchId: branchId, newRoleId: role.toString() },
+                                    cache: false,
+                                    type: "POST",
+                                    success: function (result) {
+                                        location.reload(true);
+                                    }
+                                });
+                            } else {
+                                $('select[name="' + fieldName + '"] option:eq(' + response.originalRole + ')').prop("selected", true);
+                            }
                         }
                     }
                     else {
