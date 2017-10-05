@@ -201,8 +201,12 @@ namespace Distributor.Helpers
                 //Update if required else create new if missing
                 if (thisBranchUser != null)
                 {
-                    if (branchUser.UserRole != thisBranchUser.UserRole)
-                        BranchUserHelpers.UpdateBranchUserRole(db, thisBranchUser.BranchUserId, userRole);
+                    if (userRole != thisBranchUser.UserRole)
+                    {
+                        thisBranchUser.UserRole = userRole;
+                        db.Entry(branchUser).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
                 else
                     BranchUserHelpers.CreateBranchUser(db, branchUser.UserId, branch.BranchId, branch.CompanyId, userRole, EntityStatusEnum.Active);

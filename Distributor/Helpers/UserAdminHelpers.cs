@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using static Distributor.Enums.EntityEnums;
+using static Distributor.Enums.UserEnums;
 using static Distributor.Enums.UserTaskEnums;
 
 namespace Distributor.Helpers
@@ -200,10 +201,19 @@ namespace Distributor.Helpers
                         UserTaskHelpers.CreateUserTask(TaskTypeEnum.UserOnHold, "New user on hold, awaiting administrator/manager activation", appUser.AppUserId, loggedInUser.AppUserId, EntityStatusEnum.Active);
                     }
 
+                    List<Guid> userSetToAdminList = new List<Guid>();
                     //Update the User Role on each Branch
                     foreach (UserAdminRelatedBranchesView relatedBranch in userAdminView.RelatedBranches)
                     {
-                        BranchUserHelpers.UpdateBranchUserRole(db, relatedBranch.BranchUserId, relatedBranch.UserRole);
+                        //just keep a list of the user's we have set to Admin as within the UpdateBranchUserRole, if a role is set to Admin on 1 user, then that user on every branch is set to Admin, so we don't want to set it back
+                        Guid result = userSetToAdminList.Find(x => x == relatedBranch.AppUserId);
+
+                        if (result == Guid.Empty)
+                        {
+                            BranchUserHelpers.UpdateBranchUserRole(db, relatedBranch.BranchUserId, relatedBranch.UserRole);
+                            if (relatedBranch.UserRole == UserRoleEnum.Admin)
+                                userSetToAdminList.Add(relatedBranch.AppUserId);
+                        }
                     }
                 }
                 
