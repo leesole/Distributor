@@ -33,33 +33,32 @@ namespace Distributor.Helpers
             //Get the list of branches this User is linked to
             List<Branch> branchesForAppUser = BranchHelpers.GetBranchesForUser(db, appUser.AppUserId);
 
+            //Build a list of all users that are linked to this company
+            List<AppUser> allUsersForCompany = AppUserHelpers.GetAppUsersForCompany(branchesForAppUser[0].CompanyId);
+
             foreach (Branch branch in branchesForAppUser)
             {
                 //Build list of company users to add to this branchView
                 List<BranchAdminViewCompanyUser> branchAdminCompanyUsers = new List<BranchAdminViewCompanyUser>();
 
-                //Build a list of all users that are linked to this company
-                List<AppUser> allUsersForCompany = (from bu in db.BranchUsers
-                                                    join au in db.AppUsers on bu.UserId equals au.AppUserId
-                                                    select au).ToList();
-                var allUsersForCompanyDistinct = allUsersForCompany.Distinct();
-
                 //Build a list of all users for this branch
                 List<AppUser> allUsersForThisBranch = (from bu in db.BranchUsers
                                                        join au in db.AppUsers on bu.UserId equals au.AppUserId
                                                        where (bu.BranchId == branch.BranchId && bu.EntityStatus == EntityStatusEnum.Active)
-                                                       select au).ToList();
-                var allUsersForThisBranchDistinct = allUsersForThisBranch.Distinct();
+                                                       select au).Distinct().ToList();
 
                 //Add all company users to the 'RelatedCompanyUsers' and set the flag to true if the user appears in the branch list
                 List<BranchAdminViewCompanyUser> relatedCompanyUsers = new List<BranchAdminViewCompanyUser>();
-                foreach (AppUser userForCompany in allUsersForCompanyDistinct)
+                foreach (AppUser userForCompany in allUsersForCompany)
                 {
                     //If the user appears in branchlist then set the 'linked' flag
                     bool found = false;
-                    AppUser foundUser = allUsersForThisBranchDistinct.FirstOrDefault(x => x.AppUserId == userForCompany.AppUserId);
+                    AppUser foundUser = allUsersForThisBranch.FirstOrDefault(x => x.AppUserId == userForCompany.AppUserId);
                     if (foundUser != null)
                         found = true;
+
+                    //get role from branchuser for this userForCompany/branch
+                    BranchUser branchUserForCompany = BranchUserHelpers.GetBranchUser(db, userForCompany.AppUserId, branch.BranchId, branch.CompanyId);
 
                     BranchAdminViewCompanyUser branchAdminCompanyUser = new BranchAdminViewCompanyUser()
                     {
@@ -67,6 +66,7 @@ namespace Distributor.Helpers
                         CurrentBranchId = userForCompany.CurrentBranchId,
                         FirstName = userForCompany.FirstName,
                         LastName = userForCompany.LastName,
+                        UserRole = branchUserForCompany.UserRole,
                         EntityStatus = userForCompany.EntityStatus,
                         LinkedToThisBranch = found
                     };

@@ -7,6 +7,7 @@ using System.Web;
 using static Distributor.Enums.BranchEnums;
 using static Distributor.Enums.EntityEnums;
 using static Distributor.Enums.GeneralEnums;
+using static Distributor.Enums.UserEnums;
 
 namespace Distributor.ViewModels
 {
@@ -68,7 +69,9 @@ namespace Distributor.ViewModels
         public Guid CurrentBranchId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public UserRoleEnum UserRole { get; set; }
         public EntityStatusEnum EntityStatus { get; set; }
+
 
         //Will flag if this is user is linked to the branch this whole record is on
         public bool LinkedToThisBranch { get; set; }

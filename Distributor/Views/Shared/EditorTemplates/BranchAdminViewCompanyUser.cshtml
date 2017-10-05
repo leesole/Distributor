@@ -1,4 +1,6 @@
-﻿@model Distributor.ViewModels.BranchAdminViewCompanyUser
+﻿@using Distributor.Enums;
+
+@model Distributor.ViewModels.BranchAdminViewCompanyUser
 
 @{ 
     var branchId = ViewBag.BranchId;
@@ -12,7 +14,16 @@
 
 <tr>
     <td></td>
-    <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch)</td>
+    
+    @if (Model.UserRole == UserEnums.UserRoleEnum.Admin)
+    {
+        @Html.HiddenFor(modelUser => modelUser.LinkedToThisBranch)
+        <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch, new { @disabled = "disabled" })</td>
+    }
+    else
+    {
+        <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch)</td>
+    }
     @if (Model.CurrentBranchId == branchId)
     {
         <td><span class="glyphicon glyphicon-ok"></span></td>

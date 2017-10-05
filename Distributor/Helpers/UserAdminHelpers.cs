@@ -38,11 +38,10 @@ namespace Distributor.Helpers
                 case "Admin": //Get all users for the company of this user
                     var branchUsersForCompany = (from b in db.BranchUsers
                                                  join a in db.AppUsers on b.UserId equals a.AppUserId
-                                                 where b.CompanyId == branchUser.CompanyId
-                                                 select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, b.UserRole }).ToList();
-                    var branchUsersForCompanyDistinct = branchUsersForCompany.Distinct();
+                                                 where (b.CompanyId == branchUser.CompanyId && b.EntityStatus == EntityStatusEnum.Active)
+                                                 select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, b.UserRole }).Distinct().ToList();
 
-                    foreach (var branchUserForCompany in branchUsersForCompanyDistinct)
+                    foreach (var branchUserForCompany in branchUsersForCompany)
                     {
                         UserAdminRelatedBranchesView relatedBranch = new UserAdminRelatedBranchesView();
                         relatedBranch.AppUserId = branchUserForCompany.AppUserId;
@@ -68,10 +67,9 @@ namespace Distributor.Helpers
 
                     List<AppUser> appUsersForCompany = (from b in branchUsersForCompany
                                                         join a in db.AppUsers on b.AppUserId equals a.AppUserId
-                                                        select a).ToList();
-                    var appUsersForCompanyDistinct = appUsersForCompany.Distinct();
+                                                        select a).Distinct().ToList();
 
-                    foreach (AppUser appUserForCompany in appUsersForCompanyDistinct)
+                    foreach (AppUser appUserForCompany in appUsersForCompany)
                     {
                         UserAdminView userAdminView = new UserAdminView();
                         userAdminView.AppUserId = appUserForCompany.AppUserId;
@@ -97,11 +95,10 @@ namespace Distributor.Helpers
                     var branchUsersForBranch = (from b in db.BranchUsers
                                                 join a in db.AppUsers on b.UserId equals a.AppUserId
                                                 join c in branchListDistinct on b.BranchId equals c.BranchId
-                                                where b.BranchId == appUser.CurrentBranchId
-                                                select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, b.UserRole }).ToList();
-                    var branchUsersForBranchDistinct = branchUsersForBranch.Distinct();
+                                                where (b.BranchId == appUser.CurrentBranchId && b.EntityStatus == EntityStatusEnum.Active)
+                                                select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, b.UserRole }).Distinct().ToList();
 
-                    foreach (var branchUserForBranch in branchUsersForBranchDistinct)
+                    foreach (var branchUserForBranch in branchUsersForBranch)
                     {
                         UserAdminRelatedBranchesView relatedBranch = new UserAdminRelatedBranchesView();
                         relatedBranch.AppUserId = branchUserForBranch.AppUserId;
@@ -126,10 +123,9 @@ namespace Distributor.Helpers
 
                     List<AppUser> appUsersForBranch = (from b in branchUsersForBranch
                                                        join a in db.AppUsers on b.AppUserId equals a.AppUserId
-                                                       select a).ToList();
-                    var appUsersForBranchDistinct = appUsersForBranch.Distinct();
+                                                       select a).Distinct().ToList();
 
-                    foreach (AppUser appUserForBranch in appUsersForBranchDistinct)
+                    foreach (AppUser appUserForBranch in appUsersForBranch)
                     {
                         UserAdminView userAdminView = new UserAdminView();
                         userAdminView.AppUserId = appUserForBranch.AppUserId;
@@ -186,14 +182,7 @@ namespace Distributor.Helpers
 
                     //if change of status from on-hold - anything then look for outstanding task and set to closed
                     if (userAdminView.AppUserEntityStatus != EntityStatusEnum.OnHold && previousEntityStatus == EntityStatusEnum.OnHold)
-                    {
-                        List<UserTask> activeTasksForThisUser = UserTaskHelpers.GetUserTasksForUser(db, appUser.AppUserId);
-
-                        foreach(UserTask activeTaskForThisUser in activeTasksForThisUser)
-                        {
-                            UserTaskHelpers.UpdateEntityStatus(activeTaskForThisUser.UserTaskId, EntityStatusEnum.Closed);
-                        }
-                    }
+                        UserTaskHelpers.CloseAllTasksForUserChangingStatusFromOnHold(db, appUser.AppUserId);
 
                     //If change of status to on-hold then create a Task
                     if (userAdminView.AppUserEntityStatus == EntityStatusEnum.OnHold && previousEntityStatus != EntityStatusEnum.OnHold)

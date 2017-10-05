@@ -201,9 +201,11 @@ namespace Distributor.Helpers
                 //Update if required else create new if missing
                 if (thisBranchUser != null)
                 {
+                    //if this branchuser is having the status changed then just check any outstanding actions and remove
                     if (userRole != thisBranchUser.UserRole)
                     {
                         thisBranchUser.UserRole = userRole;
+                        thisBranchUser.EntityStatus = EntityStatusEnum.Active;
                         db.Entry(branchUser).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -278,7 +280,7 @@ namespace Distributor.Helpers
             if (userRole == UserRoleEnum.Admin)
                 AppUserHelpers.UpdateRoleFlags(db, branchUser.UserId, false, true);
 
-            //if role changes to Admin/Super user from anything else then add all company branches to user
+            //if role changes to Admin/Super user from anything else then add all company branches to user and activate if required
             if ((userRole == UserRoleEnum.SuperUser || userRole == UserRoleEnum.Admin) && (branchUser.UserRole != UserRoleEnum.SuperUser && branchUser.UserRole != UserRoleEnum.Admin))
                 BranchUserHelpers.CreateBranchUserAdminRolesForUserForAllBranches(db, branchUser, userRole);
             else

@@ -219,6 +219,21 @@ namespace Distributor.Helpers
             return userTask;
         }
 
+        public static void CloseAllTasksForUserChangingStatusFromOnHold(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            CloseAllTasksForUserChangingStatusFromOnHold(db, appUserId);
+            db.Dispose();
+        }
+
+        public static void CloseAllTasksForUserChangingStatusFromOnHold(ApplicationDbContext db, Guid appUserId)
+        {
+            List<UserTask> activeTasksForThisUser = UserTaskHelpers.GetUserTasksForUser(db, appUserId);
+
+            foreach (UserTask activeTaskForThisUser in activeTasksForThisUser)
+                UserTaskHelpers.UpdateEntityStatus(activeTaskForThisUser.UserTaskId, EntityStatusEnum.Closed);
+        }
+
         #endregion
     }
 
