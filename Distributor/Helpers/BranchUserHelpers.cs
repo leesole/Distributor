@@ -94,6 +94,23 @@ namespace Distributor.Helpers
             return list;
         }
 
+        public static List<BranchUser> GetBranchUsersForUserWithRole(Guid appUserId, UserRoleEnum role)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<BranchUser> list = GetBranchUsersForUserWithRole(db, appUserId, role);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<BranchUser> GetBranchUsersForUserWithRole(ApplicationDbContext db, Guid appUserId, UserRoleEnum role)
+        {
+            List<BranchUser> list = (from bu in db.BranchUsers
+                                     where (bu.UserId == appUserId && bu.UserRole == role)
+                                     select bu).Distinct().ToList();
+
+            return list;
+        }
+
         public static List<BranchUser> GetBranchUsersForBranch(Guid branchId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -122,7 +139,8 @@ namespace Distributor.Helpers
         public static List<BranchUser> GetAdminBranchUsersForBranchExcludingUser(ApplicationDbContext db, Guid branchId, Guid appUserId)
         {
             List<BranchUser> list = (from bu in db.BranchUsers
-                                     where (bu.BranchId == branchId && bu.UserRole == UserRoleEnum.Admin && bu.UserId != appUserId)
+                                     join au in db.AppUsers on bu.UserId equals au.AppUserId
+                                     where (bu.BranchId == branchId && bu.UserRole == UserRoleEnum.Admin && bu.UserId != appUserId && au.EntityStatus == EntityStatusEnum.Active)
                                      select bu).Distinct().ToList();
 
             return list;

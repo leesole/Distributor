@@ -69,7 +69,7 @@ namespace Distributor.ViewModels
         public Guid CurrentBranchId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public UserRoleEnum UserRole { get; set; }
+        public UserRoleEnum? UserRole { get; set; }
         public EntityStatusEnum EntityStatus { get; set; }
 
 

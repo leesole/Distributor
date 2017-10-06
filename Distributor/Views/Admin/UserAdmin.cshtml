@@ -80,6 +80,31 @@
                 }
             });
         }
+
+        function statusChange(role, combinedId, fieldName) {
+            var splitId = combinedId.split(':');
+            var appUserId = splitId[0];
+            var branchId = splitId[1];
+
+            var url = '/Data/OtherAdminUsersExistForCompany'
+
+            $.ajax({
+                url: url,
+                data: { appUserId: appUserId, branchId: branchId },
+                cache: false,
+                type: "POST",
+                success: function (response) {
+                    if (response.success) {
+                        //Do nothing, allow change of status
+                    }
+                    else {
+                        //set the user status back to ACTIVE and give error message as we cannot remove the last ADMIN user
+                        alert("You cannot remove the last ADMIN user.  Please select a new ADMIN user before changing the status of this user.")
+                        $('select[name="' + fieldName + '"] option:eq(2)').prop("selected", true);
+                    }
+                }
+            });
+        }
     </script>
 }
 

@@ -39,7 +39,7 @@ namespace Distributor.Helpers
                     var branchUsersForCompany = (from b in db.BranchUsers
                                                  join a in db.AppUsers on b.UserId equals a.AppUserId
                                                  where (b.CompanyId == branchUser.CompanyId && b.EntityStatus == EntityStatusEnum.Active)
-                                                 select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, b.UserRole }).Distinct().ToList();
+                                                 select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, UserRole = b.UserRole }).Distinct().ToList();
 
                     foreach (var branchUserForCompany in branchUsersForCompany)
                     {
@@ -86,19 +86,24 @@ namespace Distributor.Helpers
                     }
                     break;
 
-                case "Manager": //Get all users for the branches of this user (manager)
+                case "Manager": //Get all users for the branches of this user as manager (manager)
                     var branchList = (from bu in db.BranchUsers
-                                      where bu.UserId == appUser.AppUserId
-                                      select new { BranchId = bu.BranchId }).ToList();
-                    var branchListDistinct = branchList.Distinct();
+                                      where (bu.UserId == appUser.AppUserId && bu.UserRole == UserRoleEnum.Manager)
+                                      select new { BranchId = bu.BranchId }).Distinct().ToList();
 
-                    var branchUsersForBranch = (from b in db.BranchUsers
-                                                join a in db.AppUsers on b.UserId equals a.AppUserId
-                                                join c in branchListDistinct on b.BranchId equals c.BranchId
-                                                where (b.BranchId == appUser.CurrentBranchId && b.EntityStatus == EntityStatusEnum.Active)
-                                                select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, b.UserRole }).Distinct().ToList();
+                    //var branchUsersForBranch = (from b in db.BranchUsers
+                    //                            join a in db.AppUsers on b.UserId equals a.AppUserId
+                    //                            join c in branchList on b.BranchId equals c.BranchId
+                    //                            where (b.BranchId == appUser.CurrentBranchId && b.EntityStatus == EntityStatusEnum.Active)
+                    //                            select new { AppUserId = b.UserId, BranchId = b.BranchId, BranchUserId = b.BranchUserId, CurrentBranchId = a.CurrentBranchId, UserRole = b.UserRole }).Distinct().ToList();
 
-                    foreach (var branchUserForBranch in branchUsersForBranch)
+                    var branchUsersForBranchList = (from bl in branchList
+                                                    join bu in db.BranchUsers on bl.BranchId equals bu.BranchId
+                                                    join au in db.AppUsers on bu.UserId equals au.AppUserId
+                                                    where (bu.CompanyId == branchUser.CompanyId && bu.EntityStatus == EntityStatusEnum.Active)
+                                                    select new { AppUserId = bu.UserId, BranchId = bu.BranchId, BranchUserId = bu.BranchUserId, CurrentBranchId = au.CurrentBranchId, UserRole = bu.UserRole }).Distinct().ToList();
+
+                    foreach (var branchUserForBranch in branchUsersForBranchList)
                     {
                         UserAdminRelatedBranchesView relatedBranch = new UserAdminRelatedBranchesView();
                         relatedBranch.AppUserId = branchUserForBranch.AppUserId;
@@ -121,11 +126,11 @@ namespace Distributor.Helpers
                         relatedBranches.Add(relatedBranch);
                     }
 
-                    List<AppUser> appUsersForBranch = (from b in branchUsersForBranch
-                                                       join a in db.AppUsers on b.AppUserId equals a.AppUserId
-                                                       select a).Distinct().ToList();
+                    List<AppUser> appUsersForBranchList = (from b in branchUsersForBranchList
+                                                           join a in db.AppUsers on b.AppUserId equals a.AppUserId
+                                                           select a).Distinct().ToList();
 
-                    foreach (AppUser appUserForBranch in appUsersForBranch)
+                    foreach (AppUser appUserForBranch in appUsersForBranchList)
                     {
                         UserAdminView userAdminView = new UserAdminView();
                         userAdminView.AppUserId = appUserForBranch.AppUserId;
@@ -166,6 +171,8 @@ namespace Distributor.Helpers
 
             try
             {
+                List<Guid> userChangedFromAdminList = new List<Guid>();
+
                 foreach (UserAdminView userAdminView in userAdminViewForUser)
                 {
                     //Get original appUser record so that we can compare previous and current entity status'
@@ -186,18 +193,21 @@ namespace Distributor.Helpers
 
                     //If change of status to on-hold then create a Task
                     if (userAdminView.AppUserEntityStatus == EntityStatusEnum.OnHold && previousEntityStatus != EntityStatusEnum.OnHold)
-                    {
-                        UserTaskHelpers.CreateUserTask(TaskTypeEnum.UserOnHold, "New user on hold, awaiting administrator/manager activation", appUser.AppUserId, loggedInUser.AppUserId, EntityStatusEnum.Active);
-                    }
+                        UserTaskHelpers.CreateUserTask(TaskTypeEnum.UserOnHold, "User on hold, awaiting administrator/manager activation", appUser.AppUserId, loggedInUser.AppUserId, EntityStatusEnum.Active);
+
+                    //If change of status from Active then check outstanding actions/tasks and reassign/create new tasks/actions???
+                    //CURRENTLY - don't do anything for ACTIONS as these are specific and TASKS will be assigned at ADMIN level also so don't do anything here at present
+
+                    //If change of role from ADMIN to something else then tasks will need to be re-assigned - THIS IS DONE IN /Data/SetUserToNewRole
 
                     List<Guid> userSetToAdminList = new List<Guid>();
                     //Update the User Role on each Branch
                     foreach (UserAdminRelatedBranchesView relatedBranch in userAdminView.RelatedBranches)
                     {
                         //just keep a list of the user's we have set to Admin as within the UpdateBranchUserRole, if a role is set to Admin on 1 user, then that user on every branch is set to Admin, so we don't want to set it back
-                        Guid result = userSetToAdminList.Find(x => x == relatedBranch.AppUserId);
+                        Guid toAdminResult = userSetToAdminList.Find(x => x == relatedBranch.AppUserId);
 
-                        if (result == Guid.Empty)
+                        if (toAdminResult == Guid.Empty)
                         {
                             BranchUserHelpers.UpdateBranchUserRole(db, relatedBranch.BranchUserId, relatedBranch.UserRole);
                             if (relatedBranch.UserRole == UserRoleEnum.Admin)

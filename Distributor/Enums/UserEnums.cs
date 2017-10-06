@@ -9,6 +9,7 @@ namespace Distributor.Enums
 {
     public static class UserEnums
     {
+        //Do not change this order as the number values are used within Javascript
         public enum UserRoleEnum
         {
             [Description("Admin")]

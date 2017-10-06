@@ -12,29 +12,61 @@
 @Html.HiddenFor(modelUser => modelUser.LastName)
 @Html.HiddenFor(modelUser => modelUser.EntityStatus)
 
-<tr>
-    <td></td>
-    
-    @if (Model.UserRole == UserEnums.UserRoleEnum.Admin)
-    {
-        @Html.HiddenFor(modelUser => modelUser.LinkedToThisBranch)
-        <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch, new { @disabled = "disabled" })</td>
-    }
-    else
-    {
-        <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch)</td>
-    }
-    @if (Model.CurrentBranchId == branchId)
-    {
-        <td><span class="glyphicon glyphicon-ok"></span></td>
-    }
-    else
-    {
+@if (Model.AppUserId == ViewBag.CurrentUserId)
+{
+    <tr style="background-color:lightcyan">
         <td></td>
-    }
-    <td>@Html.DisplayFor(modelUser => modelUser.FirstName)</td>
-    <td>@Html.DisplayFor(modelUser => modelUser.LastName)</td>
-    <td>@Html.DisplayFor(modelUser => modelUser.EntityStatus)</td>
-    <td></td>
-    <td></td>
-</tr>
+
+        @if (Model.UserRole == UserEnums.UserRoleEnum.Admin || Model.AppUserId == ViewBag.CurrentUserId)
+        {
+            @Html.HiddenFor(modelUser => modelUser.LinkedToThisBranch)
+            <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch, new { @disabled = "disabled" })</td>
+        }
+        else
+        {
+            <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch)</td>
+        }
+        @if (Model.CurrentBranchId == branchId)
+        {
+            <td><span class="glyphicon glyphicon-ok"></span></td>
+        }
+        else
+        {
+            <td></td>
+        }
+        <td>@Html.DisplayFor(modelUser => modelUser.FirstName)</td>
+        <td>@Html.DisplayFor(modelUser => modelUser.LastName)</td>
+        <td>@Html.DisplayFor(modelUser => modelUser.EntityStatus)</td>
+        <td></td>
+        <td></td>
+    </tr>
+}
+else
+{
+    <tr>
+        <td></td>
+    
+        @if (Model.UserRole == UserEnums.UserRoleEnum.Admin || Model.AppUserId == ViewBag.CurrentUserId)
+        {
+            @Html.HiddenFor(modelUser => modelUser.LinkedToThisBranch)
+            <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch, new { @disabled = "disabled" })</td>
+        }
+        else
+        {
+            <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch)</td>
+        }
+        @if (Model.CurrentBranchId == branchId)
+        {
+            <td><span class="glyphicon glyphicon-ok"></span></td>
+        }
+        else
+        {
+            <td></td>
+        }
+        <td>@Html.DisplayFor(modelUser => modelUser.FirstName)</td>
+        <td>@Html.DisplayFor(modelUser => modelUser.LastName)</td>
+        <td>@Html.DisplayFor(modelUser => modelUser.EntityStatus)</td>
+        <td></td>
+        <td></td>
+    </tr>
+}

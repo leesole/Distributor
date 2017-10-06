@@ -14,6 +14,7 @@ namespace Distributor.Enums
             [Description("User on hold")]
             [Display(Name = "User on hold")]
             UserOnHold = 1,
+
             [Description("Branch on hold")]
             [Display(Name = "Branch on hold")]
             BranchOnHold = 2

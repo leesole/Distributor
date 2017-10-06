@@ -83,6 +83,32 @@ namespace Distributor.Helpers
             return branchesForUserDistinct;
         }
 
+        public static List<Branch> GetBranchesForUserForAdminView(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<Branch> list = GetBranchesForUserForAdminView(db, appUserId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Branch> GetBranchesForUserForAdminView(ApplicationDbContext db, Guid appUserId)
+        {
+            AppUser currentAppUser = AppUserHelpers.GetAppUser(db, appUserId);
+            Branch currentBranch = BranchHelpers.GetBranch(db, currentAppUser.CurrentBranchId);
+            BranchUser currentBranchUser = BranchUserHelpers.GetBranchUser(db, appUserId, currentAppUser.CurrentBranchId, currentBranch.CompanyId);
+
+            List<BranchUser> branchUserForUser = BranchUserHelpers.GetBranchUsersForUserWithRole(db, appUserId, currentBranchUser.UserRole);
+
+            List<Branch> branchesForUser = new List<Branch>();
+
+            foreach (BranchUser branchUser in branchUserForUser)
+                branchesForUser.Add(BranchHelpers.GetBranch(db, branchUser.BranchId));
+
+            List<Branch> branchesForUserDistinct = branchesForUser.Distinct().ToList();
+
+            return branchesForUserDistinct;
+        }
+
         public static List<Branch> GetAllBranches()
         {
             ApplicationDbContext db = new ApplicationDbContext();

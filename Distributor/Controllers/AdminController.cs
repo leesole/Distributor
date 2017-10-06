@@ -25,6 +25,7 @@ namespace Distributor.Controllers
         public ActionResult UserAdmin()
         {
             List<UserAdminView> userAdminViewForUser = UserAdminHelpers.GetUserAdminViewListForUser(User);
+            ViewBag.CurrentUserId = AppUserHelpers.GetAppUser(User).AppUserId;
             //TempData["OriginalModel"] = userAdminViewForUser;
             return View(userAdminViewForUser);
         }
@@ -52,6 +53,7 @@ namespace Distributor.Controllers
         public ActionResult BranchAdmin()
         {
             List<BranchAdminView> branchesAdminView = BranchAdminHelpers.GetBranchAdminViewList(User);
+            ViewBag.CurrentUserId = AppUserHelpers.GetAppUser(User).AppUserId;
             return View(branchesAdminView);
         }
 

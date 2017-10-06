@@ -38,8 +38,10 @@
                     xImage[i].style.display = "none";
                     xWebsite[i].style.display = "none";
                 }
-                xImage[slideIndex - 1].style.display = "block";
-                xWebsite[slideIndex - 1].style.display = "block";
+                try {
+                    xImage[slideIndex - 1].style.display = "block";
+                    xWebsite[slideIndex - 1].style.display = "block";
+                } catch(err){}
             }
 
 
@@ -60,8 +62,10 @@
                     xImageUser[y].style.display = "none";
                     xWebsiteUser[y].style.display = "none";
                 }
-                xImageUser[slideIndexUser - 1].style.display = "block";
-                xWebsiteUser[slideIndexUser - 1].style.display = "block";
+                try {
+                    xImageUser[slideIndexUser - 1].style.display = "block";
+                    xWebsiteUser[slideIndexUser - 1].style.display = "block";
+                } catch (err){}
             }
 
     </script>

@@ -152,10 +152,10 @@ namespace Distributor.Controllers
             List<BranchUser> branchUsers = BranchUserHelpers.GetAdminBranchUsersForBranchExcludingUser(branchId, appUserId);
             BranchUser branchUserForCallingUser = BranchUserHelpers.GetBranchUser(appUserId, branchId, BranchHelpers.GetBranch(branchId).CompanyId);
 
-            string originalSelectedItem = ((int)branchUserForCallingUser.UserRole + 1).ToString();
-
             //Add 1 to the selected item as there is a blank option at the start
-            if (branchUsers == null)
+            string originalSelectedItem = ((int)branchUserForCallingUser.UserRole + 1).ToString();
+                        
+            if (branchUsers == null || branchUsers.Count == 0)
                 return Json(new { success = false, originalRole = originalSelectedItem });
             else
                 return Json(new { success = true, originalRole = originalSelectedItem });
@@ -169,6 +169,9 @@ namespace Distributor.Controllers
             int.TryParse(newRoleId, out roleId);
 
             BranchUserHelpers.UpdateBranchUserRoleForAllBranches(appUserId, (UserRoleEnum)roleId);
+
+            //This will re-assign admin tasks to the other Admins (if not already assigned)
+            UserTaskAssignmentHelpers.ReassignAllTasksForUserChangingRoleFromAdmin(appUserId);
 
             return Json(new { success = true });
         }

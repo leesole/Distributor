@@ -31,7 +31,7 @@ namespace Distributor.Helpers
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
 
             //Get the list of branches this User is linked to
-            List<Branch> branchesForAppUser = BranchHelpers.GetBranchesForUser(db, appUser.AppUserId);
+            List<Branch> branchesForAppUser = BranchHelpers.GetBranchesForUserForAdminView(db, appUser.AppUserId);
 
             //Build a list of all users that are linked to this company
             List<AppUser> allUsersForCompany = AppUserHelpers.GetAppUsersForCompany(branchesForAppUser[0].CompanyId);
@@ -51,14 +51,18 @@ namespace Distributor.Helpers
                 List<BranchAdminViewCompanyUser> relatedCompanyUsers = new List<BranchAdminViewCompanyUser>();
                 foreach (AppUser userForCompany in allUsersForCompany)
                 {
+                    UserRoleEnum? role = null;
+
                     //If the user appears in branchlist then set the 'linked' flag
                     bool found = false;
                     AppUser foundUser = allUsersForThisBranch.FirstOrDefault(x => x.AppUserId == userForCompany.AppUserId);
                     if (foundUser != null)
+                    {
+                        //get role from branchuser for this userForCompany/branch
+                        BranchUser branchUserForCompany = BranchUserHelpers.GetBranchUser(db, userForCompany.AppUserId, branch.BranchId, branch.CompanyId);
+                        role = branchUserForCompany.UserRole;
                         found = true;
-
-                    //get role from branchuser for this userForCompany/branch
-                    BranchUser branchUserForCompany = BranchUserHelpers.GetBranchUser(db, userForCompany.AppUserId, branch.BranchId, branch.CompanyId);
+                    }
 
                     BranchAdminViewCompanyUser branchAdminCompanyUser = new BranchAdminViewCompanyUser()
                     {
@@ -66,7 +70,7 @@ namespace Distributor.Helpers
                         CurrentBranchId = userForCompany.CurrentBranchId,
                         FirstName = userForCompany.FirstName,
                         LastName = userForCompany.LastName,
-                        UserRole = branchUserForCompany.UserRole,
+                        UserRole = role,
                         EntityStatus = userForCompany.EntityStatus,
                         LinkedToThisBranch = found
                     };

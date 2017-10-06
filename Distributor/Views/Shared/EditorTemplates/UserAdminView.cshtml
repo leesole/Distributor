@@ -2,6 +2,7 @@
 
 @{ 
     var appUserId = ViewBag.AppUserId;
+    var combinedIdForStatus = appUserId + ":";
 }
 
 @if (Model.AppUserId == appUserId)
@@ -9,13 +10,44 @@
     @Html.HiddenFor(modelItem => modelItem.AppUserId)
     @Html.HiddenFor(modelItem => modelItem.CurrentBranchId)
 
-    <tr id=@appUserId class="active">
-        <td><input type="button" value="Branches" class="btn btn-xs btn-primary btn-block showhidebranch" /></td>
-        <td>@Html.EnumDropDownListFor(modelItem => modelItem.AppUserEntityStatus, "", new { @class = "form-control" })</td>
-        <td>@Html.EditorFor(modelItem => modelItem.FirstName, new { @class = "form-control" })</td>
-        <td>@Html.EditorFor(modelItem => modelItem.LastName, new { @class = "form-control" })</td>
-        <td>@Html.DisplayFor(modelItem => modelItem.LoginEmail)</td>
-    </tr>
+    combinedIdForStatus += Model.CurrentBranchId;
+
+    if (ViewBag.CurrentUserId == Model.AppUserId)
+    {
+        <tr id=@appUserId style="background-color:lightcyan">
+            <td><input type="button" value="Branches" class="btn btn-xs btn-primary btn-block showhidebranch" /></td>
+            @if (ViewBag.CurrentUserId == Model.AppUserId) //do not allow changes to logged in user
+            {
+                @Html.HiddenFor(modelItem => modelItem.AppUserEntityStatus)
+                <td>@Html.EnumDropDownListFor(modelItem => modelItem.AppUserEntityStatus, "", new { @class = "form-control", @disabled = "disabled", @id = @combinedIdForStatus, onchange = "javascipt:statusChange(this.value, this.id, this.name);" })</td>
+            }
+            else
+            {
+                <td>@Html.EnumDropDownListFor(modelItem => modelItem.AppUserEntityStatus, "", new { @class = "form-control", @id = @combinedIdForStatus, onchange = "javascipt:statusChange(this.value, this.id, this.name);" })</td>
+            }
+            <td>@Html.EditorFor(modelItem => modelItem.FirstName, new { @class = "form-control" })</td>
+            <td>@Html.EditorFor(modelItem => modelItem.LastName, new { @class = "form-control" })</td>
+            <td>@Html.DisplayFor(modelItem => modelItem.LoginEmail)</td>
+        </tr>
+    }
+    else
+    {
+        <tr id=@appUserId class="active">
+            <td><input type="button" value="Branches" class="btn btn-xs btn-primary btn-block showhidebranch" /></td>
+            @if (ViewBag.CurrentUserId == Model.AppUserId) //do not allow changes to logged in user
+            {
+                @Html.HiddenFor(modelItem => modelItem.AppUserEntityStatus)
+                <td>@Html.EnumDropDownListFor(modelItem => modelItem.AppUserEntityStatus, "", new { @class = "form-control", @disabled = "disabled", @id = @combinedIdForStatus, onchange = "javascipt:statusChange(this.value, this.id, this.name);" })</td>
+            }
+            else
+            {
+                <td>@Html.EnumDropDownListFor(modelItem => modelItem.AppUserEntityStatus, "", new { @class = "form-control", @id = @combinedIdForStatus, onchange = "javascipt:statusChange(this.value, this.id, this.name);" })</td>
+            }
+            <td>@Html.EditorFor(modelItem => modelItem.FirstName, new { @class = "form-control" })</td>
+            <td>@Html.EditorFor(modelItem => modelItem.LastName, new { @class = "form-control" })</td>
+            <td>@Html.DisplayFor(modelItem => modelItem.LoginEmail)</td>
+        </tr>
+    }
 
     <tbody id=@appUserId style="display:none">
         <tr class="info">

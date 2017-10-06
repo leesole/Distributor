@@ -70,6 +70,23 @@ namespace Distributor.Helpers
             return userTasksForBranch;
         }
 
+        public static List<UserTask> GetTasksByReference(Guid referenceId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<UserTask> list = GetTasksByReference(db, referenceId);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<UserTask> GetTasksByReference(ApplicationDbContext db, Guid referenceId)
+        {
+            List<UserTask> tasks = (from t in db.UserTasks
+                                    where (t.ReferenceKey == referenceId && t.EntityStatus == EntityStatusEnum.Active)
+                                    select t).ToList();
+
+            return tasks;
+        }
+
         #endregion
 
         #region Create
@@ -228,10 +245,80 @@ namespace Distributor.Helpers
 
         public static void CloseAllTasksForUserChangingStatusFromOnHold(ApplicationDbContext db, Guid appUserId)
         {
-            List<UserTask> activeTasksForThisUser = UserTaskHelpers.GetUserTasksForUser(db, appUserId);
+            List<UserTask> activeTasksForThisUser = UserTaskHelpers.GetTasksByReference(db, appUserId);
 
             foreach (UserTask activeTaskForThisUser in activeTasksForThisUser)
                 UserTaskHelpers.UpdateEntityStatus(activeTaskForThisUser.UserTaskId, EntityStatusEnum.Closed);
+        }
+
+        #endregion
+    }
+    public static class UserTaskAssignmentHelpers
+    {
+        #region Update
+
+        public static void ReassignAllTasksForUserChangingRoleFromAdmin(Guid appUserId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            ReassignAllTasksForUserChangingRoleFromAdmin(db, appUserId);
+            db.Dispose();
+        }
+
+        public static void ReassignAllTasksForUserChangingRoleFromAdmin(ApplicationDbContext db, Guid appUserId)
+        {
+            List<UserTaskAssignment> list = (from uta in db.UserTaskAssignments
+                                             where uta.AppUserId == appUserId
+                                             select uta).ToList();
+
+            List<Guid> taskGuidsFromList = (from l in list
+                                            select l.UserTaskId).Distinct().ToList();
+
+            //Find current admins for the company
+            List<AppUser> admins = AppUserHelpers.GetAdminAppUsersForCompany(db, BranchHelpers.GetBranch(db, AppUserHelpers.GetAppUser(db, appUserId).CurrentBranchId).CompanyId);
+
+            //now match up admins to tasks and if any are missing add them
+            foreach (Guid task in taskGuidsFromList)
+            {
+                foreach (AppUser admin in admins)
+                {
+                    List<Guid> assignedToTask = (from l in list
+                                                 where l.UserTaskId == task
+                                                 select l.AppUserId).ToList();
+
+                    Guid result = assignedToTask.Find(x => x == admin.AppUserId);
+
+                    if (result == Guid.Empty)
+                        CopyTaskFromUserAToUserB(db, task, appUserId, admin.AppUserId);
+                }
+            }
+        }
+        
+        public static UserTaskAssignment CopyTaskFromUserAToUserB(Guid userTaskId, Guid appUserIdA, Guid appUserIdB)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserTaskAssignment task = CopyTaskFromUserAToUserB(db, userTaskId, appUserIdA, appUserIdB);
+            db.Dispose();
+            return task;
+        }
+
+        public static UserTaskAssignment CopyTaskFromUserAToUserB(ApplicationDbContext db, Guid userTaskId, Guid appUserIdA, Guid appUserIdB)
+        {
+            UserTaskAssignment taskAssigment = (from ut in db.UserTaskAssignments
+                                                where (ut.UserTaskId == userTaskId && ut.AppUserId == appUserIdA)
+                                                select ut).FirstOrDefault();
+
+            UserTaskAssignment taskAssignmentCopy = new UserTaskAssignment()
+            {
+                UserTaskAssignmentId = Guid.NewGuid(),
+                UserTaskId = userTaskId,
+                AppUserId = appUserIdB,
+                UserRole = UserRoleEnum.Admin
+            };
+
+            db.UserTaskAssignments.Add(taskAssignmentCopy);
+            db.SaveChanges();
+
+            return taskAssignmentCopy;
         }
 
         #endregion
