@@ -17,7 +17,7 @@
     <tr style="background-color:lightcyan">
         <td></td>
 
-        @if (Model.UserRole == UserEnums.UserRoleEnum.Admin || Model.AppUserId == ViewBag.CurrentUserId)
+        @if (Model.UserRole == UserEnums.UserRoleEnum.Admin || Model.AppUserId == ViewBag.CurrentUserId || Model.CurrentBranchId == branchId) //do not allow changes for admin, current user or those that this is their current branch - for current branch needs to set different current first
         {
             @Html.HiddenFor(modelUser => modelUser.LinkedToThisBranch)
             <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch, new { @disabled = "disabled" })</td>
@@ -46,7 +46,7 @@ else
     <tr>
         <td></td>
     
-        @if (Model.UserRole == UserEnums.UserRoleEnum.Admin || Model.AppUserId == ViewBag.CurrentUserId)
+        @if (Model.UserRole == UserEnums.UserRoleEnum.Admin || Model.AppUserId == ViewBag.CurrentUserId || Model.CurrentBranchId == branchId) //do not allow changes for admin, current user or those that this is their current branch - for current branch needs to set different current first
         {
             @Html.HiddenFor(modelUser => modelUser.LinkedToThisBranch)
             <td>@Html.CheckBoxFor(modelUser => modelUser.LinkedToThisBranch, new { @disabled = "disabled" })</td>
