@@ -199,37 +199,31 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AcceptDamagedItems, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.AcceptDamagedItems)
-                    @Html.ValidationMessageFor(model => model.AcceptDamagedItems, "", new { @class = "text-danger" })
-                </div>
+                @Html.CheckBoxFor(model => model.AcceptDamagedItems, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AcceptDamagedItems, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.AcceptOutOfDateItems, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.AcceptOutOfDateItems)
-                    @Html.ValidationMessageFor(model => model.AcceptOutOfDateItems, "", new { @class = "text-danger" })
-                </div>
+                @Html.CheckBoxFor(model => model.AcceptOutOfDateItems, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AcceptOutOfDateItems, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.CollectionAvailable, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.CollectionAvailable)
-                    @Html.ValidationMessageFor(model => model.CollectionAvailable, "", new { @class = "text-danger" })
-                </div>
+                @Html.CheckBoxFor(model => model.CollectionAvailable, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CollectionAvailable, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.SelectedCampaignId, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.SelectedCampaignId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.SelectedCampaignId, (SelectList)ViewBag.CampaignList, "Select campaign", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SelectedCampaignId, "", new { @class = "text-danger" })
             </div>
         </div>

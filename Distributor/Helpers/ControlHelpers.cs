@@ -42,6 +42,19 @@ namespace Distributor.Helpers
             return new SelectList(BranchHelpers.GetBranchesForUser(appUserId), "BranchId", "BranchName", branchId);
         }
 
+        //public static SelectList AllActiveCampaignsForUserListDropDown(Guid appUserId)
+        //{
+        //    return new SelectList(CampaignHelpers.GetAllCampaignsForUser(appUserId), "CampaignId", "Name");
+        //}
+
+        public static SelectList AllActiveCampaignsForUserListDropDown(Guid appUserId, Guid? selectedCampaignId)
+        {
+            if (selectedCampaignId == null)
+                return new SelectList(CampaignHelpers.GetAllCampaignsForUser(appUserId), "CampaignId", "Name", "Select campaign");
+            else
+                return new SelectList(CampaignHelpers.GetAllCampaignsForUser(appUserId), "CampaignId", "Name", selectedCampaignId);
+        }
+
         #region BranchEnums
 
         public static SelectList BusinessTypeEnumListDropDown()

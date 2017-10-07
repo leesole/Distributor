@@ -53,6 +53,7 @@ namespace Distributor.Controllers
             catch { }
 
             ViewBag.CallingController = callingController;
+            ViewBag.CampaignList = ControlHelpers.AllActiveCampaignsForUserListDropDown(AppUserHelpers.GetAppUserIdFromUser(User), null);
 
             RequirementListingAddView model = new RequirementListingAddView()
             {
@@ -68,7 +69,7 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,AcceptOutOfDateItems,CollectionAvailable,ListingStatus,CampaignId,CallingAction,CallingController")] RequirementListingAddView requirementListing)
+        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,AcceptOutOfDateItems,CollectionAvailable,ListingStatus,SelectedCampaignId,CallingAction,CallingController")] RequirementListingAddView requirementListing)
         {
             if (ModelState.IsValid)
             {
@@ -92,6 +93,9 @@ namespace Distributor.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.CampaignList = ControlHelpers.AllActiveCampaignsForUserListDropDown(AppUserHelpers.GetAppUserIdFromUser(User), requirementListing.SelectedCampaignId);
+            
             return View(requirementListing);
         }
 

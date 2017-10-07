@@ -286,7 +286,7 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool? acceptDamagedItems, bool? acceptOutOfDateItems, bool? collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
+        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool acceptOutOfDateItems, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             RequirementListing newRequirementListing = CreateRequirementListing(db, user, itemDescription, itemType, quantityRequired, uom, requiredFrom, requiredTo, acceptDamagedItems, acceptOutOfDateItems, collectionAvailable, listingStatus, selectedCampaignId);
@@ -294,7 +294,7 @@ namespace Distributor.Helpers
             return newRequirementListing;
         }
 
-        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool? acceptDamagedItems, bool? acceptOutOfDateItems, bool? collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
+        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool acceptOutOfDateItems, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
             Branch branch = BranchHelpers.GetBranch(db, branchUser.BranchId);
@@ -310,9 +310,9 @@ namespace Distributor.Helpers
                 UoM = uom,
                 RequiredFrom = requiredFrom,
                 RequiredTo = requiredTo,
-                AcceptDamagedItems = acceptDamagedItems ?? false,
-                AcceptOutOfDateItems = acceptOutOfDateItems ?? false,
-                CollectionAvailable = collectionAvailable ?? false,
+                AcceptDamagedItems = acceptDamagedItems,
+                AcceptOutOfDateItems = acceptOutOfDateItems,
+                CollectionAvailable = collectionAvailable,
                 ListingBranchPostcode = branch.AddressPostcode,
                 ListingOriginatorAppUserId = branchUser.UserId,
                 ListingOriginatorBranchId = branchUser.BranchId,
@@ -388,9 +388,9 @@ namespace Distributor.Helpers
             listing.UoM = view.UoM;
             listing.RequiredFrom = view.RequiredFrom;
             listing.RequiredTo = view.RequiredTo;
-            listing.AcceptDamagedItems = view.AcceptDamagedItems ?? false;
-            listing.AcceptOutOfDateItems = view.AcceptOutOfDateItems ?? false;
-            listing.CollectionAvailable = view.CollectionAvailable ?? false;
+            listing.AcceptDamagedItems = view.AcceptDamagedItems;
+            listing.AcceptOutOfDateItems = view.AcceptOutOfDateItems;
+            listing.CollectionAvailable = view.CollectionAvailable;
             listing.ListingStatus = view.ListingStatus;
 
             db.Entry(listing).State = EntityState.Modified;
@@ -541,12 +541,26 @@ namespace Distributor.Helpers
             Branch listingBranch = BranchHelpers.GetBranch(db, requirementListing.ListingOriginatorBranchId);
             Company listingCompany = CompanyHelpers.GetCompany(db, requirementListing.ListingOriginatorCompanyId);
             Campaign listingCampaign = null;
+            Guid campaignId = Guid.Empty;
+            string campaignName = "";
+            string campaignStrapline = "";
+            string campaignDescription = "";
+            DateTime? campaignStartDateTime = null;
+            DateTime? campaignEndDateTime = null;
 
             ViewButtons buttons = ViewButtonsHelpers.GetAvailableButtonsForSingleView(db, listingAppUser, listingBranch, listingCompany, user);
 
             if (requirementListing.CampaignId != null)
                 if (requirementListing.CampaignId.Value != Guid.Empty)
+                {
                     listingCampaign = CampaignHelpers.GetCampaign(db, requirementListing.CampaignId.Value);
+                    campaignId = listingCampaign.CampaignId;
+                    campaignName = listingCampaign.Name;
+                    campaignStrapline = listingCampaign.StrapLine;
+                    campaignDescription = listingCampaign.Description;
+                    campaignStartDateTime = listingCampaign.CampaignStartDateTime;
+                    campaignEndDateTime = listingCampaign.CampaignEndDateTime;
+                }
 
             RequirementListingEditView view = new RequirementListingEditView()
             {
@@ -567,7 +581,12 @@ namespace Distributor.Helpers
                 ListingAppUser = listingAppUser,
                 ListingBranchDetails = listingBranch,
                 ListingCompanyDetails = listingCompany,
-                CampaignDetails = listingCampaign,
+                SelectedCampaignId = campaignId,
+                CampaignName = campaignName,
+                CampaignStrapLine = campaignStrapline,
+                CampaignDescription = campaignStrapline,
+                CampaignStartDateTime = campaignStartDateTime,
+                CampaignEndDateTime = campaignEndDateTime,
                 Buttons = buttons
             };
 

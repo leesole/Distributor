@@ -54,7 +54,7 @@ namespace Distributor.Helpers
         public static List<Order> GetAllOrdersForUser(ApplicationDbContext db, Guid appUserId)
         {
             List<Order> allOrdersForUser = (from o in db.Orders
-                                            where (o.OrderOriginatorAppUserId == appUserId && (o.OrderStatus == OrderStatusEnum.New || o.OrderStatus == OrderStatusEnum.Despatched))
+                                            where (o.OrderOriginatorAppUserId == appUserId && o.OrderStatus != OrderStatusEnum.Closed)
                                             select o).ToList();
 
             return allOrdersForUser;
@@ -72,7 +72,7 @@ namespace Distributor.Helpers
         public static List<Order> GetAllOrdersForBranch(ApplicationDbContext db, Guid branchId)
         {
             List<Order> list = (from o in db.Orders
-                                where (o.OrderOriginatorBranchId == branchId && (o.OrderStatus == OrderStatusEnum.New || o.OrderStatus == OrderStatusEnum.Despatched))
+                                where (o.OrderOriginatorBranchId == branchId && o.OrderStatus != OrderStatusEnum.Closed)
                                 select o).ToList();
 
             return list;
@@ -90,7 +90,7 @@ namespace Distributor.Helpers
         public static List<Order> GetAllOrdersForCompany(ApplicationDbContext db, Guid companyId)
         {
             List<Order> list = (from o in db.Orders
-                                where (o.OrderOriginatorCompanyId == companyId && (o.OrderStatus == OrderStatusEnum.New || o.OrderStatus == OrderStatusEnum.Despatched))
+                                where (o.OrderOriginatorCompanyId == companyId && o.OrderStatus != OrderStatusEnum.Closed)
                                 select o).ToList();
 
             return list;
@@ -108,7 +108,7 @@ namespace Distributor.Helpers
         public static List<Order> GetAllOrdersForBranchUser(ApplicationDbContext db, BranchUser branchUser)
         {
             List<Order> allOrdersForBranchUser = (from o in db.Orders
-                                                  where (o.OrderOriginatorAppUserId == branchUser.UserId && (o.OrderStatus == OrderStatusEnum.New || o.OrderStatus == OrderStatusEnum.Despatched))
+                                                  where (o.OrderOriginatorAppUserId == branchUser.UserId && o.OrderStatus != OrderStatusEnum.Closed)
                                                   select o).ToList();
 
             return allOrdersForBranchUser;
