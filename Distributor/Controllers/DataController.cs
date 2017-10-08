@@ -175,5 +175,23 @@ namespace Distributor.Controllers
 
             return Json(new { success = true });
         }
+
+        [HttpPost]
+        public ActionResult GetCampaignDetails(Guid campaignId)
+        {
+            Campaign campaignDetails = null;
+
+            if (campaignId != null)
+            {
+                campaignDetails = CampaignHelpers.GetCampaign(campaignId);
+
+                if (campaignDetails != null)
+                {
+                    return Json(new { campaignDetails, success = true });
+                }
+                return Json(new { campaignDetails, success = false });
+            }
+            return Json(new { campaignDetails, success = false });
+        }
     }
 }

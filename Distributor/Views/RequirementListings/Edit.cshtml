@@ -14,6 +14,61 @@
         })
 
         function ChangeCampaign(campaignId) {
+            if (campaignId == "") {
+                document.getElementById("campaignname").innerText = "";
+                document.getElementById("campaignstrapline").innerText = "";
+                document.getElementById("campaigndescription").innerText = "";
+                document.getElementById("campaignstartdatetime").innerText = "";
+                document.getElementById("campaignenddatetime").innerText = "";
+            } else {
+                var url = "/Data/GetCampaignDetails";
+                $.ajax({
+                    url: url,
+                    data: { campaignId: campaignId },
+                    cache: false,
+                    type: "POST",
+                    success: function (data, status, jqXHR) {
+                        if ("success" === status) {
+                            if (data.campaignDetails.Name != null && data.campaignDetails.Name != "") {
+                                document.getElementById("campaignname").innerText = data.campaignDetails.Name;
+                            } else {
+                                document.getElementById("campaignname").innerText = "";
+                            }
+                            if (data.campaignDetails.StrapLine != null && data.campaignDetails.StrapLine != "") {
+                                document.getElementById("campaignstrapline").innerText = data.campaignDetails.StrapLine;
+                            } else {
+                                document.getElementById("campaignstrapline").innerText = "";
+                            }
+                            if (data.campaignDetails.Description != null && data.campaignDetails.Description != "") {
+                                document.getElementById("campaigndescription").innerText = data.campaignDetails.Description;
+                            } else {
+                                document.getElementById("campaigndescription").innerText = "";
+                            }
+                            if (data.campaignDetails.CampaignStartDateTime != null && data.campaignDetails.CampaignStartDateTime != "") {
+                                var t1 = new Date(parseInt(data.campaignDetails.CampaignStartDateTime.substring(6, 19).toString())).toLocaleDateString();
+                                document.getElementById("campaignstartdatetime").innerText = t1;
+                            } else {
+                                document.getElementById("campaignstartdatetime").innerText = "";
+                            }
+                            if (data.campaignDetails.CampaignEndDateTime != null && data.campaignDetails.CampaignEndDateTime != "") {
+                                var t2 = new Date(parseInt(data.campaignDetails.CampaignEndDateTime.substring(6, 19).toString())).toLocaleDateString();
+                                document.getElementById("campaignenddatetime").innerText = t2;
+                            } else {
+                                document.getElementById("campaignenddatetime").innerText = "";
+                            }
+                        } else {
+                            document.getElementById("campaignname").innerText = "";
+                            document.getElementById("campaignstrapline").innerText = "";
+                            document.getElementById("campaigndescription").innerText = "";
+                            document.getElementById("campaignstartdatetime").innerText = "";
+                            document.getElementById("campaignenddatetime").innerText = "";
+                        }
+                    },
+                    error: function (response) {
+                        alert("error : " + response);
+                    }
+                });
+            }
         }
     </script>
 }
@@ -328,23 +383,23 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.CampaignName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.CampaignName)</div>
+                        <div class="col-md-8" id="campaignname">@Html.DisplayFor(model => model.CampaignName)</div>
                     </div>                    
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.CampaignStrapLine)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.CampaignStrapLine)</div>
+                        <div class="col-md-8" id="campaignstrapline">@Html.DisplayFor(model => model.CampaignStrapLine)</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.CampaignDescription)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.CampaignDescription)</div>
+                        <div class="col-md-8" id="campaigndescription">@Html.DisplayFor(model => model.CampaignDescription)</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.CampaignStartDateTime)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.CampaignStartDateTime)</div>
+                        <div class="col-md-8" id="campaignstartdatetime">@Html.DisplayFor(model => model.CampaignStartDateTime)</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">@Html.LabelFor(model => model.CampaignEndDateTime)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.CampaignEndDateTime)</div>
+                        <div class="col-md-8" id="campaignenddatetime">@Html.DisplayFor(model => model.CampaignEndDateTime)</div>
                     </div>
                 </div>
             </div>

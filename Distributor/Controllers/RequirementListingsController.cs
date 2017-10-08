@@ -104,7 +104,7 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,AcceptOutOfDateItems,CollectionAvailable,ListingStatus")]RequirementListingEditView requirementListing)
+        public ActionResult Edit([Bind(Include = "ListingId,ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,RequiredFrom,RequiredTo,AcceptDamagedItems,AcceptOutOfDateItems,CollectionAvailable,ListingStatus,SelectedCampaignId,CampaignName,CampaignStrapLine,CampaignDescription,CampaignStartDateTime,CampaignEndDateTime")]RequirementListingEditView requirementListing)
         {
             if (ModelState.IsValid)
             {
@@ -124,7 +124,20 @@ namespace Distributor.Controllers
             RequirementListing listing = RequirementListingHelpers.GetRequirementListing(db, requirementListing.ListingId);
             requirementListing.ListingAppUser = AppUserHelpers.GetAppUser(db, listing.ListingOriginatorAppUserId);
             requirementListing.ListingBranchDetails = BranchHelpers.GetBranch(db, listing.ListingOriginatorAppUserId);
-            
+
+            //Rebuild campaign details as changing will change ID but no address details, so force the change now:
+            if (requirementListing.SelectedCampaignId != null)
+            {
+                Campaign campaign = CampaignHelpers.GetCampaign(db, requirementListing.SelectedCampaignId.Value);
+                requirementListing.CampaignName = campaign.Name;
+                requirementListing.CampaignStrapLine = campaign.StrapLine;
+                requirementListing.CampaignDescription = campaign.Description;
+                requirementListing.CampaignStartDateTime = campaign.CampaignStartDateTime;
+                requirementListing.CampaignEndDateTime = campaign.CampaignEndDateTime;
+            }
+
+            ViewBag.CampaignList = ControlHelpers.AllActiveCampaignsForUserListDropDown(AppUserHelpers.GetAppUserIdFromUser(User), requirementListing.SelectedCampaignId);
+
             return View(requirementListing);
         }
 
@@ -153,6 +166,7 @@ namespace Distributor.Controllers
         //    db.SaveChanges();
         //    return RedirectToAction("Index");
         //}
+
 
         protected override void Dispose(bool disposing)
         {

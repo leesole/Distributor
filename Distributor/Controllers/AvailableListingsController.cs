@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Distributor.Models;
 using Distributor.ViewModels;
 using Distributor.Helpers;
+using static Distributor.Enums.ItemEnums;
 
 namespace Distributor.Controllers
 {
@@ -68,10 +69,11 @@ namespace Distributor.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,DisplayUntilDate,SellByDate,UseByDate,DeliveryAvailable,ListingStatus,CallingAction,CallingController")] AvailableListingAddView availableListing)
+        public ActionResult Create([Bind(Include = "ItemDescription,ItemType,QuantityRequired,QuantityFulfilled,QuantityOutstanding,UoM,AvailableFrom,AvailableTo,ItemCondition,DisplayUntilDate,SellByDate,UseByDate,DeliveryAvailable,CallingAction,CallingController")] AvailableListingAddView availableListing)
         {
             if (ModelState.IsValid)
             {
+                availableListing.ListingStatus = ItemRequiredListingStatusEnum.Open;
                 AvailableListingHelpers.CreateAvailableListingFromAvailableListingAddView(availableListing, User);
 
                 return RedirectToAction(availableListing.CallingAction, availableListing.CallingController);

@@ -392,6 +392,7 @@ namespace Distributor.Helpers
             listing.AcceptOutOfDateItems = view.AcceptOutOfDateItems;
             listing.CollectionAvailable = view.CollectionAvailable;
             listing.ListingStatus = view.ListingStatus;
+            listing.CampaignId = view.SelectedCampaignId;
 
             db.Entry(listing).State = EntityState.Modified;
             db.SaveChanges();

@@ -103,282 +103,293 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table table-hover">
-        <tr class="info">
-            <th colspan="3">Actions</th>
-            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
-            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
-            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
-            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
-            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
-            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
-            <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
-        </tr>
+    @if (ViewBag.RequiredCount == null || ViewBag.RequiredCount == 0)
+    {
+        <p>No details to show</p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <tr class="info">
+                <th colspan="3">Actions</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+            </tr>
 
-        @if (Model == null)
-        {
-            <tr>No details to show</tr>
-        }
-        else
-        {
-            foreach (var item in Model)
+            @if (Model == null)
             {
-                orderId = item.OrderDetails.OrderId;
-                despatchedButton = "despatchedbutton" + orderId.ToString();
-                deliveredButton = "deliveredbutton" + orderId.ToString();
-                receivedButton = "receivedbutton" + orderId.ToString();
-                collectedButton = "collectedbutton" + orderId.ToString();
-                closedButton = "closedbutton" + orderId.ToString();
+                <tr>No details to show</tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    orderId = item.OrderDetails.OrderId;
+                    despatchedButton = "despatchedbutton" + orderId.ToString();
+                    deliveredButton = "deliveredbutton" + orderId.ToString();
+                    receivedButton = "receivedbutton" + orderId.ToString();
+                    collectedButton = "collectedbutton" + orderId.ToString();
+                    closedButton = "closedbutton" + orderId.ToString();
 
-                <tr id=@orderId>
-                    @{ 
-                        displayDespatchButton = true;
-                        displayDeliveredButton = true;
-                        displayCollectedButton = true;
-                        displayReceivedButton = true;
-                        displayClosedButton = true;
+                    <tr id=@orderId>
+                        @{
+                            displayDespatchButton = true;
+                            displayDeliveredButton = true;
+                            displayCollectedButton = true;
+                            displayReceivedButton = true;
+                            displayClosedButton = true;
 
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DespatchedAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DeliveredAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.CollectedAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-                    }
-
-                    @if (ViewBag.AllowBranchTrading)
-                    {
-                        if (item.OrderDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOrder = true;
-                        }
-                    }
-                    else
-                    {
-                        if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOrder = true;
-                        }
-                    }
-
-                    @if (inhouseOrder) //our order
-                    {
-                        if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            if (displayDespatchButton)
+                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DespatchedAuthorisationLevel)
                             {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Despatched')"><span class="glyphicon glyphicon-ok"></span> Despatched</button></td>
+                                case GeneralEnums.InternalSearchLevelEnum.Company:
+                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.DespatchedAuthorisationId)
+                                    {
+                                        displayDespatchButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.DespatchedAuthorisationId)
+                                    {
+                                        displayDespatchButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.User:
+                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.DespatchedAuthorisationId)
+                                    {
+                                        displayDespatchButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                    break;
+                            }
+
+                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DeliveredAuthorisationLevel)
+                            {
+                                case GeneralEnums.InternalSearchLevelEnum.Company:
+                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.DeliveredAuthorisationId)
+                                    {
+                                        displayDeliveredButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.DeliveredAuthorisationId)
+                                    {
+                                        displayDeliveredButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.User:
+                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.DeliveredAuthorisationId)
+                                    {
+                                        displayDeliveredButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                    break;
+                            }
+
+                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.CollectedAuthorisationLevel)
+                            {
+                                case GeneralEnums.InternalSearchLevelEnum.Company:
+                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.CollectedAuthorisationId)
+                                    {
+                                        displayCollectedButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.CollectedAuthorisationId)
+                                    {
+                                        displayCollectedButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.User:
+                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.CollectedAuthorisationId)
+                                    {
+                                        displayCollectedButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                    break;
+                            }
+
+                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
+                            {
+                                case GeneralEnums.InternalSearchLevelEnum.Company:
+                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.ClosedAuthorisationId)
+                                    {
+                                        displayClosedButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.ClosedAuthorisationId)
+                                    {
+                                        displayClosedButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.User:
+                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.ClosedAuthorisationId)
+                                    {
+                                        displayClosedButton = false;
+                                    }
+                                    break;
+                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                    break;
+                            }
+                        }
+
+                        @if (ViewBag.AllowBranchTrading)
+                        {
+                            if (item.OrderDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                            {
+                                inhouseOrder = true;
+                            }
+                        }
+                        else
+                        {
+                            if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                            {
+                                inhouseOrder = true;
+                            }
+                        }
+
+                        @if (inhouseOrder) //our order
+                        {
+                            if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
+                            {
+                                if (displayDespatchButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Despatched')"><span class="glyphicon glyphicon-ok"></span> Despatched</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayDeliveredButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayClosedButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
+                            {
+                                <td></td>
+
+                                if (displayDeliveredButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayClosedButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
+                            {
+                                <td></td>
+                                <td></td>
+                                if (displayClosedButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
                             }
                             else
                             {
                                 <td></td>
-                            }
-                            if (displayDeliveredButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button></td>
-                            }
-                            else
-                            {
                                 <td></td>
-                            }
-                            if (displayClosedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
-                        {
-                            <td></td>
-
-                            if (displayDeliveredButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                            if (displayClosedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
-                        {
-                            <td></td>
-                            <td></td>
-                            if (displayClosedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
-                            }
-                            else
-                            {
                                 <td></td>
                             }
                         }
                         else
                         {
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        }
-                    }
-                    else
-                    {
-                        if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            if (displayCollectedButton)
+                            if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
                             {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button></td>
+                                if (displayCollectedButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayReceivedButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayClosedButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
                             }
-                            else
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
                             {
                                 <td></td>
-                            }
-                            if (displayReceivedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                            if (displayClosedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
-                        {
-                            <td></td>
-                            if (displayReceivedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                            if (displayClosedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
+                                if (displayReceivedButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayClosedButton)
+                                {
+                                    <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
                             }
                         }
-                    }
-                    <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
-                    <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
-                    <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
-                    <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
-                    <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
-                    <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
-                    <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
-                </tr>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                    </tr>
+                }
             }
-        }
-    </table>
+        </table>
+    }
+</div>
+
+<div class="form-group">
+    @Html.ActionLink("Display history", "History", "Orders", "", new { @class = "btn btn-default" })
 </div>

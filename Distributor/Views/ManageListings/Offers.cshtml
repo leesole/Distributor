@@ -179,316 +179,636 @@
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
             <li class="active">Offers</li>
         </ol>
-        <p class="lead">Your current offers.</p>
+        <p class="lead">Your current requirement listing offers.</p>
     </div>
 </div>
 
 <div class="table-responsive">
-    <table class="table table-hover">
-        <tr class="info">
-            <th colspan="3">Actions</th>
-            <th>@Html.DisplayNameFor(model => model.OfferDetails.ListingType)</th>
-            <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
-            <th>@Html.DisplayNameFor(model => model.OfferDetails.CurrentOfferQuantity)</th>
-            <th></th>
-            <th>@Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)</th>
-            <th></th>
-            <th>@Html.DisplayNameFor(model => model.OfferDetails.PreviousOfferQuantity)</th>
-            <th>Unit of measure</th>
-            <th>Description</th>
-        </tr>
+    @if (ViewBag.RequiredCount == null || ViewBag.RequiredCount == 0)
+    {
+        <p>No details to show</p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <tr class="info">
+                <th colspan="3">Actions</th>
+                <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
+                <th>Offer qty</th>
+                <th></th>
+                <th>Counter offer qty</th>
+                <th></th>
+                <th>Previous offer qty</th>
+                <th>UoM</th>
+                <th>Description</th>
+            </tr>
 
-        @if (Model == null)
-        {
-           <tr>No details to show</tr>
-        }
-        else
-        {
-            foreach (var item in Model)
+            @foreach (var item in Model)
             {
-                offerId = item.OfferDetails.OfferId;
-                acceptButton = "acceptbutton" + offerId.ToString();
-                rejectButton = "rejectbutton" + offerId.ToString();
-                counterButton = "counterbutton" + offerId.ToString();
-                saveButton = "savebutton" + offerId.ToString();
-                offerQuantityField = "offerquantityfield" + offerId.ToString();
-                counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
+                if (item.OfferDetails.ListingType == GeneralEnums.ListingTypeEnum.Requirement)
+                {
+                    offerId = item.OfferDetails.OfferId;
+                    acceptButton = "acceptbutton" + offerId.ToString();
+                    rejectButton = "rejectbutton" + offerId.ToString();
+                    counterButton = "counterbutton" + offerId.ToString();
+                    saveButton = "savebutton" + offerId.ToString();
+                    offerQuantityField = "offerquantityfield" + offerId.ToString();
+                    counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
 
-                displayAcceptButton = true;
-                displayRejectButton = true;
-                displayCounterButton = true;
+                    displayAcceptButton = true;
+                    displayRejectButton = true;
+                    displayCounterButton = true;
 
-                if (ViewBag.AllowBranchTrading)
-                {
-                    if (item.OfferDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                    if (ViewBag.AllowBranchTrading)
                     {
-                        inhouseOffer = true;
+                        if (item.OfferDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                        {
+                            inhouseOffer = true;
+                        }
                     }
-                }
-                else
-                {
-                    if (item.OfferDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                    else
                     {
-                        inhouseOffer = true;
+                        if (item.OfferDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                        {
+                            inhouseOffer = true;
+                        }
                     }
-                }
 
-                if (inhouseOffer)
-                {
-                    switch (item.OfferAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                    if (inhouseOffer)
                     {
-                        case GeneralEnums.InternalSearchLevelEnum.Company:
-                            if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
-                            {
-                                displayAcceptButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Branch:
-                            if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
-                            {
-                                displayAcceptButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.User:
-                            if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
-                            {
-                                displayAcceptButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
+                        switch (item.OfferAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                        switch (item.OfferAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                        switch (item.OfferAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayOfferButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayOfferButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayOfferButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
                     }
-                    switch (item.OfferAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                    else
                     {
-                        case GeneralEnums.InternalSearchLevelEnum.Company:
-                            if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
-                            {
-                                displayRejectButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Branch:
-                            if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.RejectedAuthorisationId)
-                            {
-                                displayRejectButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.User:
-                            if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
-                            {
-                                displayRejectButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
+                        switch (item.ListingAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                        switch (item.ListingAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                        switch (item.ListingAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayCounterButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayCounterButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayCounterButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
                     }
-                    switch (item.OfferAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
-                    {
-                        case GeneralEnums.InternalSearchLevelEnum.Company:
-                            if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
-                            {
-                                displayOfferButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Branch:
-                            if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
-                            {
-                                displayOfferButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.User:
-                            if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
-                            {
-                                displayOfferButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (item.ListingAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
-                    {
-                        case GeneralEnums.InternalSearchLevelEnum.Company:
-                            if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
-                            {
-                                displayAcceptButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Branch:
-                            if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
-                            {
-                                displayAcceptButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.User:
-                            if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
-                            {
-                                displayAcceptButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-                    switch (item.ListingAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
-                    {
-                        case GeneralEnums.InternalSearchLevelEnum.Company:
-                            if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
-                            {
-                                displayRejectButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Branch:
-                            if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.RejectedAuthorisationId)
-                            {
-                                displayRejectButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.User:
-                            if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
-                            {
-                                displayRejectButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-                    switch (item.ListingAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
-                    {
-                        case GeneralEnums.InternalSearchLevelEnum.Company:
-                            if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
-                            {
-                                displayCounterButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Branch:
-                            if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
-                            {
-                                displayCounterButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.User:
-                            if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
-                            {
-                                displayCounterButton = false;
-                            }
-                            break;
-                        case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-                }
 
-                if (inhouseOffer)
-                {
-                    <tr id=@offerId class="warning">
-                        @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
-                        {
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        }
-                        else
-                        {
-                            if (displayAcceptButton)
+                    if (inhouseOffer)
+                    {
+                        <tr id=@offerId class="warning">
+                            @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
                             {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span> Accept</button></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             }
                             else
                             {
-                                <td></td>
+                                if (displayAcceptButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayRejectButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayOfferButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
                             }
-                            if (displayRejectButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span> Reject</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                            if (displayOfferButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-primary" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span> Counter</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }                            
-                        }
-                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
-                        <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
-                        <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveOfferField(id)" style="display:none" /></td>
-                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
-                        <td></td>
-                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
-                        @if (item.AvailableListingDetails != null)
-                        {
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
-                        }
-                        @if (item.RequirementListingDetails != null)
-                        {
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
-                        }
-                    </tr>
-                }
-                else
-                {
-                    <tr id=@offerId>
-                        @if (item.OfferDetails.CurrentOfferQuantity == 0)
-                        {
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                            <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
+                            <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveOfferField(id)" style="display:none" /></td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
                             <td></td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                            @if (item.AvailableListingDetails != null)
+                            {
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+                            }
+                            @if (item.RequirementListingDetails != null)
+                            {
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+                            }
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr id=@offerId>
+                            @if (item.OfferDetails.CurrentOfferQuantity == 0)
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                            else
+                            {
+                                if (displayAcceptButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayRejectButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayCounterButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
                             <td></td>
-                            <td></td>
-                        }
-                        else
-                        {
-                            if (displayAcceptButton)
+                            <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CounterOfferQuantity, new { id = @counterOfferQuantityField, disabled = "disabled" })</td>
+                            <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveCounterOfferField(id)" style="display:none" /></td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                            @if (item.AvailableListingDetails != null)
                             {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span> Accept</button></td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                             }
-                            else
+                            @if (item.RequirementListingDetails != null)
                             {
-                                <td></td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                             }
-                            if (displayRejectButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span> Reject</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                            if (displayCounterButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-primary" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span> Counter</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.ListingType)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
-                        <td></td>
-                        <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CounterOfferQuantity, new { id = @counterOfferQuantityField, disabled = "disabled" })</td>
-                        <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveCounterOfferField(id)" style="display:none" /></td>
-                        <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
-                        @if (item.AvailableListingDetails != null)
-                        {
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
-                        }
-                        @if (item.RequirementListingDetails != null)
-                        {
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
-                        }
-                    </tr>
+                        </tr>
+                    }
                 }
             }
-        }
-    </table>
+        </table>
+    }
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <p class="lead">Your current available listing offers.</p>
+    </div>
+</div>
+
+<div class="table-responsive">
+    @if (ViewBag.AvailableCount == null || ViewBag.AvailableCount == 0)
+    {
+        <p>No details to show</p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <tr class="info">
+                <th colspan="3">Actions</th>
+                <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
+                <th>Offer qty</th>
+                <th></th>
+                <th>Counter offer qty</th>
+                <th></th>
+                <th>Previous offer qty</th>
+                <th>UoM</th>
+                <th>Description</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                if (item.OfferDetails.ListingType == GeneralEnums.ListingTypeEnum.Available)
+                {
+                    offerId = item.OfferDetails.OfferId;
+                    acceptButton = "acceptbutton" + offerId.ToString();
+                    rejectButton = "rejectbutton" + offerId.ToString();
+                    counterButton = "counterbutton" + offerId.ToString();
+                    saveButton = "savebutton" + offerId.ToString();
+                    offerQuantityField = "offerquantityfield" + offerId.ToString();
+                    counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
+
+                    displayAcceptButton = true;
+                    displayRejectButton = true;
+                    displayCounterButton = true;
+
+                    if (ViewBag.AllowBranchTrading)
+                    {
+                        if (item.OfferDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                        {
+                            inhouseOffer = true;
+                        }
+                    }
+                    else
+                    {
+                        if (item.OfferDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                        {
+                            inhouseOffer = true;
+                        }
+                    }
+
+                    if (inhouseOffer)
+                    {
+                        switch (item.OfferAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                        switch (item.OfferAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                        switch (item.OfferAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.OfferOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayOfferButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.OfferOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayOfferButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.OfferOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayOfferButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (item.ListingAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
+                                {
+                                    displayAcceptButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                        switch (item.ListingAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
+                                {
+                                    displayRejectButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                        switch (item.ListingAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
+                        {
+                            case GeneralEnums.InternalSearchLevelEnum.Company:
+                                if (item.OfferDetails.ListingOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayCounterButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Branch:
+                                if (item.OfferDetails.ListingOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayCounterButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.User:
+                                if (item.OfferDetails.ListingOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
+                                {
+                                    displayCounterButton = false;
+                                }
+                                break;
+                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                                break;
+                        }
+                    }
+
+                    if (inhouseOffer)
+                    {
+                        <tr id=@offerId class="warning">
+                            @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                            else
+                            {
+                                if (displayAcceptButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayRejectButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayOfferButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                            <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
+                            <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveOfferField(id)" style="display:none" /></td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
+                            <td></td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                            @if (item.AvailableListingDetails != null)
+                            {
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+                            }
+                            @if (item.RequirementListingDetails != null)
+                            {
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+                            }
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr id=@offerId>
+                            @if (item.OfferDetails.CurrentOfferQuantity == 0)
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                            else
+                            {
+                                if (displayAcceptButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayRejectButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                if (displayCounterButton)
+                                {
+                                    <td><button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            }
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
+                            <td></td>
+                            <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CounterOfferQuantity, new { id = @counterOfferQuantityField, disabled = "disabled" })</td>
+                            <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveCounterOfferField(id)" style="display:none" /></td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                            @if (item.AvailableListingDetails != null)
+                            {
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+                            }
+                            @if (item.RequirementListingDetails != null)
+                            {
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+                            }
+                        </tr>
+                    }
+                }
+            }
+        </table>
+    }
+</div>
+
+<div class="form-group">
+    @Html.ActionLink("Display history", "History", "Offers", "", new { @class = "btn btn-default" })
 </div>

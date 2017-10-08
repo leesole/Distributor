@@ -48,7 +48,7 @@ namespace Distributor.ViewModels
         public DateTime? UseByDate { get; set; }
 
         [Display(Name = "Can deliver?")]
-        public bool? DeliveryAvailable { get; set; }
+        public bool DeliveryAvailable { get; set; }
 
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }
@@ -116,7 +116,7 @@ namespace Distributor.ViewModels
         public DateTime? UseByDate { get; set; }
 
         [Display(Name = "Can deliver?")]
-        public bool? DeliveryAvailable { get; set; }
+        public bool DeliveryAvailable { get; set; }
 
         [Display(Name = "Listing status")]
         public ItemRequiredListingStatusEnum ListingStatus { get; set; }

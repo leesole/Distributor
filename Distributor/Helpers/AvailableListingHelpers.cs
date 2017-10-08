@@ -400,7 +400,7 @@ namespace Distributor.Helpers
             listing.DisplayUntilDate = view.DisplayUntilDate;
             listing.SellByDate = view.SellByDate;
             listing.UseByDate = view.UseByDate;
-            listing.DeliveryAvailable = view.DeliveryAvailable ?? false;
+            listing.DeliveryAvailable = view.DeliveryAvailable;
             listing.ListingStatus = view.ListingStatus;
 
             db.Entry(listing).State = EntityState.Modified;
