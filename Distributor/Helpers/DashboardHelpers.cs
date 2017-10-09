@@ -52,7 +52,7 @@ namespace Distributor.Helpers
             DashboardView dashboardView = new DashboardView();
 
             //get the campaigns and listings for this user
-            List<Campaign> campaignsForUser = CampaignHelpers.GetAllCampaignsForUser(db, appUser.AppUserId);
+            List<Campaign> campaignsForUser = CampaignHelpers.GetAllCampaignsForUser(db, appUser.AppUserId, false);
             dashboardView.CampaignList = campaignsForUser;
 
             List<Campaign> campaignsDashboardList = CampaignHelpers.GetAllDashboardFilteredCampaigns(db, appUser.AppUserId);
@@ -70,10 +70,10 @@ namespace Distributor.Helpers
             List<AvailableListing> availableListingDashboardList = AvailableListingHelpers.GetAllDashboardFilteredAvailableListings(db, appUser.AppUserId);
             dashboardView.AvailableListingDashboardList = availableListingDashboardList;
 
-            List<Offer> offersForUser = OfferHelpers.GetAllOffersForUser(db, appUser.AppUserId);
+            List<Offer> offersForUser = OfferHelpers.GetAllOffersForUser(db, appUser.AppUserId, false);
             dashboardView.OfferList = offersForUser;
 
-            List<Order> ordersForUser = OrderHelpers.GetAllOrdersForUser(db, appUser.AppUserId);
+            List<Order> ordersForUser = OrderHelpers.GetAllOrdersForUser(db, appUser.AppUserId, false);
             dashboardView.OrderList = ordersForUser;
 
             //get listings for admin areas if this user is not a 'User' - i.e. is Manager, Admin etc.

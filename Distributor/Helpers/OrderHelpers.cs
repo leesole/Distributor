@@ -42,56 +42,89 @@ namespace Distributor.Helpers
             return db.Orders.ToList();
         }
 
-        public static List<Order> GetAllOrdersForUser(Guid appUserId)
+        public static List<Order> GetAllOrdersForUser(Guid appUserId, bool getHistory)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Order> list = GetAllOrdersForUser(db, appUserId);
+            List<Order> list = GetAllOrdersForUser(db, appUserId, getHistory);
             db.Dispose();
             return list;
         }
 
-        public static List<Order> GetAllOrdersForUser(ApplicationDbContext db, Guid appUserId)
+        public static List<Order> GetAllOrdersForUser(ApplicationDbContext db, Guid appUserId, bool getHistory)
         {
-            List<Order> allOrdersForUser = (from o in db.Orders
-                                            where (o.OrderOriginatorAppUserId == appUserId && o.OrderStatus != OrderStatusEnum.Closed)
-                                            select o).ToList();
+            List<Order> allOrdersForUser = null;
+
+            if (getHistory)
+            {
+                allOrdersForUser = (from o in db.Orders
+                                    where (o.OrderOriginatorAppUserId == appUserId && o.OrderStatus == OrderStatusEnum.Closed)
+                                    select o).ToList();
+            }
+            else
+            {
+                allOrdersForUser = (from o in db.Orders
+                                    where (o.OrderOriginatorAppUserId == appUserId && o.OrderStatus != OrderStatusEnum.Closed)
+                                    select o).ToList();
+            }
 
             return allOrdersForUser;
         }
 
-        public static List<Order> GetAllOrdersForBranch(Guid branchId)
+        public static List<Order> GetAllOrdersForBranch(Guid branchId, bool getHistory)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Order> list = GetAllOrdersForBranch(db, branchId);
+            List<Order> list = GetAllOrdersForBranch(db, branchId, getHistory);
             db.Dispose();
             return list;
         }
 
-        public static List<Order> GetAllOrdersForBranch(ApplicationDbContext db, Guid branchId)
+        public static List<Order> GetAllOrdersForBranch(ApplicationDbContext db, Guid branchId, bool getHistory)
         {
-            List<Order> list = (from o in db.Orders
-                                where (o.OrderOriginatorBranchId == branchId && o.OrderStatus != OrderStatusEnum.Closed)
-                                select o).ToList();
+            List<Order> list = null;
+
+            if (getHistory)
+            {
+                list = (from o in db.Orders
+                        where (o.OrderOriginatorBranchId == branchId && o.OrderStatus == OrderStatusEnum.Closed)
+                        select o).ToList();
+            }
+            else
+            {
+                list = (from o in db.Orders
+                        where (o.OrderOriginatorBranchId == branchId && o.OrderStatus != OrderStatusEnum.Closed)
+                        select o).ToList();
+            }
 
             return list;
         }
 
-        public static List<Order> GetAllOrdersForCompany(Guid companyId)
+        public static List<Order> GetAllOrdersForCompany(Guid companyId, bool getHistory)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Order> list = GetAllOrdersForCompany(db, companyId);
+            List<Order> list = GetAllOrdersForCompany(db, companyId, getHistory);
             db.Dispose();
             return list;
         }
 
-        public static List<Order> GetAllOrdersForCompany(ApplicationDbContext db, Guid companyId)
+        public static List<Order> GetAllOrdersForCompany(ApplicationDbContext db, Guid companyId, bool getHistory)
         {
-            List<Order> list = (from o in db.Orders
-                                where (o.OrderOriginatorCompanyId == companyId && o.OrderStatus != OrderStatusEnum.Closed)
-                                select o).ToList();
+            List<Order> list = null;
+
+            if (getHistory)
+            {
+                list = (from o in db.Orders
+                        where (o.OrderOriginatorCompanyId == companyId && o.OrderStatus == OrderStatusEnum.Closed)
+                        select o).ToList();
+            }
+            else
+            {
+                list = (from o in db.Orders
+                        where (o.OrderOriginatorCompanyId == companyId && o.OrderStatus != OrderStatusEnum.Closed)
+                        select o).ToList();
+            }
 
             return list;
         }
@@ -114,16 +147,16 @@ namespace Distributor.Helpers
             return allOrdersForBranchUser;
         }
 
-        public static List<Order> GetAllManageListingFilteredOrders(Guid appUserId)
+        public static List<Order> GetAllManageListingFilteredOrders(Guid appUserId, bool getHistory)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Order> list = GetAllManageListingFilteredOrders(db, appUserId);
+            List<Order> list = GetAllManageListingFilteredOrders(db, appUserId, getHistory);
             db.Dispose();
             return list;
         }
 
-        public static List<Order> GetAllManageListingFilteredOrders(ApplicationDbContext db, Guid appUserId)
+        public static List<Order> GetAllManageListingFilteredOrders(ApplicationDbContext db, Guid appUserId, bool getHistory)
         {
             AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
             Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
@@ -136,13 +169,13 @@ namespace Distributor.Helpers
             switch (settings.OrdersManageViewInternalSelectionLevel)
             {
                 case InternalSearchLevelEnum.User:
-                    list = GetAllOrdersForUser(db, appUserId);
+                    list = GetAllOrdersForUser(db, appUserId, getHistory);
                     break;
                 case InternalSearchLevelEnum.Branch: //user's current branch to filter
-                    list = GetAllOrdersForBranch(db, branch.BranchId);
+                    list = GetAllOrdersForBranch(db, branch.BranchId, getHistory);
                     break;
                 case InternalSearchLevelEnum.Company: //user's current company to filter
-                    list = GetAllOrdersForCompany(db, branch.CompanyId);
+                    list = GetAllOrdersForCompany(db, branch.CompanyId, getHistory);
                     break;
                 case InternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
                     break;
@@ -300,7 +333,7 @@ namespace Distributor.Helpers
             List<OrderManageView> allOrdersManageView = new List<OrderManageView>();
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
-            List<Order> allOrdersForUser = OrderHelpers.GetAllOrdersForUser(db, appUser.AppUserId);
+            List<Order> allOrdersForUser = OrderHelpers.GetAllOrdersForUser(db, appUser.AppUserId, false);
 
             foreach (Order orderForUser in allOrdersForUser)
             {
@@ -319,17 +352,26 @@ namespace Distributor.Helpers
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<OrderManageView> list = GetAllOrdersManageView(db, user);
+            List<OrderManageView> list = GetAllOrdersManageView(db, user, false);
             db.Dispose();
             return list;
         }
 
-        public static List<OrderManageView> GetAllOrdersManageView(ApplicationDbContext db, IPrincipal user)
+        public static List<OrderManageView> GetAllOrdersManageView(IPrincipal user, bool getHistory)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<OrderManageView> list = GetAllOrdersManageView(db, user, getHistory);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<OrderManageView> GetAllOrdersManageView(ApplicationDbContext db, IPrincipal user, bool getHistory)
         {
             List<OrderManageView> allOrdersManageView = new List<OrderManageView>();
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
-            List<Order> allOrdersForUser = OrderHelpers.GetAllManageListingFilteredOrders(db, appUser.AppUserId);
+            List<Order> allOrdersForUser = OrderHelpers.GetAllManageListingFilteredOrders(db, appUser.AppUserId, getHistory);
 
             foreach (Order orderForBranchUser in allOrdersForUser)
             {

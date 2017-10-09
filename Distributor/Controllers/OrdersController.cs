@@ -19,53 +19,10 @@ namespace Distributor.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        //// GET: Orders
-        //public ActionResult Index()
-        //{
-        //    return View(db.Orders.ToList());
-        //}
-
-        //// GET: Orders/Details/5
-        //public ActionResult Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Order order = db.Orders.Find(id);
-        //    if (order == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(order);
-        //}
-
-        //// GET: Orders/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Orders/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "OrderId,OrderQuanity,OrderStatus,OrderCreationDateTime,OrderDistributionDateTime,OrderDeliveredDateTime,OrderCollectedDateTime,OrderClosedDateTime,OrderOriginatorAppUserId,OrderOriginatorBranchId,OrderOriginatorCompanyId,OrderOriginatorDateTime,OfferId,OfferOriginatorAppUserId,OfferOriginatorBranchId,OfferOriginatorCompanyId,ListingId,ListingOriginatorAppUserId,ListingOriginatorBranchId,ListingOriginatorCompanyId")] Order order)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        order.OrderId = Guid.NewGuid();
-        //        db.Orders.Add(order);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(order);
-        //}
+        
 
         // GET: Orders/Edit/5
-        public ActionResult Details(Guid? id)
+        public ActionResult Details(Guid? id, bool showHistory)
         {
             if (id == null)
             {
@@ -96,6 +53,8 @@ namespace Distributor.Controllers
             ViewBag.CollectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersCollectedAuthorisationManageViewLevel, User);
             ViewBag.ClosedAuthorisationLevel = settings.OrdersClosedAuthorisationManageViewLevel;
             ViewBag.ClosedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersClosedAuthorisationManageViewLevel, User);
+
+            ViewBag.ShowHistory = showHistory;
 
             return View(order);
         }
@@ -191,34 +150,37 @@ namespace Distributor.Controllers
                 }
             }
 
+            ViewBag.ShowHistory = false;
+
             return View(order);
         }
 
-        //// GET: Orders/Delete/5
-        //public ActionResult Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Order order = db.Orders.Find(id);
-        //    if (order == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(order);
-        //}
+        public ActionResult History()
+        {
+            List<OrderManageView> model = OrderManageHelpers.GetAllOrdersManageView(User, true);
 
-        //// POST: Orders/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(Guid id)
-        //{
-        //    Order order = db.Orders.Find(id);
-        //    db.Orders.Remove(order);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+            //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
+            Company company = CompanyHelpers.GetCompanyForUser(User);
+            ViewBag.AllowBranchTrading = company.AllowBranchTrading;
+            if (company.AllowBranchTrading)
+                ViewBag.CurrentBranchOrCompanyId = AppUserHelpers.GetAppUser(User).CurrentBranchId;
+            else
+                ViewBag.CurrentBranchOrCompanyId = company.CompanyId;
+
+            //Set the authorisation levels and IDs for button activation on form
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(User);
+
+            ViewBag.DespatchedAuthorisationLevel = settings.OrdersDespatchedAuthorisationManageViewLevel;
+            ViewBag.DespatchedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDespatchedAuthorisationManageViewLevel, User);
+            ViewBag.DeliveredAuthorisationLevel = settings.OrdersDeliveredAuthorisationManageViewLevel;
+            ViewBag.DeliveredAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDeliveredAuthorisationManageViewLevel, User);
+            ViewBag.CollectedAuthorisationLevel = settings.OrdersCollectedAuthorisationManageViewLevel;
+            ViewBag.CollectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersCollectedAuthorisationManageViewLevel, User);
+            ViewBag.ClosedAuthorisationLevel = settings.OrdersClosedAuthorisationManageViewLevel;
+            ViewBag.ClosedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersClosedAuthorisationManageViewLevel, User);
+
+            return View(model);
+        }
 
         protected override void Dispose(bool disposing)
         {

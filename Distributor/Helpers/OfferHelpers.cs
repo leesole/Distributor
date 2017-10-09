@@ -45,64 +45,97 @@ namespace Distributor.Helpers
             return offer;
         }
 
-        public static List<Offer> GetAllOffersForUser(Guid appUserId)
+        public static List<Offer> GetAllOffersForUser(Guid appUserId, bool getHistory)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Offer> list = GetAllOffersForUser(db, appUserId);
+            List<Offer> list = GetAllOffersForUser(db, appUserId, getHistory);
             db.Dispose();
             return list;
         }
 
-        public static List<Offer> GetAllOffersForUser(ApplicationDbContext db, Guid appUserId)
+        public static List<Offer> GetAllOffersForUser(ApplicationDbContext db, Guid appUserId, bool getHistory)
         {
-            List<Offer> allOffersForUser = (from o in db.Offers
-                                            where ((o.OfferOriginatorAppUserId == appUserId && o.OfferStatus == OfferStatusEnum.New)
-                                                  || (o.ListingOriginatorAppUserId == appUserId && o.OfferStatus == OfferStatusEnum.New))
-                                            select o).ToList();
-            var allOffersForUserDistinct = allOffersForUser.Distinct().ToList();
+            List<Offer> allOffersForUser = null;
 
-            return allOffersForUserDistinct;
+            if (getHistory)
+            {
+                allOffersForUser = (from o in db.Offers
+                                    where ((o.OfferOriginatorAppUserId == appUserId && o.OfferStatus != OfferStatusEnum.New)
+                                          || (o.ListingOriginatorAppUserId == appUserId && o.OfferStatus != OfferStatusEnum.New))
+                                    select o).Distinct().ToList();
+            }
+            else
+            {
+                allOffersForUser = (from o in db.Offers
+                                    where ((o.OfferOriginatorAppUserId == appUserId && o.OfferStatus == OfferStatusEnum.New)
+                                          || (o.ListingOriginatorAppUserId == appUserId && o.OfferStatus == OfferStatusEnum.New))
+                                    select o).Distinct().ToList();
+            }
+
+            return allOffersForUser;
         }
 
-        public static List<Offer> GetAllOffersForBranch(Guid branchId)
+        public static List<Offer> GetAllOffersForBranch(Guid branchId, bool getHistory)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Offer> list = GetAllOffersForBranch(db, branchId);
+            List<Offer> list = GetAllOffersForBranch(db, branchId, getHistory);
             db.Dispose();
             return list;
         }
 
-        public static List<Offer> GetAllOffersForBranch(ApplicationDbContext db, Guid branchId)
+        public static List<Offer> GetAllOffersForBranch(ApplicationDbContext db, Guid branchId, bool getHistory)
         {
-            List<Offer> list = (from o in db.Offers
-                                where ((o.OfferOriginatorBranchId == branchId && o.OfferStatus == OfferStatusEnum.New)
-                                      || (o.ListingOriginatorBranchId == branchId && o.OfferStatus == OfferStatusEnum.New))
-                                select o).ToList();
-            var listDistinct = list.Distinct().ToList();
+            List<Offer> list = null;
 
-            return listDistinct;
+            if (getHistory)
+            {
+                list = (from o in db.Offers
+                        where ((o.OfferOriginatorBranchId == branchId && o.OfferStatus != OfferStatusEnum.New)
+                              || (o.ListingOriginatorBranchId == branchId && o.OfferStatus != OfferStatusEnum.New))
+                        select o).Distinct().ToList();
+            }
+            else
+            {
+                list = (from o in db.Offers
+                        where ((o.OfferOriginatorBranchId == branchId && o.OfferStatus == OfferStatusEnum.New)
+                              || (o.ListingOriginatorBranchId == branchId && o.OfferStatus == OfferStatusEnum.New))
+                        select o).Distinct().ToList();
+            }
+
+            return list;
         }
 
-        public static List<Offer> GetAllOffersForCompany(Guid companyId)
+        public static List<Offer> GetAllOffersForCompany(Guid companyId, bool getHistory)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Offer> list = GetAllOffersForCompany(db, companyId);
+            List<Offer> list = GetAllOffersForCompany(db, companyId, getHistory);
             db.Dispose();
             return list;
         }
 
-        public static List<Offer> GetAllOffersForCompany(ApplicationDbContext db, Guid companyId)
+        public static List<Offer> GetAllOffersForCompany(ApplicationDbContext db, Guid companyId, bool getHistory)
         {
-            List<Offer> list = (from o in db.Offers
-                                where ((o.OfferOriginatorCompanyId == companyId && o.OfferStatus == OfferStatusEnum.New)
-                                      || (o.ListingOriginatorCompanyId == companyId && o.OfferStatus == OfferStatusEnum.New))
-                                select o).ToList();
-            var listDistinct = list.Distinct().ToList();
+            List<Offer> list = null;
 
-            return listDistinct;
+            if (getHistory)
+            {
+                list = (from o in db.Offers
+                        where ((o.OfferOriginatorCompanyId == companyId && o.OfferStatus != OfferStatusEnum.New)
+                              || (o.ListingOriginatorCompanyId == companyId && o.OfferStatus != OfferStatusEnum.New))
+                        select o).Distinct().ToList();
+            }
+            else
+            {
+                list = (from o in db.Offers
+                        where ((o.OfferOriginatorCompanyId == companyId && o.OfferStatus == OfferStatusEnum.New)
+                              || (o.ListingOriginatorCompanyId == companyId && o.OfferStatus == OfferStatusEnum.New))
+                        select o).Distinct().ToList();
+            }
+
+            return list;
         }
 
         public static List<Offer> GetAllOffersForBranchUser(BranchUser branchUser)
@@ -131,12 +164,21 @@ namespace Distributor.Helpers
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<Offer> list = GetAllManageListingFilteredOffers(db, appUserId);
+            List<Offer> list = GetAllManageListingFilteredOffers(db, appUserId, false);
             db.Dispose();
             return list;
         }
 
-        public static List<Offer> GetAllManageListingFilteredOffers(ApplicationDbContext db, Guid appUserId)
+        public static List<Offer> GetAllManageListingFilteredOffers(Guid appUserId, bool getHistory)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<Offer> list = GetAllManageListingFilteredOffers(db, appUserId, getHistory);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<Offer> GetAllManageListingFilteredOffers(ApplicationDbContext db, Guid appUserId, bool getHistory)
         {
             AppUser appUser = AppUserHelpers.GetAppUser(db, appUserId);
             Branch branch = BranchHelpers.GetBranch(db, appUser.CurrentBranchId);
@@ -149,13 +191,13 @@ namespace Distributor.Helpers
             switch (settings.OffersManageViewInternalSelectionLevel)
             {
                 case InternalSearchLevelEnum.User:
-                    list = GetAllOffersForUser(db, appUserId);
+                    list = GetAllOffersForUser(db, appUserId, getHistory);
                     break;
                 case InternalSearchLevelEnum.Branch: //user's current branch to filter
-                    list = GetAllOffersForBranch(db, branch.BranchId);
+                    list = GetAllOffersForBranch(db, branch.BranchId, getHistory);
                     break;
                 case InternalSearchLevelEnum.Company: //user's current company to filter
-                    list = GetAllOffersForCompany(db, branch.CompanyId);
+                    list = GetAllOffersForCompany(db, branch.CompanyId, getHistory);
                     break;
                 case InternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
                     break;
@@ -406,17 +448,26 @@ namespace Distributor.Helpers
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            List<OfferManageView> list = GetAllOffersManageView(db, user);
+            List<OfferManageView> list = GetAllOffersManageView(db, user, false);
             db.Dispose();
             return list;
         }
 
-        public static List<OfferManageView> GetAllOffersManageView(ApplicationDbContext db, IPrincipal user)
+        public static List<OfferManageView> GetAllOffersManageView(IPrincipal user, bool getHistory)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            List<OfferManageView> list = GetAllOffersManageView(db, user, getHistory);
+            db.Dispose();
+            return list;
+        }
+
+        public static List<OfferManageView> GetAllOffersManageView(ApplicationDbContext db, IPrincipal user, bool getHistory)
         {
             List<OfferManageView> allOffersManageView = new List<OfferManageView>();
 
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
-            List<Offer> allOffersForUser = OfferHelpers.GetAllManageListingFilteredOffers(db, appUser.AppUserId);
+            List<Offer> allOffersForUser = OfferHelpers.GetAllManageListingFilteredOffers(db, appUser.AppUserId, getHistory);
 
             foreach (Offer offerForUser in allOffersForUser)
             {

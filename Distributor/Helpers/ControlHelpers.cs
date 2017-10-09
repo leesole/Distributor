@@ -50,9 +50,9 @@ namespace Distributor.Helpers
         public static SelectList AllActiveCampaignsForUserListDropDown(Guid appUserId, Guid? selectedCampaignId)
         {
             if (selectedCampaignId == null)
-                return new SelectList(CampaignHelpers.GetAllCampaignsForUser(appUserId), "CampaignId", "Name", "Select campaign");
+                return new SelectList(CampaignHelpers.GetAllCampaignsForUser(appUserId, false), "CampaignId", "Name", "Select campaign");
             else
-                return new SelectList(CampaignHelpers.GetAllCampaignsForUser(appUserId), "CampaignId", "Name", selectedCampaignId);
+                return new SelectList(CampaignHelpers.GetAllCampaignsForUser(appUserId, false), "CampaignId", "Name", selectedCampaignId);
         }
 
         #region BranchEnums

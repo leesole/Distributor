@@ -484,6 +484,9 @@
     <Content Include="Views\Action\Index.cshtml" />
     <Content Include="Views\RequirementListings\History.cshtml" />
     <Content Include="Views\AvailableListings\History.cshtml" />
+    <Content Include="Views\Campaigns\History.cshtml" />
+    <Content Include="Views\Offers\History.cshtml" />
+    <Content Include="Views\Orders\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

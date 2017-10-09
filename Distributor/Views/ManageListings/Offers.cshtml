@@ -415,21 +415,21 @@
                                     <td></td>
                                 }
                             }
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                             <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
                             <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveOfferField(id)" style="display:none" /></td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
                             <td></td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                             @if (item.AvailableListingDetails != null)
                             {
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                             }
                             @if (item.RequirementListingDetails != null)
                             {
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                             }
                         </tr>
                     }
@@ -469,21 +469,21 @@
                                     <td></td>
                                 }
                             }
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
                             <td></td>
                             <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CounterOfferQuantity, new { id = @counterOfferQuantityField, disabled = "disabled" })</td>
                             <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveCounterOfferField(id)" style="display:none" /></td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                             @if (item.AvailableListingDetails != null)
                             {
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                             }
                             @if (item.RequirementListingDetails != null)
                             {
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                             }
                         </tr>
                     }
@@ -731,21 +731,21 @@
                                     <td></td>
                                 }
                             }
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                             <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
                             <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveOfferField(id)" style="display:none" /></td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.CounterOfferQuantity)</td>
                             <td></td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                             @if (item.AvailableListingDetails != null)
                             {
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                             }
                             @if (item.RequirementListingDetails != null)
                             {
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                             }
                         </tr>
                     }
@@ -785,21 +785,21 @@
                                     <td></td>
                                 }
                             }
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
                             <td></td>
                             <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CounterOfferQuantity, new { id = @counterOfferQuantityField, disabled = "disabled" })</td>
                             <td><input type="button" value="Save" class="btn btn-sm btn-primary btn-block buttondetails" id=@saveButton onclick="saveCounterOfferField(id)" style="display:none" /></td>
-                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.PreviousOfferQuantity)</td>
                             @if (item.AvailableListingDetails != null)
                             {
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListingDetails.ItemDescription)</td>
                             }
                             @if (item.RequirementListingDetails != null)
                             {
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
-                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.UoM)</td>
+                                <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListingDetails.ItemDescription)</td>
                             }
                         </tr>
                     }

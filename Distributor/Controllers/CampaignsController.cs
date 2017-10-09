@@ -104,7 +104,7 @@ namespace Distributor.Controllers
         }
 
         // GET: Campaigns/Edit/5
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(Guid? id, bool showHistory)
         {
             if (id == null)
             {
@@ -115,6 +115,9 @@ namespace Distributor.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ShowHistory = showHistory;
+
             return View(campaign);
         }
 
@@ -172,6 +175,12 @@ namespace Distributor.Controllers
         //    db.SaveChanges();
         //    return RedirectToAction("Index");
         //}
+
+        public ActionResult History()
+        {
+            List<CampaignManageView> model = CampaignManageHelpers.GetAllCampaignsManageView(User, true);
+            return View(model);
+        }
 
         protected override void Dispose(bool disposing)
         {

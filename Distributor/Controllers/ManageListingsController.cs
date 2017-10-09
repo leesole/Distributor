@@ -12,6 +12,11 @@ using static Distributor.ViewModels.OfferViews;
 
 namespace Distributor.Controllers
 {
+    /// <summary>
+    /// NOTE _ ANY CHANGES TO ANY OF THESE MODELS NEED TO BE REFELECTED IN THE 'HISTORY' OF THE CONTROLLER FOR THE CHANGE,
+    /// 
+    /// i.e. If you change the 'Requirements' controller below, then change the controller for RequirementsListing/History
+    /// </summary>
     [Authorize]
     public class ManageListingsController : Controller
     {
@@ -52,8 +57,16 @@ namespace Distributor.Controllers
             ViewBag.RejectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersRejectedAuthorisationManageViewLevel, User);
             ViewBag.ReturnedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersReturnedAuthorisationManageViewLevel, User);
 
-            ViewBag.RequiredCount = model.Count(x => x.OfferDetails.ListingType == ListingTypeEnum.Requirement);
-            ViewBag.AvailableCount = model.Count(x => x.OfferDetails.ListingType == ListingTypeEnum.Available);
+            ViewBag.RequiredCount = 0;
+            ViewBag.AvailableCount = 0;
+
+            try
+            {
+                ViewBag.RequiredCount = model.Count(x => x.OfferDetails.ListingType == ListingTypeEnum.Requirement);
+                ViewBag.AvailableCount = model.Count(x => x.OfferDetails.ListingType == ListingTypeEnum.Available);
+            }
+            catch { }
+            
 
             return View(model);
         }

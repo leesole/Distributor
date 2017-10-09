@@ -18,6 +18,13 @@
             // This will make every element with the class "date-picker" into a DatePicker element
             $('.date-picker').datepicker();
         })
+
+        $(document).ready(function () {
+            var type = $("#detailtype").text();
+            if (type == "Show Details") {
+                $("#setstyle").prop('disabled', true);
+            }
+        });
     </script>
 }
 
@@ -69,168 +76,186 @@
     </nav>
 </nav>
 
-<div class="row" style="padding-top:55px">
-    <div class="col-lg-12">
-        <h1 class="page-header" style="margin: 10px 0px 10px">Order <small>Edit Details</small></h1>
-        <ol class="breadcrumb">
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
-            <li class="active">Order Details</li>
-        </ol>
-    </div>
-</div>
-
-@if (Model.AvailableListingDetails != null)
+@if (ViewBag.ShowHistory)
 {
-    uoM = Model.AvailableListingDetails.UoM;
-    description = Model.AvailableListingDetails.ItemDescription;
-
-    <p class="lead">Listing details</p>
-    <div class="table-responsive">
-        <table class="table">
-            <tr class="info">
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemDescription)</th>
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemType)</th>
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.QuantityOutstanding)</th>
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.UoM)</th>
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableFrom)</th>
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableTo)</th>
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemCondition)</th>
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.UseByDate)</th>
-                <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.DeliveryAvailable)</th>
-            </tr>
-            <tr>
-                <td>@Html.DisplayFor(model => model.AvailableListingDetails.ItemDescription)</td>
-                <td>@Model.AvailableListingDetails.ItemType.DisplayName()</td>
-                <td>@Html.DisplayFor(model => model.AvailableListingDetails.QuantityOutstanding)</td>
-                <td>@Html.DisplayFor(model => model.AvailableListingDetails.UoM)</td>
-                <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableFrom)</td>
-                <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableTo)</td>
-                <td>@Model.AvailableListingDetails.ItemCondition.DisplayName()</td>
-                <td>@Html.DisplayFor(model => model.AvailableListingDetails.UseByDate)</td>
-                <td>@Html.DisplayFor(model => model.AvailableListingDetails.DeliveryAvailable)</td>
-            </tr>
-        </table>
+    <div class="row" style="padding-top:55px">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="margin: 10px 0px 10px">Order History <small>Show Details</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+                <li>@Html.ActionLink("Orders History", "History", "Orders")</li>
+                <li class="active" id="detailtype">Order Details</li>
+            </ol>
+        </div>
     </div>
 }
-@if (Model.RequirementListingDetails != null)
+else
 {
-    uoM = Model.RequirementListingDetails.UoM;
-    description = Model.RequirementListingDetails.ItemDescription;
-
-    <p class="lead">Listing details</p>
-    <div class="table-responsive">
-        <table class="table">
-            <tr class="info">
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemDescription)</th>
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemType)</th>
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.QuantityOutstanding)</th>
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.UoM)</th>
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredFrom)</th>
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredTo)</th>
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.AcceptDamagedItems)</th>
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</th>
-                <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.CollectionAvailable)</th>
-            </tr>
-            <tr>
-                <td>@Html.DisplayFor(model => model.RequirementListingDetails.ItemDescription)</td>
-                <td>@Model.RequirementListingDetails.ItemType.DisplayName()</td>
-                <td>@Html.DisplayFor(model => model.RequirementListingDetails.QuantityOutstanding)</td>
-                <td>@Html.DisplayFor(model => model.RequirementListingDetails.UoM)</td>
-                <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredFrom)</td>
-                <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredTo)</td>
-                <td>@Html.DisplayFor(model => model.RequirementListingDetails.AcceptDamagedItems)</td>
-                <td>@Html.DisplayFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</td>
-                <td>@Html.DisplayFor(model => model.RequirementListingDetails.CollectionAvailable)</td>
-            </tr>
-        </table>
-    </div>
-}
-@if (Model.OfferDetails != null)
-{
-    <p class="lead">Offer details</p>
-    <div class="table-responsive">
-        <table class="table">
-            <tr class="info">
-                <th>@Html.DisplayNameFor(model => model.OfferDetails.ListingType)</th>
-                <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
-                <th>@Html.DisplayNameFor(model => model.OfferDetails.CurrentOfferQuantity)</th>
-                <th>@Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)</th>
-                <th>@Html.DisplayNameFor(model => model.OfferDetails.PreviousOfferQuantity)</th>
-                <th>Unit of measure</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>@Model.OfferDetails.ListingType.DisplayName()</td>
-                <td>@Model.OfferDetails.OfferStatus.DisplayName()</td>
-                <td>@Html.DisplayFor(model => model.OfferDetails.CurrentOfferQuantity)</td>
-                <td>@Html.DisplayFor(model => model.OfferDetails.CounterOfferQuantity)</td>
-                <td>@Html.DisplayFor(model => model.OfferDetails.PreviousOfferQuantity)</td>
-                <td>@uoM</td>
-                <td>@description</td>
-            </tr>
-        </table>
+    <div class="row" style="padding-top:55px">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="margin: 10px 0px 10px">Order <small>Edit Details</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+                <li class="active" id="detailtype">Order Details</li>
+            </ol>
+        </div>
     </div>
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div id="setstyle">
+    @if (Model.AvailableListingDetails != null)
+    {
+        uoM = Model.AvailableListingDetails.UoM;
+        description = Model.AvailableListingDetails.ItemDescription;
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="login-panel panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Order details</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.OrderId)
+        <p class="lead">Listing details</p>
+        <div class="table-responsive">
+            <table class="table">
+                <tr class="info">
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemDescription)</th>
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemType)</th>
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.QuantityOutstanding)</th>
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.UoM)</th>
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableFrom)</th>
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableTo)</th>
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemCondition)</th>
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.UseByDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.DeliveryAvailable)</th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.ItemDescription)</td>
+                    <td>@Model.AvailableListingDetails.ItemType.DisplayName()</td>
+                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.QuantityOutstanding)</td>
+                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.UoM)</td>
+                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableFrom)</td>
+                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableTo)</td>
+                    <td>@Model.AvailableListingDetails.ItemCondition.DisplayName()</td>
+                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.UseByDate)</td>
+                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.DeliveryAvailable)</td>
+                </tr>
+            </table>
+        </div>
+    }
+    @if (Model.RequirementListingDetails != null)
+    {
+        uoM = Model.RequirementListingDetails.UoM;
+        description = Model.RequirementListingDetails.ItemDescription;
 
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.LabelFor(model => model.OrderStatus)</div>
-                            <div class="col-md-8">@Model.OrderStatus.DisplayName()</div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.LabelFor(model => model.OrderQuanity)</div>
-                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderQuanity, new { htmlAttributes = new { @class = "form-control" } })</div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.Label("Unit of measure")</div>
-                            <div class="col-md-8">@uoM</div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.LabelFor(model => model.OrderCreationDateTime)</div>
-                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderCreationDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.LabelFor(model => model.OrderDistributionDateTime)</div>
-                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderDistributionDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.LabelFor(model => model.OrderDeliveredDateTime)</div>
-                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderDeliveredDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.LabelFor(model => model.OrderCollectedDateTime)</div>
-                            <div class="col-md-8">
-                                @Html.DisplayFor(model => model.OrderCollectedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                @Html.ValidationMessageFor(model => model.OrderCollectedDateTime, "", new { @class = "text-danger" })
+        <p class="lead">Listing details</p>
+        <div class="table-responsive">
+            <table class="table">
+                <tr class="info">
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemDescription)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemType)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.QuantityOutstanding)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.UoM)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredFrom)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredTo)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.AcceptDamagedItems)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</th>
+                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.CollectionAvailable)</th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.ItemDescription)</td>
+                    <td>@Model.RequirementListingDetails.ItemType.DisplayName()</td>
+                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.QuantityOutstanding)</td>
+                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.UoM)</td>
+                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredFrom)</td>
+                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredTo)</td>
+                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.AcceptDamagedItems)</td>
+                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</td>
+                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.CollectionAvailable)</td>
+                </tr>
+            </table>
+        </div>
+    }
+    @if (Model.OfferDetails != null)
+    {
+        <p class="lead">Offer details</p>
+        <div class="table-responsive">
+            <table class="table">
+                <tr class="info">
+                    <th>@Html.DisplayNameFor(model => model.OfferDetails.ListingType)</th>
+                    <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
+                    <th>@Html.DisplayNameFor(model => model.OfferDetails.CurrentOfferQuantity)</th>
+                    <th>@Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)</th>
+                    <th>@Html.DisplayNameFor(model => model.OfferDetails.PreviousOfferQuantity)</th>
+                    <th>Unit of measure</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>@Model.OfferDetails.ListingType.DisplayName()</td>
+                    <td>@Model.OfferDetails.OfferStatus.DisplayName()</td>
+                    <td>@Html.DisplayFor(model => model.OfferDetails.CurrentOfferQuantity)</td>
+                    <td>@Html.DisplayFor(model => model.OfferDetails.CounterOfferQuantity)</td>
+                    <td>@Html.DisplayFor(model => model.OfferDetails.PreviousOfferQuantity)</td>
+                    <td>@uoM</td>
+                    <td>@description</td>
+                </tr>
+            </table>
+        </div>
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="login-panel panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Order details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.OrderId)
+
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.LabelFor(model => model.OrderStatus)</div>
+                                <div class="col-md-8">@Model.OrderStatus.DisplayName()</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.LabelFor(model => model.OrderQuanity)</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderQuanity, new { htmlAttributes = new { @class = "form-control" } })</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.Label("Unit of measure")</div>
+                                <div class="col-md-8">@uoM</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.LabelFor(model => model.OrderCreationDateTime)</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderCreationDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.LabelFor(model => model.OrderDistributionDateTime)</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderDistributionDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.LabelFor(model => model.OrderDeliveredDateTime)</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderDeliveredDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.LabelFor(model => model.OrderCollectedDateTime)</div>
+                                <div class="col-md-8">
+                                    @Html.DisplayFor(model => model.OrderCollectedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.OrderCollectedDateTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.LabelFor(model => model.OrderReceivedDateTime)</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderReceivedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-4">@Html.LabelFor(model => model.OrderClosedDateTime)</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderClosedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.LabelFor(model => model.OrderReceivedDateTime)</div>
-                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderReceivedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4">@Html.LabelFor(model => model.OrderClosedDateTime)</div>
-                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderClosedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
-                        </div>
                     </div>
-                </div>
-                <div class="panel-footer">
-                    @{
+                    <div class="panel-footer">
+                        @{
                         var displayDespatchButton = true;
                         var displayDeliveredButton = true;
                         var displayCollectedButton = true;
@@ -332,9 +357,9 @@
                             case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
                                 break;
                         }
-                    }
+                        }
 
-                    @if (ViewBag.AllowBranchTrading)
+                        @if (ViewBag.AllowBranchTrading)
                     {
                         if (Model.OrderBranchDetails.BranchId == ViewBag.CurrentBranchOrCompanyId)
                         {
@@ -349,39 +374,39 @@
                         }
                     }
 
-                    @if (inhouseOrder) //our order
+                        @if (inhouseOrder) //our order
                     {
                         if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
                         {
                             if (displayDespatchButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success" name="despatchedbutton"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
+                    <button type="submit" class="btn btn-sm btn-success" name="despatchedbutton"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
                             }
                             if (displayDeliveredButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
                             }
                             if (displayClosedButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                         else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
                         {
                             if (displayDeliveredButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
                             }
                             if (displayClosedButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                         else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
                         {
                             if (displayClosedButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                     }
@@ -391,153 +416,158 @@
                         {
                             if (displayCollectedButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success" name="collectedbutton"><span class="glyphicon glyphicon-ok"></span> Collected</button>
+                    <button type="submit" class="btn btn-sm btn-success" name="collectedbutton"><span class="glyphicon glyphicon-ok"></span> Collected</button>
                             }
                             if (displayReceivedButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
+                    <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
                             }
                             if (displayClosedButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                         else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
                         {
                             if (displayReceivedButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
+                    <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
                             }
                             if (displayClosedButton)
                             {
-                                <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                             }
                         }
                     }
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="login-panel panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Order created by</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OrderAppUser.FirstName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderAppUser.FirstName)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OrderAppUser.LastName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderAppUser.LastName)</div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.BranchName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.BranchName)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressLine1)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressLine1)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressTownCity)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressTownCity)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressCounty)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressCounty)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressPostcode)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressPostcode)</div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Order created by</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OrderAppUser.FirstName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderAppUser.FirstName)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OrderAppUser.LastName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderAppUser.LastName)</div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.BranchName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.BranchName)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressLine1)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressLine1)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressTownCity)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressTownCity)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressCounty)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressCounty)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressPostcode)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressPostcode)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="login-panel panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Listing created by</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Listing created by</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.FirstName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.FirstName)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.LastName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.LastName)</div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.BranchName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.BranchName)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.FirstName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.FirstName)</div>
+            </div>
+            <div class="col-md-6">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Offer created by</h3>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.LastName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.LastName)</div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.BranchName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.BranchName)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressLine1)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressTownCity)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressCounty)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressPostcode)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferAppUser.FirstName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OfferAppUser.FirstName)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferAppUser.LastName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OfferAppUser.LastName)</div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.BranchName)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.BranchName)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressLine1)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressLine1)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressTownCity)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressTownCity)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressCounty)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressCounty)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressPostcode)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressPostcode)</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="login-panel panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Offer created by</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OfferAppUser.FirstName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferAppUser.FirstName)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OfferAppUser.LastName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferAppUser.LastName)</div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.BranchName)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.BranchName)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressLine1)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressLine1)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressTownCity)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressTownCity)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressCounty)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressCounty)</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">@Html.LabelFor(model => model.OrderBranchDetails.AddressPostcode)</div>
-                        <div class="col-md-8">@Html.DisplayFor(model => model.OrderBranchDetails.AddressPostcode)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
-        <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
-    </div>
+    if (ViewBag.ShowHistory == false)
+    {
+        <div class="form-group">
+            <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+            <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
+        </div>
+    }
+
 }
+</div>

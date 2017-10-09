@@ -376,13 +376,13 @@
                                 }
                             }
                         }
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
                     </tr>
                 }
             }

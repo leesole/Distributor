@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Distributor.Models;
 using Distributor.Helpers;
 using Distributor.ViewModels;
+using static Distributor.Enums.GeneralEnums;
 
 namespace Distributor.Controllers
 {
@@ -24,7 +25,7 @@ namespace Distributor.Controllers
         //}
 
         // GET: Offers/Details
-        public ActionResult Details(Guid? offerId)
+        public ActionResult Details(Guid? offerId, bool showHistory)
         {
             if (offerId == null)
             {
@@ -52,6 +53,7 @@ namespace Distributor.Controllers
             ViewBag.AcceptedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersAcceptedAuthorisationManageViewLevel, User);
             ViewBag.RejectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersRejectedAuthorisationManageViewLevel, User);
             ViewBag.ReturnedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersReturnedAuthorisationManageViewLevel, User);
+            ViewBag.ShowHistory = showHistory;
 
             return View(offerManageView);
         }
@@ -80,62 +82,37 @@ namespace Distributor.Controllers
             return View(offer);
         }
 
-        //// GET: Offers/Edit/5
-        //public ActionResult Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Offer offer = db.Offers.Find(id);
-        //    if (offer == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(offer);
-        //}
+        public ActionResult History()
+        {
+            List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageView(User, true);
 
-        //// POST: Offers/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "OfferId,ListingId,ListingType,OfferStatus,CurrentOfferQuantity,PreviousOfferQuantity,CounterOfferQuantity,OfferOriginatorAppUserId,OfferOriginatorBranchId,OfferOriginatorCompanyId,OfferOriginatorDateTime,OrderId,OrderOriginatorAppUserId,OrderOriginatorBranchId,OrderOriginatorCompanyId,OrderOriginatorDateTime")] Offer offer)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(offer).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(offer);
-        //}
+            //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
+            Company company = CompanyHelpers.GetCompanyForUser(User);
+            ViewBag.AllowBranchTrading = company.AllowBranchTrading;
+            if (company.AllowBranchTrading)
+                ViewBag.CurrentBranchOrCompanyId = AppUserHelpers.GetAppUser(User).CurrentBranchId;
+            else
+                ViewBag.CurrentBranchOrCompanyId = company.CompanyId;
 
-        //// GET: Offers/Delete/5
-        //public ActionResult Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Offer offer = db.Offers.Find(id);
-        //    if (offer == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(offer);
-        //}
+            //Set the authorisation levels and IDs for button activation on form
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(User);
 
-        //// POST: Offers/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(Guid id)
-        //{
-        //    Offer offer = db.Offers.Find(id);
-        //    db.Offers.Remove(offer);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+            ViewBag.AcceptedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersAcceptedAuthorisationManageViewLevel, User);
+            ViewBag.RejectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersRejectedAuthorisationManageViewLevel, User);
+            ViewBag.ReturnedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersReturnedAuthorisationManageViewLevel, User);
+
+            ViewBag.RequiredCount = 0;
+            ViewBag.AvailableCount = 0;
+
+            try
+            {
+                ViewBag.RequiredCount = model.Count(x => x.OfferDetails.ListingType == ListingTypeEnum.Requirement);
+                ViewBag.AvailableCount = model.Count(x => x.OfferDetails.ListingType == ListingTypeEnum.Available);
+            }
+            catch { }
+
+            return View(model);
+        }
 
         protected override void Dispose(bool disposing)
         {
