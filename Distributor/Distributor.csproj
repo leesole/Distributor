@@ -483,6 +483,7 @@
     <Content Include="Views\AppUsers\FriendIndex.cshtml" />
     <Content Include="Views\Action\Index.cshtml" />
     <Content Include="Views\RequirementListings\History.cshtml" />
+    <Content Include="Views\AvailableListings\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

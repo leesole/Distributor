@@ -83,7 +83,7 @@ namespace Distributor.Controllers
         }
 
         // GET: AvailableListings/Edit/5
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(Guid? id, bool showHistory)
         {
             if (id == null)
             {
@@ -94,6 +94,9 @@ namespace Distributor.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ShowHistory = showHistory;
+
             return View(availableListing);
         }
 
@@ -151,6 +154,12 @@ namespace Distributor.Controllers
         //    db.SaveChanges();
         //    return RedirectToAction("Index");
         //}
+
+        public ActionResult History()
+        {
+            List<AvailableListingManageView> model = AvailableListingManageHelpers.GetAllAvailableListingsManageView(User, true);
+            return View(model);
+        }
 
         protected override void Dispose(bool disposing)
         {

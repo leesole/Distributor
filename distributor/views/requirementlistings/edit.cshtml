@@ -1,7 +1,7 @@
 ﻿@using Distributor.Enums
 @using Distributor.Helpers
 
-@model Distributor.ViewModels.AvailableListingEditView
+@model Distributor.ViewModels.RequirementListingEditView
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -19,6 +19,64 @@
                 $("#setstyle").prop('disabled', true);
             }
         });
+
+        function ChangeCampaign(campaignId) {
+            if (campaignId == "") {
+                document.getElementById("campaignname").innerText = "";
+                document.getElementById("campaignstrapline").innerText = "";
+                document.getElementById("campaigndescription").innerText = "";
+                document.getElementById("campaignstartdatetime").innerText = "";
+                document.getElementById("campaignenddatetime").innerText = "";
+            } else {
+                var url = "/Data/GetCampaignDetails";
+                $.ajax({
+                    url: url,
+                    data: { campaignId: campaignId },
+                    cache: false,
+                    type: "POST",
+                    success: function (data, status, jqXHR) {
+                        if ("success" === status) {
+                            if (data.campaignDetails.Name != null && data.campaignDetails.Name != "") {
+                                document.getElementById("campaignname").innerText = data.campaignDetails.Name;
+                            } else {
+                                document.getElementById("campaignname").innerText = "";
+                            }
+                            if (data.campaignDetails.StrapLine != null && data.campaignDetails.StrapLine != "") {
+                                document.getElementById("campaignstrapline").innerText = data.campaignDetails.StrapLine;
+                            } else {
+                                document.getElementById("campaignstrapline").innerText = "";
+                            }
+                            if (data.campaignDetails.Description != null && data.campaignDetails.Description != "") {
+                                document.getElementById("campaigndescription").innerText = data.campaignDetails.Description;
+                            } else {
+                                document.getElementById("campaigndescription").innerText = "";
+                            }
+                            if (data.campaignDetails.CampaignStartDateTime != null && data.campaignDetails.CampaignStartDateTime != "") {
+                                var t1 = new Date(parseInt(data.campaignDetails.CampaignStartDateTime.substring(6, 19).toString())).toLocaleDateString();
+                                document.getElementById("campaignstartdatetime").innerText = t1;
+                            } else {
+                                document.getElementById("campaignstartdatetime").innerText = "";
+                            }
+                            if (data.campaignDetails.CampaignEndDateTime != null && data.campaignDetails.CampaignEndDateTime != "") {
+                                var t2 = new Date(parseInt(data.campaignDetails.CampaignEndDateTime.substring(6, 19).toString())).toLocaleDateString();
+                                document.getElementById("campaignenddatetime").innerText = t2;
+                            } else {
+                                document.getElementById("campaignenddatetime").innerText = "";
+                            }
+                        } else {
+                            document.getElementById("campaignname").innerText = "";
+                            document.getElementById("campaignstrapline").innerText = "";
+                            document.getElementById("campaigndescription").innerText = "";
+                            document.getElementById("campaignstartdatetime").innerText = "";
+                            document.getElementById("campaignenddatetime").innerText = "";
+                        }
+                    },
+                    error: function (response) {
+                        alert("error : " + response);
+                    }
+                });
+            }
+        }
     </script>
 }
 
@@ -59,8 +117,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="disabled">@Html.ActionLink("MANAGE LISTINGS", "General", "Home")</li>
-                    <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
-                    <li class="active">@Html.ActionLink("Available", "Available", "ManageListings")</li>
+                    <li class="active">@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                    <li>@Html.ActionLink("Available", "Available", "ManageListings")</li>
                     <li>@Html.ActionLink("Campaigns", "Campaigns", "ManageListings")</li>
                     <li>@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
                     <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
@@ -74,14 +132,13 @@
 {
     <div class="row" style="padding-top:55px">
         <div class="col-lg-12">
-            <h1 class="page-header" style="margin: 10px 0px 10px">Available History <small>Show Details</small></h1>
+            <h1 class="page-header" style="margin: 10px 0px 10px">Request History <small>Show Details</small></h1>
             <ol class="breadcrumb">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Available", "Available", "ManageListings")</li>
-                <li>@Html.ActionLink("Available history", "History", "AvailableListings")</li>
+                <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                <li>@Html.ActionLink("Requests history", "History", "RequirementListings")</li>
                 <li class="active" id="detailtype">Show Details</li>
             </ol>
-            <p class="lead">Your current available listings.</p>
         </div>
     </div>
 }
@@ -89,17 +146,15 @@ else
 {
     <div class="row" style="padding-top:55px">
         <div class="col-lg-12">
-            <h1 class="page-header" style="margin: 10px 0px 10px">Available Listing <small>Edit Details</small></h1>
+            <h1 class="page-header" style="margin: 10px 0px 10px">Request Listing <small>Edit Details</small></h1>
             <ol class="breadcrumb">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Available", "Available", "ManageListings")</li>
+                <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
                 <li class="active" id="detailtype">Edit Details</li>
             </ol>
-            <p class="lead">Your current available listings.</p>
         </div>
     </div>
 }
-
 
 @using (Html.BeginForm())
 {
@@ -209,107 +264,77 @@ else
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.AvailableFrom)</div>
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.RequiredFrom)</div>
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.AvailableFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                    @Html.ValidationMessageFor(model => model.AvailableFrom, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.RequiredFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.RequiredFrom, "", new { @class = "text-danger" })
                                 }
                                 else
                                 {
-                                    @Html.HiddenFor(model => model.AvailableFrom)
-                                    @Html.DisplayFor(model => model.AvailableFrom)
+                                    @Html.HiddenFor(model => model.RequiredFrom)
+                                    @Html.DisplayFor(model => model.RequiredFrom)
                                 }
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.AvailableTo)</div>
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.RequiredTo)</div>
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.AvailableTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                    @Html.ValidationMessageFor(model => model.AvailableTo, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.RequiredTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.RequiredTo, "", new { @class = "text-danger" })
                                 }
                                 else
                                 {
-                                    @Html.HiddenFor(model => model.AvailableTo)
-                                    @Html.DisplayFor(model => model.AvailableTo)
+                                    @Html.HiddenFor(model => model.RequiredTo)
+                                    @Html.DisplayFor(model => model.RequiredTo)
                                 }
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemCondition)</div>
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.AcceptDamagedItems)</div>
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EnumDropDownListFor(model => model.ItemCondition, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.ItemCondition, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.AcceptDamagedItems, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AcceptDamagedItems, "", new { @class = "text-danger" })
                                 }
                                 else
                                 {
-                                    @Html.HiddenFor(model => model.ItemCondition)
-                                    <p>@Model.ItemCondition.DisplayName()</p>
+                                    @Html.HiddenFor(model => model.AcceptDamagedItems)
+                                    <p>@Model.AcceptDamagedItems</p>
                                 }
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.DisplayUntilDate)</div>
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.AcceptOutOfDateItems)</div>
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.DisplayUntilDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                    @Html.ValidationMessageFor(model => model.DisplayUntilDate, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.AcceptOutOfDateItems, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AcceptOutOfDateItems, "", new { @class = "text-danger" })
                                 }
                                 else
                                 {
-                                    @Html.HiddenFor(model => model.DisplayUntilDate)
-                                    @Html.DisplayFor(model => model.DisplayUntilDate)
+                                    @Html.HiddenFor(model => model.AcceptOutOfDateItems)
+                                    <p>@Model.AcceptOutOfDateItems</p>
                                 }
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.SellByDate)</div>
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.CollectionAvailable)</div>
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.SellByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                    @Html.ValidationMessageFor(model => model.SellByDate, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.CollectionAvailable, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CollectionAvailable, "", new { @class = "text-danger" })
                                 }
                                 else
                                 {
-                                    @Html.HiddenFor(model => model.SellByDate)
-                                    @Html.DisplayFor(model => model.SellByDate)
-                                }
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.UseByDate)</div>
-                            <div class="col-md-8">
-                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
-                                {
-                                    @Html.EditorFor(model => model.UseByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
-                                    @Html.ValidationMessageFor(model => model.UseByDate, "", new { @class = "text-danger" })
-                                }
-                                else
-                                {
-                                    @Html.HiddenFor(model => model.UseByDate)
-                                    @Html.DisplayFor(model => model.UseByDate)
-                                }
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.DeliveryAvailable)</div>
-                            <div class="col-md-8">
-                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
-                                {
-                                    @Html.EditorFor(model => model.DeliveryAvailable, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.DeliveryAvailable, "", new { @class = "text-danger" })
-                                }
-                                else
-                                {
-                                    @Html.HiddenFor(model => model.DeliveryAvailable)
-                                    <p>@Model.DeliveryAvailable</p>
+                                    @Html.HiddenFor(model => model.CollectionAvailable)
+                                    <p>@Model.CollectionAvailable</p>
                                 }
                             </div>
                         </div>
@@ -366,9 +391,45 @@ else
                     </div>
                 </div>
             </div>
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Campaign details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="row">
+                            @Html.LabelFor(model => model.SelectedCampaignId, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(model => model.SelectedCampaignId, (SelectList)ViewBag.CampaignList, "Select campaign", new { @class = "form-control", onchange = "javascipt:ChangeCampaign(this.value);" })
+                                @Html.ValidationMessageFor(model => model.SelectedCampaignId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignName)</div>
+                        <div class="col-md-8" id="campaignname">@Html.DisplayFor(model => model.CampaignName)</div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignStrapLine)</div>
+                        <div class="col-md-8" id="campaignstrapline">@Html.DisplayFor(model => model.CampaignStrapLine)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignDescription)</div>
+                        <div class="col-md-8" id="campaigndescription">@Html.DisplayFor(model => model.CampaignDescription)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignStartDateTime)</div>
+                        <div class="col-md-8" id="campaignstartdatetime">@Html.DisplayFor(model => model.CampaignStartDateTime)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignEndDateTime)</div>
+                        <div class="col-md-8" id="campaignenddatetime">@Html.DisplayFor(model => model.CampaignEndDateTime)</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
+        
     if (ViewBag.ShowHistory == false)
     {
         <div class="form-group">
@@ -376,4 +437,5 @@ else
             <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
         </div>
     }
+
 }

@@ -138,7 +138,7 @@ namespace Distributor.Controllers
 
         public ActionResult History()
         {
-            List<RequirementListingManageView> model = RequirementListingManageHelpers.GetAllRequirementListingsManageView(User, true);
+            List<RequirementListingManageView> model = RequirementListingManageHelpers.GetAllRequirementListingsManageView(User, false);
             return View(model);
         }
 

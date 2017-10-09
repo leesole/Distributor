@@ -64,7 +64,7 @@ namespace Distributor.Helpers
             List<RequirementListing> requirementListingDashboardList = RequirementListingHelpers.GetAllDashboardFilteredRequirementListings(db, appUser.AppUserId);
             dashboardView.RequirementListingDashboardList = requirementListingDashboardList;
 
-            List<AvailableListing> availableListingsForUser = AvailableListingHelpers.GetAllAvailableListingsForUser(db, appUser.AppUserId);
+            List<AvailableListing> availableListingsForUser = AvailableListingHelpers.GetAllAvailableListingsForUser(db, appUser.AppUserId, false);
             dashboardView.AvailableListingList = availableListingsForUser;
 
             List<AvailableListing> availableListingDashboardList = AvailableListingHelpers.GetAllDashboardFilteredAvailableListings(db, appUser.AppUserId);
