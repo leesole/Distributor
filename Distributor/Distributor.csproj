@@ -482,6 +482,7 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\AppUsers\FriendIndex.cshtml" />
     <Content Include="Views\Action\Index.cshtml" />
+    <Content Include="Views\RequirementListings\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

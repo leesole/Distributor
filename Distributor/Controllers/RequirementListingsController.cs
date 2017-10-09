@@ -17,12 +17,6 @@ namespace Distributor.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        //// GET: RequirementListings
-        //public ActionResult Index()
-        //{
-        //    return View(db.RequirementListings.ToList());
-        //}
-
         // GET: RequirementListings/Details/5
         public ActionResult Details(Guid? id)
         {
@@ -82,7 +76,7 @@ namespace Distributor.Controllers
         }
 
         // GET: RequirementListings/Edit/5
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(Guid? id, bool showHistory)
         {
             if (id == null)
             {
@@ -95,6 +89,7 @@ namespace Distributor.Controllers
             }
 
             ViewBag.CampaignList = ControlHelpers.AllActiveCampaignsForUserListDropDown(AppUserHelpers.GetAppUserIdFromUser(User), requirementListing.SelectedCampaignId);
+            ViewBag.ShowHistory = showHistory;
             
             return View(requirementListing);
         }
@@ -141,32 +136,11 @@ namespace Distributor.Controllers
             return View(requirementListing);
         }
 
-        //// GET: RequirementListings/Delete/5
-        //public ActionResult Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    RequirementListing requirementListing = db.RequirementListings.Find(id);
-        //    if (requirementListing == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(requirementListing);
-        //}
-
-        //// POST: RequirementListings/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(Guid id)
-        //{
-        //    RequirementListing requirementListing = db.RequirementListings.Find(id);
-        //    db.RequirementListings.Remove(requirementListing);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
+        public ActionResult History()
+        {
+            List<RequirementListingManageView> model = RequirementListingManageHelpers.GetAllRequirementListingsManageView(User, true);
+            return View(model);
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -13,6 +13,13 @@
             $('.date-picker').datepicker();
         })
 
+        $(document).ready(function () {
+            var type = $("#detailtype").text();
+            if (type == "Show Details") {
+                $("#setstyle").prop('disabled', true);
+            }
+        });
+
         function ChangeCampaign(campaignId) {
             if (campaignId == "") {
                 document.getElementById("campaignname").innerText = "";
@@ -121,21 +128,38 @@
     </nav>
 </nav>
 
-<div class="row" style="padding-top:55px">
-    <div class="col-lg-12">
-        <h1 class="page-header" style="margin: 10px 0px 10px">Request Listing <small>Edit Details</small></h1>
-        <ol class="breadcrumb">
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
-            <li class="active">Edit Details</li>
-        </ol>
+@if (ViewBag.ShowHistory)
+{
+    <div class="row" style="padding-top:55px">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="margin: 10px 0px 10px">Request Listing <small>Show Details</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                <li>@Html.ActionLink("Requests history", "History", "RequirementListings")</li>
+                <li class="active" id="detailtype">Show Details</li>
+            </ol>
+        </div>
     </div>
-</div>
+}
+else
+{
+    <div class="row" style="padding-top:55px">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="margin: 10px 0px 10px">Request Listing <small>Edit Details</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                <li class="active" id="detailtype">Edit Details</li>
+            </ol>
+        </div>
+    </div>
+}
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="row">
+    <div class="row" id="setstyle">
         <div class="col-md-6">
             <div class="login-panel panel panel-primary">
                 <div class="panel-heading">
@@ -405,9 +429,13 @@
             </div>
         </div>
     </div>
+        
+    if (ViewBag.ShowHistory == false)
+    {
+        <div class="form-group">
+            <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+            <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
+        </div>
+    }
 
-    <div class="form-group">
-        <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
-        <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
-    </div>
 }

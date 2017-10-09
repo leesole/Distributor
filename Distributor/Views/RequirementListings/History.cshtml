@@ -52,12 +52,13 @@
 
 <div class="row" style="padding-top:55px">
     <div class="col-lg-12">
-        <h1 class="page-header" style="margin: 10px 0px 10px">Manage Listings <small>Requests</small></h1>
+        <h1 class="page-header" style="margin: 10px 0px 10px">Manage Listings <small>Requests history</small></h1>
         <ol class="breadcrumb">
             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li class="active">Requests</li>
+            <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+            <li class="active">Requests history</li>
         </ol>
-        <p class="lead">Your current request listings.</p>
+        <p class="lead">Your historical request listings.</p>
     </div>
 </div>
 
@@ -85,23 +86,18 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'">@item.RequirementListing.ItemType.DisplayName()</td>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListing.RequiredFrom)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.RequirementListing.RequiredTo)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = false })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'">@item.RequirementListing.ItemType.DisplayName()</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'">@Html.DisplayFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'">@Html.DisplayFor(modelItem => item.RequirementListing.RequiredTo)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "RequirementListings", new { id = item.RequirementListing.ListingId, showHistory = true })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
                 </tr>
             }
 
         </table>
     }
-</div>
-
-<div class="form-group">
-    @Html.ActionLink("Create listing", "Create", "RequirementListings", "", new { @class = "btn btn-primary" })
-    @Html.ActionLink("Display history", "History", "RequirementListings", "", new { @class = "btn btn-default" })
 </div>

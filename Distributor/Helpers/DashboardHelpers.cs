@@ -58,7 +58,7 @@ namespace Distributor.Helpers
             List<Campaign> campaignsDashboardList = CampaignHelpers.GetAllDashboardFilteredCampaigns(db, appUser.AppUserId);
             dashboardView.CampaignDashboardList = campaignsDashboardList;
 
-            List<RequirementListing> requirementListingsForUser = RequirementListingHelpers.GetAllRequirementListingsForUser(db, appUser.AppUserId);
+            List<RequirementListing> requirementListingsForUser = RequirementListingHelpers.GetAllRequirementListingsForUser(db, appUser.AppUserId, false);
             dashboardView.RequirementListingList = requirementListingsForUser;
 
             List<RequirementListing> requirementListingDashboardList = RequirementListingHelpers.GetAllDashboardFilteredRequirementListings(db, appUser.AppUserId);
