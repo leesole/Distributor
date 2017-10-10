@@ -99,12 +99,12 @@
             <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
             <li class="active">Orders History</li>
         </ol>
-        <p class="lead">Your historical orders.</p>
+        <p class="lead">Your historical orders out.</p>
     </div>
 </div>
 
 <div class="table-responsive">
-    @if (Model.Count() == 0)
+    @if (ViewBag.OutOrderCount == null || ViewBag.OutOrderCount == 0)
     {
         <p>No details to show</p>
     }
@@ -120,14 +120,26 @@
                 <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
                 <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
             </tr>
+            @foreach (var item in Model)
+            {
+                inhouseOrder = false;
 
-            @if (Model == null)
-            {
-                <tr>No details to show</tr>
-            }
-            else
-            {
-                foreach (var item in Model)
+                if (ViewBag.AllowBranchTrading)
+                {
+                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                    {
+                        inhouseOrder = true;
+                    }
+                }
+                else
+                {
+                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                    {
+                        inhouseOrder = true;
+                    }
+                }
+
+                if (inhouseOrder)
                 {
                     orderId = item.OrderDetails.OrderId;
 
@@ -141,6 +153,69 @@
                         <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
                     </tr>
                 }
+
+            }
+        </table>
+    }
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <p class="lead">Your historical orders in.</p>
+    </div>
+</div>
+
+<div class="table-responsive">
+    @if (ViewBag.InOrderCount == null || ViewBag.InOrderCount == 0)
+    {
+        <p>No details to show</p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <tr class="info">
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                inhouseOrder = false;
+
+                if (ViewBag.AllowBranchTrading)
+                {
+                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                    {
+                        inhouseOrder = true;
+                    }
+                }
+                else
+                {
+                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                    {
+                        inhouseOrder = true;
+                    }
+                }
+
+                if (inhouseOrder == false)
+                {
+                    orderId = item.OrderDetails.OrderId;
+
+                    <tr id=@orderId>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                    </tr>
+                }
+
             }
         </table>
     }
