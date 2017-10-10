@@ -395,6 +395,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersReceivedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OrdersReceivedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersReceivedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
                             @Html.LabelFor(model => model.OrdersCollectedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-6">
                                 @Html.EnumDropDownListFor(model => model.OrdersCollectedAuthorisationManageViewLevel, new { @class = "form-control" })

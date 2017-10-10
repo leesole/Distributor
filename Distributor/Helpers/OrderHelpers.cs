@@ -58,13 +58,13 @@ namespace Distributor.Helpers
             if (getHistory)
             {
                 allOrdersForUser = (from o in db.Orders
-                                    where (o.OrderOriginatorAppUserId == appUserId && o.OrderStatus == OrderStatusEnum.Closed)
+                                    where ((o.OrderOriginatorAppUserId == appUserId && o.OrderStatus == OrderStatusEnum.Closed) || (o.OfferOriginatorAppUserId == appUserId && o.OrderStatus == OrderStatusEnum.Closed))
                                     select o).ToList();
             }
             else
             {
                 allOrdersForUser = (from o in db.Orders
-                                    where (o.OrderOriginatorAppUserId == appUserId && o.OrderStatus != OrderStatusEnum.Closed)
+                                    where ((o.OrderOriginatorAppUserId == appUserId && o.OrderStatus != OrderStatusEnum.Closed) || (o.OfferOriginatorAppUserId == appUserId && o.OrderStatus != OrderStatusEnum.Closed))
                                     select o).ToList();
             }
 
@@ -87,13 +87,13 @@ namespace Distributor.Helpers
             if (getHistory)
             {
                 list = (from o in db.Orders
-                        where (o.OrderOriginatorBranchId == branchId && o.OrderStatus == OrderStatusEnum.Closed)
+                        where ((o.OrderOriginatorBranchId == branchId && o.OrderStatus == OrderStatusEnum.Closed) || (o.OfferOriginatorBranchId == branchId && o.OrderStatus == OrderStatusEnum.Closed))
                         select o).ToList();
             }
             else
             {
                 list = (from o in db.Orders
-                        where (o.OrderOriginatorBranchId == branchId && o.OrderStatus != OrderStatusEnum.Closed)
+                        where ((o.OrderOriginatorBranchId == branchId && o.OrderStatus != OrderStatusEnum.Closed) || (o.OfferOriginatorBranchId == branchId && o.OrderStatus != OrderStatusEnum.Closed))
                         select o).ToList();
             }
 
@@ -116,13 +116,13 @@ namespace Distributor.Helpers
             if (getHistory)
             {
                 list = (from o in db.Orders
-                        where (o.OrderOriginatorCompanyId == companyId && o.OrderStatus == OrderStatusEnum.Closed)
+                        where ((o.OrderOriginatorCompanyId == companyId && o.OrderStatus == OrderStatusEnum.Closed) || (o.OfferOriginatorCompanyId == companyId && o.OrderStatus == OrderStatusEnum.Closed))
                         select o).ToList();
             }
             else
             {
                 list = (from o in db.Orders
-                        where (o.OrderOriginatorCompanyId == companyId && o.OrderStatus != OrderStatusEnum.Closed)
+                        where ((o.OrderOriginatorCompanyId == companyId && o.OrderStatus != OrderStatusEnum.Closed) || (o.OfferOriginatorCompanyId == companyId && o.OrderStatus != OrderStatusEnum.Closed))
                         select o).ToList();
             }
 

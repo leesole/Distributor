@@ -78,9 +78,30 @@ namespace Distributor.Controllers
             Company company = CompanyHelpers.GetCompanyForUser(User);
             ViewBag.AllowBranchTrading = company.AllowBranchTrading;
             if (company.AllowBranchTrading)
-                ViewBag.CurrentBranchOrCompanyId = AppUserHelpers.GetAppUser(User).CurrentBranchId;
+            {
+                Guid currentBranchId = AppUserHelpers.GetAppUser(User).CurrentBranchId;
+                ViewBag.CurrentBranchOrCompanyId = currentBranchId;
+
+                ViewBag.OutOrderCount = (from m in model
+                                         where m.OrderDetails.OrderOriginatorBranchId.Value == currentBranchId
+                                         select m).Count();
+
+                ViewBag.InOrderCount = (from m in model
+                                        where m.OrderDetails.OfferOriginatorBranchId.Value == currentBranchId
+                                        select m).Count();
+            }
             else
+            {
                 ViewBag.CurrentBranchOrCompanyId = company.CompanyId;
+
+                ViewBag.OutOrderCount = (from m in model
+                                         where m.OrderDetails.OrderOriginatorCompanyId.Value == company.CompanyId
+                                         select m).Count();
+
+                ViewBag.InOrderCount = (from m in model
+                                        where m.OrderDetails.OfferOriginatorCompanyId.Value == company.CompanyId
+                                        select m).Count();
+            }
 
             //Set the authorisation levels and IDs for button activation on form
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(User);
@@ -89,11 +110,13 @@ namespace Distributor.Controllers
             ViewBag.DespatchedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDespatchedAuthorisationManageViewLevel, User);
             ViewBag.DeliveredAuthorisationLevel = settings.OrdersDeliveredAuthorisationManageViewLevel;
             ViewBag.DeliveredAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDeliveredAuthorisationManageViewLevel, User);
+            ViewBag.ReceivedAuthorisationLevel = settings.OrdersReceivedAuthorisationManageViewLevel;
+            ViewBag.ReceivedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersReceivedAuthorisationManageViewLevel, User);
             ViewBag.CollectedAuthorisationLevel = settings.OrdersCollectedAuthorisationManageViewLevel;
             ViewBag.CollectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersCollectedAuthorisationManageViewLevel, User);
             ViewBag.ClosedAuthorisationLevel = settings.OrdersClosedAuthorisationManageViewLevel;
             ViewBag.ClosedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersClosedAuthorisationManageViewLevel, User);
-            
+
             return View(model);
         }
     }

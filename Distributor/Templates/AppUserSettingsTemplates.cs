@@ -43,6 +43,7 @@ namespace Distributor.Templates
         public InternalSearchLevelEnum OrdersManageViewInternalSelectionLevel = InternalSearchLevelEnum.User;
         public InternalSearchLevelEnum OrdersDespatchedAuthorisationManageViewLevel = InternalSearchLevelEnum.User;
         public InternalSearchLevelEnum OrdersDeliveredAuthorisationManageViewLevel = InternalSearchLevelEnum.User;
+        public InternalSearchLevelEnum OrdersReceivedAuthorisationManageViewLevel = InternalSearchLevelEnum.User;
         public InternalSearchLevelEnum OrdersCollectedAuthorisationManageViewLevel = InternalSearchLevelEnum.User;
         public InternalSearchLevelEnum OrdersClosedAuthorisationManageViewLevel = InternalSearchLevelEnum.User;
         public ExternalSearchLevelEnum CampaignGeneralInfoExternalSelectionLevel = ExternalSearchLevelEnum.All;
@@ -62,6 +63,7 @@ namespace Distributor.Templates
         public new InternalSearchLevelEnum OrdersManageViewInternalSelectionLevel = InternalSearchLevelEnum.Branch;
         public new InternalSearchLevelEnum OrdersDespatchedAuthorisationManageViewLevel = InternalSearchLevelEnum.Branch;
         public new InternalSearchLevelEnum OrdersDeliveredAuthorisationManageViewLevel = InternalSearchLevelEnum.Branch;
+        public new InternalSearchLevelEnum OrdersReceivedAuthorisationManageViewLevel = InternalSearchLevelEnum.Branch;
         public new InternalSearchLevelEnum OrdersCollectedAuthorisationManageViewLevel = InternalSearchLevelEnum.Branch;
         public new InternalSearchLevelEnum OrdersClosedAuthorisationManageViewLevel = InternalSearchLevelEnum.Branch;
     }
@@ -78,6 +80,7 @@ namespace Distributor.Templates
         public new InternalSearchLevelEnum OrdersManageViewInternalSelectionLevel = InternalSearchLevelEnum.Company;
         public new InternalSearchLevelEnum OrdersDespatchedAuthorisationManageViewLevel = InternalSearchLevelEnum.Company;
         public new InternalSearchLevelEnum OrdersDeliveredAuthorisationManageViewLevel = InternalSearchLevelEnum.Company;
+        public new InternalSearchLevelEnum OrdersReceivedAuthorisationManageViewLevel = InternalSearchLevelEnum.Company;
         public new InternalSearchLevelEnum OrdersCollectedAuthorisationManageViewLevel = InternalSearchLevelEnum.Company;
         public new InternalSearchLevelEnum OrdersClosedAuthorisationManageViewLevel = InternalSearchLevelEnum.Company;
     }

@@ -103,6 +103,7 @@ namespace Distributor.Helpers
             InternalSearchLevelEnum ordersManageViewInternalSelectionLevel,
             InternalSearchLevelEnum ordersDespatchedAuthorisationManageViewLevel,
             InternalSearchLevelEnum ordersDeliveredAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersReceivedAuthorisationManageViewLevel,
             InternalSearchLevelEnum ordersCollectedAuthorisationManageViewLevel,
             InternalSearchLevelEnum ordersClosedAuthorisationManageViewLevel)
         {
@@ -145,7 +146,8 @@ namespace Distributor.Helpers
                 offersReturnedAuthorisationManageViewLevel, 
                 ordersManageViewInternalSelectionLevel, 
                 ordersDespatchedAuthorisationManageViewLevel, 
-                ordersDeliveredAuthorisationManageViewLevel, 
+                ordersDeliveredAuthorisationManageViewLevel,
+                ordersReceivedAuthorisationManageViewLevel,
                 ordersCollectedAuthorisationManageViewLevel, 
                 ordersClosedAuthorisationManageViewLevel);
             db.Dispose();
@@ -190,6 +192,7 @@ namespace Distributor.Helpers
             InternalSearchLevelEnum ordersManageViewInternalSelectionLevel,
             InternalSearchLevelEnum ordersDespatchedAuthorisationManageViewLevel,
             InternalSearchLevelEnum ordersDeliveredAuthorisationManageViewLevel,
+            InternalSearchLevelEnum ordersReceivedAuthorisationManageViewLevel,
             InternalSearchLevelEnum ordersCollectedAuthorisationManageViewLevel,
             InternalSearchLevelEnum ordersClosedAuthorisationManageViewLevel)
         {
@@ -234,6 +237,7 @@ namespace Distributor.Helpers
                 OrdersManageViewInternalSelectionLevel = ordersManageViewInternalSelectionLevel,
                 OrdersDespatchedAuthorisationManageViewLevel = ordersDespatchedAuthorisationManageViewLevel,
                 OrdersDeliveredAuthorisationManageViewLevel = ordersDeliveredAuthorisationManageViewLevel,
+                OrdersReceivedAuthorisationManageViewLevel = ordersReceivedAuthorisationManageViewLevel,
                 OrdersCollectedAuthorisationManageViewLevel = ordersCollectedAuthorisationManageViewLevel,
                 OrdersClosedAuthorisationManageViewLevel = ordersClosedAuthorisationManageViewLevel
             };
@@ -305,6 +309,7 @@ namespace Distributor.Helpers
                 OrdersManageViewInternalSelectionLevel = template.OrdersManageViewInternalSelectionLevel,
                 OrdersDespatchedAuthorisationManageViewLevel = template.OrdersDespatchedAuthorisationManageViewLevel,
                 OrdersDeliveredAuthorisationManageViewLevel = template.OrdersDeliveredAuthorisationManageViewLevel,
+                OrdersReceivedAuthorisationManageViewLevel = template.OrdersReceivedAuthorisationManageViewLevel,
                 OrdersCollectedAuthorisationManageViewLevel = template.OrdersCollectedAuthorisationManageViewLevel,
                 OrdersClosedAuthorisationManageViewLevel = template.OrdersClosedAuthorisationManageViewLevel,
                 CampaignGeneralInfoExternalSelectionLevel = template.CampaignGeneralInfoExternalSelectionLevel,
@@ -366,6 +371,7 @@ namespace Distributor.Helpers
             settings.OrdersManageViewInternalSelectionLevel = view.OrdersManageViewInternalSelectionLevel;
             settings.OrdersDespatchedAuthorisationManageViewLevel = view.OrdersDespatchedAuthorisationManageViewLevel;
             settings.OrdersDeliveredAuthorisationManageViewLevel = view.OrdersDeliveredAuthorisationManageViewLevel;
+            settings.OrdersReceivedAuthorisationManageViewLevel = view.OrdersReceivedAuthorisationManageViewLevel;
             settings.OrdersCollectedAuthorisationManageViewLevel = view.OrdersCollectedAuthorisationManageViewLevel;
             settings.OrdersClosedAuthorisationManageViewLevel = view.OrdersClosedAuthorisationManageViewLevel;
             settings.CampaignGeneralInfoExternalSelectionLevel = view.CampaignGeneralInfoExternalSelectionLevel;

@@ -230,6 +230,10 @@ namespace Distributor.ViewModels
         public InternalSearchLevelEnum OrdersDeliveredAuthorisationManageViewLevel { get; set; }
 
         [Required]
+        [Display(Name = "'Received' authorisation Level")]
+        public InternalSearchLevelEnum OrdersReceivedAuthorisationManageViewLevel { get; set; }
+
+        [Required]
         [Display(Name = "'Collected' authorisation Level")]
         public InternalSearchLevelEnum OrdersCollectedAuthorisationManageViewLevel { get; set; }
 
