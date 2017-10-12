@@ -192,7 +192,7 @@
     {
         <table class="table table-hover">
             <tr class="info">
-                <th colspan="3">Actions</th>
+                <th style="min-width:150px">Actions</th>
                 <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
                 <th>Offer qty</th>
                 <th></th>
@@ -385,35 +385,25 @@
                             @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
                             {
                                 <td></td>
-                                <td></td>
-                                <td></td>
                             }
                             else
                             {
-                                if (displayAcceptButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                if (displayRejectButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                if (displayOfferButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (displayAcceptButton)
+                                        {
+                                            <button type="submit" class="btn btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button>
+                                        }
+                                        @if (displayRejectButton)
+                                        {
+                                            <button type="submit" class="btn btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button>
+                                        }
+                                         @if (displayOfferButton)
+                                         {
+                                            <button type="submit" class="btn btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button>
+                                         }
+                                    </div>
+                                </td>
                             }
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                             <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
@@ -436,38 +426,28 @@
                     else
                     {
                         <tr id=@offerId>
-                            @if (item.OfferDetails.CurrentOfferQuantity == 0)
+                            @if (item.OfferDetails.PreviousOfferQuantity == 0)
                             {
-                                <td></td>
-                                <td></td>
                                 <td></td>
                             }
                             else
                             {
-                                if (displayAcceptButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                if (displayRejectButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                if (displayCounterButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (displayAcceptButton)
+                                        {
+                                            <button type="submit" class="btn btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button>
+                                        }
+                                        @if (displayRejectButton)
+                                        {
+                                            <button type="submit" class="btn btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button>
+                                        }
+                                        @if (displayCounterButton)
+                                        {
+                                            <button type="submit" class="btn btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button>
+                                        }
+                                    </div>
+                                </td>
                             }
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
@@ -508,7 +488,7 @@
     {
         <table class="table table-hover">
             <tr class="info">
-                <th colspan="3">Actions</th>
+                <th style="min-width:150px">Actions</th>
                 <th>@Html.DisplayNameFor(model => model.OfferDetails.OfferStatus)</th>
                 <th>Offer qty</th>
                 <th></th>
@@ -701,35 +681,25 @@
                             @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
                             {
                                 <td></td>
-                                <td></td>
-                                <td></td>
                             }
                             else
                             {
-                                if (displayAcceptButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                if (displayRejectButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                if (displayOfferButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (displayAcceptButton)
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button>
+                                        }
+                                        @if (displayRejectButton)
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button>
+                                        }
+                                        @if (displayOfferButton)
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button>
+                                        }
+                                    </div>
+                                </td>
                             }
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                             <td>@Html.TextBoxFor(modelItem => item.OfferDetails.CurrentOfferQuantity, new { id = @offerQuantityField, disabled = "disabled" })</td>
@@ -755,35 +725,25 @@
                             @if (item.OfferDetails.CurrentOfferQuantity == 0)
                             {
                                 <td></td>
-                                <td></td>
-                                <td></td>
                             }
                             else
                             {
-                                if (displayAcceptButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                if (displayRejectButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                if (displayCounterButton)
-                                {
-                                    <td><button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button></td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (displayAcceptButton)
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-success" title="Accept offer" id=@acceptButton onclick="acceptButtonClick(id)"><span class="glyphicon glyphicon-ok"></span></button>
+                                        }
+                                        @if (displayRejectButton)
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Reject offer" id=@rejectButton onclick="rejectButtonClick(id)"><span class="glyphicon glyphicon-remove"></span></button>
+                                        }
+                                        @if (displayCounterButton)
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-primary" title="Counter offer" id=@counterButton onclick="setCounterOfferField(id)"><span class="glyphicon glyphicon-usd"></span></button>
+                                        }
+                                    </div>
+                                </td> 
                             }
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OfferDetails.CurrentOfferQuantity)</td>
