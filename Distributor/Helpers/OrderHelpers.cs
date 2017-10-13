@@ -200,10 +200,31 @@ namespace Distributor.Helpers
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
 
+            //depending on 'branch trading' check to see if last counter is related to this user, if not then use the last counter details (if counter details exist)
+            if (offer.LastCounterOfferOriginatorAppUserId != null)
+            {
+                Company company = CompanyHelpers.GetCompany(db, branchUser.CompanyId);
+
+                if (company.AllowBranchTrading)
+                {
+                    if (branchUser.BranchId != offer.LastCounterOfferOriginatorBranchId)
+                        branchUser = BranchUserHelpers.GetBranchUser(db, offer.LastCounterOfferOriginatorAppUserId.Value, offer.LastCounterOfferOriginatorBranchId.Value, offer.LastCounterOfferOriginatorCompanyId.Value);
+                }
+                else
+                {
+                    if (branchUser.CompanyId != offer.LastCounterOfferOriginatorCompanyId)
+                        branchUser = BranchUserHelpers.GetBranchUser(db, offer.LastCounterOfferOriginatorAppUserId.Value, offer.LastCounterOfferOriginatorBranchId.Value, offer.LastCounterOfferOriginatorCompanyId.Value);
+                }
+            }
+
+            decimal orderQty = offer.CurrentOfferQuantity;
+            if (offer.CurrentOfferQuantity == 0 && offer.CounterOfferQuantity != 0)
+                orderQty = offer.CounterOfferQuantity.Value;
+
             Order order = new Order()
             {
                 OrderId = Guid.NewGuid(),
-                OrderQuanity = offer.CurrentOfferQuantity,
+                OrderQuanity = orderQty,
                 OrderStatus = OrderStatusEnum.New,
                 OrderCreationDateTime = DateTime.Now,
                 OrderOriginatorAppUserId = branchUser.UserId,

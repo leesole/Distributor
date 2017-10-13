@@ -305,7 +305,7 @@
     {
         <table class="table table-hover">
             <tr class="info">
-                <th colspan="3">Actions</th>
+                <th style="min-width:150px">Actions</th>
                 <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
                 <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
                 <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
@@ -421,63 +421,36 @@
 
                         @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
                         {
-                            if (displayReceivedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                            if (displayCollectedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                            if (displayClosedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    @if (displayReceivedButton)
+                                    {
+                                        <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button>
+                                    }
+                                    @if (displayCollectedButton)
+                                    {
+                                        <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button>
+                                    }
+                                    @if (displayClosedButton)
+                                    {
+                                        <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                    }
+                                </div>
+                            </td>
                         }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Received)
+                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Received || item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
                         {
-                            <td></td>
-
-                            <td></td>
-
-                            if (displayClosedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
-                        {
-                            <td></td>
-                            <td></td>
-                            if (displayClosedButton)
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    @if (displayClosedButton)
+                                    {
+                                        <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                    }
+                                </div>
+                            </td>
                         }
                         else
                         {
-                            <td></td>
-                            <td></td>
                             <td></td>
                         }
 

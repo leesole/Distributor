@@ -39,7 +39,7 @@ namespace Distributor.Helpers
         public static Offer GetOfferForListingAndUser(ApplicationDbContext db, Guid listingId, Guid appUserId)
         {
             Offer offer = (from o in db.Offers
-                           where (o.ListingId == listingId && o.OfferOriginatorAppUserId == appUserId)
+                           where (o.ListingId == listingId && o.OfferOriginatorAppUserId == appUserId && o.OfferStatus != OfferStatusEnum.Rejected)
                            select o).FirstOrDefault();
 
             return offer;
@@ -296,8 +296,13 @@ namespace Distributor.Helpers
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
 
+            offer.OfferStatus = OfferStatusEnum.Countered;
             offer.CurrentOfferQuantity = offerQuantity;
             offer.CounterOfferQuantity = 0;
+            offer.LastCounterOfferOriginatorAppUserId = branchUser.UserId;
+            offer.LastCounterOfferOriginatorBranchId = branchUser.BranchId;
+            offer.LastCounterOfferOriginatorCompanyId = branchUser.CompanyId;
+            offer.LastCounterOfferOriginatorDateTime = DateTime.Now;
 
             db.Entry(offer).State = EntityState.Modified;
             db.SaveChanges();
@@ -320,6 +325,10 @@ namespace Distributor.Helpers
             offer.CounterOfferQuantity = offerQuantity;
             offer.PreviousOfferQuantity = offer.CurrentOfferQuantity;
             offer.CurrentOfferQuantity = 0;
+            offer.LastCounterOfferOriginatorAppUserId = branchUser.UserId;
+            offer.LastCounterOfferOriginatorBranchId = branchUser.BranchId;
+            offer.LastCounterOfferOriginatorCompanyId = branchUser.CompanyId;
+            offer.LastCounterOfferOriginatorDateTime = DateTime.Now;
 
             db.Entry(offer).State = EntityState.Modified;
             db.SaveChanges();

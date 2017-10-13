@@ -399,9 +399,13 @@ namespace Distributor.Helpers
 
         public static AvailableListing UpdateQuantitiesFromOrder(ApplicationDbContext db, Offer offer)
         {
+            decimal orderQty = offer.CurrentOfferQuantity;
+            if (offer.CurrentOfferQuantity == 0 && offer.CounterOfferQuantity != 0)
+                orderQty = offer.CounterOfferQuantity.Value;
+
             AvailableListing listing = GetAvailableListing(db, offer.ListingId);
-            listing.QuantityFulfilled += offer.CurrentOfferQuantity;
-            listing.QuantityOutstanding -= offer.CurrentOfferQuantity;
+            listing.QuantityFulfilled += orderQty;
+            listing.QuantityOutstanding -= orderQty;
             listing.ListingStatus = ItemRequiredListingStatusEnum.Partial;
 
             if (listing.QuantityOutstanding <= 0)

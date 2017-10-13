@@ -44,6 +44,11 @@ namespace Distributor.Models
         public Guid? ListingOriginatorCompanyId { get; set; }
         public DateTime? ListingOriginatorDateTime { get; set; }
 
+        public Guid? LastCounterOfferOriginatorAppUserId { get; set; }
+        public Guid? LastCounterOfferOriginatorBranchId { get; set; }
+        public Guid? LastCounterOfferOriginatorCompanyId { get; set; }
+        public DateTime? LastCounterOfferOriginatorDateTime { get; set; }
+
         public Guid? OrderId { get; set; }  //if this offer is accepted then an order is made and this is the reference to that order.
         public Guid? OrderOriginatorAppUserId { get; set; }
         public Guid? OrderOriginatorBranchId { get; set; }

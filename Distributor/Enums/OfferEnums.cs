@@ -23,9 +23,9 @@ namespace Distributor.Enums
             [Display(Name = "Rejected")]
             Rejected = 2,
 
-            [Description("Returned")]
-            [Display(Name = "Returned")]
-            Returned = 3
+            [Description("Countered")]
+            [Display(Name = "Countered")]
+            Countered = 3
         }
     }
 }

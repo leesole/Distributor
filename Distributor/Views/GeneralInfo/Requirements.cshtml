@@ -147,31 +147,31 @@
                                 {
                                     if (appUserId != currentAppUserId)
                                     {
-                                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                                 else
                                 {
                                     if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                             }
                             else
                             {
-                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                             }
                             <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
+                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span></button></td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
@@ -192,31 +192,31 @@
                                 {
                                     if (appUserId != currentAppUserId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                                 else
                                 {
                                     if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                             }
                             else
                             {
-                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                             }
                             <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
+                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span></button></td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
@@ -237,31 +237,31 @@
                                 {
                                     if (appUserId != currentAppUserId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                                 else
                                 {
                                     if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                             }
                             else
                             {
-                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                             }
                             <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
+                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span></button></td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
@@ -286,31 +286,31 @@
                                 {
                                     if (appUserId != currentAppUserId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                                 else
                                 {
                                     if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                             }
                             else
                             {
-                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                             }
                             <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
+                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span></button></td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
@@ -335,31 +335,31 @@
                                 {
                                     if (appUserId != currentAppUserId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                                 else
                                 {
                                     if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                             }
                             else
                             {
-                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                             }
                             <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
+                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span></button></td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
@@ -384,31 +384,31 @@
                                 {
                                     if (appUserId != currentAppUserId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                                 else
                                 {
                                     if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                             }
                             else
                             {
-                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                             }
                             <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
+                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span></button></td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
@@ -433,31 +433,31 @@
                                 {
                                     if (appUserId != currentAppUserId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                                 else
                                 {
                                     if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                     else
                                     {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                                     }
                                 }
                             }
                             else
                             {
-                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span></button></td>
                             }
                             <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
+                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span></button></td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
@@ -476,5 +476,7 @@
 </div>
 
 <div class="form-group">
-    @Html.ActionLink("Create listing", "Create", "RequirementListings", "", new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create listing", "Create", "RequirementListings", "", new { @class = "btn btn-primary" })
+        @Html.ActionLink("Offers", "Offers", "ManageListings", "", new { @class = "btn btn-default" })
+        @Html.ActionLink("Orders", "Orders", "ManageListings", "", new { @class = "btn btn-default" })
 </div>
