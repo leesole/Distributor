@@ -492,16 +492,9 @@ namespace Distributor.Helpers
                 if (currentBranch.CompanyId == availableListing.ListingOriginatorCompanyId)
                     companyMatchedOwner = true;
                 if (currentBranch.BranchId == availableListing.ListingOriginatorBranchId)
-                {
-                    companyMatchedOwner = false;
                     branchMatchedOwner = true;
-                }
                 if (appUser.AppUserId == availableListing.ListingOriginatorAppUserId)
-                {
-                    companyMatchedOwner = false;
-                    branchMatchedOwner = false;
                     userMatchedOwner = true;
-                }
 
                 Company company = CompanyHelpers.GetCompany(db, availableListing.ListingOriginatorCompanyId);
 

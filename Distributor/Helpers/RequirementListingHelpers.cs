@@ -69,7 +69,7 @@ namespace Distributor.Helpers
                                              select rl).ToList();
 
             //Now bring in the Selection Level sort
-            switch (settings.RequiredListingDashboardExternalSelectionLevel)
+            switch (settings.RequiredListingGeneralInfoExternalSelectionLevel)
             {
                 case ExternalSearchLevelEnum.All: //do nothing
                     break;
@@ -483,16 +483,9 @@ namespace Distributor.Helpers
                 if (currentBranch.CompanyId == requirementListing.ListingOriginatorCompanyId)
                     companyMatchedOwner = true;
                 if (currentBranch.BranchId == requirementListing.ListingOriginatorBranchId)
-                {
-                    companyMatchedOwner = false;
                     branchMatchedOwner = true;
-                }
                 if (appUser.AppUserId == requirementListing.ListingOriginatorAppUserId)
-                {
-                    companyMatchedOwner = false;
-                    branchMatchedOwner = false;
                     userMatchedOwner = true;
-                }
 
                 Company company = CompanyHelpers.GetCompany(db, requirementListing.ListingOriginatorCompanyId);
 
@@ -506,7 +499,7 @@ namespace Distributor.Helpers
                     CompanyLevelBlock = companyBlocked,
                     DisplayBlocks = settings.RequiredListingGeneralInfoDisplayBlockedListings,
                     CompanyLevelOwner = companyMatchedOwner,
-                    DisplayMyCompanyRecords = settings.RequiredListingGeneralInfoDisplayMyUserListings,
+                    DisplayMyCompanyRecords = settings.RequiredListingGeneralInfoDisplayMyCompanyListings,
                     BranchLevelOwner = branchMatchedOwner,
                     DisplayMyBranchRecords = settings.RequiredListingGeneralInfoDisplayMyBranchListings,
                     UserLevelOwner = userMatchedOwner,

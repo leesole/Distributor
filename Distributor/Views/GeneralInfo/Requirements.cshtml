@@ -142,12 +142,12 @@
                     {
                         <tr id=@listingId style="color:darkred">
                             @if (offerQuantity == 0)
-                        {
-                            if (item.AllowBranchTrading)
                             {
-                                if (appUserId != currentAppUserId)
+                                if (item.AllowBranchTrading)
                                 {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                    if (appUserId != currentAppUserId)
+                                    {
+                                            <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
                                     }
                                     else
                                     {
@@ -187,11 +187,11 @@
                     {
                         <tr id=@listingId style="color:indianred">
                             @if (offerQuantity == 0)
-                        {
-                            if (item.AllowBranchTrading)
                             {
-                                if (appUserId != currentAppUserId)
+                                if (item.AllowBranchTrading)
                                 {
+                                    if (appUserId != currentAppUserId)
+                                    {
                                         <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
                                     }
                                     else
@@ -232,11 +232,11 @@
                     {
                         <tr id=@listingId style="color:red">
                             @if (offerQuantity == 0)
-                        {
-                            if (item.AllowBranchTrading)
                             {
-                                if (appUserId != currentAppUserId)
+                                if (item.AllowBranchTrading)
                                 {
+                                    if (appUserId != currentAppUserId)
+                                    {
                                         <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
                                     }
                                     else
@@ -277,15 +277,15 @@
                     {
                         //do nothing, don't show the row
                     }
-                    else if (item.CompanyLevelOwner && item.DisplayMyCompanyRecords)
+                    else if (item.UserLevelOwner && item.DisplayMyRecords)
                     {
-                        <tr id=@listingId style="color:darkgreen">
+                        <tr id=@listingId style="color:green">
                             @if (offerQuantity == 0)
-                        {
-                            if (item.AllowBranchTrading)
                             {
-                                if (appUserId != currentAppUserId)
+                                if (item.AllowBranchTrading)
                                 {
+                                    if (appUserId != currentAppUserId)
+                                    {
                                         <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
                                     }
                                     else
@@ -321,16 +321,20 @@
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
                         </tr>
+                    }
+                    else if (item.UserLevelOwner && !item.DisplayMyRecords)
+                    {
+                        //do nothing, don't show the row
                     }
                     else if (item.BranchLevelOwner && item.DisplayMyBranchRecords)
                     {
                         <tr id=@listingId style="color:forestgreen">
                             @if (offerQuantity == 0)
-                        {
-                            if (item.AllowBranchTrading)
                             {
-                                if (appUserId != currentAppUserId)
+                                if (item.AllowBranchTrading)
                                 {
+                                    if (appUserId != currentAppUserId)
+                                    {
                                         <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
                                     }
                                     else
@@ -367,64 +371,68 @@
                             <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
                         </tr>
                     }
-                    else if (item.UserLevelOwner && item.DisplayMyRecords)
-                    {
-                        <tr id=@listingId style="color:green">
-                            @if (offerQuantity == 0)
-                        {
-                            if (item.AllowBranchTrading)
-                            {
-                                if (appUserId != currentAppUserId)
-                                {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
-                                    }
-                                    else
-                                    {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
-                                    }
-                                }
-                                else
-                                {
-                                    if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
-                                    {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
-                                    }
-                                    else
-                                    {
-                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
-                            }
-                            <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
-                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
-                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
-                        </tr>
-                    }
-                    else if ((item.CompanyLevelOwner || item.BranchLevelOwner || item.UserLevelOwner) && !item.DisplayMyRecords)
+                    else if (item.BranchLevelOwner && !item.DisplayMyBranchRecords)
                     {
                         //do nothing, don't show the row
                     }
-                    else
+                    else if (item.CompanyLevelOwner && item.DisplayMyCompanyRecords)
+                    {
+                        <tr id=@listingId style="color:darkgreen">
+                            @if (offerQuantity == 0)
+                            {
+                                if (item.AllowBranchTrading)
+                                {
+                                    if (appUserId != currentAppUserId)
+                                    {
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                    }
+                                    else
+                                    {
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                    }
+                                }
+                                else
+                                {
+                                    if (item.RequirementListing.ListingOriginatorCompanyId != ViewBag.CurrentCompanyId)
+                                    {
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                    }
+                                    else
+                                    {
+                                        <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton disabled><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
+                            }
+                            <td>@Html.TextBoxFor(modelItem => item.OfferQuantity, new { id = @offerQuantityField, disabled = "disabled", style = "width:70px" })</td>
+                            <td><button type="submit" class="btn btn-xs btn-success btn-block showhideofferdetails" id=@saveButton disabled><span class="glyphicon glyphicon-ok"></span> Save</button></td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemDescription)</td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.ItemType)</td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.QuantityOutstanding)</td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.DisplayFor(modelItem => item.RequirementListing.UoM)</td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredFrom)</td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'">@Html.HiddenFor(modelItem => item.RequirementListing.RequiredTo)</td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptDamagedItems)</td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.AcceptOutOfDateItems)</td>
+                            <td onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.RequirementListing.ListingId })'" style="text-align:center">@Html.DisplayFor(modelItem => item.RequirementListing.CollectionAvailable)</td>
+                        </tr>
+                    }
+                    else if (item.CompanyLevelOwner && !item.DisplayMyCompanyRecords)
+                    {
+                        //do nothing, don't show the row
+                    }
+                    else 
                     {
                         <tr id=@listingId>
                             @if (offerQuantity == 0)
-                        {
-                            if (item.AllowBranchTrading)
                             {
-                                if (appUserId != currentAppUserId)
+                                if (item.AllowBranchTrading)
                                 {
+                                    if (appUserId != currentAppUserId)
+                                    {
                                         <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span> Offer</button></td>
                                     }
                                     else
