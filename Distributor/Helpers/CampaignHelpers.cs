@@ -469,16 +469,9 @@ namespace Distributor.Helpers
                 if (currentBranch.CompanyId == campaign.CampaignOriginatorCompanyId)
                     companyMatchedOwner = true;
                 if (currentBranch.BranchId == campaign.CampaignOriginatorBranchId)
-                {
-                    companyMatchedOwner = false;
                     branchMatchedOwner = true;
-                }
                 if (appUser.AppUserId == campaign.CampaignOriginatorAppUserId)
-                {
-                    companyMatchedOwner = false;
-                    branchMatchedOwner = false;
                     userMatchedOwner = true;
-                }
 
                 CampaignGeneralInfoView campaignGeneralInfoView = new CampaignGeneralInfoView()
                 {
