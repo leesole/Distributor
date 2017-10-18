@@ -224,6 +224,7 @@ namespace Distributor.Helpers
             Order order = new Order()
             {
                 OrderId = Guid.NewGuid(),
+                ListingType = offer.ListingType,
                 OrderQuanity = orderQty,
                 OrderStatus = OrderStatusEnum.New,
                 OrderCreationDateTime = DateTime.Now,
@@ -486,6 +487,7 @@ namespace Distributor.Helpers
             OrderEditView view = new OrderEditView()
             {
                 OrderId = orderDetails.OrderId,
+                ListingType = orderDetails.ListingType,
                 OrderQuanity = orderDetails.OrderQuanity,
                 OrderStatus = orderDetails.OrderStatus,
                 OrderCreationDateTime = orderDetails.OrderCreationDateTime,

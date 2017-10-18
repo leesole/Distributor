@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using static Distributor.Enums.GeneralEnums;
 using static Distributor.Enums.OrderEnums;
 
 namespace Distributor.ViewModels
@@ -20,6 +21,9 @@ namespace Distributor.ViewModels
     public class OrderEditView
     {
         public Guid OrderId { get; set; }
+
+        [Display(Name = "Listing type")]
+        public ListingTypeEnum ListingType { get; set; }
 
         [Display(Name = "Order quantity")]
         public decimal OrderQuanity { get; set; }

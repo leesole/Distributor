@@ -61,15 +61,15 @@ namespace Distributor.Helpers
             if (getHistory)
             {
                 allOffersForUser = (from o in db.Offers
-                                    where ((o.OfferOriginatorAppUserId == appUserId && o.OfferStatus != OfferStatusEnum.New)
-                                          || (o.ListingOriginatorAppUserId == appUserId && o.OfferStatus != OfferStatusEnum.New))
+                                    where ((o.OfferOriginatorAppUserId == appUserId && (o.OfferStatus == OfferStatusEnum.Accepted || o.OfferStatus == OfferStatusEnum.Rejected))
+                                          || (o.ListingOriginatorAppUserId == appUserId && (o.OfferStatus == OfferStatusEnum.Accepted || o.OfferStatus == OfferStatusEnum.Rejected)))
                                     select o).Distinct().ToList();
             }
             else
             {
                 allOffersForUser = (from o in db.Offers
-                                    where ((o.OfferOriginatorAppUserId == appUserId && o.OfferStatus == OfferStatusEnum.New)
-                                          || (o.ListingOriginatorAppUserId == appUserId && o.OfferStatus == OfferStatusEnum.New))
+                                    where ((o.OfferOriginatorAppUserId == appUserId && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Countered))
+                                          || (o.ListingOriginatorAppUserId == appUserId && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Countered)))
                                     select o).Distinct().ToList();
             }
 
@@ -92,15 +92,15 @@ namespace Distributor.Helpers
             if (getHistory)
             {
                 list = (from o in db.Offers
-                        where ((o.OfferOriginatorBranchId == branchId && o.OfferStatus != OfferStatusEnum.New)
-                              || (o.ListingOriginatorBranchId == branchId && o.OfferStatus != OfferStatusEnum.New))
+                        where ((o.OfferOriginatorBranchId == branchId && (o.OfferStatus == OfferStatusEnum.Accepted || o.OfferStatus == OfferStatusEnum.Rejected))
+                              || (o.ListingOriginatorBranchId == branchId && (o.OfferStatus == OfferStatusEnum.Accepted || o.OfferStatus == OfferStatusEnum.Rejected)))
                         select o).Distinct().ToList();
             }
             else
             {
                 list = (from o in db.Offers
-                        where ((o.OfferOriginatorBranchId == branchId && o.OfferStatus == OfferStatusEnum.New)
-                              || (o.ListingOriginatorBranchId == branchId && o.OfferStatus == OfferStatusEnum.New))
+                        where ((o.OfferOriginatorBranchId == branchId && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Countered))
+                              || (o.ListingOriginatorBranchId == branchId && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Countered)))
                         select o).Distinct().ToList();
             }
 
@@ -123,15 +123,15 @@ namespace Distributor.Helpers
             if (getHistory)
             {
                 list = (from o in db.Offers
-                        where ((o.OfferOriginatorCompanyId == companyId && o.OfferStatus != OfferStatusEnum.New)
-                              || (o.ListingOriginatorCompanyId == companyId && o.OfferStatus != OfferStatusEnum.New))
+                        where ((o.OfferOriginatorCompanyId == companyId && (o.OfferStatus == OfferStatusEnum.Accepted || o.OfferStatus == OfferStatusEnum.Rejected))
+                              || (o.ListingOriginatorCompanyId == companyId && (o.OfferStatus == OfferStatusEnum.Accepted || o.OfferStatus == OfferStatusEnum.Rejected)))
                         select o).Distinct().ToList();
             }
             else
             {
                 list = (from o in db.Offers
-                        where ((o.OfferOriginatorCompanyId == companyId && o.OfferStatus == OfferStatusEnum.New)
-                              || (o.ListingOriginatorCompanyId == companyId && o.OfferStatus == OfferStatusEnum.New))
+                        where ((o.OfferOriginatorCompanyId == companyId && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Countered))
+                              || (o.ListingOriginatorCompanyId == companyId && (o.OfferStatus == OfferStatusEnum.New || o.OfferStatus == OfferStatusEnum.Countered)))
                         select o).Distinct().ToList();
             }
 
@@ -416,7 +416,7 @@ namespace Distributor.Helpers
 
         public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Offer offer)
         {
-            if (offer.OfferStatus != OfferStatusEnum.New)
+            if (offer.OfferStatus != OfferStatusEnum.New && offer.OfferStatus != OfferStatusEnum.Countered)
                 return null;
 
             AppUser offerAppUser = AppUserHelpers.GetAppUser(db, offer.OfferOriginatorAppUserId);

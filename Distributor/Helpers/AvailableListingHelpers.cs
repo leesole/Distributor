@@ -80,7 +80,7 @@ namespace Distributor.Helpers
                 case ExternalSearchLevelEnum.Company: //user's current company to filter
                     list = list.Where(l => l.ListingOriginatorCompanyId == branch.CompanyId).ToList();
                     break;
-                case ExternalSearchLevelEnum.Group: //user's built group sets to filter ***TO BE DONE***
+                case ExternalSearchLevelEnum.Group: //LSLSLS user's built group sets to filter ***TO BE DONE***
                     break;
             }
 

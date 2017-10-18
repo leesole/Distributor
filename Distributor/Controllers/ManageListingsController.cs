@@ -63,9 +63,11 @@ namespace Distributor.Controllers
             try
             {
                 ViewBag.RequiredCount = model.Count(x => x.OfferDetails.ListingType == ListingTypeEnum.Requirement);
+            } catch { }
+            try
+            { 
                 ViewBag.AvailableCount = model.Count(x => x.OfferDetails.ListingType == ListingTypeEnum.Available);
-            }
-            catch { }
+            } catch { }
             
             return View(model);
         }
