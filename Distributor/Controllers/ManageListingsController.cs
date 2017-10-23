@@ -105,6 +105,15 @@ namespace Distributor.Controllers
                                         select m).Count();
             }
 
+            //Do count of Request and Available based orders
+            ViewBag.OutOrderCount = (from m in model
+                                     where m.OrderDetails.ListingType == ListingTypeEnum.Requirement
+                                     select m).Count();
+
+            ViewBag.InOrderCount = (from m in model
+                                    where m.OrderDetails.ListingType == ListingTypeEnum.Available
+                                    select m).Count();
+
             //Set the authorisation levels and IDs for button activation on form
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(User);
 
