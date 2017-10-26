@@ -49,7 +49,7 @@
         </div>
     </div>
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -72,7 +72,7 @@
                     <li class="active">@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
                 </ul>
             </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+        </div><!-- /.container -->
     </nav>
 </nav>
 
@@ -116,7 +116,6 @@ else
                 <tr class="info">
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemDescription)</th>
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemType)</th>
-                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.QuantityOutstanding)</th>
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.UoM)</th>
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableFrom)</th>
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableTo)</th>
@@ -127,7 +126,6 @@ else
                 <tr>
                     <td>@Html.DisplayFor(model => model.AvailableListingDetails.ItemDescription)</td>
                     <td>@Model.AvailableListingDetails.ItemType.DisplayName()</td>
-                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.QuantityOutstanding)</td>
                     <td>@Html.DisplayFor(model => model.AvailableListingDetails.UoM)</td>
                     <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableFrom)</td>
                     <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableTo)</td>
@@ -149,7 +147,6 @@ else
                 <tr class="info">
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemDescription)</th>
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemType)</th>
-                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.QuantityOutstanding)</th>
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.UoM)</th>
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredFrom)</th>
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredTo)</th>
@@ -160,7 +157,6 @@ else
                 <tr>
                     <td>@Html.DisplayFor(model => model.RequirementListingDetails.ItemDescription)</td>
                     <td>@Model.RequirementListingDetails.ItemType.DisplayName()</td>
-                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.QuantityOutstanding)</td>
                     <td>@Html.DisplayFor(model => model.RequirementListingDetails.UoM)</td>
                     <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredFrom)</td>
                     <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredTo)</td>
@@ -183,7 +179,6 @@ else
                     <th>@Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)</th>
                     <th>@Html.DisplayNameFor(model => model.OfferDetails.PreviousOfferQuantity)</th>
                     <th>Unit of measure</th>
-                    <th>Description</th>
                 </tr>
                 <tr>
                     <td>@Model.OfferDetails.ListingType.DisplayName()</td>
@@ -192,7 +187,6 @@ else
                     <td>@Html.DisplayFor(model => model.OfferDetails.CounterOfferQuantity)</td>
                     <td>@Html.DisplayFor(model => model.OfferDetails.PreviousOfferQuantity)</td>
                     <td>@uoM</td>
-                    <td>@description</td>
                 </tr>
             </table>
         </div>
