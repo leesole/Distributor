@@ -259,19 +259,19 @@ else
                         switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DespatchedAuthorisationLevel)
                         {
                             case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.DespatchedAuthorisationId)
+                                if (Model.OrderBranchDetails.CompanyId != ViewBag.DespatchedAuthorisationId && Model.OfferBranchDetails.CompanyId != ViewBag.DespatchedAuthorisationId)
                                 {
                                     displayDespatchButton = false;
                                 }
                                 break;
                             case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.DespatchedAuthorisationId)
+                                if (Model.OrderBranchDetails.BranchId != ViewBag.DespatchedAuthorisationId && Model.OfferBranchDetails.BranchId != ViewBag.DespatchedAuthorisationId)
                                 {
                                     displayDespatchButton = false;
                                 }
                                 break;
                             case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.DespatchedAuthorisationId)
+                                if (Model.OrderAppUser.AppUserId != ViewBag.DespatchedAuthorisationId && Model.OfferAppUser.AppUserId != ViewBag.DespatchedAuthorisationId)
                                 {
                                     displayDespatchButton = false;
                                 }
@@ -283,19 +283,19 @@ else
                         switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DeliveredAuthorisationLevel)
                         {
                             case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.DeliveredAuthorisationId)
+                                if (Model.OrderBranchDetails.CompanyId != ViewBag.DeliveredAuthorisationId && Model.OfferBranchDetails.CompanyId != ViewBag.DeliveredAuthorisationId)
                                 {
                                     displayDeliveredButton = false;
                                 }
                                 break;
                             case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.DeliveredAuthorisationId)
+                                if (Model.OrderBranchDetails.BranchId != ViewBag.DeliveredAuthorisationId && Model.OfferBranchDetails.BranchId != ViewBag.DeliveredAuthorisationId)
                                 {
                                     displayDeliveredButton = false;
                                 }
                                 break;
                             case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.DeliveredAuthorisationId)
+                                if (Model.OrderAppUser.AppUserId != ViewBag.DeliveredAuthorisationId && Model.OfferAppUser.AppUserId != ViewBag.DeliveredAuthorisationId)
                                 {
                                     displayDeliveredButton = false;
                                 }
@@ -307,19 +307,19 @@ else
                         switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.CollectedAuthorisationLevel)
                         {
                             case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.CollectedAuthorisationId)
+                                if (Model.OrderBranchDetails.CompanyId != ViewBag.CollectedAuthorisationId && Model.OfferBranchDetails.CompanyId != ViewBag.CollectedAuthorisationId)
                                 {
                                     displayCollectedButton = false;
                                 }
                                 break;
                             case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.CollectedAuthorisationId)
+                                if (Model.OrderBranchDetails.BranchId != ViewBag.CollectedAuthorisationId && Model.OfferBranchDetails.BranchId != ViewBag.CollectedAuthorisationId)
                                 {
                                     displayCollectedButton = false;
                                 }
                                 break;
                             case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.CollectedAuthorisationId)
+                                if (Model.OrderAppUser.AppUserId != ViewBag.CollectedAuthorisationId && Model.OfferAppUser.AppUserId != ViewBag.CollectedAuthorisationId)
                                 {
                                     displayCollectedButton = false;
                                 }
@@ -331,19 +331,19 @@ else
                         switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
                         {
                             case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.ClosedAuthorisationId)
+                                if (Model.OrderBranchDetails.CompanyId != ViewBag.ClosedAuthorisationId && Model.OfferBranchDetails.CompanyId != ViewBag.ClosedAuthorisationId)
                                 {
                                     displayClosedButton = false;
                                 }
                                 break;
                             case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.ClosedAuthorisationId)
+                                if (Model.OrderBranchDetails.BranchId != ViewBag.ClosedAuthorisationId && Model.OfferBranchDetails.BranchId != ViewBag.ClosedAuthorisationId)
                                 {
                                     displayClosedButton = false;
                                 }
                                 break;
                             case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.ClosedAuthorisationId)
+                                if (Model.OrderAppUser.AppUserId != ViewBag.ClosedAuthorisationId && Model.OfferAppUser.AppUserId != ViewBag.ClosedAuthorisationId)
                                 {
                                     displayClosedButton = false;
                                 }
