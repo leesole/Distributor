@@ -122,123 +122,27 @@
             </tr>
             @foreach (var item in Model)
             {
-                inhouseOrder = false;
-
-                if (ViewBag.AllowBranchTrading)
-                {
-                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-                else
-                {
-                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-
-                //if (inhouseOrder)
-                if ((inhouseOrder && item.OrderDetails.ListingType == GeneralEnums.ListingTypeEnum.Available) || (inhouseOrder == false && item.OrderDetails.ListingType == GeneralEnums.ListingTypeEnum.Requirement))
+                if (item.OrderOut)
                 {
                     orderId = item.OrderDetails.OrderId;
                     despatchedButton = "despatchedbutton" + orderId.ToString();
                     deliveredButton = "deliveredbutton" + orderId.ToString();
                     closedButton = "closedbutton" + orderId.ToString();
 
-                    <tr id=@orderId>
-                        @{
-                            displayDespatchButton = true;
-                            displayDeliveredButton = true;
-                            displayClosedButton = true;
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DespatchedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.DespatchedAuthorisationId && item.OrderDetails.OfferOriginatorCompanyId != ViewBag.DespatchedAuthorisationId)
-                                    {
-                                        displayDespatchButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.DespatchedAuthorisationId && item.OrderDetails.OfferOriginatorBranchId != ViewBag.DespatchedAuthorisationId)
-                                    {
-                                        displayDespatchButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.DespatchedAuthorisationId && item.OrderDetails.OfferOriginatorAppUserId != ViewBag.DespatchedAuthorisationId)
-                                    {
-                                        displayDespatchButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DeliveredAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.DeliveredAuthorisationId && item.OrderDetails.OfferOriginatorCompanyId != ViewBag.DeliveredAuthorisationId)
-                                    {
-                                        displayDeliveredButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.DeliveredAuthorisationId && item.OrderDetails.OfferOriginatorBranchId != ViewBag.DeliveredAuthorisationId)
-                                    {
-                                        displayDeliveredButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.DeliveredAuthorisationId && item.OrderDetails.OfferOriginatorAppUserId != ViewBag.DeliveredAuthorisationId)
-                                    {
-                                        displayDeliveredButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OfferOriginatorCompanyId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OfferOriginatorBranchId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OfferOriginatorAppUserId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-                        }
-                        
+                    <tr id=@orderId>                        
                         @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
                         {
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    @if (displayDespatchButton)
+                                    @if (item.DisplayDespatchButton.Value)
                                     {
                                         <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Despatched')"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
                                     }
-                                    @if (displayDeliveredButton)
+                                    @if (item.DisplayDeliveredButton.Value)
                                     {
                                         <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
                                     }
-                                    @if (displayClosedButton)
+                                    @if (item.DisplayClosedButton.Value)
                                     {
                                         <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                                     }
@@ -249,11 +153,11 @@
                         {
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    @if (displayDeliveredButton)
+                                    @if (item.DisplayDeliveredButton.Value)
                                     {
                                         <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
                                     }
-                                    @if (displayClosedButton)
+                                    @if (item.DisplayClosedButton.Value)
                                     {
                                         <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                                     }
@@ -264,7 +168,7 @@
                         {
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    @if (displayClosedButton)
+                                    @if (item.DisplayClosedButton.Value)
                                     {
                                         <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                                     }
@@ -317,25 +221,7 @@
             </tr>
             @foreach (var item in Model)
             {
-                inhouseOrder = false;
-
-                if (ViewBag.AllowBranchTrading)
-                {
-                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-                else
-                {
-                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-
-                //if (inhouseOrder == false)
-                if ((inhouseOrder && item.OrderDetails.ListingType == GeneralEnums.ListingTypeEnum.Requirement) || (inhouseOrder == false && item.OrderDetails.ListingType == GeneralEnums.ListingTypeEnum.Available))
+                if (item.OrderOut == false)
                 {
                     orderId = item.OrderDetails.OrderId;
                     collectedButton = "collectedbutton" + orderId.ToString();
@@ -343,97 +229,19 @@
                     closedButton = "closedbutton" + orderId.ToString();
 
                     <tr id=@orderId>
-                        @{
-                            displayCollectedButton = true;
-                            displayReceivedButton = true;
-                            displayClosedButton = true;
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.CollectedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OfferOriginatorCompanyId != ViewBag.CollectedAuthorisationId && item.OrderDetails.OrderOriginatorCompanyId != ViewBag.CollectedAuthorisationId)
-                                    {
-                                        displayCollectedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OfferOriginatorBranchId != ViewBag.CollectedAuthorisationId && item.OrderDetails.OrderOriginatorCompanyId != ViewBag.CollectedAuthorisationId)
-                                    {
-                                        displayCollectedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OfferOriginatorAppUserId != ViewBag.CollectedAuthorisationId && item.OrderDetails.OrderOriginatorAppUserId != ViewBag.CollectedAuthorisationId)
-                                    {
-                                        displayCollectedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ReceivedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OfferOriginatorCompanyId != ViewBag.ReceivedAuthorisationId && item.OrderDetails.OrderOriginatorCompanyId != ViewBag.ReceivedAuthorisationId)
-                                    {
-                                        displayReceivedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OfferOriginatorBranchId != ViewBag.ReceivedAuthorisationId && item.OrderDetails.OrderOriginatorBranchId != ViewBag.ReceivedAuthorisationId)
-                                    {
-                                        displayReceivedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OfferOriginatorAppUserId != ViewBag.ReceivedAuthorisationId && item.OrderDetails.OrderOriginatorAppUserId != ViewBag.ReceivedAuthorisationId)
-                                    {
-                                        displayReceivedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OfferOriginatorCompanyId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OrderOriginatorCompanyId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OfferOriginatorBranchId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OrderOriginatorBranchId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OfferOriginatorAppUserId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OrderOriginatorAppUserId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-                        }
-
                         @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
                         {
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    @if (displayReceivedButton)
+                                    @if (item.DisplayReceivedButton.Value)
                                     {
                                         <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button>
                                     }
-                                    @if (displayCollectedButton)
+                                    @if (item.DisplayCollectedButton.Value)
                                     {
                                         <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button>
                                     }
-                                    @if (displayClosedButton)
+                                    @if (item.DisplayClosedButton.Value)
                                     {
                                         <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                                     }
@@ -444,7 +252,7 @@
                         {
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    @if (displayClosedButton)
+                                    @if (item.DisplayClosedButton.Value)
                                     {
                                         <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
                                     }

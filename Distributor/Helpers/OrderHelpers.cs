@@ -395,12 +395,175 @@ namespace Distributor.Helpers
             AppUser appUser = AppUserHelpers.GetAppUser(db, user);
             List<Order> allOrdersForUser = OrderHelpers.GetAllManageListingFilteredOrders(db, appUser.AppUserId, getHistory);
 
+            //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
+            Company company = CompanyHelpers.GetCompanyForUser(db, user);
+            
+            //Set the authorisation levels and IDs for button activation on form
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, user);
+
+            InternalSearchLevelEnum despatchedAuthorisationLevel = settings.OrdersDespatchedAuthorisationManageViewLevel;
+            Guid despatchedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDespatchedAuthorisationManageViewLevel, user);
+            InternalSearchLevelEnum deliveredAuthorisationLevel = settings.OrdersDeliveredAuthorisationManageViewLevel;
+            Guid deliveredAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDeliveredAuthorisationManageViewLevel, user);
+            InternalSearchLevelEnum receivedAuthorisationLevel = settings.OrdersReceivedAuthorisationManageViewLevel;
+            Guid receivedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersReceivedAuthorisationManageViewLevel, user);
+            InternalSearchLevelEnum collectedAuthorisationLevel = settings.OrdersCollectedAuthorisationManageViewLevel;
+            Guid collectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersCollectedAuthorisationManageViewLevel, user);
+            InternalSearchLevelEnum closedAuthorisationLevel = settings.OrdersClosedAuthorisationManageViewLevel;
+            Guid closedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersClosedAuthorisationManageViewLevel, user);
+
             foreach (Order orderForBranchUser in allOrdersForUser)
             {
-                OrderManageView orderManageView = new OrderManageView()
+                OrderManageView orderManageView = new OrderManageView();
+                orderManageView.OrderDetails = orderForBranchUser;
+
+                //set Inhouse flag
+                if (company.AllowBranchTrading)
                 {
-                    OrderDetails = orderForBranchUser
-                };
+                    if (orderForBranchUser.OrderOriginatorBranchId == appUser.CurrentBranchId)
+                        orderManageView.InhouseOrder = true;
+                    else
+                        orderManageView.InhouseOrder = false;
+                }
+                else
+                {
+                    if (orderForBranchUser.OrderOriginatorCompanyId == company.CompanyId)
+                        orderManageView.InhouseOrder = true;
+                    else
+                        orderManageView.InhouseOrder = false;
+                }
+
+                //Set OrderOut flag
+                if ((orderManageView.InhouseOrder && orderForBranchUser.ListingType == ListingTypeEnum.Available) || (!orderManageView.InhouseOrder && orderForBranchUser.ListingType == ListingTypeEnum.Requirement))
+                    orderManageView.OrderOut = true;
+                else
+                    orderManageView.OrderOut = false;
+
+                //set buttons
+                if (orderManageView.OrderOut)
+                {
+                    orderManageView.DisplayDespatchButton = true;
+                    orderManageView.DisplayDeliveredButton = true;
+                    orderManageView.DisplayReceivedButton = null;
+                    orderManageView.DisplayCollectedButton = null;
+                    orderManageView.DisplayClosedButton = true;
+
+                    switch (despatchedAuthorisationLevel)
+                    {
+                        case InternalSearchLevelEnum.Company:
+                            if (orderForBranchUser.OrderOriginatorCompanyId != despatchedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != despatchedAuthorisationId)
+                                orderManageView.DisplayDespatchButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Branch:
+                            if (orderForBranchUser.OrderOriginatorBranchId != despatchedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != despatchedAuthorisationId)
+                                orderManageView.DisplayDespatchButton = false;
+                            break;
+                        case InternalSearchLevelEnum.User:
+                            if (orderForBranchUser.OrderOriginatorAppUserId != despatchedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != despatchedAuthorisationId)
+                                orderManageView.DisplayDespatchButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                            break;
+                    }
+
+                    switch (deliveredAuthorisationLevel)
+                    {
+                        case InternalSearchLevelEnum.Company:
+                            if (orderForBranchUser.OrderOriginatorCompanyId != deliveredAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != deliveredAuthorisationId)
+                                orderManageView.DisplayDeliveredButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Branch:
+                            if (orderForBranchUser.OrderOriginatorBranchId != deliveredAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != deliveredAuthorisationId)
+                                orderManageView.DisplayDespatchButton = false;
+                            break;
+                        case InternalSearchLevelEnum.User:
+                            if (orderForBranchUser.OrderOriginatorAppUserId != deliveredAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != deliveredAuthorisationId)
+                                orderManageView.DisplayDespatchButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                            break;
+                    }
+
+                    switch (closedAuthorisationLevel)
+                    {
+                        case InternalSearchLevelEnum.Company:
+                            if (orderForBranchUser.OrderOriginatorCompanyId != closedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != closedAuthorisationId)
+                                orderManageView.DisplayClosedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Branch:
+                            if (orderForBranchUser.OrderOriginatorBranchId != closedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != closedAuthorisationId)
+                                orderManageView.DisplayClosedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.User:
+                            if (orderForBranchUser.OrderOriginatorAppUserId != closedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != closedAuthorisationId)
+                                orderManageView.DisplayClosedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                            break;
+                    }
+                }
+                else
+                {
+                    orderManageView.DisplayDespatchButton = null;
+                    orderManageView.DisplayDeliveredButton = null;
+                    orderManageView.DisplayReceivedButton = true;
+                    orderManageView.DisplayCollectedButton = true;
+                    orderManageView.DisplayClosedButton = true;
+                    
+                    switch (collectedAuthorisationLevel)
+                    {
+                        case InternalSearchLevelEnum.Company:
+                            if (orderForBranchUser.OrderOriginatorCompanyId != collectedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != collectedAuthorisationId)
+                                orderManageView.DisplayCollectedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Branch:
+                            if (orderForBranchUser.OrderOriginatorBranchId != collectedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != collectedAuthorisationId)
+                                orderManageView.DisplayCollectedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.User:
+                            if (orderForBranchUser.OrderOriginatorAppUserId != collectedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != collectedAuthorisationId)
+                                orderManageView.DisplayCollectedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                            break;
+                    }
+
+                    switch (receivedAuthorisationLevel)
+                    {
+                        case InternalSearchLevelEnum.Company:
+                            if (orderForBranchUser.OrderOriginatorCompanyId != receivedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != receivedAuthorisationId)
+                                orderManageView.DisplayReceivedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Branch:
+                            if (orderForBranchUser.OrderOriginatorBranchId != receivedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != receivedAuthorisationId)
+                                orderManageView.DisplayReceivedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.User:
+                            if (orderForBranchUser.OrderOriginatorAppUserId != receivedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != receivedAuthorisationId)
+                                orderManageView.DisplayReceivedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                            break;
+                    }
+
+                    switch (closedAuthorisationLevel)
+                    {
+                        case InternalSearchLevelEnum.Company:
+                            if (orderForBranchUser.OrderOriginatorCompanyId != closedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != closedAuthorisationId)
+                                orderManageView.DisplayClosedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Branch:
+                            if (orderForBranchUser.OrderOriginatorBranchId != closedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != closedAuthorisationId)
+                                orderManageView.DisplayClosedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.User:
+                            if (orderForBranchUser.OrderOriginatorAppUserId != closedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != closedAuthorisationId)
+                                orderManageView.DisplayClosedButton = false;
+                            break;
+                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                            break;
+                    }
+                }
 
                 allOrdersManageView.Add(orderManageView);
             }
@@ -415,16 +578,16 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static OrderEditView GetOrderEditView(Guid orderId)
+        public static OrderEditView GetOrderEditView(Guid orderId, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            OrderEditView view = GetOrderEditView(db, orderId);
+            OrderEditView view = GetOrderEditView(db, orderId, user);
             db.Dispose();
             return view;
         }
 
-        public static OrderEditView GetOrderEditView(ApplicationDbContext db, Guid orderId)
+        public static OrderEditView GetOrderEditView(ApplicationDbContext db, Guid orderId, IPrincipal user)
         {
             Order orderDetails = OrderHelpers.GetOrder(db, orderId);
             AppUser orderAppUser = null;
@@ -507,6 +670,172 @@ namespace Distributor.Helpers
                 AvailableListingDetails = availableListing,
                 RequirementListingDetails = requirementListing
             };
+
+            AppUser thisAppUser = AppUserHelpers.GetAppUser(db, user);
+            //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
+            Company thisCompany = CompanyHelpers.GetCompanyForUser(db, user);
+
+            //Set the authorisation levels and IDs for button activation on form
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, user);
+
+            InternalSearchLevelEnum despatchedAuthorisationLevel = settings.OrdersDespatchedAuthorisationManageViewLevel;
+            Guid despatchedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDespatchedAuthorisationManageViewLevel, user);
+            InternalSearchLevelEnum deliveredAuthorisationLevel = settings.OrdersDeliveredAuthorisationManageViewLevel;
+            Guid deliveredAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDeliveredAuthorisationManageViewLevel, user);
+            InternalSearchLevelEnum receivedAuthorisationLevel = settings.OrdersReceivedAuthorisationManageViewLevel;
+            Guid receivedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersReceivedAuthorisationManageViewLevel, user);
+            InternalSearchLevelEnum collectedAuthorisationLevel = settings.OrdersCollectedAuthorisationManageViewLevel;
+            Guid collectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersCollectedAuthorisationManageViewLevel, user);
+            InternalSearchLevelEnum closedAuthorisationLevel = settings.OrdersClosedAuthorisationManageViewLevel;
+            Guid closedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersClosedAuthorisationManageViewLevel, user);
+
+            //set Inhouse flag
+            if (thisCompany.AllowBranchTrading)
+            {
+                if (orderDetails.OrderOriginatorBranchId == thisAppUser.CurrentBranchId)
+                    view.InhouseOrder = true;
+                else
+                    view.InhouseOrder = false;
+            }
+            else
+            {
+                if (orderDetails.OrderOriginatorCompanyId == thisCompany.CompanyId)
+                    view.InhouseOrder = true;
+                else
+                    view.InhouseOrder = false;
+            }
+
+            //Set OrderOut flag
+            if ((view.InhouseOrder && orderDetails.ListingType == ListingTypeEnum.Available) || (!view.InhouseOrder && orderDetails.ListingType == ListingTypeEnum.Requirement))
+                view.OrderOut = true;
+            else
+                view.OrderOut = false;
+
+            //set buttons
+            if (view.OrderOut)
+            {
+                view.DisplayDespatchButton = true;
+                view.DisplayDeliveredButton = true;
+                view.DisplayReceivedButton = null;
+                view.DisplayCollectedButton = null;
+                view.DisplayClosedButton = true;
+
+                switch (despatchedAuthorisationLevel)
+                {
+                    case InternalSearchLevelEnum.Company:
+                        if (orderDetails.OrderOriginatorCompanyId != despatchedAuthorisationId && orderDetails.OfferOriginatorCompanyId != despatchedAuthorisationId)
+                            view.DisplayDespatchButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Branch:
+                        if (orderDetails.OrderOriginatorBranchId != despatchedAuthorisationId && orderDetails.OfferOriginatorBranchId != despatchedAuthorisationId)
+                            view.DisplayDespatchButton = false;
+                        break;
+                    case InternalSearchLevelEnum.User:
+                        if (orderDetails.OrderOriginatorAppUserId != despatchedAuthorisationId && orderDetails.OfferOriginatorAppUserId != despatchedAuthorisationId)
+                            view.DisplayDespatchButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+
+                switch (deliveredAuthorisationLevel)
+                {
+                    case InternalSearchLevelEnum.Company:
+                        if (orderDetails.OrderOriginatorCompanyId != deliveredAuthorisationId && orderDetails.OfferOriginatorCompanyId != deliveredAuthorisationId)
+                            view.DisplayDeliveredButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Branch:
+                        if (orderDetails.OrderOriginatorBranchId != deliveredAuthorisationId && orderDetails.OfferOriginatorBranchId != deliveredAuthorisationId)
+                            view.DisplayDespatchButton = false;
+                        break;
+                    case InternalSearchLevelEnum.User:
+                        if (orderDetails.OrderOriginatorAppUserId != deliveredAuthorisationId && orderDetails.OfferOriginatorAppUserId != deliveredAuthorisationId)
+                            view.DisplayDespatchButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+
+                switch (closedAuthorisationLevel)
+                {
+                    case InternalSearchLevelEnum.Company:
+                        if (orderDetails.OrderOriginatorCompanyId != closedAuthorisationId && orderDetails.OfferOriginatorCompanyId != closedAuthorisationId)
+                            view.DisplayClosedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Branch:
+                        if (orderDetails.OrderOriginatorBranchId != closedAuthorisationId && orderDetails.OfferOriginatorBranchId != closedAuthorisationId)
+                            view.DisplayClosedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.User:
+                        if (orderDetails.OrderOriginatorAppUserId != closedAuthorisationId && orderDetails.OfferOriginatorAppUserId != closedAuthorisationId)
+                            view.DisplayClosedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+            }
+            else
+            {
+                view.DisplayDespatchButton = null;
+                view.DisplayDeliveredButton = null;
+                view.DisplayReceivedButton = true;
+                view.DisplayCollectedButton = true;
+                view.DisplayClosedButton = true;
+
+                switch (collectedAuthorisationLevel)
+                {
+                    case InternalSearchLevelEnum.Company:
+                        if (orderDetails.OrderOriginatorCompanyId != collectedAuthorisationId && orderDetails.OfferOriginatorCompanyId != collectedAuthorisationId)
+                            view.DisplayCollectedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Branch:
+                        if (orderDetails.OrderOriginatorBranchId != collectedAuthorisationId && orderDetails.OfferOriginatorBranchId != collectedAuthorisationId)
+                            view.DisplayCollectedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.User:
+                        if (orderDetails.OrderOriginatorAppUserId != collectedAuthorisationId && orderDetails.OfferOriginatorAppUserId != collectedAuthorisationId)
+                            view.DisplayCollectedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+
+                switch (receivedAuthorisationLevel)
+                {
+                    case InternalSearchLevelEnum.Company:
+                        if (orderDetails.OrderOriginatorCompanyId != receivedAuthorisationId && orderDetails.OfferOriginatorCompanyId != receivedAuthorisationId)
+                            view.DisplayReceivedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Branch:
+                        if (orderDetails.OrderOriginatorBranchId != receivedAuthorisationId && orderDetails.OfferOriginatorBranchId != receivedAuthorisationId)
+                            view.DisplayReceivedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.User:
+                        if (orderDetails.OrderOriginatorAppUserId != receivedAuthorisationId && orderDetails.OfferOriginatorAppUserId != receivedAuthorisationId)
+                            view.DisplayReceivedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+
+                switch (closedAuthorisationLevel)
+                {
+                    case InternalSearchLevelEnum.Company:
+                        if (orderDetails.OrderOriginatorCompanyId != closedAuthorisationId && orderDetails.OfferOriginatorCompanyId != closedAuthorisationId)
+                            view.DisplayClosedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Branch:
+                        if (orderDetails.OrderOriginatorBranchId != closedAuthorisationId && orderDetails.OfferOriginatorBranchId != closedAuthorisationId)
+                            view.DisplayClosedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.User:
+                        if (orderDetails.OrderOriginatorAppUserId != closedAuthorisationId && orderDetails.OfferOriginatorAppUserId != closedAuthorisationId)
+                            view.DisplayClosedButton = false;
+                        break;
+                    case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+            }
 
             return view;
         }

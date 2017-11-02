@@ -249,190 +249,68 @@ else
                         </div>
                     </div>
                     <div class="panel-footer">
-                        @{
-                        var displayDespatchButton = true;
-                        var displayDeliveredButton = true;
-                        var displayCollectedButton = true;
-                        var displayReceivedButton = true;
-                        var displayClosedButton = true;
 
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DespatchedAuthorisationLevel)
+                        @if (Model.OrderOut) //our order
                         {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.DespatchedAuthorisationId && Model.OfferBranchDetails.CompanyId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.DespatchedAuthorisationId && Model.OfferBranchDetails.BranchId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.DespatchedAuthorisationId && Model.OfferAppUser.AppUserId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DeliveredAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.DeliveredAuthorisationId && Model.OfferBranchDetails.CompanyId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.DeliveredAuthorisationId && Model.OfferBranchDetails.BranchId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.DeliveredAuthorisationId && Model.OfferAppUser.AppUserId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.CollectedAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.CollectedAuthorisationId && Model.OfferBranchDetails.CompanyId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.CollectedAuthorisationId && Model.OfferBranchDetails.BranchId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.CollectedAuthorisationId && Model.OfferAppUser.AppUserId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.ClosedAuthorisationId && Model.OfferBranchDetails.CompanyId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.ClosedAuthorisationId && Model.OfferBranchDetails.BranchId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.ClosedAuthorisationId && Model.OfferAppUser.AppUserId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-                        }
-
-                        @if (ViewBag.AllowBranchTrading)
-                    {
-                        if (Model.OrderBranchDetails.BranchId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOrder = true;
-                        }
-                    }
-                    else
-                    {
-                        if (Model.OrderBranchDetails.CompanyId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOrder = true;
-                        }
-                    }
-
-                        @if (inhouseOrder) //our order
-                    {
-                        if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            if (displayDespatchButton)
+                            if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
                             {
-                    <button type="submit" class="btn btn-sm btn-success" name="despatchedbutton"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
+                                if (Model.DisplayDespatchButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="despatchedbutton"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
+                                }
+                                if (Model.DisplayDeliveredButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                }
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
-                            if (displayDeliveredButton)
+                            else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
                             {
-                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                if (Model.DisplayDeliveredButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                }
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
-                            if (displayClosedButton)
+                            else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Delivered)
                             {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
                         }
-                        else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
+                        else
                         {
-                            if (displayDeliveredButton)
+                            if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
                             {
-                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                if (Model.DisplayReceivedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
+                                }
+                                if (Model.DisplayCollectedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="collectedbutton"><span class="glyphicon glyphicon-ok"></span> Collected</button>
+                                }
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
-                            if (displayClosedButton)
+                            else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Received || Model.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
                             {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
                         }
-                        else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
-                        {
-                            if (displayClosedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            if (displayCollectedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-success" name="collectedbutton"><span class="glyphicon glyphicon-ok"></span> Collected</button>
-                            }
-                            if (displayReceivedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
-                            }
-                            if (displayClosedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                            }
-                        }
-                        else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
-                        {
-                            if (displayReceivedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
-                            }
-                            if (displayClosedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                            }
-                        }
-                    }
                     </div>
                 </div>
             </div>

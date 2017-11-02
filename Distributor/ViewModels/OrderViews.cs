@@ -16,6 +16,14 @@ namespace Distributor.ViewModels
     public class OrderManageView
     {
         public Order OrderDetails { get; set; }
+
+        public bool OrderOut { get; set; }
+        public bool? DisplayDespatchButton { get; set; }
+        public bool? DisplayDeliveredButton { get; set; }
+        public bool? DisplayReceivedButton { get; set; }
+        public bool? DisplayCollectedButton { get; set; }
+        public bool? DisplayClosedButton { get; set; }
+        public bool InhouseOrder { get; set; }
     }
 
     public class OrderEditView
@@ -55,6 +63,15 @@ namespace Distributor.ViewModels
         [Display(Name = "Closed date")]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? OrderClosedDateTime { get; set; }
+
+        public bool OrderOut { get; set; }
+        public bool? DisplayDespatchButton { get; set; }
+        public bool? DisplayDeliveredButton { get; set; }
+        public bool? DisplayReceivedButton { get; set; }
+        public bool? DisplayCollectedButton { get; set; }
+        public bool? DisplayClosedButton { get; set; }
+        public bool InhouseOrder { get; set; }
+
 
         public AppUser OrderAppUser { get; set; }
         public Branch OrderBranchDetails { get; set; }
