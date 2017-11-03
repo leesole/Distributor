@@ -48,7 +48,6 @@ namespace Distributor.Helpers
         public static AppUserSettings GetAppUserSettingsForUser(ApplicationDbContext db, IPrincipal user)
         {
             AppUserSettings appUserSettings = GetAppUserSettingsForUser(db, AppUserHelpers.GetAppUserIdFromUser(user));
-            db.Dispose();
             return appUserSettings;
         }
 

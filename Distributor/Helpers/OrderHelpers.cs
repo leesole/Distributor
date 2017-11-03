@@ -397,20 +397,6 @@ namespace Distributor.Helpers
 
             //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
             Company company = CompanyHelpers.GetCompanyForUser(db, user);
-            
-            //Set the authorisation levels and IDs for button activation on form
-            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, user);
-
-            InternalSearchLevelEnum despatchedAuthorisationLevel = settings.OrdersDespatchedAuthorisationManageViewLevel;
-            Guid despatchedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDespatchedAuthorisationManageViewLevel, user);
-            InternalSearchLevelEnum deliveredAuthorisationLevel = settings.OrdersDeliveredAuthorisationManageViewLevel;
-            Guid deliveredAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDeliveredAuthorisationManageViewLevel, user);
-            InternalSearchLevelEnum receivedAuthorisationLevel = settings.OrdersReceivedAuthorisationManageViewLevel;
-            Guid receivedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersReceivedAuthorisationManageViewLevel, user);
-            InternalSearchLevelEnum collectedAuthorisationLevel = settings.OrdersCollectedAuthorisationManageViewLevel;
-            Guid collectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersCollectedAuthorisationManageViewLevel, user);
-            InternalSearchLevelEnum closedAuthorisationLevel = settings.OrdersClosedAuthorisationManageViewLevel;
-            Guid closedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersClosedAuthorisationManageViewLevel, user);
 
             foreach (Order orderForBranchUser in allOrdersForUser)
             {
@@ -418,152 +404,25 @@ namespace Distributor.Helpers
                 orderManageView.OrderDetails = orderForBranchUser;
 
                 //set Inhouse flag
-                if (company.AllowBranchTrading)
-                {
-                    if (orderForBranchUser.OrderOriginatorBranchId == appUser.CurrentBranchId)
-                        orderManageView.InhouseOrder = true;
-                    else
-                        orderManageView.InhouseOrder = false;
-                }
-                else
-                {
-                    if (orderForBranchUser.OrderOriginatorCompanyId == company.CompanyId)
-                        orderManageView.InhouseOrder = true;
-                    else
-                        orderManageView.InhouseOrder = false;
-                }
+                orderManageView.InhouseOrder = OrderProcessHelpers.SetInhouseFlag(orderForBranchUser, appUser, company);
 
                 //Set OrderOut flag
-                if ((orderManageView.InhouseOrder && orderForBranchUser.ListingType == ListingTypeEnum.Available) || (!orderManageView.InhouseOrder && orderForBranchUser.ListingType == ListingTypeEnum.Requirement))
-                    orderManageView.OrderOut = true;
-                else
-                    orderManageView.OrderOut = false;
+                orderManageView.OrderOut = OrderProcessHelpers.SetOrderOutFlag(orderForBranchUser, orderManageView.InhouseOrder);
 
                 //set buttons
-                if (orderManageView.OrderOut)
-                {
-                    orderManageView.DisplayDespatchButton = true;
-                    orderManageView.DisplayDeliveredButton = true;
-                    orderManageView.DisplayReceivedButton = null;
-                    orderManageView.DisplayCollectedButton = null;
-                    orderManageView.DisplayClosedButton = true;
+                bool? displayDespatchButton = null;
+                bool? displayDeliveredButton = null;
+                bool? displayReceivedButton = null;
+                bool? displayCollectedButton = null;
+                bool? displayClosedButton = null;
 
-                    switch (despatchedAuthorisationLevel)
-                    {
-                        case InternalSearchLevelEnum.Company:
-                            if (orderForBranchUser.OrderOriginatorCompanyId != despatchedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != despatchedAuthorisationId)
-                                orderManageView.DisplayDespatchButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Branch:
-                            if (orderForBranchUser.OrderOriginatorBranchId != despatchedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != despatchedAuthorisationId)
-                                orderManageView.DisplayDespatchButton = false;
-                            break;
-                        case InternalSearchLevelEnum.User:
-                            if (orderForBranchUser.OrderOriginatorAppUserId != despatchedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != despatchedAuthorisationId)
-                                orderManageView.DisplayDespatchButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
+                OrderProcessHelpers.SetOrderButtons(db, user, orderForBranchUser, orderManageView.OrderOut, out displayDespatchButton, out displayDeliveredButton, out displayReceivedButton, out displayCollectedButton, out displayClosedButton);
 
-                    switch (deliveredAuthorisationLevel)
-                    {
-                        case InternalSearchLevelEnum.Company:
-                            if (orderForBranchUser.OrderOriginatorCompanyId != deliveredAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != deliveredAuthorisationId)
-                                orderManageView.DisplayDeliveredButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Branch:
-                            if (orderForBranchUser.OrderOriginatorBranchId != deliveredAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != deliveredAuthorisationId)
-                                orderManageView.DisplayDespatchButton = false;
-                            break;
-                        case InternalSearchLevelEnum.User:
-                            if (orderForBranchUser.OrderOriginatorAppUserId != deliveredAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != deliveredAuthorisationId)
-                                orderManageView.DisplayDespatchButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-
-                    switch (closedAuthorisationLevel)
-                    {
-                        case InternalSearchLevelEnum.Company:
-                            if (orderForBranchUser.OrderOriginatorCompanyId != closedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != closedAuthorisationId)
-                                orderManageView.DisplayClosedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Branch:
-                            if (orderForBranchUser.OrderOriginatorBranchId != closedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != closedAuthorisationId)
-                                orderManageView.DisplayClosedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.User:
-                            if (orderForBranchUser.OrderOriginatorAppUserId != closedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != closedAuthorisationId)
-                                orderManageView.DisplayClosedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-                }
-                else
-                {
-                    orderManageView.DisplayDespatchButton = null;
-                    orderManageView.DisplayDeliveredButton = null;
-                    orderManageView.DisplayReceivedButton = true;
-                    orderManageView.DisplayCollectedButton = true;
-                    orderManageView.DisplayClosedButton = true;
-                    
-                    switch (collectedAuthorisationLevel)
-                    {
-                        case InternalSearchLevelEnum.Company:
-                            if (orderForBranchUser.OrderOriginatorCompanyId != collectedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != collectedAuthorisationId)
-                                orderManageView.DisplayCollectedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Branch:
-                            if (orderForBranchUser.OrderOriginatorBranchId != collectedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != collectedAuthorisationId)
-                                orderManageView.DisplayCollectedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.User:
-                            if (orderForBranchUser.OrderOriginatorAppUserId != collectedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != collectedAuthorisationId)
-                                orderManageView.DisplayCollectedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-
-                    switch (receivedAuthorisationLevel)
-                    {
-                        case InternalSearchLevelEnum.Company:
-                            if (orderForBranchUser.OrderOriginatorCompanyId != receivedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != receivedAuthorisationId)
-                                orderManageView.DisplayReceivedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Branch:
-                            if (orderForBranchUser.OrderOriginatorBranchId != receivedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != receivedAuthorisationId)
-                                orderManageView.DisplayReceivedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.User:
-                            if (orderForBranchUser.OrderOriginatorAppUserId != receivedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != receivedAuthorisationId)
-                                orderManageView.DisplayReceivedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-
-                    switch (closedAuthorisationLevel)
-                    {
-                        case InternalSearchLevelEnum.Company:
-                            if (orderForBranchUser.OrderOriginatorCompanyId != closedAuthorisationId && orderForBranchUser.OfferOriginatorCompanyId != closedAuthorisationId)
-                                orderManageView.DisplayClosedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Branch:
-                            if (orderForBranchUser.OrderOriginatorBranchId != closedAuthorisationId && orderForBranchUser.OfferOriginatorBranchId != closedAuthorisationId)
-                                orderManageView.DisplayClosedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.User:
-                            if (orderForBranchUser.OrderOriginatorAppUserId != closedAuthorisationId && orderForBranchUser.OfferOriginatorAppUserId != closedAuthorisationId)
-                                orderManageView.DisplayClosedButton = false;
-                            break;
-                        case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                            break;
-                    }
-                }
+                orderManageView.DisplayDespatchButton = displayDespatchButton;
+                orderManageView.DisplayDeliveredButton = displayDeliveredButton;
+                orderManageView.DisplayReceivedButton = displayReceivedButton;
+                orderManageView.DisplayCollectedButton = displayCollectedButton;
+                orderManageView.DisplayClosedButton = displayClosedButton;
 
                 allOrdersManageView.Add(orderManageView);
             }
@@ -675,9 +534,67 @@ namespace Distributor.Helpers
             //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
             Company thisCompany = CompanyHelpers.GetCompanyForUser(db, user);
 
-            //Set the authorisation levels and IDs for button activation on form
+            //set Inhouse flag
+            view.InhouseOrder = OrderProcessHelpers.SetInhouseFlag(orderDetails, thisAppUser, thisCompany);
+
+            //Set OrderOut flag
+            view.OrderOut = OrderProcessHelpers.SetOrderOutFlag(orderDetails, view.InhouseOrder);
+
+            //set buttons
+            bool? displayDespatchButton = null;
+            bool? displayDeliveredButton = null;
+            bool? displayReceivedButton = null;
+            bool? displayCollectedButton = null;
+            bool? displayClosedButton = null;
+
+            OrderProcessHelpers.SetOrderButtons(db, user, orderDetails, view.OrderOut, out displayDespatchButton, out displayDeliveredButton, out displayReceivedButton, out displayCollectedButton, out displayClosedButton);
+
+            view.DisplayDespatchButton = displayDespatchButton;
+            view.DisplayDeliveredButton = displayDeliveredButton;
+            view.DisplayReceivedButton = displayReceivedButton;
+            view.DisplayCollectedButton = displayCollectedButton;
+            view.DisplayClosedButton = displayClosedButton;
+
+            return view;
+        }
+
+        #endregion
+    }
+
+    public static class OrderProcessHelpers
+    {
+        public static bool SetInhouseFlag(Order order, AppUser appUser, Company company)
+        {
+            if (company.AllowBranchTrading)
+            {
+                if (order.OrderOriginatorBranchId == appUser.CurrentBranchId)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                if (order.OrderOriginatorCompanyId == company.CompanyId)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        public static bool SetOrderOutFlag(Order order, bool inhouseOrder)
+        {
+            if ((inhouseOrder && order.ListingType == ListingTypeEnum.Available) || (!inhouseOrder && order.ListingType == ListingTypeEnum.Requirement))
+                return true;
+            else
+                return false;
+        }
+
+        public static void SetOrderButtons(ApplicationDbContext db, IPrincipal user, Order order, bool orderOut, out bool? displayDespatchButton, out bool? displayDeliveredButton, out bool? displayReceivedButton, out bool? displayCollectedButton, out bool? displayClosedButton)
+        {
+            //Get settings for logged in user
             AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, user);
 
+            //Set the authorisation levels and IDs for button activation on form
             InternalSearchLevelEnum despatchedAuthorisationLevel = settings.OrdersDespatchedAuthorisationManageViewLevel;
             Guid despatchedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersDespatchedAuthorisationManageViewLevel, user);
             InternalSearchLevelEnum deliveredAuthorisationLevel = settings.OrdersDeliveredAuthorisationManageViewLevel;
@@ -689,50 +606,28 @@ namespace Distributor.Helpers
             InternalSearchLevelEnum closedAuthorisationLevel = settings.OrdersClosedAuthorisationManageViewLevel;
             Guid closedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OrdersClosedAuthorisationManageViewLevel, user);
 
-            //set Inhouse flag
-            if (thisCompany.AllowBranchTrading)
-            {
-                if (orderDetails.OrderOriginatorBranchId == thisAppUser.CurrentBranchId)
-                    view.InhouseOrder = true;
-                else
-                    view.InhouseOrder = false;
-            }
-            else
-            {
-                if (orderDetails.OrderOriginatorCompanyId == thisCompany.CompanyId)
-                    view.InhouseOrder = true;
-                else
-                    view.InhouseOrder = false;
-            }
-
-            //Set OrderOut flag
-            if ((view.InhouseOrder && orderDetails.ListingType == ListingTypeEnum.Available) || (!view.InhouseOrder && orderDetails.ListingType == ListingTypeEnum.Requirement))
-                view.OrderOut = true;
-            else
-                view.OrderOut = false;
-
             //set buttons
-            if (view.OrderOut)
+            if (orderOut)
             {
-                view.DisplayDespatchButton = true;
-                view.DisplayDeliveredButton = true;
-                view.DisplayReceivedButton = null;
-                view.DisplayCollectedButton = null;
-                view.DisplayClosedButton = true;
+                displayDespatchButton = true;
+                displayDeliveredButton = true;
+                displayReceivedButton = null;
+                displayCollectedButton = null;
+                displayClosedButton = true;
 
                 switch (despatchedAuthorisationLevel)
                 {
                     case InternalSearchLevelEnum.Company:
-                        if (orderDetails.OrderOriginatorCompanyId != despatchedAuthorisationId && orderDetails.OfferOriginatorCompanyId != despatchedAuthorisationId)
-                            view.DisplayDespatchButton = false;
+                        if (order.OrderOriginatorCompanyId != despatchedAuthorisationId && order.OfferOriginatorCompanyId != despatchedAuthorisationId)
+                            displayDespatchButton = false;
                         break;
                     case InternalSearchLevelEnum.Branch:
-                        if (orderDetails.OrderOriginatorBranchId != despatchedAuthorisationId && orderDetails.OfferOriginatorBranchId != despatchedAuthorisationId)
-                            view.DisplayDespatchButton = false;
+                        if (order.OrderOriginatorBranchId != despatchedAuthorisationId && order.OfferOriginatorBranchId != despatchedAuthorisationId)
+                            displayDespatchButton = false;
                         break;
                     case InternalSearchLevelEnum.User:
-                        if (orderDetails.OrderOriginatorAppUserId != despatchedAuthorisationId && orderDetails.OfferOriginatorAppUserId != despatchedAuthorisationId)
-                            view.DisplayDespatchButton = false;
+                        if (order.OrderOriginatorAppUserId != despatchedAuthorisationId && order.OfferOriginatorAppUserId != despatchedAuthorisationId)
+                            displayDespatchButton = false;
                         break;
                     case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
                         break;
@@ -741,16 +636,16 @@ namespace Distributor.Helpers
                 switch (deliveredAuthorisationLevel)
                 {
                     case InternalSearchLevelEnum.Company:
-                        if (orderDetails.OrderOriginatorCompanyId != deliveredAuthorisationId && orderDetails.OfferOriginatorCompanyId != deliveredAuthorisationId)
-                            view.DisplayDeliveredButton = false;
+                        if (order.OrderOriginatorCompanyId != deliveredAuthorisationId && order.OfferOriginatorCompanyId != deliveredAuthorisationId)
+                            displayDeliveredButton = false;
                         break;
                     case InternalSearchLevelEnum.Branch:
-                        if (orderDetails.OrderOriginatorBranchId != deliveredAuthorisationId && orderDetails.OfferOriginatorBranchId != deliveredAuthorisationId)
-                            view.DisplayDespatchButton = false;
+                        if (order.OrderOriginatorBranchId != deliveredAuthorisationId && order.OfferOriginatorBranchId != deliveredAuthorisationId)
+                            displayDespatchButton = false;
                         break;
                     case InternalSearchLevelEnum.User:
-                        if (orderDetails.OrderOriginatorAppUserId != deliveredAuthorisationId && orderDetails.OfferOriginatorAppUserId != deliveredAuthorisationId)
-                            view.DisplayDespatchButton = false;
+                        if (order.OrderOriginatorAppUserId != deliveredAuthorisationId && order.OfferOriginatorAppUserId != deliveredAuthorisationId)
+                            displayDespatchButton = false;
                         break;
                     case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
                         break;
@@ -759,16 +654,16 @@ namespace Distributor.Helpers
                 switch (closedAuthorisationLevel)
                 {
                     case InternalSearchLevelEnum.Company:
-                        if (orderDetails.OrderOriginatorCompanyId != closedAuthorisationId && orderDetails.OfferOriginatorCompanyId != closedAuthorisationId)
-                            view.DisplayClosedButton = false;
+                        if (order.OrderOriginatorCompanyId != closedAuthorisationId && order.OfferOriginatorCompanyId != closedAuthorisationId)
+                            displayClosedButton = false;
                         break;
                     case InternalSearchLevelEnum.Branch:
-                        if (orderDetails.OrderOriginatorBranchId != closedAuthorisationId && orderDetails.OfferOriginatorBranchId != closedAuthorisationId)
-                            view.DisplayClosedButton = false;
+                        if (order.OrderOriginatorBranchId != closedAuthorisationId && order.OfferOriginatorBranchId != closedAuthorisationId)
+                            displayClosedButton = false;
                         break;
                     case InternalSearchLevelEnum.User:
-                        if (orderDetails.OrderOriginatorAppUserId != closedAuthorisationId && orderDetails.OfferOriginatorAppUserId != closedAuthorisationId)
-                            view.DisplayClosedButton = false;
+                        if (order.OrderOriginatorAppUserId != closedAuthorisationId && order.OfferOriginatorAppUserId != closedAuthorisationId)
+                            displayClosedButton = false;
                         break;
                     case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
                         break;
@@ -776,25 +671,25 @@ namespace Distributor.Helpers
             }
             else
             {
-                view.DisplayDespatchButton = null;
-                view.DisplayDeliveredButton = null;
-                view.DisplayReceivedButton = true;
-                view.DisplayCollectedButton = true;
-                view.DisplayClosedButton = true;
+                displayDespatchButton = null;
+                displayDeliveredButton = null;
+                displayReceivedButton = true;
+                displayCollectedButton = true;
+                displayClosedButton = true;
 
                 switch (collectedAuthorisationLevel)
                 {
                     case InternalSearchLevelEnum.Company:
-                        if (orderDetails.OrderOriginatorCompanyId != collectedAuthorisationId && orderDetails.OfferOriginatorCompanyId != collectedAuthorisationId)
-                            view.DisplayCollectedButton = false;
+                        if (order.OrderOriginatorCompanyId != collectedAuthorisationId && order.OfferOriginatorCompanyId != collectedAuthorisationId)
+                            displayCollectedButton = false;
                         break;
                     case InternalSearchLevelEnum.Branch:
-                        if (orderDetails.OrderOriginatorBranchId != collectedAuthorisationId && orderDetails.OfferOriginatorBranchId != collectedAuthorisationId)
-                            view.DisplayCollectedButton = false;
+                        if (order.OrderOriginatorBranchId != collectedAuthorisationId && order.OfferOriginatorBranchId != collectedAuthorisationId)
+                            displayCollectedButton = false;
                         break;
                     case InternalSearchLevelEnum.User:
-                        if (orderDetails.OrderOriginatorAppUserId != collectedAuthorisationId && orderDetails.OfferOriginatorAppUserId != collectedAuthorisationId)
-                            view.DisplayCollectedButton = false;
+                        if (order.OrderOriginatorAppUserId != collectedAuthorisationId && order.OfferOriginatorAppUserId != collectedAuthorisationId)
+                            displayCollectedButton = false;
                         break;
                     case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
                         break;
@@ -803,16 +698,16 @@ namespace Distributor.Helpers
                 switch (receivedAuthorisationLevel)
                 {
                     case InternalSearchLevelEnum.Company:
-                        if (orderDetails.OrderOriginatorCompanyId != receivedAuthorisationId && orderDetails.OfferOriginatorCompanyId != receivedAuthorisationId)
-                            view.DisplayReceivedButton = false;
+                        if (order.OrderOriginatorCompanyId != receivedAuthorisationId && order.OfferOriginatorCompanyId != receivedAuthorisationId)
+                            displayReceivedButton = false;
                         break;
                     case InternalSearchLevelEnum.Branch:
-                        if (orderDetails.OrderOriginatorBranchId != receivedAuthorisationId && orderDetails.OfferOriginatorBranchId != receivedAuthorisationId)
-                            view.DisplayReceivedButton = false;
+                        if (order.OrderOriginatorBranchId != receivedAuthorisationId && order.OfferOriginatorBranchId != receivedAuthorisationId)
+                            displayReceivedButton = false;
                         break;
                     case InternalSearchLevelEnum.User:
-                        if (orderDetails.OrderOriginatorAppUserId != receivedAuthorisationId && orderDetails.OfferOriginatorAppUserId != receivedAuthorisationId)
-                            view.DisplayReceivedButton = false;
+                        if (order.OrderOriginatorAppUserId != receivedAuthorisationId && order.OfferOriginatorAppUserId != receivedAuthorisationId)
+                            displayReceivedButton = false;
                         break;
                     case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
                         break;
@@ -821,25 +716,21 @@ namespace Distributor.Helpers
                 switch (closedAuthorisationLevel)
                 {
                     case InternalSearchLevelEnum.Company:
-                        if (orderDetails.OrderOriginatorCompanyId != closedAuthorisationId && orderDetails.OfferOriginatorCompanyId != closedAuthorisationId)
-                            view.DisplayClosedButton = false;
+                        if (order.OrderOriginatorCompanyId != closedAuthorisationId && order.OfferOriginatorCompanyId != closedAuthorisationId)
+                            displayClosedButton = false;
                         break;
                     case InternalSearchLevelEnum.Branch:
-                        if (orderDetails.OrderOriginatorBranchId != closedAuthorisationId && orderDetails.OfferOriginatorBranchId != closedAuthorisationId)
-                            view.DisplayClosedButton = false;
+                        if (order.OrderOriginatorBranchId != closedAuthorisationId && order.OfferOriginatorBranchId != closedAuthorisationId)
+                            displayClosedButton = false;
                         break;
                     case InternalSearchLevelEnum.User:
-                        if (orderDetails.OrderOriginatorAppUserId != closedAuthorisationId && orderDetails.OfferOriginatorAppUserId != closedAuthorisationId)
-                            view.DisplayClosedButton = false;
+                        if (order.OrderOriginatorAppUserId != closedAuthorisationId && order.OfferOriginatorAppUserId != closedAuthorisationId)
+                            displayClosedButton = false;
                         break;
                     case InternalSearchLevelEnum.Group:   //LSLSLS  TO BE DONE WHEN GROUPS ADDED
                         break;
                 }
             }
-
-            return view;
         }
-
-        #endregion
     }
 }
