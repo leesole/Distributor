@@ -30,5 +30,12 @@ namespace Distributor.ViewModels
         public AppUserSettings OfferAppUserSettings { get; set; }
 
         public AppUserSettings ListingAppUserSettings { get; set; }
+
+
+        public bool? DisplayAcceptButton { get; set; }
+        public bool? DisplayRejectButton { get; set; }
+        public bool? DisplayCounterButton { get; set; }
+        public bool? DisplayOfferButton { get; set; }
+        public bool InhouseOrder { get; set; }
     }
 }

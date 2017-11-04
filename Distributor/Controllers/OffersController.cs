@@ -32,7 +32,7 @@ namespace Distributor.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            OfferManageView offerManageView = OfferManageHelpers.GetOfferManageViewForOffer(offerId.Value);
+            OfferManageView offerManageView = OfferManageHelpers.GetOfferManageViewForOffer(offerId.Value, User);
 
             if (offerManageView == null) //set to null if the value has changed from new to something else
             {

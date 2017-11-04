@@ -82,56 +82,6 @@ namespace Distributor.Controllers
 
             order = OrderEditHelpers.GetOrderEditView(db, order.OrderId, User);
 
-            ////rebuild the missing details before returning to screen to show errors
-            //Order orderDetails = OrderHelpers.GetOrder(db, order.OrderId);
-
-            //if (orderDetails.OrderOriginatorAppUserId != null)
-            //    if (orderDetails.OrderOriginatorAppUserId.Value != Guid.Empty)
-            //        order.OrderAppUser = AppUserHelpers.GetAppUser(db, orderDetails.OrderOriginatorAppUserId.Value);
-
-            //if (orderDetails.OrderOriginatorBranchId != null)
-            //    if (orderDetails.OrderOriginatorBranchId.Value != Guid.Empty)
-            //        order.OrderBranchDetails = BranchHelpers.GetBranch(db, orderDetails.OrderOriginatorBranchId.Value);
-
-            //if (orderDetails.OfferOriginatorAppUserId != null)
-            //    if (orderDetails.OfferOriginatorAppUserId.Value != Guid.Empty)
-            //        order.OfferAppUser = AppUserHelpers.GetAppUser(db, orderDetails.OfferOriginatorAppUserId.Value);
-
-            //if (orderDetails.OfferOriginatorBranchId != null)
-            //    if (orderDetails.OfferOriginatorBranchId.Value != Guid.Empty)
-            //        order.OfferBranchDetails = BranchHelpers.GetBranch(db, orderDetails.OfferOriginatorBranchId.Value);
-
-            //if (orderDetails.ListingOriginatorAppUserId != null)
-            //    if (orderDetails.ListingOriginatorAppUserId.Value != Guid.Empty)
-            //        order.ListingAppUser = AppUserHelpers.GetAppUser(db, orderDetails.ListingOriginatorAppUserId.Value);
-
-            //if (orderDetails.ListingOriginatorBranchId != null)
-            //    if (orderDetails.ListingOriginatorBranchId.Value != Guid.Empty)
-            //        order.ListingBranchDetails = BranchHelpers.GetBranch(db, orderDetails.ListingOriginatorBranchId.Value);
-
-            //if (orderDetails.OfferId != null)
-            //{
-            //    if (orderDetails.OfferId.Value != Guid.Empty)
-            //    {
-            //        order.OfferDetails = OfferHelpers.GetOffer(db, orderDetails.OfferId.Value);
-            //        if (orderDetails.ListingId != null)
-            //        {
-            //            if (orderDetails.ListingId.Value != Guid.Empty)
-            //            {
-            //                switch (order.OfferDetails.ListingType)
-            //                {
-            //                    case ListingTypeEnum.Available:
-            //                        order.AvailableListingDetails = AvailableListingHelpers.GetAvailableListing(db, orderDetails.ListingId.Value);
-            //                        break;
-            //                    case ListingTypeEnum.Requirement:
-            //                        order.RequirementListingDetails = RequirementListingHelpers.GetRequirementListing(db, orderDetails.ListingId.Value);
-            //                        break;
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
             ViewBag.ShowHistory = false;
 
             return View(order);

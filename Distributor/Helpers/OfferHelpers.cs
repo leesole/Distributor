@@ -1,4 +1,5 @@
-﻿using Distributor.Models;
+﻿using Distributor.Enums;
+using Distributor.Models;
 using Distributor.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -389,32 +390,32 @@ namespace Distributor.Helpers
     {
         #region Get
 
-        public static OfferManageView GetOfferManageViewForOffer(Guid offerId)
+        public static OfferManageView GetOfferManageViewForOffer(Guid offerId, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            OfferManageView offerManageView = GetOfferManageViewForOffer(db, offerId);
+            OfferManageView offerManageView = GetOfferManageViewForOffer(db, offerId, user);
             db.Dispose();
             return offerManageView;
         }
 
-        public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Guid offerId)
+        public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Guid offerId, IPrincipal user)
         {
             Offer offer = OfferHelpers.GetOffer(db, offerId);
 
-            return GetOfferManageViewForOffer(db, offer);
+            return GetOfferManageViewForOffer(db, offer, user);
         }
 
-        public static OfferManageView GetOfferManageViewForOffer(Offer offer)
+        public static OfferManageView GetOfferManageViewForOffer(Offer offer, IPrincipal user)
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            OfferManageView offerManageView = GetOfferManageViewForOffer(db, offer);
+            OfferManageView offerManageView = GetOfferManageViewForOffer(db, offer, user);
             db.Dispose();
             return offerManageView;
         }
 
-        public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Offer offer)
+        public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Offer offer, IPrincipal user)
         {
             if (offer.OfferStatus != OfferStatusEnum.New && offer.OfferStatus != OfferStatusEnum.Countered)
                 return null;
@@ -448,7 +449,26 @@ namespace Distributor.Helpers
                 ListingBranchDetails = BranchHelpers.GetBranch(db, listingAppUser.CurrentBranchId),
                 OfferAppUserSettings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, offerAppUser.AppUserId),
                 ListingAppUserSettings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, listingAppUser.AppUserId)
-        };
+            };
+
+            AppUser thisAppUser = AppUserHelpers.GetAppUser(db, user);
+            //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
+            Company thisCompany = CompanyHelpers.GetCompanyForUser(db, user);
+            //set Inhouse flag
+            offerManageView.InhouseOrder = OfferProcessHelpers.SetInhouseFlag(offer, thisAppUser, thisCompany);
+
+            //set buttons
+            bool? displayAcceptButton = null;
+            bool? displayRejectButton = null;
+            bool? displayCounterButton = null;
+            bool? displayOfferButton = null;
+
+            OfferProcessHelpers.SetOrderButtons(db, user, offerManageView, out displayAcceptButton, out displayRejectButton, out displayCounterButton, out displayOfferButton);
+
+            offerManageView.DisplayAcceptButton = displayAcceptButton;
+            offerManageView.DisplayRejectButton = displayRejectButton;
+            offerManageView.DisplayCounterButton = displayCounterButton;
+            offerManageView.DisplayOfferButton = displayOfferButton;
 
             return offerManageView;
         }
@@ -480,41 +500,158 @@ namespace Distributor.Helpers
 
             foreach (Offer offerForUser in allOffersForUser)
             {
-                //AvailableListing availableListing = null;
-                //RequirementListing requirementListing = null;
-                //AppUser listingAppUser = null;
-
-                //AppUser offerAppUser = AppUserHelpers.GetAppUser(db, offerForUser.OfferOriginatorAppUserId);
-
-                //switch (offerForUser.ListingType)
-                //{
-                //    case ListingTypeEnum.Available:
-                //        availableListing = AvailableListingHelpers.GetAvailableListing(db, offerForUser.ListingId);
-                //        listingAppUser = AppUserHelpers.GetAppUser(db, availableListing.ListingOriginatorAppUserId);
-                //        break;
-                //    case ListingTypeEnum.Requirement:
-                //        requirementListing = RequirementListingHelpers.GetRequirementListing(db, offerForUser.ListingId);
-                //        listingAppUser = AppUserHelpers.GetAppUser(db, requirementListing.ListingOriginatorAppUserId);
-                //        break;
-                //}
-
-                //OfferManageView offerManageView = new OfferManageView()
-                //{
-                //    OfferDetails = offerForUser,
-                //    AvailableListingDetails = availableListing,
-                //    RequirementListingDetails = requirementListing,
-                //    OfferAppUserDetails = offerAppUser,
-                //    ListingAppUserDetails = listingAppUser,
-                //    OfferBranchDetails = BranchHelpers.GetBranch(db, offerAppUser.CurrentBranchId),
-                //    ListingBranchDetails = BranchHelpers.GetBranch(db, listingAppUser.CurrentBranchId)
-                //};
-
-                allOffersManageView.Add(GetOfferManageViewForOffer(db, offerForUser));
+                allOffersManageView.Add(GetOfferManageViewForOffer(db, offerForUser, user));
             }
 
             return allOffersManageView;
         }
 
         #endregion
+    }
+
+    public static class OfferProcessHelpers
+    {
+        public static bool SetInhouseFlag(Offer offer, AppUser appUser, Company company)
+        {
+            if (company.AllowBranchTrading)
+            {
+                if (offer.OfferOriginatorBranchId == appUser.CurrentBranchId)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                if (offer.OfferOriginatorCompanyId == company.CompanyId)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        public static void SetOrderButtons(ApplicationDbContext db, IPrincipal user, OfferManageView view, out bool? displayAcceptButton, out bool? displayRejectButton, out bool? displayCounterButton, out bool? displayOfferButton)
+        {
+            //Get settings for logged in user
+            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(db, user);
+
+            Guid acceptedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersAcceptedAuthorisationManageViewLevel, user);
+            Guid rejectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersRejectedAuthorisationManageViewLevel, user);
+            Guid returnedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersReturnedAuthorisationManageViewLevel, user);
+
+            //Set buttons
+            displayAcceptButton = true;
+            displayRejectButton = true;
+            displayCounterButton = true;
+            displayOfferButton = true;
+
+            if (view.InhouseOrder)
+            {
+                switch (view.OfferAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (view.OfferDetails.OfferOriginatorCompanyId != acceptedAuthorisationId)
+                            displayAcceptButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (view.OfferDetails.OfferOriginatorBranchId != acceptedAuthorisationId)
+                            displayAcceptButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (view.OfferDetails.OfferOriginatorAppUserId != acceptedAuthorisationId)
+                            displayAcceptButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+                switch (view.OfferAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (view.OfferDetails.OfferOriginatorCompanyId != rejectedAuthorisationId)
+                            displayRejectButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (view.OfferDetails.OfferOriginatorBranchId != rejectedAuthorisationId)
+                            displayRejectButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (view.OfferDetails.OfferOriginatorAppUserId != rejectedAuthorisationId)
+                            displayRejectButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+                switch (view.OfferAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (view.OfferDetails.OfferOriginatorCompanyId != returnedAuthorisationId)
+                            displayOfferButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (view.OfferDetails.OfferOriginatorBranchId != returnedAuthorisationId)
+                            displayOfferButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (view.OfferDetails.OfferOriginatorAppUserId != returnedAuthorisationId)
+                            displayOfferButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+            }
+            else
+            {
+                switch (view.ListingAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (view.OfferDetails.ListingOriginatorCompanyId != acceptedAuthorisationId)
+                            displayAcceptButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (view.OfferDetails.ListingOriginatorBranchId != acceptedAuthorisationId)
+                            displayAcceptButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (view.OfferDetails.ListingOriginatorAppUserId != acceptedAuthorisationId)
+                            displayAcceptButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+                switch (view.ListingAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (view.OfferDetails.ListingOriginatorCompanyId != rejectedAuthorisationId)
+                            displayRejectButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (view.OfferDetails.ListingOriginatorBranchId != rejectedAuthorisationId)
+                            displayRejectButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (view.OfferDetails.ListingOriginatorAppUserId != rejectedAuthorisationId)
+                            displayRejectButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+                switch (view.ListingAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (view.OfferDetails.ListingOriginatorCompanyId != returnedAuthorisationId)
+                            displayCounterButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (view.OfferDetails.ListingOriginatorBranchId != returnedAuthorisationId)
+                            displayCounterButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (view.OfferDetails.ListingOriginatorAppUserId != returnedAuthorisationId)
+                            displayCounterButton = false;
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+            }
+        }
     }
 }
