@@ -210,7 +210,7 @@
                     offerQuantityField = "offerquantityfield" + offerId.ToString();
                     counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
 
-                    if (item.InhouseOrder)
+                    if (item.InhouseOffer)
                     {
                         <tr id=@offerId class="warning">
                             @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)
@@ -342,7 +342,7 @@
                     offerQuantityField = "offerquantityfield" + offerId.ToString();
                     counterOfferQuantityField = "counterofferquantityfield" + offerId.ToString();
 
-                    if (item.InhouseOrder)
+                    if (item.InhouseOffer)
                     {
                         <tr id=@offerId class="warning">
                             @if (item.OfferDetails.CounterOfferQuantity == null || item.OfferDetails.CounterOfferQuantity == 0)

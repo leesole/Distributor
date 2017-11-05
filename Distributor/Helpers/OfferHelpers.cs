@@ -455,7 +455,7 @@ namespace Distributor.Helpers
             //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
             Company thisCompany = CompanyHelpers.GetCompanyForUser(db, user);
             //set Inhouse flag
-            offerManageView.InhouseOrder = OfferProcessHelpers.SetInhouseFlag(offer, thisAppUser, thisCompany);
+            offerManageView.InhouseOffer = OfferProcessHelpers.SetInhouseFlag(offer, thisAppUser, thisCompany);
 
             //set buttons
             bool? displayAcceptButton = null;
@@ -544,7 +544,7 @@ namespace Distributor.Helpers
             displayCounterButton = true;
             displayOfferButton = true;
 
-            if (view.InhouseOrder)
+            if (view.InhouseOffer)
             {
                 switch (view.OfferAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
                 {

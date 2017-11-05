@@ -326,181 +326,6 @@ else
 
     <div class="row">
         <div class="col-md-6">
-            @if (ViewBag.AllowBranchTrading)
-            {
-                if (Model.OfferDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
-                {
-                    inhouseOffer = true;
-                }
-            }
-            else
-            {
-                if (Model.OfferDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                {
-                    inhouseOffer = true;
-                }
-            }
-
-            @{
-                var displayAcceptButton = true;
-                var displayRejectButton = true;
-                var displayCounterButton = true;
-                var displayOfferButton = true;
-
-                if (ViewBag.ShowHistory)
-                {
-                    displayAcceptButton = false;
-                    displayRejectButton = false;
-                    displayCounterButton = false;
-                    displayOfferButton = false;
-                }
-            }
-
-            @if (inhouseOffer)
-            {
-                switch (Model.OfferAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
-                {
-                    case GeneralEnums.InternalSearchLevelEnum.Company:
-                        if (Model.OfferDetails.OfferOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
-                        {
-                            displayAcceptButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Branch:
-                        if (Model.OfferDetails.OfferOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
-                        {
-                            displayAcceptButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.User:
-                        if (Model.OfferDetails.OfferOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
-                        {
-                            displayAcceptButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                        break;
-                }
-                switch (Model.OfferAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
-                {
-                    case GeneralEnums.InternalSearchLevelEnum.Company:
-                        if (Model.OfferDetails.OfferOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
-                        {
-                            displayRejectButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Branch:
-                        if (Model.OfferDetails.OfferOriginatorBranchId != ViewBag.RejectedAuthorisationId)
-                        {
-                            displayRejectButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.User:
-                        if (Model.OfferDetails.OfferOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
-                        {
-                            displayRejectButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                        break;
-                }
-                switch (Model.OfferAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
-                {
-                    case GeneralEnums.InternalSearchLevelEnum.Company:
-                        if (Model.OfferDetails.OfferOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
-                        {
-                            displayOfferButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Branch:
-                        if (Model.OfferDetails.OfferOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
-                        {
-                            displayOfferButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.User:
-                        if (Model.OfferDetails.OfferOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
-                        {
-                            displayOfferButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                        break;
-                }
-            }
-            else
-            {
-                switch (Model.ListingAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
-                {
-                    case GeneralEnums.InternalSearchLevelEnum.Company:
-                        if (Model.OfferDetails.ListingOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
-                        {
-                            displayAcceptButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Branch:
-                        if (Model.OfferDetails.ListingOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
-                        {
-                            displayAcceptButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.User:
-                        if (Model.OfferDetails.ListingOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
-                        {
-                            displayAcceptButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                        break;
-                }
-                switch (Model.ListingAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
-                {
-                    case GeneralEnums.InternalSearchLevelEnum.Company:
-                        if (Model.OfferDetails.ListingOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
-                        {
-                            displayRejectButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Branch:
-                        if (Model.OfferDetails.ListingOriginatorBranchId != ViewBag.RejectedAuthorisationId)
-                        {
-                            displayRejectButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.User:
-                        if (Model.OfferDetails.ListingOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
-                        {
-                            displayRejectButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                        break;
-                }
-                switch (Model.ListingAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
-                {
-                    case GeneralEnums.InternalSearchLevelEnum.Company:
-                        if (Model.OfferDetails.ListingOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
-                        {
-                            displayCounterButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Branch:
-                        if (Model.OfferDetails.ListingOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
-                        {
-                            displayCounterButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.User:
-                        if (Model.OfferDetails.ListingOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
-                        {
-                            displayCounterButton = false;
-                        }
-                        break;
-                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                        break;
-                }
-            }
-
             <div class="login-panel panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Offer details</h3>
@@ -509,7 +334,7 @@ else
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-md-4">@Html.LabelFor(model => model.OfferDetails.CurrentOfferQuantity)</div>
-                            @if (inhouseOffer && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity > 0)
+                            @if (Model.InhouseOffer && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity > 0)
                             {
                                 <div class="col-md-8">@Html.EditorFor(model => model.OfferDetails.CurrentOfferQuantity, new { id = "offerquantityfield" })</div>
                             }
@@ -520,7 +345,7 @@ else
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">@Html.LabelFor(model => model.OfferDetails.CounterOfferQuantity)</div>
-                            @if (inhouseOffer && Model.OfferDetails.CurrentOfferQuantity > 0)
+                            @if (Model.InhouseOffer && Model.OfferDetails.CurrentOfferQuantity > 0)
                             {
                                 <div class="col-md-8">@Html.EditorFor(model => model.OfferDetails.CounterOfferQuantity, new { id = "counterofferquantityfield" })</div>
                             }

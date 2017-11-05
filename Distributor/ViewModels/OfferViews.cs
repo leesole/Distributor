@@ -36,6 +36,6 @@ namespace Distributor.ViewModels
         public bool? DisplayRejectButton { get; set; }
         public bool? DisplayCounterButton { get; set; }
         public bool? DisplayOfferButton { get; set; }
-        public bool InhouseOrder { get; set; }
+        public bool InhouseOffer { get; set; }
     }
 }
