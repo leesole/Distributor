@@ -417,9 +417,6 @@ namespace Distributor.Helpers
 
         public static OfferManageView GetOfferManageViewForOffer(ApplicationDbContext db, Offer offer, IPrincipal user)
         {
-            if (offer.OfferStatus != OfferStatusEnum.New && offer.OfferStatus != OfferStatusEnum.Countered)
-                return null;
-
             AppUser offerAppUser = AppUserHelpers.GetAppUser(db, offer.OfferOriginatorAppUserId);
 
             AvailableListing availableListing = null;

@@ -72,21 +72,6 @@ namespace Distributor.Controllers
         {
             List<OfferManageView> model = OfferManageHelpers.GetAllOffersManageView(User, true);
 
-            //If we allow branch trading then differentiate between branches for in/out trading, otherwise it is at company level
-            Company company = CompanyHelpers.GetCompanyForUser(User);
-            ViewBag.AllowBranchTrading = company.AllowBranchTrading;
-            if (company.AllowBranchTrading)
-                ViewBag.CurrentBranchOrCompanyId = AppUserHelpers.GetAppUser(User).CurrentBranchId;
-            else
-                ViewBag.CurrentBranchOrCompanyId = company.CompanyId;
-
-            //Set the authorisation levels and IDs for button activation on form
-            AppUserSettings settings = AppUserSettingsHelpers.GetAppUserSettingsForUser(User);
-
-            ViewBag.AcceptedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersAcceptedAuthorisationManageViewLevel, User);
-            ViewBag.RejectedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersRejectedAuthorisationManageViewLevel, User);
-            ViewBag.ReturnedAuthorisationId = DataHelpers.GetAuthorisationId(settings.OffersReturnedAuthorisationManageViewLevel, User);
-
             ViewBag.RequiredCount = 0;
             ViewBag.AvailableCount = 0;
 
