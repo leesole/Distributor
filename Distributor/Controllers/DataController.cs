@@ -22,11 +22,6 @@ namespace Distributor.Controllers
             return Json(ControlHelpers.AllBranchesForCompany(companyId));
         }
 
-        //public ActionResult ActivateUser(Guid appUserId)
-        //{
-        //    return Json(new { success = true });
-        //}
-
         //get branch object for branchid
         [HttpPost]
         public ActionResult GetBranchAddressDetailsForBranch(Guid branchId)

@@ -46,28 +46,28 @@ else
             <tr class="info">
                 <th></th>
                 <th>Group name</th>
+                <th>Owner</th>
                 <th>Type</th>
                 <th>Visibility</th>
                 <th>Invite</th>
                 <th>Acceptance</th>
-                <th>Owner</th>
             </tr>
             @for (int i = 0; i < Model.GroupListViewsCreatedByUser.Count; i++)
             {
                 <tr>
                     <td><input style="width:70px" type="button" value="Members" class="btn btn-sm btn-primary btn-block showhidemembers" /></td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Group.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].GroupOriginatorName)</td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Group.Type)</td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Group.VisibilityLevel)</td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Group.InviteLevel)</td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Group.AcceptanceLevel)</td>
-                    <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Group.GroupOriginatorAppUserId)</td>
                 </tr>
                 <tbody id="byuserbody" style="display:none">
                     <tr class="info">
                         <th></th>
                         <th>Members</th>
-                        <th>ReferenceId</th>
+                        <th>Name</th>
                         <th>Type</th>
                         <th></th>
                         <th></th>
@@ -78,8 +78,8 @@ else
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Members[z].ReferenceId)</td>
-                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Members[z].Type)</td>
+                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Members[z].GroupMemberName)</td>
+                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsCreatedByUser[i].Members[z].GroupMember.Type)</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -103,28 +103,28 @@ else
             <tr class="info">
                 <th></th>
                 <th>Group name</th>
+                <th>Owner</th>
                 <th>Type</th>
                 <th>Visibility</th>
                 <th>Invite</th>
                 <th>Acceptance</th>
-                <th>Owner</th>
             </tr>
             @for (int i = 0; i < Model.GroupListViewsRelevantToUser.Count; i++)
             {
                 <tr>
                     <td><input style="width:70px" type="button" value="Members" class="btn btn-sm btn-primary btn-block showhidemembers" /></td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Group.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].GroupOriginatorName)</td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Group.Type)</td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Group.VisibilityLevel)</td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Group.InviteLevel)</td>
                     <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Group.AcceptanceLevel)</td>
-                    <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Group.GroupOriginatorAppUserId)</td>
                 </tr>
                 <tbody id="byuserbody" style="display:none">
                     <tr class="info">
                         <th></th>
                         <th>Members</th>
-                        <th>ReferenceId</th>
+                        <th>Name</th>
                         <th>Type</th>
                         <th></th>
                         <th></th>
@@ -135,8 +135,8 @@ else
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Members[z].ReferenceId)</td>
-                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Members[z].Type)</td>
+                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Members[z].GroupMemberName)</td>
+                            <td>@Html.DisplayFor(modelItem => Model.GroupListViewsRelevantToUser[i].Members[z].GroupMember.Type)</td>
                             <td></td>
                             <td></td>
                             <td></td>

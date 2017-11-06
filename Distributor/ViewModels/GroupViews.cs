@@ -12,7 +12,15 @@ namespace Distributor.ViewModels
     public class GroupListView
     {
         public Group Group { get; set; }
-        public List<GroupMember> Members { get; set; }
+        public string GroupOriginatorName { get; set; }
+        //public List<GroupMember> Members { get; set; }
+        public List<GroupMemberListView> Members { get; set; }
+    }
+
+    public class GroupMemberListView
+    {
+        public GroupMember GroupMember { get; set; }
+        public string GroupMemberName { get; set; } //this could be user, branch, company
     }
 
     public class GroupEditView

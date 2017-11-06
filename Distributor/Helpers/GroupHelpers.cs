@@ -178,11 +178,39 @@ namespace Distributor.Helpers
             {
                 //Get members of the group
                 List<GroupMember> groupMembers = GroupMemberHelpers.GetMembersForGroup(db, group.GroupId);
+                List<GroupMemberListView> groupMembersView = new List<GroupMemberListView>();
+
+                foreach (GroupMember member in groupMembers)
+                {
+                    string memberName = null;
+
+                    switch (member.Type)
+                    {
+                        case LevelEnum.User:
+                            memberName = AppUserHelpers.GetAppUserName(db, member.ReferenceId);
+                            break;
+                        case LevelEnum.Branch:
+                            memberName = BranchHelpers.GetBranchNameTownPostCode(db, member.ReferenceId);
+                            break;
+                        case LevelEnum.Company:
+                            memberName = CompanyHelpers.GetCompanyNameTownPostCode(db, member.ReferenceId);
+                            break;
+                    }
+
+                    GroupMemberListView groupMemberListView = new GroupMemberListView()
+                    {
+                        GroupMember = member,
+                        GroupMemberName = memberName
+                    };
+
+                    groupMembersView.Add(groupMemberListView);
+                }
 
                 //create view record to add to list of view records
                 GroupListView view = new GroupListView();
                 view.Group = group;
-                view.Members = groupMembers;
+                view.GroupOriginatorName = AppUserHelpers.GetAppUserName(db, view.Group.GroupOriginatorAppUserId);
+                view.Members = groupMembersView;
 
                 list.Add(view);
             }
@@ -237,11 +265,39 @@ namespace Distributor.Helpers
             {
                 //Get members of the group
                 List<GroupMember> groupMembers = GroupMemberHelpers.GetMembersForGroup(db, group.GroupId);
+                List<GroupMemberListView> groupMembersView = new List<GroupMemberListView>();
+
+                foreach (GroupMember member in groupMembers)
+                {
+                    string memberName = null;
+
+                    switch (member.Type)
+                    {
+                        case LevelEnum.User:
+                            memberName = AppUserHelpers.GetAppUserName(db, member.ReferenceId);
+                            break;
+                        case LevelEnum.Branch:
+                            memberName = BranchHelpers.GetBranchNameTownPostCode(db, member.ReferenceId);
+                            break;
+                        case LevelEnum.Company:
+                            memberName = CompanyHelpers.GetCompanyNameTownPostCode(db, member.ReferenceId);
+                            break;
+                    }
+
+                    GroupMemberListView groupMemberListView = new GroupMemberListView()
+                    {
+                        GroupMember = member,
+                        GroupMemberName = memberName
+                    };
+
+                    groupMembersView.Add(groupMemberListView);
+                }
 
                 //create view record to add to list of view records
                 GroupListView view = new GroupListView();
                 view.Group = group;
-                view.Members = groupMembers;
+                view.GroupOriginatorName = AppUserHelpers.GetAppUserName(db, view.Group.GroupOriginatorAppUserId);
+                view.Members = groupMembersView;
 
                 list.Add(view);
             }
