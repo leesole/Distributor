@@ -94,7 +94,7 @@ namespace Distributor.Controllers
                     break;
                 case "group":
                     //Need to go to Group screen to select a group or allow adding of a new group
-                    return RedirectToAction("Create", "Groups", new { levelEnum = levelEnum, ofReferenceId = ofReferenceId, byReferenceId = byReferenceId, appUserid = byAppUserId });
+                    return RedirectToAction("Create", "Groups", new { level = levelEnum, ofReferenceId = ofReferenceId, byReferenceId = byReferenceId, appUserid = byAppUserId });
             }
 
             return Json(new { success = true });

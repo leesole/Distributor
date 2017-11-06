@@ -23,27 +23,6 @@ namespace Distributor.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        //// GET: AppUsers
-        //public ActionResult Index()
-        //{
-        //    return View(db.AppUsers.ToList());
-        //}
-
-        //// GET: AppUsers/Details/5
-        //public ActionResult Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    AppUser appUser = db.AppUsers.Find(id);
-        //    if (appUser == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(appUser);
-        //}
-
         private ApplicationUserManager _userManager;
 
         public ApplicationUserManager UserManager
@@ -131,27 +110,6 @@ namespace Distributor.Controllers
 
             return View(model);
         }
-
-        //// POST: AppUsers/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Create(AppUserView model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //    }
-
-        //    Branch branch = BranchHelpers.GetCurrentBranchForUser(AppUserHelpers.GetGuidFromUserGetAppUserId(User.Identity.GetAppUserId()));
-        //    //DropDown
-        //    ViewBag.BranchList = ControlHelpers.AllBranchesForCompanyListDropDown(branch.CompanyId, branch.BranchId);
-        //    ViewBag.UserRoleList = ControlHelpers.UserRoleEnumListDropDown();
-        //    ViewBag.EntityStatusList = ControlHelpers.EntityStatusEnumListDropDown();
-
-        //    return View(model);
-        //}
 
         // GET: AppUsers/Edit/5
         public ActionResult Edit(Guid? id)
@@ -252,32 +210,6 @@ namespace Distributor.Controllers
 
             return View(model);
         }
-
-        //// GET: AppUsers/Delete/5
-        //public ActionResult Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    AppUser appUser = db.AppUsers.Find(id);
-        //    if (appUser == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(appUser);
-        //}
-
-        //// POST: AppUsers/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(Guid id)
-        //{
-        //    AppUser appUser = db.AppUsers.Find(id);
-        //    db.AppUsers.Remove(appUser);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
 
         // GET: AppUsers Friends
         public ActionResult FriendIndex(Guid appUserId, string url)

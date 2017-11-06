@@ -16,7 +16,7 @@
         function buttonClick(id) {
             if (window.confirm("Proceed?")) {
                 var url = "/Data/ProcessButton";
-
+        
                 $.ajax({
                     url: url,
                     data: { buttonName: id },
