@@ -1,0 +1,267 @@
+﻿@using Distributor.Extenstions
+@using Distributor.Helpers
+
+@model Distributor.ViewModels.AvailableListingEditView
+
+@{
+    var buttonId = "";
+    var currentAppUserId = User.Identity.GetAppUserId();
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function buttonClick(id) {
+            if (window.confirm("Proceed?")) {
+                var url = "/Data/ProcessButton";
+
+                $.ajax({
+                    url: url,
+                    data: { buttonName: id },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+<nav class="navbar navbar-fixed-top">
+    <div class="navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*<a class="navbar-brand" href="#">Brand</a>*@
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="disabled">@Html.ActionLink("GENERAL INFO", "General", "Home")</li>
+                    <li>@Html.ActionLink("Requests", "Requirements", "GeneralInfo")</li>
+                    <li class="active">@Html.ActionLink("Available", "Available", "GeneralInfo")</li>
+                    <li>@Html.ActionLink("Campaigns", "Campaigns", "GeneralInfo")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+</nav>
+
+
+<div class="row" style="padding-top:55px">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">Available Listing <small>Listing Details</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Available", "Available", "GeneralInfo")</li>
+            <li class="active">Listing Details</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listing details</h3>
+            </div>
+            <div class="panel-body">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ListingId)
+
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemDescription)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ItemDescription)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemType)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ItemType.DisplayName()</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.QuantityRequired)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.QuantityRequired)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.QuantityFulfilled)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.QuantityFulfilled)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.QuantityOutstanding)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.QuantityOutstanding)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.UoM)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.UoM)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.AvailableFrom)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.AvailableFrom)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.AvailableTo)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.AvailableTo)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemCondition)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ItemCondition.DisplayName()</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.DisplayUntilDate)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.DisplayUntilDate)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.SellByDate)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.SellByDate)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.UseByDate)</div></div>
+                <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.UseByDate)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.DeliveryAvailable)</div></div>
+                <div class="row"><div class="col-md-12">@Model.DeliveryAvailable</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ListingStatus)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ListingStatus.DisplayName()</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listing created by</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Company</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingCompanyDetails.CompanyName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingCompanyDetails.CompanyRegistrationDetails)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingCompanyDetails.CharityRegistrationDetails)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingCompanyDetails.VATRegistrationDetails)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Model.Buttons.CompanyBlockButton)
+                            {
+                                buttonId = "block:company:" + Model.ListingCompanyDetails.CompanyId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.CompanyAddFriendButton)
+                            {
+                                buttonId = "friend:company:" + Model.ListingCompanyDetails.CompanyId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-user"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.CompanyAddToGroupButton)
+                            {
+                                buttonId = "group:company:" + Model.ListingCompanyDetails.CompanyId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-primary" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Branch</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.BranchName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Model.Buttons.BranchBlockButton)
+                            {
+                                buttonId = "block:branch:" + Model.ListingBranchDetails.BranchId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.BranchAddFriendButton)
+                            {
+                                buttonId = "friend:branch:" + Model.ListingBranchDetails.BranchId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-user"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.BranchAddToGroupButton)
+                            {
+                                buttonId = "group:branch:" + Model.ListingBranchDetails.BranchId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-primary" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">User</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingAppUser.FirstName)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">@Html.DisplayFor(model => model.ListingAppUser.LastName)</div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            @if (Model.Buttons.UserBlockButton)
+                            {
+                                buttonId = "block:user:" + Model.ListingAppUser.AppUserId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
+                            @if (Model.Buttons.UserAddFriendButton)
+                            {
+                                buttonId = "friend:user:" + Model.ListingAppUser.AppUserId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-success" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-user"></span>Friend</button>
+                            }
+                            @if (Model.Buttons.UserAddToGroupButton)
+                            {
+                                buttonId = "group:user:" + Model.ListingAppUser.AppUserId + ":" + currentAppUserId;
+                                <button type="submit" class="btn btn-xs btn-primary" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-plus"></span>Group</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

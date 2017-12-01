@@ -1,0 +1,222 @@
+﻿@using Distributor.Extenstions;
+@using Distributor.Enums;
+
+@model IEnumerable<Distributor.ViewModels.OrderManageView>
+
+@{
+    var orderId = Guid.Empty;
+    var despatchedButton = "";
+    var displayDespatchButton = true;
+    var deliveredButton = "";
+    var displayDeliveredButton = true;
+    var receivedButton = "";
+    var displayReceivedButton = true;
+    var collectedButton = "";
+    var displayCollectedButton = true;
+    var closedButton = "";
+    var displayClosedButton = true;
+    var currentAppUserId = User.Identity.GetAppUserId();
+    var inhouseOrder = false;
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function buttonClick(id, type) {
+            var thisOfferId = id.substr(12, 43);
+            if (window.confirm(type + " selected.  Proceed?")) {
+                var url = "/Orders/ChangeOrderStatus";
+
+                $.ajax({
+                    url: url,
+                    data: { orderId: id, orderStatus: type },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+<nav class="navbar navbar-fixed-top">
+    <div class="navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*<a class="navbar-brand" href="#">Brand</a>*@
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="disabled">@Html.ActionLink("MANAGE LISTINGS", "General", "Home")</li>
+                    <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                    <li>@Html.ActionLink("Available", "Available", "ManageListings")</li>
+                    <li>@Html.ActionLink("Campaigns", "Campaigns", "ManageListings")</li>
+                    <li>@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+                    <li class="active">@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+</nav>
+
+<div class="row" style="padding-top:55px">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">Manage Listings <small>Orders History</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+            <li class="active">Orders History</li>
+        </ol>
+        <p class="lead">Your historical orders out.</p>
+    </div>
+</div>
+
+<div class="table-responsive">
+    @if (ViewBag.OutOrderCount == null || ViewBag.OutOrderCount == 0)
+    {
+        <p>No details to show</p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <tr class="info">
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                inhouseOrder = false;
+
+                if (ViewBag.AllowBranchTrading)
+                {
+                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                    {
+                        inhouseOrder = true;
+                    }
+                }
+                else
+                {
+                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                    {
+                        inhouseOrder = true;
+                    }
+                }
+
+                if (inhouseOrder)
+                {
+                    orderId = item.OrderDetails.OrderId;
+
+                    <tr id=@orderId>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                    </tr>
+                }
+
+            }
+        </table>
+    }
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <p class="lead">Your historical orders in.</p>
+    </div>
+</div>
+
+<div class="table-responsive">
+    @if (ViewBag.InOrderCount == null || ViewBag.InOrderCount == 0)
+    {
+        <p>No details to show</p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <tr class="info">
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                inhouseOrder = false;
+
+                if (ViewBag.AllowBranchTrading)
+                {
+                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                    {
+                        inhouseOrder = true;
+                    }
+                }
+                else
+                {
+                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                    {
+                        inhouseOrder = true;
+                    }
+                }
+
+                if (inhouseOrder == false)
+                {
+                    orderId = item.OrderDetails.OrderId;
+
+                    <tr id=@orderId>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                    </tr>
+                }
+
+            }
+        </table>
+    }
+</div>

@@ -1,0 +1,208 @@
+﻿@using Microsoft.AspNet.Identity
+@using Distributor.Extenstions
+
+@model Distributor.ViewModels.BlockViewList
+
+@{
+    var userRole = User.Identity.GetCurrentUserRole();
+    var buttonId = Guid.Empty;
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function buttonClick(id) {
+            if (window.confirm("Proceed?")) {
+                var url = "/Data/RemoveBlock";
+
+                $.ajax({
+                    url: url,
+                    data: { blockId: id },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">
+            User blocks
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li><a href=@Model.CallingUrl>User changes</a></li>
+            <li class="active">User blocks</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">User blocks</h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.UserBlockListView == null || Model.UserBlockListView.Count == 0)
+                {
+                    <p>No user blocks to show</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr class="info">
+                                <th style="width:100px">Action</th>
+                                <th>Blocked by</th>
+                                <th>Blocked</th>
+                                <th>Blocked on</th>
+                                <th>Blocked by user</th>
+                            </tr>
+                            @for (int i = 0; i < Model.UserBlockListView.Count; i++)
+                            {
+                                if (Model.UserBlockListView[i].BlockedByLoggedInUser)
+                                {
+                                    buttonId = Model.UserBlockListView[i].BlockId;
+                                    <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span> Remove</button></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedByUserName)</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <th></th>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBlockListView[i].BlockedByUserName)</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Branch blocks</h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.UserBranchBlockListView == null || Model.UserBranchBlockListView.Count == 0)
+                {
+                    <p>No user branch blocks to show</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr class="info">
+                                <th style="width:100px">Action</th>
+                                <th>Blocked by</th>
+                                <th>Blocked</th>
+                                <th>Blocked on</th>
+                                <th>Blocked by user</th>
+                            </tr>
+                            @for (int i = 0; i < Model.UserBranchBlockListView.Count; i++)
+                            {
+                                if (Model.UserBranchBlockListView[i].BlockedByLoggedInUser)
+                                {
+                                    buttonId = Model.UserBranchBlockListView[i].BlockId;
+                                    <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span> Remove</button></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedByUserName)</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserBranchBlockListView[i].BlockedByUserName)</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Company blocks</h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.UserCompanyBlockListView == null || Model.UserCompanyBlockListView.Count == 0)
+                {
+                    <p>No user company blocks to show</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr class="info">
+                                <th style="width:100px">Action</th>
+                                <th>Blocked by</th>
+                                <th>Blocked</th>
+                                <th>Blocked on</th>
+                                <th>Blocked by user</th>
+                            </tr>
+                            @for (int i = 0; i < Model.UserCompanyBlockListView.Count; i++)
+                            {
+                                if (Model.UserCompanyBlockListView[i].BlockedByLoggedInUser)
+                                {
+                                    buttonId = Model.UserCompanyBlockListView[i].BlockId;
+                                    <tr style="background-color:lightyellow">
+                                        <td><button type="submit" class="btn btn-xs btn-danger" id=@buttonId onclick="buttonClick(id)"><span class="glyphicon glyphicon-remove"></span> Remove</button></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedByUserName)</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedByName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedOfName)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedOn)</td>
+                                        <td>@Html.DisplayFor(modelItem => Model.UserCompanyBlockListView[i].BlockedByUserName)</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

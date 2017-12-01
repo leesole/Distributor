@@ -1,0 +1,441 @@
+﻿@using Distributor.Enums
+@using Distributor.Helpers
+
+@model Distributor.ViewModels.RequirementListingEditView
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!-- Code to wire up your DatePicker -->
+    <script type="text/javascript">
+        $(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+        })
+
+        $(document).ready(function () {
+            var type = $("#detailtype").text();
+            if (type == "Show Details") {
+                $("#setstyle").prop('disabled', true);
+            }
+        });
+
+        function ChangeCampaign(campaignId) {
+            if (campaignId == "") {
+                document.getElementById("campaignname").innerText = "";
+                document.getElementById("campaignstrapline").innerText = "";
+                document.getElementById("campaigndescription").innerText = "";
+                document.getElementById("campaignstartdatetime").innerText = "";
+                document.getElementById("campaignenddatetime").innerText = "";
+            } else {
+                var url = "/Data/GetCampaignDetails";
+                $.ajax({
+                    url: url,
+                    data: { campaignId: campaignId },
+                    cache: false,
+                    type: "POST",
+                    success: function (data, status, jqXHR) {
+                        if ("success" === status) {
+                            if (data.campaignDetails.Name != null && data.campaignDetails.Name != "") {
+                                document.getElementById("campaignname").innerText = data.campaignDetails.Name;
+                            } else {
+                                document.getElementById("campaignname").innerText = "";
+                            }
+                            if (data.campaignDetails.StrapLine != null && data.campaignDetails.StrapLine != "") {
+                                document.getElementById("campaignstrapline").innerText = data.campaignDetails.StrapLine;
+                            } else {
+                                document.getElementById("campaignstrapline").innerText = "";
+                            }
+                            if (data.campaignDetails.Description != null && data.campaignDetails.Description != "") {
+                                document.getElementById("campaigndescription").innerText = data.campaignDetails.Description;
+                            } else {
+                                document.getElementById("campaigndescription").innerText = "";
+                            }
+                            if (data.campaignDetails.CampaignStartDateTime != null && data.campaignDetails.CampaignStartDateTime != "") {
+                                var t1 = new Date(parseInt(data.campaignDetails.CampaignStartDateTime.substring(6, 19).toString())).toLocaleDateString();
+                                document.getElementById("campaignstartdatetime").innerText = t1;
+                            } else {
+                                document.getElementById("campaignstartdatetime").innerText = "";
+                            }
+                            if (data.campaignDetails.CampaignEndDateTime != null && data.campaignDetails.CampaignEndDateTime != "") {
+                                var t2 = new Date(parseInt(data.campaignDetails.CampaignEndDateTime.substring(6, 19).toString())).toLocaleDateString();
+                                document.getElementById("campaignenddatetime").innerText = t2;
+                            } else {
+                                document.getElementById("campaignenddatetime").innerText = "";
+                            }
+                        } else {
+                            document.getElementById("campaignname").innerText = "";
+                            document.getElementById("campaignstrapline").innerText = "";
+                            document.getElementById("campaigndescription").innerText = "";
+                            document.getElementById("campaignstartdatetime").innerText = "";
+                            document.getElementById("campaignenddatetime").innerText = "";
+                        }
+                    },
+                    error: function (response) {
+                        alert("error : " + response);
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+<nav class="navbar navbar-fixed-top">
+    <div class="navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*<a class="navbar-brand" href="#">Brand</a>*@
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="disabled">@Html.ActionLink("MANAGE LISTINGS", "General", "Home")</li>
+                    <li class="active">@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                    <li>@Html.ActionLink("Available", "Available", "ManageListings")</li>
+                    <li>@Html.ActionLink("Campaigns", "Campaigns", "ManageListings")</li>
+                    <li>@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+                    <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+</nav>
+
+@if (ViewBag.ShowHistory)
+{
+    <div class="row" style="padding-top:55px">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="margin: 10px 0px 10px">Request History <small>Show Details</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                <li>@Html.ActionLink("Requests History", "History", "RequirementListings")</li>
+                <li class="active" id="detailtype">Show Details</li>
+            </ol>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row" style="padding-top:55px">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="margin: 10px 0px 10px">Request Listing <small>Edit Details</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                <li class="active" id="detailtype">Edit Details</li>
+            </ol>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row" id="setstyle">
+        <div class="col-md-6">
+            <div class="login-panel panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Listing details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.ListingId)
+                        @Html.HiddenFor(model => model.ListingAppUser)
+                        @Html.HiddenFor(model => model.ListingBranchDetails)
+                        @Html.HiddenFor(model => model.ListingCompanyDetails)
+
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemDescription)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ItemDescription, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.ItemDescription)
+                                    @Html.DisplayFor(model => model.ItemDescription)
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemType)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EnumDropDownListFor(model => model.ItemType, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ItemType, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.ItemType)
+                                    <p>@Model.ItemType.DisplayName()</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityRequired)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.QuantityRequired, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.QuantityRequired, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.QuantityRequired)
+                                    @Html.DisplayFor(model => model.QuantityRequired)
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityFulfilled)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.QuantityFulfilled, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.QuantityFulfilled, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.QuantityFulfilled)
+                                    @Html.DisplayFor(model => model.QuantityFulfilled)
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.QuantityOutstanding)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.QuantityOutstanding, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.QuantityOutstanding, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.QuantityOutstanding)
+                                    @Html.DisplayFor(model => model.QuantityOutstanding)
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.UoM)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.UoM, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UoM, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.UoM)
+                                    @Html.DisplayFor(model => model.UoM)
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.RequiredFrom)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.RequiredFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.RequiredFrom, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.RequiredFrom)
+                                    @Html.DisplayFor(model => model.RequiredFrom)
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.RequiredTo)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.RequiredTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.ValidationMessageFor(model => model.RequiredTo, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.RequiredTo)
+                                    @Html.DisplayFor(model => model.RequiredTo)
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.AcceptDamagedItems)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.AcceptDamagedItems, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AcceptDamagedItems, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.AcceptDamagedItems)
+                                    <p>@Model.AcceptDamagedItems</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.AcceptOutOfDateItems)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.AcceptOutOfDateItems, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AcceptOutOfDateItems, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.AcceptOutOfDateItems)
+                                    <p>@Model.AcceptOutOfDateItems</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.CollectionAvailable)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EditorFor(model => model.CollectionAvailable, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CollectionAvailable, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.CollectionAvailable)
+                                    <p>@Model.CollectionAvailable</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.ListingStatus)</div>
+                            <div class="col-md-8">
+                                @Html.EnumDropDownListFor(model => model.ListingStatus, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ListingStatus, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Listing created by</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.FirstName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.FirstName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUser.LastName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUser.LastName)</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.BranchName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.BranchName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingOriginatorDateTime)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingOriginatorDateTime)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Campaign details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="row">
+                            @Html.LabelFor(model => model.SelectedCampaignId, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(model => model.SelectedCampaignId, (SelectList)ViewBag.CampaignList, "Select campaign", new { @class = "form-control", onchange = "javascipt:ChangeCampaign(this.value);" })
+                                @Html.ValidationMessageFor(model => model.SelectedCampaignId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignName)</div>
+                        <div class="col-md-8" id="campaignname">@Html.DisplayFor(model => model.CampaignName)</div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignStrapLine)</div>
+                        <div class="col-md-8" id="campaignstrapline">@Html.DisplayFor(model => model.CampaignStrapLine)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignDescription)</div>
+                        <div class="col-md-8" id="campaigndescription">@Html.DisplayFor(model => model.CampaignDescription)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignStartDateTime)</div>
+                        <div class="col-md-8" id="campaignstartdatetime">@Html.DisplayFor(model => model.CampaignStartDateTime)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.CampaignEndDateTime)</div>
+                        <div class="col-md-8" id="campaignenddatetime">@Html.DisplayFor(model => model.CampaignEndDateTime)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    if (ViewBag.ShowHistory == false)
+    {
+        <div class="form-group">
+            <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+            <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
+        </div>
+    }
+
+}

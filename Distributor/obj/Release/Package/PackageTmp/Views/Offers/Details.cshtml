@@ -1,0 +1,607 @@
+﻿@using Distributor.Enums
+@using Distributor.Extenstions
+@using Distributor.Helpers
+
+@model Distributor.ViewModels.OfferManageView
+
+@{
+    var currentAppUserId = User.Identity.GetAppUserId();
+    var inhouseOffer = false;
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var type = $("#detailtype").text();
+            if (type == "Show Details") {
+                $("#setstyle").prop('disabled', true);
+            }
+        });
+
+        function acceptButtonClick() {
+            var offerId = @Html.Raw(Json.Encode(Model.OfferDetails.OfferId));
+            if (window.confirm("Accept this offer?")) {
+                var url = "/Offers/AcceptOffer";
+
+                $.ajax({
+                    url: url,
+                    data: { offerId: offerId },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        function rejectButtonClick() {
+            var offerId = @Html.Raw(Json.Encode(Model.OfferDetails.OfferId));
+            if (window.confirm("Reject this offer?")) {
+                var url = "/Offers/RejectOffer";
+
+                $.ajax({
+                    url: url,
+                    data: { offerId: offerId },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        function saveOfferField() {
+            var offerId = @Html.Raw(Json.Encode(Model.OfferDetails.OfferId));
+            var offerQuantityFieldId = "offerquantityfield";
+            var offerQty = $("#" + offerQuantityFieldId).val();
+
+            if (window.confirm("Submit this new offer?")) {
+                var url = "/Offers/SubmitNewOffer";
+
+                $.ajax({
+                    url: url,
+                    data: { offerId: offerId, offerQuantity: offerQty },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        function saveCounterOfferField() {
+            var offerId = @Html.Raw(Json.Encode(Model.OfferDetails.OfferId));
+            var offerQuantityFieldId = "counterofferquantityfield";
+            var offerQty = $("#" + offerQuantityFieldId).val();
+            if (window.confirm("Submit this counter offer?")) {
+                var url = "/Offers/SubmitCounterOffer";
+
+                $.ajax({
+                    url: url,
+                    data: { offerId: offerId, offerQuantity: offerQty },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+<nav class="navbar navbar-fixed-top">
+    <div class="navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*<a class="navbar-brand" href="#">Brand</a>*@
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="disabled">@Html.ActionLink("MANAGE LISTINGS", "General", "Home")</li>
+                    <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                    <li>@Html.ActionLink("Available", "Available", "ManageListings")</li>
+                    <li>@Html.ActionLink("Campaigns", "Campaigns", "ManageListings")</li>
+                    <li class="active">@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+                    <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+</nav>
+
+@if (ViewBag.ShowHistory)
+{
+    <div class="row" style="padding-top:55px">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="margin: 10px 0px 10px">Offers <small>Offer History</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+                <li>@Html.ActionLink("Offers History", "History", "Offers")</li>
+                <li class="active" id="detailtype">Offer History</li>
+            </ol>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row" style="padding-top:55px">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="margin: 10px 0px 10px">Offers <small>Offer Details</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+                <li class="active" id="detailtype">Offer Details</li>
+            </ol>
+        </div>
+    </div>
+}
+
+<div  id="setstyle">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Listing details</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.AvailableListingDetails != null)
+                    {
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.ItemDescription)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.ItemDescription)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.ItemType)</div>
+                            <div class="col-md-8">@Model.AvailableListingDetails.ItemType.DisplayName()</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.ItemCondition)</div>
+                            <div class="col-md-8">@Model.AvailableListingDetails.ItemCondition.DisplayName()</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.AvailableFrom)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.AvailableFrom)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.AvailableTo)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.AvailableTo)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.DeliveryAvailable)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.DeliveryAvailable)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.DisplayUntilDate)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.DisplayUntilDate)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.SellByDate)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.SellByDate)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.UseByDate)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.UseByDate)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.QuantityOutstanding)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.QuantityOutstanding)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.AvailableListingDetails.UoM)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.AvailableListingDetails.UoM)</div>
+                        </div>
+                    }
+                    @if (Model.RequirementListingDetails != null)
+                    {
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.ItemDescription)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.ItemDescription)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.ItemType)</div>
+                            <div class="col-md-8">@Model.RequirementListingDetails.ItemType.DisplayName()</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.AcceptDamagedItems)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.AcceptDamagedItems)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.AcceptOutOfDateItems)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.RequiredFrom)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.RequiredFrom)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.RequiredTo)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.RequiredTo)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.CollectionAvailable)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.CollectionAvailable)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.QuantityOutstanding)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.QuantityOutstanding)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">@Html.LabelFor(model => model.RequirementListingDetails.UoM)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.RequirementListingDetails.UoM)</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Listing user details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUserDetails.FirstName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUserDetails.FirstName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingAppUserDetails.LastName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingAppUserDetails.LastName)</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.BranchName) </div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.BranchName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressLine1) </div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressLine1)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressTownCity) </div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressTownCity)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressCounty) </div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressCounty)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.AddressPostcode) </div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.AddressPostcode)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.TelephoneNumber) </div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.TelephoneNumber)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.Email) </div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ListingBranchDetails.Email)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.ListingBranchDetails.BusinessType) </div>
+                        <div class="col-md-8">@Model.ListingBranchDetails.BusinessType.DisplayName()</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            @if (ViewBag.AllowBranchTrading)
+            {
+                if (Model.OfferDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                {
+                    inhouseOffer = true;
+                }
+            }
+            else
+            {
+                if (Model.OfferDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
+                {
+                    inhouseOffer = true;
+                }
+            }
+
+            @{
+                var displayAcceptButton = true;
+                var displayRejectButton = true;
+                var displayCounterButton = true;
+                var displayOfferButton = true;
+
+                if (ViewBag.ShowHistory)
+                {
+                    displayAcceptButton = false;
+                    displayRejectButton = false;
+                    displayCounterButton = false;
+                    displayOfferButton = false;
+                }
+            }
+
+            @if (inhouseOffer)
+            {
+                switch (Model.OfferAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (Model.OfferDetails.OfferOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
+                        {
+                            displayAcceptButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (Model.OfferDetails.OfferOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
+                        {
+                            displayAcceptButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (Model.OfferDetails.OfferOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
+                        {
+                            displayAcceptButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+                switch (Model.OfferAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (Model.OfferDetails.OfferOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
+                        {
+                            displayRejectButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (Model.OfferDetails.OfferOriginatorBranchId != ViewBag.RejectedAuthorisationId)
+                        {
+                            displayRejectButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (Model.OfferDetails.OfferOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
+                        {
+                            displayRejectButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+                switch (Model.OfferAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (Model.OfferDetails.OfferOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
+                        {
+                            displayOfferButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (Model.OfferDetails.OfferOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
+                        {
+                            displayOfferButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (Model.OfferDetails.OfferOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
+                        {
+                            displayOfferButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+            }
+            else
+            {
+                switch (Model.ListingAppUserSettings.OffersAcceptedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (Model.OfferDetails.ListingOriginatorCompanyId != ViewBag.AcceptedAuthorisationId)
+                        {
+                            displayAcceptButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (Model.OfferDetails.ListingOriginatorBranchId != ViewBag.AcceptedAuthorisationId)
+                        {
+                            displayAcceptButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (Model.OfferDetails.ListingOriginatorAppUserId != ViewBag.AcceptedAuthorisationId)
+                        {
+                            displayAcceptButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+                switch (Model.ListingAppUserSettings.OffersRejectedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (Model.OfferDetails.ListingOriginatorCompanyId != ViewBag.RejectedAuthorisationId)
+                        {
+                            displayRejectButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (Model.OfferDetails.ListingOriginatorBranchId != ViewBag.RejectedAuthorisationId)
+                        {
+                            displayRejectButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (Model.OfferDetails.ListingOriginatorAppUserId != ViewBag.RejectedAuthorisationId)
+                        {
+                            displayRejectButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+                switch (Model.ListingAppUserSettings.OffersReturnedAuthorisationManageViewLevel)
+                {
+                    case GeneralEnums.InternalSearchLevelEnum.Company:
+                        if (Model.OfferDetails.ListingOriginatorCompanyId != ViewBag.ReturnedAuthorisationId)
+                        {
+                            displayCounterButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Branch:
+                        if (Model.OfferDetails.ListingOriginatorBranchId != ViewBag.ReturnedAuthorisationId)
+                        {
+                            displayCounterButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.User:
+                        if (Model.OfferDetails.ListingOriginatorAppUserId != ViewBag.ReturnedAuthorisationId)
+                        {
+                            displayCounterButton = false;
+                        }
+                        break;
+                    case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
+                        break;
+                }
+            }
+
+            <div class="login-panel panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Offer details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferDetails.CurrentOfferQuantity)</div>
+                            @if (inhouseOffer && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity > 0)
+                            {
+                                <div class="col-md-8">@Html.EditorFor(model => model.OfferDetails.CurrentOfferQuantity, new { id = "offerquantityfield" })</div>
+                            }
+                            else
+                            {
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OfferDetails.CurrentOfferQuantity)</div>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferDetails.CounterOfferQuantity)</div>
+                            @if (inhouseOffer && Model.OfferDetails.CurrentOfferQuantity > 0)
+                            {
+                                <div class="col-md-8">@Html.EditorFor(model => model.OfferDetails.CounterOfferQuantity, new { id = "counterofferquantityfield" })</div>
+                            }
+                            else
+                            {
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OfferDetails.CounterOfferQuantity)</div>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4">@Html.LabelFor(model => model.OfferDetails.PreviousOfferQuantity)</div>
+                            <div class="col-md-8">@Html.DisplayFor(model => model.OfferDetails.PreviousOfferQuantity)</div>
+                        </div>
+                    </div>
+                </div>
+                @if (Model.OfferDetails.OfferOriginatorAppUserId.ToString() == currentAppUserId && Model.OfferDetails.CounterOfferQuantity != null && Model.OfferDetails.CounterOfferQuantity > 0 && ViewBag.ShowHistory == false)
+                {
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-sm btn-success" onclick="acceptButtonClick()"><span class="glyphicon glyphicon-ok"></span> Accept</button>
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="rejectButtonClick()"><span class="glyphicon glyphicon-remove"></span> Reject</button>
+                        <button type="submit" class="btn btn-sm btn-success" onclick="saveOfferField()"><span class="glyphicon glyphicon-ok"></span> Save offer</button>
+                    </div>
+                }
+                else if (Model.OfferDetails.ListingOriginatorAppUserId.ToString() == currentAppUserId && Model.OfferDetails.CurrentOfferQuantity > 0 && ViewBag.ShowHistory == false)
+                {
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-sm btn-success" onclick="acceptButtonClick()"><span class="glyphicon glyphicon-ok"></span> Accept</button>
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="rejectButtonClick()"><span class="glyphicon glyphicon-remove"></span> Reject</button>
+                        <button type="submit" class="btn btn-sm btn-success" onclick="saveCounterOfferField()"><span class="glyphicon glyphicon-ok"></span> Save counter offer</button>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Offer user details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferAppUserDetails.FirstName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferAppUserDetails.FirstName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferAppUserDetails.LastName)</div>
+                        <div class="col-md-8">@Html.DisplayNameFor(model => model.OfferAppUserDetails.LastName)</div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.BranchName)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.BranchName)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressLine1)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressLine1)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressTownCity)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressTownCity)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressCounty)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressCounty)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.AddressPostcode)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.AddressPostcode)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.TelephoneNumber)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.TelephoneNumber)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.Email)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.OfferBranchDetails.Email)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">@Html.LabelFor(model => model.OfferBranchDetails.BusinessType)</div>
+                        <div class="col-md-8">@Model.OfferBranchDetails.BusinessType.DisplayName()</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

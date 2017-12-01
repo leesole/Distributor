@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Distributor.Models.Branch>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index Form</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BranchName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusinessType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressLine1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressLine2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressLine3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressTownCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressCounty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressPostcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelephoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntityStatus)
+            </th>
+        </tr>
+
+    </table>
+    <div>
+        <input type="submit" value="save">
+    </div>
+}

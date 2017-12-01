@@ -1,0 +1,215 @@
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\ApplicationInsights.config
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\csc.exe
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\csc.exe.config
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\csc.rsp
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\csi.exe
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\csi.rsp
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\System.AppContext.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\System.Collections.Immutable.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\System.IO.FileSystem.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\System.Reflection.Metadata.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\vbc.exe
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\vbc.exe.config
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\vbc.rsp
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\VBCSCompiler.exe
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Distributor.Tests.dll.config
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Distributor.Tests.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Distributor.Tests.pdb
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Distributor.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.Helpers.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.Mvc.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.Razor.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.Optimization.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Owin.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\EntityFramework.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Distributor.pdb
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Distributor.dll.config
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.Helpers.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.Mvc.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.Razor.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\System.Web.Optimization.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\EntityFramework.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\obj\Debug\Distributor.Tests.csprojResolveAssemblyReference.cache
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\obj\Debug\Distributor.Tests.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor.Tests\obj\Debug\Distributor.Tests.pdb
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\ApplicationInsights.config
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\csc.exe
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\csc.exe.config
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\csc.rsp
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\csi.exe
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\csi.rsp
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\System.AppContext.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\System.Collections.Immutable.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\System.IO.FileSystem.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\System.Reflection.Metadata.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\vbc.exe
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\vbc.exe.config
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\vbc.rsp
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\VBCSCompiler.exe
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Distributor.Tests.dll.config
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Distributor.Tests.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Distributor.Tests.pdb
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Distributor.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.Helpers.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.Mvc.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.Razor.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.Optimization.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Owin.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\EntityFramework.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Distributor.pdb
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Distributor.dll.config
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.Helpers.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.Mvc.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.Razor.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\System.Web.Optimization.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\EntityFramework.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\obj\Debug\Distributor.Tests.csprojResolveAssemblyReference.cache
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\obj\Debug\Distributor.Tests.csproj.CoreCompileInputs.cache
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\obj\Debug\Distributor.Tests.dll
+C:\Users\leesole\source\repos\Distributor\Distributor.Tests\obj\Debug\Distributor.Tests.pdb
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\ApplicationInsights.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\csc.exe
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\csc.exe.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\csc.rsp
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\csi.exe
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\csi.rsp
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\System.AppContext.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\System.Collections.Immutable.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\System.IO.FileSystem.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\System.Reflection.Metadata.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\vbc.exe
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\vbc.exe.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\vbc.rsp
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\VBCSCompiler.exe
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Distributor.Tests.dll.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Distributor.Tests.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Distributor.Tests.pdb
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Distributor.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.Helpers.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.Mvc.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.Razor.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.WebPages.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Owin.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.Optimization.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Owin.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\EntityFramework.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Distributor.pdb
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Distributor.dll.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.Helpers.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.Mvc.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.Razor.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.WebPages.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Owin.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\System.Web.Optimization.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\EntityFramework.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\obj\Debug\Distributor.Tests.csprojResolveAssemblyReference.cache
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\obj\Debug\Distributor.Tests.csproj.CoreCompileInputs.cache
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\obj\Debug\Distributor.Tests.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor.Tests\obj\Debug\Distributor.Tests.pdb

@@ -1,0 +1,350 @@
+﻿@using Microsoft.AspNet.Identity
+@using Distributor.Extenstions
+@using Distributor.Helpers
+
+@model Distributor.ViewModels.DashboardView
+
+@{
+    var userRole = User.Identity.GetCurrentUserRole();
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+
+        //Render tables
+        $(document).ready(function () {
+            $('#yourRequestsTable').dataTable();
+            $('#availableListingsTable').dataTable();
+
+        });
+
+
+            var slideIndex = 1;
+            showDivs(slideIndex);
+
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function showDivs(n) {
+                var i;
+                var xImage = document.getElementsByClassName("campaignImage");
+                var xWebsite = document.getElementsByClassName("campaignWebsite");
+                if (n > xImage.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = xImage.length }
+                for (i = 0; i < xImage.length; i++) {
+                    xImage[i].style.display = "none";
+                    xWebsite[i].style.display = "none";
+                }
+                try {
+                    xImage[slideIndex - 1].style.display = "block";
+                    xWebsite[slideIndex - 1].style.display = "block";
+                } catch(err){}
+            }
+
+
+            var slideIndexUser = 1;
+            showDivsUser(slideIndexUser);
+
+            function plusDivsUser(z) {
+                showDivsUser(slideIndexUser += z);
+            }
+
+            function showDivsUser(z) {
+                var y;
+                var xImageUser = document.getElementsByClassName("userCampaignImage");
+                var xWebsiteUser = document.getElementsByClassName("userCampaignWebsite");
+                if (z > xImageUser.length) { slideIndexUser = 1 }
+                if (z < 1) { slideIndexUser = xImageUser.length }
+                for (y = 0; y < xImageUser.length; y++) {
+                    xImageUser[y].style.display = "none";
+                    xWebsiteUser[y].style.display = "none";
+                }
+                try {
+                    xImageUser[slideIndexUser - 1].style.display = "block";
+                    xWebsiteUser[slideIndexUser - 1].style.display = "block";
+                } catch (err){}
+            }
+
+    </script>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">Dashboard <small>Home</small></h1>
+        <ol class="breadcrumb">
+            <li class="active">Home</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+
+        @if (userRole == "Manager" || userRole == "Admin" || userRole == "SuperUser")
+        {
+            <div class="col-md-6" style="padding:0px 5px 5px 0px">
+                <div class="card bg-danger text-center" style="padding:10px" onclick="location.href='@Url.Action("Tasks", "Admin", new { redirect = Request.Url.ToString() })'">
+                    <h4>Tasks</h4>
+                    <h1><b>@ViewBag.OutstandingTasks</b></h1>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding:0px 5px 5px 0px">
+                <div class="card bg-danger text-center" style="padding:10px" onclick="location.href='@Url.Action("Index", "Action", new { redirect = Request.Url.ToString() })'">
+                    <h4>Actions</h4>
+                    <h1><b>@ViewBag.OutstandingActions</b></h1>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-12" style="padding:0px 5px 5px 0px">
+                <div class="card bg-danger text-center" style="padding:10px" onclick="location.href='@Url.Action("Index", "Action", new { redirect = Request.Url.ToString() })'">
+                    <h4>Actions</h4>
+                    <h1><b>@ViewBag.OutstandingActions</b></h1>
+                </div>
+            </div>
+        }
+        <div class="col-md-6" style="padding:0px 5px 5px 0px" onclick="location.href='@Url.Action("Offers", "ManageListings")'">
+            <div class="card bg-warning text-center" style="padding:10px">
+                <h4>Offers</h4>
+                <h1><b>@ViewBag.OutstandingOffers</b></h1>
+            </div>
+        </div>
+        <div class="col-md-6" style="padding:0px 5px 5px 0px" onclick="location.href='@Url.Action("Orders", "ManageListings")'">
+            <div class="card bg-warning text-center" style="padding:10px">
+                <h4>Orders</h4>
+                <h1><b>@ViewBag.Orders</b></h1>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="padding:0px 5px 5px 0px">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading" onclick="location.href='@Url.Action("Campaigns", "ManageListings")'">
+                    <h3 class="panel-title">Your campaigns</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.CampaignList == null || Model.CampaignList.Count == 0)
+                    {
+                        <p>No campaigns to show</p>
+                    }
+                    else
+                    {
+                        <div class="w3-content w3-display-container">
+                            @for (int b = 0; b < Model.CampaignList.Count; b++)
+                            {
+                                var userImageSource = "";
+                                try
+                                {
+                                    var userBase64 = Convert.ToBase64String(Model.CampaignList[b].Image);
+                                    userImageSource = String.Format("data:image/gif;base64,{0}", userBase64);
+                                    <img class="userCampaignImage" src=@userImageSource style="width:100%" />
+                                }
+                                catch
+                                {
+                                    <img class="userCampaignImage" src="~/images/NoImage.png" style="width:100%" />
+                                }
+                                if (Model.CampaignList[b].Website != null && Model.CampaignList[b].Website != "")
+                                {
+                                    var userWebAddress = "http://" + @Model.CampaignList[b].Website;
+                                    <p class="userCampaignWebsite"><a href=@userWebAddress>Visit website</a></p>
+                                }
+                                else
+                                {
+                                    <p class="userCampaignWebsite"></p>
+                                }
+                                <button class="w3-button w3-black w3-display-left" onclick="plusDivsUser(-1)">&#10094;</button>
+                                <button class="w3-button w3-black w3-display-right" onclick="plusDivsUser(1)">&#10095;</button>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="padding:0px 5px 5px 0px">
+            <div class="login-panel panel panel-info">
+                <div class="panel-heading" onclick="location.href='@Url.Action("Campaigns", "GeneralInfo")'">
+                    <h3 class="panel-title">Recent campaigns</h3>
+                </div>
+                <div class="panel-body">
+                    @if (Model.CampaignDashboardList == null || Model.CampaignDashboardList.Count == 0)
+                    {
+                        <p>No recent campaigns to show</p>
+                    }
+                    else
+                    {
+                        <div class="w3-content w3-display-container">
+                            @for (int a = 0; a < Model.CampaignDashboardList.Count; a++)
+                            {
+                                var imageSource = "";
+                                try
+                                {
+                                    var base64 = Convert.ToBase64String(Model.CampaignDashboardList[a].Image);
+                                    imageSource = String.Format("data:image/gif;base64,{0}", base64);
+                                    <img class="campaignImage" src=@imageSource style="width:100%" />
+                                }
+                                catch
+                                {
+                                    <img class="campaignImage" src="~/images/NoImage.png" style="width:100%" />
+                                }
+                                if (Model.CampaignDashboardList[a].Website != null && Model.CampaignDashboardList[a].Website != "")
+                                {
+                                    var webAddress = "http://" + @Model.CampaignDashboardList[a].Website;
+                                    <p class="campaignWebsite"><a href=@webAddress>Visit website</a></p>
+                                }
+                                else
+                                {
+                                    <p class="campaignWebsite"></p>
+                                }
+                                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-8">
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Your requests listing</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3">
+                    <div class="card bg-info text-center" style="padding:10px" onclick="location.href='@Url.Action("Requirements", "ManageListings")'">
+                        <h4>Current Requests</h4>
+                        <h1><b>@ViewBag.CurrentRequests</b></h1>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card bg-danger text-center" style="padding:10px" onclick="location.href='@Url.Action("Requirements", "ManageListings")'">
+                                <h4>Oustanding</h4>
+                                <h1><b>@ViewBag.RequestsOutstanding</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-warning text-center" style="padding:10px" onclick="location.href='@Url.Action("Requirements", "ManageListings")'">
+                                <h4>Fulfilled</h4>
+                                <h1><b>@ViewBag.RequestsFulfilled</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-info text-center" style="padding:10px" onclick="location.href='@Url.Action("Requirements", "ManageListings")'">
+                                <h4>Total</h4>
+                                <h1><b>@ViewBag.RequestsTotal</b></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <br />
+                    @if (Model.RequirementListingDashboardList == null || Model.RequirementListingDashboardList.Count == 0)
+                    {
+                        <p>No recent requirements to show</p>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table id="yourRequestsTable" class="table table-condensed">
+                                <thead>
+                                    <tr class="info">
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Quantity required</th>
+                                        <th>UoM</th>
+                                    </tr>
+                                </thead>
+                                <tbody onclick="location.href='@Url.Action("Requirements", "GeneralInfo")'">
+                                    @foreach (var item in Model.RequirementListingDashboardList)
+                                    {
+                                        <tr id=@item.ListingId>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="login-panel panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Your available listing</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3">
+                    <div class="card bg-info text-center" style="padding:10px" onclick="location.href='@Url.Action("Available", "ManageListings")'">
+                        <h4>Current Available</h4>
+                        <h1><b>@ViewBag.CurrentAvailable</b></h1>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card bg-danger text-center" style="padding:10px" onclick="location.href='@Url.Action("Available", "ManageListings")'">
+                                <h4>Oustanding</h4>
+                                <h1><b>@ViewBag.AvailableOutstanding</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-warning text-center" style="padding:10px" onclick="location.href='@Url.Action("Available", "ManageListings")'">
+                                <h4>Fulfilled</h4>
+                                <h1><b>@ViewBag.AvailableFulfilled</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-info text-center" style="padding:10px" onclick="location.href='@Url.Action("Available", "ManageListings")'">
+                                <h4>Total</h4>
+                                <h1><b>@ViewBag.AvailableTotal</b></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <br />
+                    @if (Model.AvailableListingDashboardList == null || Model.AvailableListingDashboardList.Count == 0)
+                    {
+                        <p>No available items to show</p>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table id="availableListingsTable" class="table table-condensed">
+                                <thead>
+                                    <tr class="info">
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Quantity available</th>
+                                        <th>UoM</th>
+                                    </tr>
+                                </thead>
+                                <tbody onclick="location.href='@Url.Action("Available", "GeneralInfo")'">
+                                    @foreach (var item in Model.AvailableListingDashboardList)
+                                    {
+                                        <tr id=@item.ListingId>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.UoM)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿@using Distributor.Helpers
+
+@model IEnumerable<Distributor.ViewModels.UserActionView>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">
+            Actions
+            <small>Your current actions</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+            <li class="active">Actions</li>
+        </ol>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr class="info">
+            <th colspan="2">Actions</th>
+            <th>@Html.DisplayNameFor(model => model.ActionType)</th>
+            <th>@Html.DisplayNameFor(model => model.ActionDescription)</th>
+            <th>@Html.DisplayNameFor(model => model.Reference)</th>
+            <th>@Html.DisplayNameFor(model => model.CreatedOn)</th>
+            <th>@Html.DisplayNameFor(model => model.CreatedBy)</th>
+            <th>@Html.DisplayNameFor(model => model.EntityStatus)</th>
+        </tr>
+
+        @if (Model == null)
+        {
+            <tr>No details to show</tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                @Html.HiddenFor(modelItem => item.UserActionId)
+                @Html.HiddenFor(modelItem => item.ActionType)
+                @Html.HiddenFor(modelItem => item.EntityStatus)
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-xs btn-success btn-block confirmapprove"><span class="glyphicon glyphicon-ok"></span> Approve</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-xs btn-danger btn-block confirmcancel"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                    </td>
+                    <td>@item.ActionType.DisplayName()</td>
+                    <td>@Html.DisplayFor(modelItem => item.ActionDescription)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Reference)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
+                    <td>@item.EntityStatus.DisplayName()</td>
+                </tr>
+            }
+        }
+    </table>
+
+</div>

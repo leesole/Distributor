@@ -1,0 +1,25 @@
+﻿<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Current Campaigns</h2>
+        <p>
+            What current campaigns are being run?  Who needs what?  What is happening in your area?
+        </p>
+        <p><a class="btn btn-default" href=@Url.Action("Campaigns", "Home")>See campaigns &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Lastest Requests</h2>
+        <p>Food banks and charities always need food and other items.  What are the latest requests in your area?</p>
+        <p><a class="btn btn-default" href=@Url.Action("Requests", "Home")>See requests &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>About Us</h2>
+        <p>What is the point of this website?  What is it we plan to achieve? There are lots of charities that all are out to help those less fortunate, what is it that we do to help that happen?</p>
+        <p><a class="btn btn-default" href=@Url.Action("About", "Home")>Learn more &raquo;</a></p>
+    </div>
+</div>

@@ -1,0 +1,344 @@
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\ApplicationInsights.config
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\csc.exe
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\csc.exe.config
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\csc.rsp
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\csi.exe
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\csi.rsp
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.CSharp.Core.targets
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\Microsoft.VisualBasic.Core.targets
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\System.AppContext.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\System.Collections.Immutable.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\System.Diagnostics.StackTrace.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\System.IO.FileSystem.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\System.IO.FileSystem.Primitives.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\System.Reflection.Metadata.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\vbc.exe
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\vbc.exe.config
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\vbc.rsp
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\VBCSCompiler.exe
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\roslyn\VBCSCompiler.exe.config
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Distributor.dll.config
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Distributor.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Distributor.pdb
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Antlr3.Runtime.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\EntityFramework.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\EntityFramework.SqlServer.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.Agent.Intercept.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.DependencyCollector.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.PerfCounterCollector.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.ServerTelemetryChannel.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.Web.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.WindowsServer.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.ApplicationInsights.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AspNet.Identity.Core.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AspNet.Identity.Owin.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Host.SystemWeb.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.Cookies.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.Facebook.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.Google.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.OAuth.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.Twitter.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Web.Infrastructure.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Newtonsoft.Json.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Owin.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.Helpers.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.Mvc.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.Optimization.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.Razor.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.WebPages.Deployment.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.WebPages.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.WebPages.Razor.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\WebGrease.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.Helpers.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.Mvc.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.Optimization.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.Razor.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.WebPages.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.WebPages.Deployment.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\System.Web.WebPages.Razor.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Antlr3.Runtime.pdb
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Newtonsoft.Json.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\EntityFramework.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\EntityFramework.SqlServer.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AspNet.Identity.Core.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AspNet.Identity.Owin.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Host.SystemWeb.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.Facebook.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.Cookies.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.OAuth.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.Google.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.Twitter.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.ApplicationInsights.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.DependencyCollector.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.ServerTelemetryChannel.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.WindowsServer.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\bin\Microsoft.AI.Web.xml
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.dll
+c:\users\leesole\documents\visual studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.pdb
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\bin\PagedList.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\bin\PagedList.Mvc.dll
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\bin\PagedList.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\bin\PagedList.Mvc.xml
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.Migrations._1st.resources
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.csproj.GenerateResource.Cache
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.Migrations._2nd.resources
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.Migrations._3rd.resources
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.Migrations._4th.resources
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.Migrations._5th.resources
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.Migrations._6th.resources
+C:\Users\leesole\Documents\Visual Studio 2017\Projects\Distributor\Distributor\obj\Debug\Distributor.csprojResolveAssemblyReference.cache
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\ApplicationInsights.config
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\csc.exe
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\csc.exe.config
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\csc.rsp
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\csi.exe
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\csi.rsp
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\System.AppContext.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\vbc.exe
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\vbc.exe.config
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\vbc.rsp
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\VBCSCompiler.exe
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Distributor.dll.config
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Distributor.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Distributor.pdb
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Antlr3.Runtime.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\EntityFramework.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\EntityFramework.SqlServer.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.Web.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.ApplicationInsights.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Newtonsoft.Json.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Owin.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\PagedList.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\PagedList.Mvc.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.Helpers.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.Mvc.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.Optimization.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.Razor.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.WebPages.Deployment.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.WebPages.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.WebPages.Razor.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\WebGrease.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\PagedList.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\PagedList.Mvc.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.Helpers.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.Mvc.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.Optimization.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.Razor.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.WebPages.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.WebPages.Deployment.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\System.Web.WebPages.Razor.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Antlr3.Runtime.pdb
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Newtonsoft.Json.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\EntityFramework.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\EntityFramework.SqlServer.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.ApplicationInsights.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.Web.xml
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._1st.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._2nd.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._3rd.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._4th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._5th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._6th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.csproj.GenerateResource.Cache
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.csproj.CoreCompileInputs.cache
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.dll
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.pdb
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._7th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._8th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._9th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._10th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._11th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._12th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._14th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._15th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.csprojResolveAssemblyReference.cache
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\ApplicationInsights.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\csc.exe
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\csc.exe.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\csc.rsp
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\csi.exe
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\csi.rsp
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\System.AppContext.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\vbc.exe
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\vbc.exe.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\vbc.rsp
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\VBCSCompiler.exe
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Distributor.dll.config
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Distributor.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Distributor.pdb
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Antlr3.Runtime.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\EntityFramework.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\EntityFramework.SqlServer.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.Web.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.ApplicationInsights.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Newtonsoft.Json.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Owin.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\PagedList.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\PagedList.Mvc.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.Helpers.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.Mvc.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.Optimization.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.Razor.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.WebPages.Deployment.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.WebPages.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.WebPages.Razor.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\WebGrease.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\PagedList.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\PagedList.Mvc.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.Helpers.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.Mvc.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.Optimization.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.Razor.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.WebPages.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.WebPages.Deployment.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\System.Web.WebPages.Razor.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Antlr3.Runtime.pdb
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Newtonsoft.Json.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\EntityFramework.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\EntityFramework.SqlServer.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.ApplicationInsights.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\Microsoft.AI.Web.xml
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.csprojResolveAssemblyReference.cache
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._1st.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._2nd.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._3rd.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._4th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._5th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._6th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._7th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._8th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._9th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._10th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._11th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._12th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._14th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._15th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.csproj.GenerateResource.Cache
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.csproj.CoreCompileInputs.cache
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.dll
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.pdb
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._16th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._17th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._18th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._19th.resources
+C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._20th.resources

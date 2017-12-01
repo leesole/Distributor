@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNet.Identity
+@using Distributor.Extenstions
+@using Distributor.Helpers
+
+@{ 
+    var userRole = User.Identity.GetCurrentUserRole();
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right" style="padding-right:30px">
+        <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+        <li>@Html.ActionLink("General Info", "General", "Home")</li>
+        <li>@Html.ActionLink("Manage Listings", "Manage", "Home")</li>
+        <li>@Html.ActionLink("Actions", "Index", "Action")</li>
+        @if (userRole == "Admin" || userRole == "SuperUser")
+        {
+            <li>@Html.ActionLink("Admin", "Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")</li>
+        }
+        @if (userRole == "Manager")
+        {
+            <li>@Html.ActionLink("Manager", "Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")</li>
+        }
+        <li>@Html.ActionLink(User.Identity.GetFullName(), "Edit", "AppUsers", new { id = AppUserHelpers.GetAppUser(User).AppUserId }, "")</li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right" style="padding-right:30px">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

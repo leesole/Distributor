@@ -1,0 +1,120 @@
+﻿@using Distributor.Helpers
+
+@model IEnumerable<Distributor.ViewModels.AvailableListingManageView>
+
+<nav class="navbar navbar-fixed-top">
+    <div class="navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*<a class="navbar-brand" href="#">Brand</a>*@
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="disabled">@Html.ActionLink("MANAGE LISTINGS", "General", "Home")</li>
+                    <li>@Html.ActionLink("Requests", "Requirements", "ManageListings")</li>
+                    <li class="active">@Html.ActionLink("Available", "Available", "ManageListings")</li>
+                    <li>@Html.ActionLink("Campaigns", "Campaigns", "ManageListings")</li>
+                    <li>@Html.ActionLink("Offers", "Offers", "ManageListings")</li>
+                    <li>@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+</nav>
+
+<div class="row" style="padding-top:55px">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">Manage Listings <small>Available</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li class="active">Available</li>
+        </ol>
+        <p class="lead">Your current available listings.</p>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+    @if (Model.Count() == 0)
+    {
+        <p>No details to show</p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <tr class="info">
+                <th>Description</th>
+                <th>Type</th>
+                <th>Qty left</th>
+                <th>UoM</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Condition</th>
+                <th>Use-by</th>
+                <th style="text-align:center">Delivery</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom);
+                Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo);
+
+                var dateFrom = "";
+                var dateTo = "";
+                if (item.AvailableListing.AvailableFrom != null)
+                {
+                    dateFrom = item.AvailableListing.AvailableFrom.Value.ToShortDateString();
+                }
+                if (item.AvailableListing.AvailableTo != null)
+                {
+                    dateTo = item.AvailableListing.AvailableTo.Value.ToShortDateString();
+                }
+                <tr>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemDescription)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@item.AvailableListing.ItemType.DisplayName()</td>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@item.AvailableListing.ItemCondition.DisplayName()</td>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
+                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'" style="text-align:center">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
+                </tr>
+            }
+
+        </table>
+    }    
+</div>
+
+<div class="form-group">
+    @Html.ActionLink("Create listing", "Create", "AvailableListings", "", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Display history", "History", "AvailableListings", "", new { @class = "btn btn-default" })
+</div>

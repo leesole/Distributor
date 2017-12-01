@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Confirmation";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default" style="margin-top:50px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Registration confirmation</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Registration has been successfully submitted.</p>
+                    <p> You should receive an email from your account administrator confirming activation of your account shortly.</p>
+
+                    <div class="form-group col-md-12">
+                        <input type="button" class="btn btn-lg btn-success btn-block" value="OK" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

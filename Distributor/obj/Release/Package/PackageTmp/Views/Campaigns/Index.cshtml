@@ -1,0 +1,165 @@
+﻿@model IEnumerable<Distributor.Models.Campaign>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StrapLine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Website)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignStartDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignEndDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationAddressLine1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationAddressLine2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationAddressLine3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationAddressTownCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationAddressCounty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationAddressPostcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationTelephoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LocationContactName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntityStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignOriginatorAppUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignOriginatorBranchId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignOriginatorCompanyId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignOriginatorDateTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StrapLine)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Website)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignStartDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignEndDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationAddressLine1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationAddressLine2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationAddressLine3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationAddressTownCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationAddressCounty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationAddressPostcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationTelephoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LocationContactName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EntityStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignOriginatorAppUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignOriginatorBranchId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignOriginatorCompanyId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignOriginatorDateTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CampaignId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CampaignId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CampaignId })
+        </td>
+    </tr>
+}
+
+</table>

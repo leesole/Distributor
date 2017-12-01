@@ -1,0 +1,206 @@
+﻿@using Microsoft.AspNet.Identity
+@using Distributor.Extenstions
+
+@model IEnumerable<Distributor.ViewModels.UserAdminView>
+
+@{
+    var userRole = User.Identity.GetCurrentUserRole();
+    var appUserId = Guid.Empty;
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(function () {
+            //show/hide branches
+            $('.showhidebranch').click(function () {
+                $(this).closest('tbody').next('tbody').toggle();
+            });
+        });
+
+        function currentBranchOnChange(appUserId, branchId) {
+            if (window.confirm("This will update current branch selection but loose all other changes.  Do you wish to proceed?")) {
+                var url = '@Url.Action("ChangeCurrentBranchForUser", "Admin")';
+                var modelDataJSON = @Html.Raw(Json.Encode(Model));
+
+                $.ajax({
+                    url: url,
+                    data: {
+                        modelDetails: JSON.stringify(modelDataJSON),
+                        appUserId: appUserId,
+                        branchId: branchId
+                    },
+                    cache: false,
+                    type: "POST",
+                    success: function (result) {
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+
+        function roleChange(role, combinedId, fieldName) {
+            var splitId = combinedId.split(':');
+            var appUserId = splitId[0];
+            var branchId = splitId[1];
+
+            var url = '/Data/OtherAdminUsersExistForCompany'
+
+            $.ajax({
+                url: url,
+                data: { appUserId: appUserId, branchId: branchId },
+                cache: false,
+                type: "POST",
+                success: function (response) {
+                    if (response.success) {
+                        //if this has changed from ADMIN then give message that the role for this user on ALL branches will be changed.
+                        if (response.originalRole == "1") {
+                            if (window.confirm("All branches will set this user to the same role as selected.  OK to proceed?")) {
+                                var roleurl = '/Data/SetUserToNewRole'
+                                $.ajax({
+                                    url: roleurl,
+                                    data: { appUserId: appUserId, branchId: branchId, newRoleId: role.toString() },
+                                    cache: false,
+                                    type: "POST",
+                                    success: function (result) {
+                                        location.reload(true);
+                                    }
+                                });
+                            } else {
+                                $('select[name="' + fieldName + '"] option:eq(' + response.originalRole + ')').prop("selected", true);
+                            }
+                        }
+                    }
+                    else {
+                        //set the user role selection back to the original value and give error message as we cannot remove the last ADMIN user
+                        alert("You cannot remove the last ADMIN user.  Please select a new ADMIN user before changing the role of this user.")
+                        $('select[name="' + fieldName + '"] option:eq(' + response.originalRole + ')').prop("selected", true);
+                    }
+                }
+            });
+        }
+
+        function statusChange(role, combinedId, fieldName) {
+            var splitId = combinedId.split(':');
+            var appUserId = splitId[0];
+            var branchId = splitId[1];
+
+            var url = '/Data/OtherAdminUsersExistForCompany'
+
+            $.ajax({
+                url: url,
+                data: { appUserId: appUserId, branchId: branchId },
+                cache: false,
+                type: "POST",
+                success: function (response) {
+                    if (response.success) {
+                        //Do nothing, allow change of status
+                    }
+                    else {
+                        //set the user status back to ACTIVE and give error message as we cannot remove the last ADMIN user
+                        alert("You cannot remove the last ADMIN user.  Please select a new ADMIN user before changing the status of this user.")
+                        $('select[name="' + fieldName + '"] option:eq(2)').prop("selected", true);
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+<nav class="navbar navbar-fixed-top">
+    <div class="navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*<a class="navbar-brand" href="#">Brand</a>*@
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="disabled">@Html.ActionLink("ADMIN", "Tasks", "Admin")</li>
+                    <li>@Html.ActionLink("Tasks", "Tasks", "Admin")</li>
+                    <li class="active">@Html.ActionLink("User Admin", "UserAdmin", "Admin")</li>
+                    <li>@Html.ActionLink("Branch Admin", "BranchAdmin", "Admin")</li>
+                    @if (userRole == "Admin" || userRole == "SuperUser")
+                    {
+                        <li>@Html.ActionLink("Company Admin", "CompanyAdmin", "Admin")</li>
+                    }
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+</nav>
+
+<div class="row" style="padding-top:55px">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">@userRole <small>User Administration</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li class="active">User Admin</li>
+        </ol>
+        <p class="lead">Your current user list.</p>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- The table -->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr class="info">
+                    <th style="width:90px">Actions</th>
+                    <th style="width:120px">Status</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    appUserId = item.AppUserId;
+
+                    @Html.EditorForModel(new { AppUserId = appUserId })
+                }
+            </table>
+            <!-- table end -->
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+        <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
+        @Html.ActionLink("Add user", "Create", "AppUsers", "", new { @class = "btn btn-primary" })
+    </div>
+}

@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Distributor.Models.RequirementListing>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuantityRequired)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuantityFulfilled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuantityOutstanding)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UoM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequiredFrom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequiredTo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AcceptDamagedItems)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AcceptOutOfDateItems)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CollectionAvailable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingBranchPostcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingOriginatorAppUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingOriginatorBranchId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingOriginatorCompanyId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ListingOriginatorDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuantityRequired)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuantityFulfilled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuantityOutstanding)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UoM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequiredFrom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequiredTo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AcceptDamagedItems)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AcceptOutOfDateItems)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CollectionAvailable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingBranchPostcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingOriginatorAppUserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingOriginatorBranchId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingOriginatorCompanyId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ListingOriginatorDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ListingId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ListingId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ListingId })
+        </td>
+    </tr>
+}
+
+</table>

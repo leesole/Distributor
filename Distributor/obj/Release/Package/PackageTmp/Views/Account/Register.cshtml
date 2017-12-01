@@ -1,0 +1,388 @@
+﻿@model Distributor.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    SelectList branchList = (SelectList)ViewBag.BranchList;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default" style="margin-top:50px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Create new account</h3>
+                </div>
+
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                        
+                    <div class="panel-body">
+                        <form role="form">
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                            <div class="form-group col-md-12">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @id = "firstname", placeholder = "First name" })
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger", @id = "firstnameerror" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @id = "lastname", placeholder = "Last name" })
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger", @id = "lastnameerror" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", placeholder = "E-mail" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger", @id = "emailerror" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "password", placeholder = "Password" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger", @id = "passworderror" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @id = "confirmpassword", placeholder = "Confirm password" })
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger", @id = "confirmpassworderror" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.DropDownListFor(m => m.SelectedCompanyId, (SelectList)ViewBag.CompanyList, "Add new company", new { @class = "form-control", @id = "companydropdown", onchange = "javascipt:DisplayHideCompanyDetails(this.value);" })
+                                @Html.ValidationMessageFor(m => m.SelectedCompanyId, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div id="companydetails">
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @id = "companyname", placeholder = "Company name" })
+                                    @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger", @id = "companynameerror" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.DropDownListFor(m => m.CompanyBusinessType, (SelectList)ViewBag.BusinessTypeList, "Select business type", new { @class = "form-control", @id = "companybusinesstype" })
+                                    @Html.ValidationMessageFor(m => m.CompanyBusinessType, "", new { @class = "text-danger", @id = "companybusinesstypeerror" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyAddressLine1, new { @class = "form-control", @id = "companyaddressline1", placeholder = "Address line 1" })
+                                    @Html.ValidationMessageFor(m => m.CompanyAddressLine1, "", new { @class = "text-danger", @id = "companyaddressline1error" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyAddressLine2, new { @class = "form-control", @id = "companyaddressline2", placeholder = "Address line 2" })
+                                    @Html.ValidationMessageFor(m => m.CompanyAddressLine2, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyAddressLine3, new { @class = "form-control", @id = "companyaddressline3", placeholder = "Address line 3" })
+                                    @Html.ValidationMessageFor(m => m.CompanyAddressLine3, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyAddressTownCity, new { @class = "form-control", @id = "companyaddresstowncity", placeholder = "Address town/city" })
+                                    @Html.ValidationMessageFor(m => m.CompanyAddressTownCity, "", new { @class = "text-danger", @id = "companyaddresstowncityerror" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyAddressCounty, new { @class = "form-control", @id = "companyaddresscounty", placeholder = "Address county" })
+                                    @Html.ValidationMessageFor(m => m.CompanyAddressCounty, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyAddressPostcode, new { @class = "form-control", @id = "companyaddresspostcode", placeholder = "Address postcode" })
+                                    @Html.ValidationMessageFor(m => m.CompanyAddressPostcode, "", new { @class = "text-danger", @id = "companyaddresspostcodeerror" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyTelephoneNumber, new { @class = "form-control", @id = "companytelephonenumber", placeholder = "Contact telephone number" })
+                                    @Html.ValidationMessageFor(m => m.CompanyTelephoneNumber, "", new { @class = "text-danger", @id = "companytelephonenumbererror" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyEmail, new { @class = "form-control", @id = "companyemail", placeholder = "Contact email" })
+                                    @Html.ValidationMessageFor(m => m.CompanyEmail, "", new { @class = "text-danger", @id = "companyemailerror" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyContactName, new { @class = "form-control", @id = "companycontactname", placeholder = "Contact person" })
+                                    @Html.ValidationMessageFor(m => m.CompanyContactName, "", new { @class = "text-danger", @id = "companycontactnameerror" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CompanyRegistrationDetails, new { @class = "form-control", @id = "companyregistrationdetails", placeholder = "Company registration details" })
+                                    @Html.ValidationMessageFor(m => m.CompanyRegistrationDetails, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.CharityRegistrationDetails, new { @class = "form-control", @id = "charityregistrationdetails", placeholder = "Charity registration details" })
+                                    @Html.ValidationMessageFor(m => m.CharityRegistrationDetails, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.TextBoxFor(m => m.VATRegistrationDetails, new { @class = "form-control", @id = "vatregistrationdetails", placeholder = "VAT registration details" })
+                                    @Html.ValidationMessageFor(m => m.VATRegistrationDetails, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div id="branchselection" style="display:none">
+                                <div class="form-group col-md-12">
+                                    @Html.DropDownListFor(m => m.SelectedBranchId, branchList, "Add new branch", new { @class = "form-control", @id = "branchdropdown", onchange = "javascipt:DisplayHideBranchDetails();" })
+                                    @Html.ValidationMessageFor(m => m.SelectedBranchId, "", new { @class = "text-danger" })
+                                </div>
+                                <div id="branchdetails">
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchName, new { @class = "form-control", @id = "branchname", placeholder = "Branch name" })
+                                        @Html.ValidationMessageFor(m => m.BranchName, "", new { @class = "text-danger", @id = "branchnameerror" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.DropDownListFor(m => m.BranchBusinessType, (SelectList)ViewBag.BusinessTypeList, "Select business type", new { @class = "form-control", @id = "branchbusinesstype" })
+                                        @Html.ValidationMessageFor(m => m.BranchBusinessType, "", new { @class = "text-danger", @id = "branchbusinesstypeerror" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchAddressLine1, new { @class = "form-control", @id = "branchaddressline1", placeholder = "Address line 1" })
+                                        @Html.ValidationMessageFor(m => m.BranchAddressLine1, "", new { @class = "text-danger", @id = "branchaddressline1error" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchAddressLine2, new { @class = "form-control", @id = "branchaddressline2", placeholder = "Address line 2" })
+                                        @Html.ValidationMessageFor(m => m.BranchAddressLine2, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchAddressLine3, new { @class = "form-control", @id = "branchaddressline3", placeholder = "Address line 3" })
+                                        @Html.ValidationMessageFor(m => m.BranchAddressLine3, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchAddressTownCity, new { @class = "form-control", @id = "branchaddresstowncity", placeholder = "Address town/city" })
+                                        @Html.ValidationMessageFor(m => m.BranchAddressTownCity, "", new { @class = "text-danger", @id = "branchaddresstowncityerror" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchAddressCounty, new { @class = "form-control", @id = "branchaddresscounty", placeholder = "Address county" })
+                                        @Html.ValidationMessageFor(m => m.BranchAddressCounty, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchAddressPostcode, new { @class = "form-control", @id = "branchaddresspostcode", placeholder = "Address postcode" })
+                                        @Html.ValidationMessageFor(m => m.BranchAddressPostcode, "", new { @class = "text-danger", @id = "branchaddresspostcodeerror" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchTelephoneNumber, new { @class = "form-control", @id = "branchtelephonenumber", placeholder = "Contact telephone number" })
+                                        @Html.ValidationMessageFor(m => m.BranchTelephoneNumber, "", new { @class = "text-danger", @id = "branchtelephonenumbererror" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchEmail, new { @class = "form-control", @id = "branchemail", placeholder = "Contact email" })
+                                        @Html.ValidationMessageFor(m => m.BranchEmail, "", new { @class = "text-danger", @id = "branchemailerror" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        @Html.TextBoxFor(m => m.BranchContactName, new { @class = "form-control", @id = "branchcontactname", placeholder = "Contact person" })
+                                        @Html.ValidationMessageFor(m => m.BranchContactName, "", new { @class = "text-danger", @id = "branchcontactnameerror" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="submit" id="submitbutton" class="btn btn-lg btn-success btn-block" value="Register" />
+                            </div>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        //This will hide/display company details depending if the company has been selected or not
+        function GetBranchesForCompany(companyId) {
+            var url = "/Data/GetBranchByCompany";
+
+            $.ajax({
+                url: url,
+                data: { companyId: companyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    $("#branchdropdown").html("");
+                    var markup = "<option value='00000000-0000-0000-0000-000000000000'>Add new branch</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value = " + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#branchdropdown").html(markup).show();
+                },
+                error: function (response) {
+                    alert("error : " + response);
+                }
+            });
+        };
+
+        function ClearCompanyDetailFields() {
+            $('#companyname').val('');
+            $('#companybusinesstype').val('');
+            $('#companyaddressline1').val('');
+            $('#companyaddressline2').val('');
+            $('#companyaddressline3').val('');
+            $('#companyaddresstowncity').val('');
+            $('#companyaddresscounty').val('');
+            $('#companyaddresspostcode').val('');
+            $('#companytelephonenumber').val('');
+            $('#companyemail').val('');
+            $('#companycontactname').val('');
+            $('#companyregistrationdetails').val('');
+            $('#charityregistrationdetails').val('');
+            $('#vatregistrationdetails').val('');
+        };
+
+        function ClearBranchDetailFields() {
+            $('#branchname').val('');
+            $('#branchbusinesstype').val('');
+            $('#branchaddressline1').val('');
+            $('#branchaddressline2').val('');
+            $('#branchaddressline3').val('');
+            $('#branchaddresstowncity').val('');
+            $('#branchaddresscounty').val('');
+            $('#branchaddresspostcode').val('');
+            $('#branchtelephonenumber').val('');
+            $('#branchemail').val('');
+            $('#branchcontactname').val('');
+        };
+
+        //set what fields to display depending on selection of company
+        function DisplayHideCompanyDetails(companyId) {
+            DisplayHideCompanyDetailsProcessing(companyId, false);  //this is called from the dropdown control
+        };
+
+        function DisplayHideCompanyDetailsProcessing(companyId, calledFromFormLoad) {
+            var companyDropDownValue = $("#companydropdown option:selected").text();
+            var companyDetails = document.getElementById("companydetails");
+            var branchSelection = document.getElementById("branchselection");
+            var branchDetails = document.getElementById("branchdetails");
+            var branchDropDownValue = $("#branchdropdown option:selected").text();
+
+            if (companyDropDownValue == "Add new company") {
+                if (!calledFromFormLoad) {
+                    ClearCompanyDetailFields();
+                    ClearBranchDetailFields();
+                }
+                companyDetails.style.display = "block";
+                branchSelection.style.display = "none";
+                branchDetails.style.display = "none";
+                $("#branchdropdown option:selected").removeAttr("selected");
+            } else {
+                if (!calledFromFormLoad) {
+                    GetBranchesForCompany(companyId);
+                }
+                companyDetails.style.display = "none";
+                branchSelection.style.display = "block";
+                if (branchDropDownValue == "Add new branch" || branchDropDownValue == "") {
+                    ClearBranchDetailFields();
+                    branchDetails.style.display = "block";
+                }
+                else {
+                    branchDetails.style.display = "none";
+                }
+            }
+        };
+
+        //set what fields to display depending on selection of branch
+        function DisplayHideBranchDetails() {
+            var companyDropDownValue = $("#companydropdown option:selected").text();
+            var branchDropDownValue = $("#branchdropdown option:selected").text();
+            var branchDetails = document.getElementById("branchdetails");
+
+            if (companyDropDownValue != "Add new company") {
+                if (branchDropDownValue == "Add new branch") {
+                    ClearBranchDetailFields();
+                    branchDetails.style.display = "block";
+                } else {
+                    branchDetails.style.display = "none";
+                }
+            }
+        };
+
+        $("#submitbutton").click(function (event) {
+            var error = false;
+            if ($("#firstname").val() == "") {
+                error = true;
+                $("#firstnameerror").html("The first name field is required");
+            }
+            if ($("#lastname").val() == "") {
+                error = true;
+                $("#lastnameerror").html("The last name field is required");
+            }
+            if ($("#email").val() == "") {
+                error = true;
+                $("#emailerror").html("The email field is required");
+            }
+            if ($("#password").val() == "") {
+                error = true;
+                $("#passworderror").html("The password field is required");
+            }
+            if ($("#confirmpassword").val() == "") {
+                error = true;
+                $("#confirmpassworderror").html("The confirm password field is required");
+            }
+            if ($("#companydropdown option:selected").text() == "Add new company") {
+                if ($("#companyname").val() == "") {
+                    error = true;
+                    $("#companynameerror").html("The company name field is required");
+                }
+                if ($("#companybusinesstype").val() == "" || $("#companybusinesstype").val() == "0") {
+                    error = true;
+                    $("#companybusinesstypeerror").html("The business type field is required");
+                }
+                if ($("#companyaddressline1").val() == "") {
+                    error = true;
+                    $("#companyaddressline1error").html("The company address line 1 field is required");
+                }
+                if ($("#companyaddresstowncity").val() == "") {
+                    error = true;
+                    $("#companyaddresstowncityerror").html("The company address town/city field is required");
+                }
+                if ($("#companyaddresspostcode").val() == "") {
+                    error = true;
+                    $("#companyaddresspostcodeerror").html("The company address postcode field is required");
+                }
+                if ($("#companytelephonenumber").val() == "") {
+                    error = true;
+                    $("#companytelephonenumbererror").html("The company telephone number field is required");
+                }
+                if ($("#companyemail").val() == "") {
+                    error = true;
+                    $("#companyemailerror").html("The company email field is required");
+                }
+                if ($("#companycontactname").val() == "") {
+                    error = true;
+                    $("#companycontactnameerror").html("The company contact person field is required");
+                }
+            }
+            else if ($("#branchdropdown option:selected").text() == "Add new branch") {
+                if ($("#branchname").val() == "") {
+                    error = true;
+                    $("#branchnameerror").html("The branch name field is required");
+                }
+                if ($("#branchbusinesstype").val() == "" || $("#companybusinesstype").val() == "0") {
+                    error = true;
+                    $("#branchbusinesstypeerror").html("The business type field is required");
+                }
+                if ($("#branchaddressline1").val() == "") {
+                    error = true;
+                    $("#branchaddressline1error").html("The branch address line 1 field is required");
+                }
+                if ($("#branchaddresstowncity").val() == "") {
+                    error = true;
+                    $("#branchaddresstowncityerror").html("The branch address town/city field is required");
+                }
+                if ($("#branchaddresspostcode").val() == "") {
+                    error = true;
+                    $("#branchaddresspostcodeerror").html("The branch address postcode field is required");
+                }
+                if ($("#branchtelephonenumber").val() == "") {
+                    error = true;
+                    $("#branchtelephonenumbererror").html("The branch telephone number field is required");
+                }
+                if ($("#branchemail").val() == "") {
+                    error = true;
+                    $("#branchemailerror").html("The branch email field is required");
+                }
+                if ($("#branchcontactname").val() == "") {
+                    error = true;
+                    $("#branchcontactnameerror").html("The branch contact person field is required");
+                }
+            }
+            if (error) {
+                event.preventDefault();
+            }
+            else {
+                $("form").unbind("submit").submit();
+            }
+        });
+
+        $(document).ready(function () {
+            var companyDropDownValueId = $("#companydropdown option:selected").val();
+            var companyDropDownValue = $("#companydropdown option:selected").text();
+            if (companyDropDownValue != "" && companyDropDownValue != "Add new company") {
+                DisplayHideCompanyDetailsProcessing(companyDropDownValueId, true);  //set to true as this is called when form loads
+            }
+        });
+    </script>
+}

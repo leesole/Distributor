@@ -1,0 +1,107 @@
+﻿@model Distributor.ViewModels.BranchAdminView
+
+
+@{
+    var branchId = ViewBag.BranchId;
+}
+
+@if (Model.BranchId == branchId)
+{
+    @Html.HiddenFor(modelBranch => modelBranch.BranchId)
+    @Html.HiddenFor(modelBranch => modelBranch.CompanyId)
+    @Html.HiddenFor(modelBranch => modelBranch.CompanyUserListId)
+
+    <tr class="info">
+        <th></th>
+        <th>Branch details</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Branch name</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.BranchName, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Address line 1</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td>Business type</td>
+        <td>@Html.EnumDropDownListFor(modelBranch => modelBranch.BusinessType, htmlAttributes: new { @class = "form-control" })</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Address line 2</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td>Contact telephone</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.TelephoneNumber, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Address line 3</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.AddressLine3, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td>Contact email</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.Email, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Address town/city</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.AddressTownCity, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td>Contact name</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.ContactName, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Address county</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.AddressCounty, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Address postcode</td>
+        <td>@Html.EditorFor(modelBranch => modelBranch.AddressPostcode, new { htmlAttributes = new { @class = "form-control" } })</td>
+        <td></td>
+        <td>Branch status</td>
+        <td>@Html.EnumDropDownListFor(modelBranch => modelBranch.EntityStatus, htmlAttributes: new { @class = "form-control" })</td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr class="info">
+        <th></th>
+        <th>Users on branch</th>
+        <th>Current</th>
+        <th>First name</th>
+        <th>Surname</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @Html.EditorFor(modelBranch => modelBranch.RelatedCompanyUsers, new { BranchId = branchId })
+}

@@ -1,0 +1,122 @@
+﻿@model Distributor.Models.Branch
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Branch</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BusinessType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusinessType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLine1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressLine1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLine2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressLine2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLine3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressLine3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressTownCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressTownCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressCounty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressCounty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressPostcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressPostcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelephoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelephoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EntityStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntityStatus)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BranchId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

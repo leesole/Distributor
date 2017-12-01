@@ -1,0 +1,646 @@
+﻿@using Microsoft.AspNet.Identity
+@using Distributor.Extenstions
+
+@model Distributor.ViewModels.AppUserEditView
+
+@{
+    var userRole = User.Identity.GetCurrentUserRole();
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        function GetBranchDetails(branchId) {
+            $.ajax('@Url.Action("GetBranchAddressDetailsForBranch", "Data")', {
+                type: 'POST',
+                dataType: 'json',
+                data: { 'branchId': branchId },
+                success: function (data, status, jqXHR) {
+                    if ("success" === status) {
+                        document.getElementById("branchname").innerText = data.branchDetails.BranchName;
+                        document.getElementById("branchbusinesstype").innerText = data.branchBusinessType;
+                        document.getElementById("branchaddressline1").innerText = data.branchDetails.AddressLine1;
+                        document.getElementById("branchaddressline2").innerText = data.branchDetails.AddressLine2;
+                        document.getElementById("branchaddressline3").innerText = data.branchDetails.AddressLine3;
+                        document.getElementById("branchaddresstowncity").innerText = data.branchDetails.AddressTownCity;
+                        document.getElementById("branchaddresscounty").innerText = data.branchDetails.AddressCounty;
+                        document.getElementById("branchaddresspostcode").innerText = data.branchDetails.AddressPostcode;
+                    } else {
+                        alert('This branch appears to be invalid, please re-select.');
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">
+            User changes
+            <small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+            <li class="active">User changes</li>
+        </ol>
+    </div>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.AppUserId)
+        @Html.HiddenFor(model => model.AppUserSettingsId)
+        @Html.HiddenFor(model => model.CallingAction)
+        @Html.HiddenFor(model => model.CallingController)
+
+        @Html.HiddenFor(model => model.BranchName)
+        @Html.HiddenFor(model => model.BranchBusinessType)
+        @Html.HiddenFor(model => model.BranchAddressLine1)
+        @Html.HiddenFor(model => model.BranchAddressLine2)
+        @Html.HiddenFor(model => model.BranchAddressLine3)
+        @Html.HiddenFor(model => model.BranchAddressTownCity)
+        @Html.HiddenFor(model => model.BranchAddressCounty)
+        @Html.HiddenFor(model => model.BranchAddressPostcode)
+
+        @{
+            for (int q = 0; q < Model.UserFriendListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserFriendListView[q].FriendId)
+                @Html.HiddenFor(model => model.UserFriendListView[q].Type)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RequestedByName)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RequestedByUserName)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RequestedOfName)
+                @Html.HiddenFor(model => model.UserFriendListView[q].Status)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RequestedOn)
+                @Html.HiddenFor(model => model.UserFriendListView[q].RejectedOn)
+                @Html.HiddenFor(model => model.UserFriendListView[q].AccceptedOn)
+                @Html.HiddenFor(model => model.UserFriendListView[q].ClosedOn)
+                @Html.HiddenFor(model => model.UserFriendListView[q].ClosedBy)
+                @Html.HiddenFor(model => model.UserFriendListView[q].FriendedByLoggedInUser)
+            }
+            for (int q = 0; q < Model.UserBranchFriendListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].FriendId)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].Type)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RequestedByName)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RequestedByUserName)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RequestedOfName)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].Status)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RequestedOn)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].RejectedOn)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].AccceptedOn)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].ClosedOn)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].ClosedBy)
+                @Html.HiddenFor(model => model.UserBranchFriendListView[q].FriendedByLoggedInUser)
+            }
+            for (int q = 0; q < Model.UserCompanyFriendListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].FriendId)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].Type)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RequestedByName)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RequestedByUserName)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RequestedOfName)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].Status)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RequestedOn)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].RejectedOn)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].AccceptedOn)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].ClosedOn)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].ClosedBy)
+                @Html.HiddenFor(model => model.UserCompanyFriendListView[q].FriendedByLoggedInUser)
+            }
+
+            for (int q = 0; q < Model.UserBlockListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserBlockListView[q].BlockId)
+                @Html.HiddenFor(model => model.UserBlockListView[q].BlockedByName)
+                @Html.HiddenFor(model => model.UserBlockListView[q].BlockedByLoggedInUser)
+                @Html.HiddenFor(model => model.UserBlockListView[q].BlockedByUserName)
+                @Html.HiddenFor(model => model.UserBlockListView[q].BlockedOfName)
+                @Html.HiddenFor(model => model.UserBlockListView[q].BlockedOn)
+                @Html.HiddenFor(model => model.UserBlockListView[q].Type)
+            }
+            for (int q = 0; q < Model.UserBranchBlockListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserBranchBlockListView[q].BlockId)
+                @Html.HiddenFor(model => model.UserBranchBlockListView[q].BlockedByName)
+                @Html.HiddenFor(model => model.UserBranchBlockListView[q].BlockedByLoggedInUser)
+                @Html.HiddenFor(model => model.UserBranchBlockListView[q].BlockedByUserName)
+                @Html.HiddenFor(model => model.UserBranchBlockListView[q].BlockedOfName)
+                @Html.HiddenFor(model => model.UserBranchBlockListView[q].BlockedOn)
+                @Html.HiddenFor(model => model.UserBranchBlockListView[q].Type)
+            }
+            for (int q = 0; q < Model.UserCompanyBlockListView.Count; q++)
+            {
+                @Html.HiddenFor(model => model.UserCompanyBlockListView[q].BlockId)
+                @Html.HiddenFor(model => model.UserCompanyBlockListView[q].BlockedByName)
+                @Html.HiddenFor(model => model.UserCompanyBlockListView[q].BlockedByLoggedInUser)
+                @Html.HiddenFor(model => model.UserCompanyBlockListView[q].BlockedByUserName)
+                @Html.HiddenFor(model => model.UserCompanyBlockListView[q].BlockedOfName)
+                @Html.HiddenFor(model => model.UserCompanyBlockListView[q].BlockedOn)
+                @Html.HiddenFor(model => model.UserCompanyBlockListView[q].Type)
+            }
+        }
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">User details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SelectedBranchId, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.SelectedBranchId, (SelectList)ViewBag.BranchList, new { @class = "form-control", @id = "branchdropdown", onchange = "javascipt:GetBranchDetails(this.value);" })
+                                    @Html.ValidationMessageFor(model => model.SelectedBranchId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.UserRole, (SelectList)ViewBag.UserRoleList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EntityStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.EntityStatus, (SelectList)ViewBag.EntityStatusList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EntityStatus, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel-body">
+                                <p id="branchname">@Html.DisplayFor(model => model.BranchName)</p>
+                                <p id="branchbusinesstype">@Html.DisplayFor(model => model.BranchBusinessType)</p>
+                                <p id="branchaddressline1">@Html.DisplayFor(model => model.BranchAddressLine1)</p>
+                                <p id="branchaddressline2">@Html.DisplayFor(model => model.BranchAddressLine2)</p>
+                                <p id="branchaddressline3">@Html.DisplayFor(model => model.BranchAddressLine3)</p>
+                                <p id="branchaddresstowncity">@Html.DisplayFor(model => model.BranchAddressTownCity)</p>
+                                <p id="branchaddresscounty">@Html.DisplayFor(model => model.BranchAddressCounty)</p>
+                                <p id="branchaddresspostcode">@Html.DisplayFor(model => model.BranchAddressPostcode)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("Index", "Groups") + "'");">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Your groups</h3>
+                    </div>
+                    <div class="panel-body">
+                        @if (Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser == null || Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser.Count == 0)
+                        {
+                            <p>No groups to show</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="info">
+                                            <th>Group name</th>
+                                            <th>Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Group.Name)</td>
+                                                <td>@Html.DisplayFor(modelItem => Model.GroupListViewsForUserOnly.GroupListViewsCreatedByUser[i].Group.Type)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("FriendIndex", "AppUsers", new { appUserId = Model.AppUserId, url = Request.Url.PathAndQuery}) + "'");">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Your friends</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-success text-center" style="padding:10px">
+                                <h4>User</h4>
+                                <h1><b>@ViewBag.UserFriendCount</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-success text-center" style="padding:10px">
+                                <h4>Branch</h4>
+                                <h1><b>@ViewBag.UserBranchFriendCount</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-success text-center" style="padding:10px">
+                                <h4>Company</h4>
+                                <h1><b>@ViewBag.UserCompanyFriendCount</b></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="col-md-4">
+                <div class="login-panel panel panel-info" onclick="@("window.location.href='" + @Url.Action("BlockIndex", "AppUsers", new { appUserId = Model.AppUserId, url = Request.Url.PathAndQuery}) + "'");">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Your blocks</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-danger text-center" style="padding:10px">
+                                <h4>User</h4>
+                                <h1><b>@ViewBag.UserBlockCount</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-danger text-center" style="padding:10px">
+                                <h4>Branch</h4>
+                                <h1><b>@ViewBag.UserBranchBlockCount</b></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding:0px 5px 5px 0px">
+                            <div class="card bg-danger text-center" style="padding:10px">
+                                <h4>Company</h4>
+                                <h1><b>@ViewBag.UserCompanyBlockCount</b></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Manage listings settings</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h4>Required listing settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingManageViewInternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.RequiredListingManageViewInternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RequiredListingManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Available listing settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingManageViewInternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.AvailableListingManageViewInternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AvailableListingManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Campaign settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignManageViewInternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.CampaignManageViewInternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CampaignManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Offer settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OffersManageViewInternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OffersManageViewInternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OffersManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OffersAcceptedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OffersAcceptedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OffersAcceptedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OffersRejectedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OffersRejectedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OffersRejectedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OffersReturnedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OffersReturnedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OffersReturnedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Order settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersManageViewInternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OrdersManageViewInternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersManageViewInternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersDespatchedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OrdersDespatchedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersDespatchedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersDeliveredAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OrdersDeliveredAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersDeliveredAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersReceivedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OrdersReceivedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersReceivedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersCollectedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OrdersCollectedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersCollectedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrdersClosedAuthorisationManageViewLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.OrdersClosedAuthorisationManageViewLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.OrdersClosedAuthorisationManageViewLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">General info settings</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h4>Required listing settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoDisplayMyUserListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingGeneralInfoDisplayMyUserListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoDisplayMyUserListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoDisplayMyBranchListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingGeneralInfoDisplayMyBranchListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoDisplayMyBranchListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoDisplayMyCompanyListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingGeneralInfoDisplayMyCompanyListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoDisplayMyCompanyListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoDisplayBlockedListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingGeneralInfoDisplayBlockedListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoDisplayBlockedListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingGeneralInfoMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoMaxDistance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingGeneralInfoExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.RequiredListingGeneralInfoExternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RequiredListingGeneralInfoExternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Available listing settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoDisplayMyUserListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingGeneralInfoDisplayMyUserListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoDisplayMyUserListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoDisplayMyBranchListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingGeneralInfoDisplayMyBranchListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoDisplayMyBranchListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoDisplayMyCompanyListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingGeneralInfoDisplayMyCompanyListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoDisplayMyCompanyListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoDisplayBlockedListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingGeneralInfoDisplayBlockedListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoDisplayBlockedListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingGeneralInfoMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoMaxDistance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingGeneralInfoExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.AvailableListingGeneralInfoExternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AvailableListingGeneralInfoExternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Campaign settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayMyUserListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayMyUserListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayMyUserListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayMyBranchListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayMyBranchListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayMyBranchListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayMyCompanyListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayMyCompanyListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayMyCompanyListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoDisplayBlockedListings, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoDisplayBlockedListings, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoDisplayBlockedListings, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignGeneralInfoMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoMaxDistance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignGeneralInfoExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.CampaignGeneralInfoExternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CampaignGeneralInfoExternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="login-panel panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Dashboard settings</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h4>Required listing settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingDashboardMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingDashboardMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingDashboardMaxDistance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingDashboardMaxAge, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.RequiredListingDashboardMaxAge, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RequiredListingDashboardMaxAge, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredListingDashboardExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.RequiredListingDashboardExternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RequiredListingDashboardExternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Available listing settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingDashboardMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingDashboardMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingDashboardMaxDistance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingDashboardMaxAge, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.AvailableListingDashboardMaxAge, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.AvailableListingDashboardMaxAge, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AvailableListingDashboardExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.AvailableListingDashboardExternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AvailableListingDashboardExternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <h4>Campaign settings</h4>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignDashboardMaxDistance, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignDashboardMaxDistance, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignDashboardMaxDistance, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignDashboardMaxAge, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.CampaignDashboardMaxAge, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CampaignDashboardMaxAge, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CampaignDashboardExternalSelectionLevel, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EnumDropDownListFor(model => model.CampaignDashboardExternalSelectionLevel, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CampaignDashboardExternalSelectionLevel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" name="submitbutton" class="btn btn-success" />
+        <input type="submit" value="Reset" name="resetbutton" class="btn btn-danger" />
+    </div>
+}
