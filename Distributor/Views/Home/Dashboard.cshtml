@@ -21,52 +21,52 @@
         });
 
 
-            var slideIndex = 1;
-            showDivs(slideIndex);
+        var slideIndex = 1;
+        showDivs(slideIndex);
 
-            function plusDivs(n) {
-                showDivs(slideIndex += n);
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var xImage = document.getElementsByClassName("campaignImage");
+            var xWebsite = document.getElementsByClassName("campaignWebsite");
+            if (n > xImage.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = xImage.length }
+            for (i = 0; i < xImage.length; i++) {
+                xImage[i].style.display = "none";
+                xWebsite[i].style.display = "none";
             }
+            try {
+                xImage[slideIndex - 1].style.display = "block";
+                xWebsite[slideIndex - 1].style.display = "block";
+            } catch(err){}
+        }
 
-            function showDivs(n) {
-                var i;
-                var xImage = document.getElementsByClassName("campaignImage");
-                var xWebsite = document.getElementsByClassName("campaignWebsite");
-                if (n > xImage.length) { slideIndex = 1 }
-                if (n < 1) { slideIndex = xImage.length }
-                for (i = 0; i < xImage.length; i++) {
-                    xImage[i].style.display = "none";
-                    xWebsite[i].style.display = "none";
-                }
-                try {
-                    xImage[slideIndex - 1].style.display = "block";
-                    xWebsite[slideIndex - 1].style.display = "block";
-                } catch(err){}
+
+        var slideIndexUser = 1;
+        showDivsUser(slideIndexUser);
+
+        function plusDivsUser(z) {
+            showDivsUser(slideIndexUser += z);
+        }
+
+        function showDivsUser(z) {
+            var y;
+            var xImageUser = document.getElementsByClassName("userCampaignImage");
+            var xWebsiteUser = document.getElementsByClassName("userCampaignWebsite");
+            if (z > xImageUser.length) { slideIndexUser = 1 }
+            if (z < 1) { slideIndexUser = xImageUser.length }
+            for (y = 0; y < xImageUser.length; y++) {
+                xImageUser[y].style.display = "none";
+                xWebsiteUser[y].style.display = "none";
             }
-
-
-            var slideIndexUser = 1;
-            showDivsUser(slideIndexUser);
-
-            function plusDivsUser(z) {
-                showDivsUser(slideIndexUser += z);
-            }
-
-            function showDivsUser(z) {
-                var y;
-                var xImageUser = document.getElementsByClassName("userCampaignImage");
-                var xWebsiteUser = document.getElementsByClassName("userCampaignWebsite");
-                if (z > xImageUser.length) { slideIndexUser = 1 }
-                if (z < 1) { slideIndexUser = xImageUser.length }
-                for (y = 0; y < xImageUser.length; y++) {
-                    xImageUser[y].style.display = "none";
-                    xWebsiteUser[y].style.display = "none";
-                }
-                try {
-                    xImageUser[slideIndexUser - 1].style.display = "block";
-                    xWebsiteUser[slideIndexUser - 1].style.display = "block";
-                } catch (err){}
-            }
+            try {
+                xImageUser[slideIndexUser - 1].style.display = "block";
+                xWebsiteUser[slideIndexUser - 1].style.display = "block";
+            } catch (err){}
+        }
 
     </script>
 }
@@ -243,7 +243,7 @@
 </div>
 
 <div class="row">
-    <div class="panel panel-info">
+    <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Requests listing</h3>
         </div>
@@ -321,7 +321,7 @@
 </div>
 
 <div class="row">
-    <div class="panel panel-info">
+    <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Available listing</h3>
         </div>
@@ -400,7 +400,7 @@
 
 <div class="row">
     <div class="col-md-6 col-sm-12">
-        <div class="panel panel-info">
+        <div class="panel panel-default">
             <div class="panel-heading" onclick="location.href='@Url.Action("Campaigns", "ManageListings")'">
                 <h3 class="panel-title">Your campaigns</h3>
             </div>
@@ -443,7 +443,7 @@
         </div>
     </div>
     <div class="col-md-6 col-sm-12">
-        <div class="panel panel-info">
+        <div class="panel panel-default">
             <div class="panel-heading" onclick="location.href='@Url.Action("Campaigns", "GeneralInfo")'">
                 <h3 class="panel-title">Recent campaigns</h3>
             </div>
