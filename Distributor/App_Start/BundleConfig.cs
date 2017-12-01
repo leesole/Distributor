@@ -31,7 +31,9 @@ namespace Distributor
                       "~/css/modern-business.css",
                       "~/css/jquery-ui.min.css",
                       "~/Content/site.css",
-                      "~/css/jquery.dynatable.css"));
+                      "~/css/jquery.dynatable.css",
+                      "~/Content/font-awesome/css/font-awesome.min.css",
+                      "~/Content/distributor.min.css"));
 
             //bundles.Add(new StyleBundle("~/css").Include(
             //          "~/css/jquery-ui.min.css"));

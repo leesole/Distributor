@@ -342,3 +342,8 @@ C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distribut
 C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._18th.resources
 C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._19th.resources
 C:\Users\leesole\source\repos\Distributor - Copy\Distributor\obj\Debug\Distributor.Migrations._20th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._16th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._17th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._18th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._19th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._20th.resources
