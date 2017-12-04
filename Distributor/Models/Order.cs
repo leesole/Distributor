@@ -23,32 +23,32 @@ namespace Distributor.Models
         public OrderStatusEnum OrderStatus { get; set; }
 
         [Display(Name = "Order date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? OrderCreationDateTime { get; set; }
 
         [Display(Name = "Distribution date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? OrderDistributionDateTime { get; set; }
         public Guid? OrderDistributedBy { get; set; }
 
         [Display(Name = "Delivered date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? OrderDeliveredDateTime { get; set; }
         public Guid? OrderDeliveredBy { get; set; }
 
 
         [Display(Name = "Collection date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? OrderCollectedDateTime { get; set; }
         public Guid? OrderCollectedBy { get; set; }
 
         [Display(Name = "Received date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? OrderReceivedDateTime { get; set; }
         public Guid? OrderReceivedBy { get; set; }
 
         [Display(Name = "Closed date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? OrderClosedDateTime { get; set; }
         public Guid? OrderClosedBy { get; set; }
 

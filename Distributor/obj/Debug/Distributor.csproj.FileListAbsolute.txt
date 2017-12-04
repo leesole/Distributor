@@ -220,7 +220,6 @@ C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migr
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._12th.resources
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._14th.resources
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._15th.resources
-C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.csprojResolveAssemblyReference.cache
 C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\ApplicationInsights.config
 C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\csc.exe
 C:\Users\leesole\source\repos\Distributor - Copy\Distributor\bin\roslyn\csc.exe.config
@@ -347,3 +346,4 @@ C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migr
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._18th.resources
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._19th.resources
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._20th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.csprojResolveAssemblyReference.cache

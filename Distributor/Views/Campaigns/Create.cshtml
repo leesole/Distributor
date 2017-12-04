@@ -14,7 +14,7 @@
     <script type="text/javascript">
         $(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
-            $('.date-picker').datepicker();
+            $('.date-picker').datepicker({ dateFormat: 'dd/mm/yy' });
         })
     </script>
 }
@@ -207,7 +207,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CampaignStartDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.CampaignStartDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                    @Html.EditorFor(model => model.CampaignStartDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                     @Html.ValidationMessageFor(model => model.CampaignStartDateTime, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -215,7 +215,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CampaignEndDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.CampaignEndDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                    @Html.EditorFor(model => model.CampaignEndDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                     @Html.ValidationMessageFor(model => model.CampaignEndDateTime, "", new { @class = "text-danger" })
                 </div>
             </div>

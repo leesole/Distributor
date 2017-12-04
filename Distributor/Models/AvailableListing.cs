@@ -33,26 +33,26 @@ namespace Distributor.Models
         public string UoM { get; set; }
 
         [Display(Name = "Available from")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AvailableFrom { get; set; }
 
         [Display(Name = "Available to")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? AvailableTo { get; set; }
 
         [Display(Name = "Item condition")]
         public ItemConditionEnum ItemCondition { get; set; }
 
         [Display(Name = "Earliest display-until date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DisplayUntilDate { get; set; }
 
         [Display(Name = "Earliest sell-by date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? SellByDate { get; set; }
 
         [Display(Name = "Earliest use-by date")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? UseByDate { get; set; }
 
         [Display(Name = "Can deliver?")]

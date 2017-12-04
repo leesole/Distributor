@@ -10,7 +10,7 @@
     <script type="text/javascript">
         $(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
-            $('.date-picker').datepicker();
+            $('.date-picker').datepicker({ dateFormat: 'dd/mm/yy' });
         })
 
         $(document).ready(function () {
@@ -106,7 +106,7 @@ else
     @Html.AntiForgeryToken()
     <div class="row" id="setstyle">
         <div class="col-md-6">
-            <div class="login-panel panel panel-primary">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Listing details</h3>
                 </div>
@@ -213,7 +213,7 @@ else
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.AvailableFrom, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.EditorFor(model => model.AvailableFrom, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                     @Html.ValidationMessageFor(model => model.AvailableFrom, "", new { @class = "text-danger" })
                                 }
                                 else
@@ -228,7 +228,7 @@ else
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.AvailableTo, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.EditorFor(model => model.AvailableTo, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                     @Html.ValidationMessageFor(model => model.AvailableTo, "", new { @class = "text-danger" })
                                 }
                                 else
@@ -258,7 +258,7 @@ else
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.DisplayUntilDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.EditorFor(model => model.DisplayUntilDate, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                     @Html.ValidationMessageFor(model => model.DisplayUntilDate, "", new { @class = "text-danger" })
                                 }
                                 else
@@ -273,7 +273,7 @@ else
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.SellByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.EditorFor(model => model.SellByDate, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                     @Html.ValidationMessageFor(model => model.SellByDate, "", new { @class = "text-danger" })
                                 }
                                 else
@@ -288,7 +288,7 @@ else
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
                                 {
-                                    @Html.EditorFor(model => model.UseByDate, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.EditorFor(model => model.UseByDate, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                     @Html.ValidationMessageFor(model => model.UseByDate, "", new { @class = "text-danger" })
                                 }
                                 else
@@ -325,7 +325,7 @@ else
             </div>
         </div>
         <div class="col-md-6">
-            <div class="login-panel panel panel-info">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Listing created by</h3>
                 </div>

@@ -25,7 +25,7 @@ namespace Distributor.ViewModels
         public Branch BranchReference { get; set; }
 
         [Display(Name = "Created")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime CreatedOn { get; set; }
 
         [Display(Name = "Created by")]

@@ -26,7 +26,7 @@ namespace Distributor.ViewModels
         public string Reference { get; set; }  //this is used to hold the key of the reference file - i.e. AppUserId for user-on-hold, BranchId for branch-on-hold etc
 
         [Display(Name = "Created")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime CreatedOn { get; set; }
 
         [Display(Name = "Created by")]

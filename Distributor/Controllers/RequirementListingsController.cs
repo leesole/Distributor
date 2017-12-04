@@ -72,6 +72,7 @@ namespace Distributor.Controllers
                 return RedirectToAction(requirementListing.CallingAction, requirementListing.CallingController);
             }
 
+            ViewBag.CampaignList = ControlHelpers.AllActiveCampaignsForUserListDropDown(AppUserHelpers.GetAppUserIdFromUser(User), null);
             return View(requirementListing);
         }
 

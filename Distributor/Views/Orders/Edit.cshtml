@@ -12,7 +12,7 @@
     <script type="text/javascript">
         $(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
-            $('.date-picker').datepicker();
+            $('.date-picker').datepicker({ dateFormat: 'dd/mm/yy' });
         })
     </script>
 }
@@ -175,7 +175,7 @@
     
     <div class="row">
         <div class="col-md-6">
-            <div class="login-panel panel panel-primary">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Order details</h3>
                 </div>
@@ -205,35 +205,35 @@
                         <div class="form-group">
                             <div class="col-md-4">@Html.LabelFor(model => model.OrderCreationDateTime)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.OrderCreationDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                @Html.EditorFor(model => model.OrderCreationDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                 @Html.ValidationMessageFor(model => model.OrderCreationDateTime, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">@Html.LabelFor(model => model.OrderDistributionDateTime)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.OrderDistributionDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                @Html.EditorFor(model => model.OrderDistributionDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                 @Html.ValidationMessageFor(model => model.OrderDistributionDateTime, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">@Html.LabelFor(model => model.OrderDeliveredDateTime)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.OrderDeliveredDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                @Html.EditorFor(model => model.OrderDeliveredDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                 @Html.ValidationMessageFor(model => model.OrderDeliveredDateTime, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">@Html.LabelFor(model => model.OrderCollectedDateTime)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.OrderCollectedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                @Html.EditorFor(model => model.OrderCollectedDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                 @Html.ValidationMessageFor(model => model.OrderCollectedDateTime, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4">@Html.LabelFor(model => model.OrderClosedDateTime)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.OrderClosedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                @Html.EditorFor(model => model.OrderClosedDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                 @Html.ValidationMessageFor(model => model.OrderClosedDateTime, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -242,7 +242,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="login-panel panel panel-info">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Order created by</h3>
                 </div>
@@ -283,7 +283,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div class="login-panel panel panel-info">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Listing created by</h3>
                 </div>
@@ -321,7 +321,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="login-panel panel panel-info">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Offer created by</h3>
                 </div>
