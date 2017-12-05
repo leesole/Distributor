@@ -17,6 +17,10 @@ namespace Distributor.Models
         public string ItemDescription { get; set; }
 
         [Required]
+        [Display(Name = "Item category")]
+        public ItemCategoryEnum ItemCategory { get; set; }
+
+        [Required]
         [Display(Name = "Item type")]
         public ItemTypeEnum ItemType { get; set; }
 

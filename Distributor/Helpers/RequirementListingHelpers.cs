@@ -322,15 +322,15 @@ namespace Distributor.Helpers
 
         #region Create
 
-        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool acceptOutOfDateItems, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
+        public static RequirementListing CreateRequirementListing(IPrincipal user, string itemDescription, ItemCategoryEnum itemCategory, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool acceptOutOfDateItems, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            RequirementListing newRequirementListing = CreateRequirementListing(db, user, itemDescription, itemType, quantityRequired, uom, requiredFrom, requiredTo, acceptDamagedItems, acceptOutOfDateItems, collectionAvailable, listingStatus, selectedCampaignId);
+            RequirementListing newRequirementListing = CreateRequirementListing(db, user, itemDescription, itemCategory, itemType, quantityRequired, uom, requiredFrom, requiredTo, acceptDamagedItems, acceptOutOfDateItems, collectionAvailable, listingStatus, selectedCampaignId);
             db.Dispose();
             return newRequirementListing;
         }
 
-        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool acceptOutOfDateItems, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
+        public static RequirementListing CreateRequirementListing(ApplicationDbContext db, IPrincipal user, string itemDescription, ItemCategoryEnum itemCategory, ItemTypeEnum itemType, decimal quantityRequired, string uom, DateTime? requiredFrom, DateTime? requiredTo, bool acceptDamagedItems, bool acceptOutOfDateItems, bool collectionAvailable, ItemRequiredListingStatusEnum listingStatus, Guid? selectedCampaignId)
         {
             BranchUser branchUser = BranchUserHelpers.GetBranchUserCurrentForUser(db, user);
             Branch branch = BranchHelpers.GetBranch(db, branchUser.BranchId);
@@ -339,6 +339,7 @@ namespace Distributor.Helpers
             {
                 ListingId = Guid.NewGuid(),
                 ItemDescription = itemDescription,
+                ItemCategory = itemCategory,
                 ItemType = itemType,
                 QuantityRequired = quantityRequired,
                 QuantityFulfilled = 0,
@@ -374,7 +375,7 @@ namespace Distributor.Helpers
 
         public static RequirementListing CreateRequirementListingFromRequirementListingAddView(ApplicationDbContext db, RequirementListingAddView requirementListingAddView, IPrincipal user)
         {
-            return CreateRequirementListing(db, user, requirementListingAddView.ItemDescription, requirementListingAddView.ItemType, requirementListingAddView.QuantityRequired, requirementListingAddView.UoM, requirementListingAddView.RequiredFrom, requirementListingAddView.RequiredTo, requirementListingAddView.AcceptDamagedItems, requirementListingAddView.AcceptOutOfDateItems, requirementListingAddView.CollectionAvailable, requirementListingAddView.ListingStatus, requirementListingAddView.SelectedCampaignId);
+            return CreateRequirementListing(db, user, requirementListingAddView.ItemDescription, requirementListingAddView.ItemCategory, requirementListingAddView.ItemType, requirementListingAddView.QuantityRequired, requirementListingAddView.UoM, requirementListingAddView.RequiredFrom, requirementListingAddView.RequiredTo, requirementListingAddView.AcceptDamagedItems, requirementListingAddView.AcceptOutOfDateItems, requirementListingAddView.CollectionAvailable, requirementListingAddView.ListingStatus, requirementListingAddView.SelectedCampaignId);
         }
 
         #endregion
@@ -421,6 +422,7 @@ namespace Distributor.Helpers
         {
             RequirementListing listing = GetRequirementListing(db, view.ListingId);
             listing.ItemDescription = view.ItemDescription;
+            listing.ItemCategory = view.ItemCategory;
             listing.ItemType = view.ItemType;
             listing.QuantityRequired = view.QuantityRequired;
             listing.QuantityFulfilled = view.QuantityFulfilled;
@@ -609,6 +611,7 @@ namespace Distributor.Helpers
             {
                 ListingId = requirementListing.ListingId,
                 ItemDescription = requirementListing.ItemDescription,
+                ItemCategory = requirementListing.ItemCategory,
                 ItemType = requirementListing.ItemType,
                 QuantityRequired = requirementListing.QuantityRequired,
                 QuantityFulfilled = requirementListing.QuantityFulfilled,
