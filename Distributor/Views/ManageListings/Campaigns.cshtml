@@ -4,10 +4,6 @@
     @Scripts.Render("~/bundles/jquery")
     <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
-        //Render tables
-        $(document).ready(function () {
-            $('#campaignTable').dataTable();
-        });
     </script>
 }
 
@@ -77,12 +73,12 @@
         <table id="campaignTable" class="table table-hover">
             <thead>
                 <tr class="info">
-                    <th>@Html.DisplayNameFor(model => model.Campaign.Name)</th>
-                    <th>@Html.DisplayNameFor(model => model.Campaign.StrapLine)</th>
-                    <th>@Html.DisplayNameFor(model => model.Campaign.Description)</th>
-                    <th>@Html.DisplayNameFor(model => model.Campaign.Website)</th>
-                    <th>@Html.DisplayNameFor(model => model.Campaign.CampaignStartDateTime)</th>
-                    <th>@Html.DisplayNameFor(model => model.Campaign.CampaignEndDateTime)</th>
+                    <th>Name</th>
+                    <th>StrapLine</th>
+                    <th>Description</th>
+                    <th>Website</th>
+                    <th>Start date/time</th>
+                    <th>End date/time</th>
                 </tr>
             </thead>
 
