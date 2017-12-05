@@ -2,6 +2,17 @@
 
 @model IEnumerable<Distributor.ViewModels.AvailableListingManageView>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        //Render tables
+        $(document).ready(function () {
+            $('#availableTable').dataTable();
+        });
+    </script>
+}
+
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
         <div class="container">
@@ -65,46 +76,50 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th>Description</th>
-                <th>Type</th>
-                <th>Qty left</th>
-                <th>UoM</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Condition</th>
-                <th>Use-by</th>
-                <th style="text-align:center">Delivery</th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom);
-                Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo);
-
-                var dateFrom = "";
-                var dateTo = "";
-                if (item.AvailableListing.AvailableFrom != null)
-                {
-                    dateFrom = item.AvailableListing.AvailableFrom.Value.ToShortDateString();
-                }
-                if (item.AvailableListing.AvailableTo != null)
-                {
-                    dateTo = item.AvailableListing.AvailableTo.Value.ToShortDateString();
-                }
-                <tr>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemDescription)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@item.AvailableListing.ItemType.DisplayName()</td>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@item.AvailableListing.ItemCondition.DisplayName()</td>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'" style="text-align:center">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
+        <table id="availableTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Qty left</th>
+                    <th>UoM</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Condition</th>
+                    <th>Use-by</th>
+                    <th style="text-align:center">Delivery</th>
                 </tr>
-            }
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    Html.HiddenFor(modelItem => item.AvailableListing.AvailableFrom);
+                    Html.HiddenFor(modelItem => item.AvailableListing.AvailableTo);
+
+                    var dateFrom = "";
+                    var dateTo = "";
+                    if (item.AvailableListing.AvailableFrom != null)
+                    {
+                        dateFrom = item.AvailableListing.AvailableFrom.Value.ToShortDateString();
+                    }
+                    if (item.AvailableListing.AvailableTo != null)
+                    {
+                        dateTo = item.AvailableListing.AvailableTo.Value.ToShortDateString();
+                    }
+                    <tr>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.ItemDescription)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@item.AvailableListing.ItemType.DisplayName()</td>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.QuantityOutstanding)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.UoM)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableFrom)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.AvailableTo)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@item.AvailableListing.ItemCondition.DisplayName()</td>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'">@Html.DisplayFor(modelItem => item.AvailableListing.UseByDate)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "AvailableListings", new { id = item.AvailableListing.ListingId, showHistory = false })'" style="text-align:center">@Html.DisplayFor(modelItem => item.AvailableListing.DeliveryAvailable)</td>
+                    </tr>
+                }
+            </tbody>
 
         </table>
     }    

@@ -15,8 +15,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
     <script type="text/javascript">
+        //Render tables
+        $(document).ready(function () {
+            $('#requiredOrdersTable').dataTable();
+            $('#availableOrdersTable').dataTable();
+        });
 
         function buttonClick(id, type) {
             var thisOfferId = id.substr(12, 43);
@@ -99,88 +105,93 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th style="min-width:150px">Actions</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
-            </tr>
-            @foreach (var item in Model)
-            {
-                if (item.OrderOut)
+        <table id="requiredOrdersTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th style="min-width:150px">Actions</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    orderId = item.OrderDetails.OrderId;
-                    despatchedButton = "despatchedbutton" + orderId.ToString();
-                    deliveredButton = "deliveredbutton" + orderId.ToString();
-                    closedButton = "closedbutton" + orderId.ToString();
+                    if (item.OrderOut)
+                    {
+                        orderId = item.OrderDetails.OrderId;
+                        despatchedButton = "despatchedbutton" + orderId.ToString();
+                        deliveredButton = "deliveredbutton" + orderId.ToString();
+                        closedButton = "closedbutton" + orderId.ToString();
 
-                    <tr id=@orderId>                        
-                        @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (item.DisplayDespatchButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Despatched')"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
-                                    }
-                                    @if (item.DisplayDeliveredButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
-                                    }
-                                    @if (item.DisplayClosedButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (item.DisplayDeliveredButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
-                                    }
-                                    @if (item.DisplayClosedButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Delivered)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (item.DisplayClosedButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                        
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
-                    </tr>
+                        <tr id=@orderId>
+                            @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayDespatchButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Despatched')"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
+                                        }
+                                        @if (item.DisplayDeliveredButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                        }
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayDeliveredButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                        }
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Delivered)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                        </tr>
+                    }
+
                 }
-
-            }
+            </tbody>
         </table>
     }
 </div>
@@ -198,73 +209,78 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th style="min-width:150px">Actions</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
-            </tr>
-            @foreach (var item in Model)
-            {
-                if (item.OrderOut == false)
+        <table id="availableOrdersTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th style="min-width:150px">Actions</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    orderId = item.OrderDetails.OrderId;
-                    collectedButton = "collectedbutton" + orderId.ToString();
-                    receivedButton = "receivedbutton" + orderId.ToString();
-                    closedButton = "closedbutton" + orderId.ToString();
+                    if (item.OrderOut == false)
+                    {
+                        orderId = item.OrderDetails.OrderId;
+                        collectedButton = "collectedbutton" + orderId.ToString();
+                        receivedButton = "receivedbutton" + orderId.ToString();
+                        closedButton = "closedbutton" + orderId.ToString();
 
-                    <tr id=@orderId>
-                        @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (item.DisplayReceivedButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button>
-                                    }
-                                    @if (item.DisplayCollectedButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button>
-                                    }
-                                    @if (item.DisplayClosedButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Received || item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (item.DisplayClosedButton.Value)
-                                    {
-                                        <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
+                        <tr id=@orderId>
+                            @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayReceivedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button>
+                                        }
+                                        @if (item.DisplayCollectedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button>
+                                        }
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Received || item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
 
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
-                    </tr>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                        </tr>
+                    }
+
                 }
-
-            }
+            </tbody>
         </table>
     }
 </div>

@@ -14,8 +14,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
     <script type="text/javascript">
+
+        //Render tables
+        $(document).ready(function () {
+            $('#availableTable').dataTable();
+        });
 
         $(function () {
             //show/hide offer details to edit
@@ -106,21 +112,23 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th colspan="3">Actions</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Qty left</th>
-                <th>UoM</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Condition</th>
-                <th>Use-by</th>
-                <th style="text-align:center">Delivery</th>
-            </tr>
+        <table id="availableTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th colspan="3">Actions</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Qty left</th>
+                    <th>UoM</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Condition</th>
+                    <th>Use-by</th>
+                    <th style="text-align:center">Delivery</th>
+                </tr>
+            </thead>
 
-            @foreach (var item in Model)
+            <tbody>@foreach (var item in Model)
             {
                 listingId = item.AvailableListing.ListingId;
                 offerButton = "offerbutton" + listingId.ToString();
@@ -368,11 +376,11 @@
                 {
                     <tr id=@listingId style="color:forestgreen">
                         @if (offerQuantity == 0)
-                                    {
-                                    if (item.AllowBranchTrading)
-                                    {
-                                        if (appUserId != currentAppUserId)
-                                        {
+                        {
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
+                                {
                                     <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                 }
                                 else
@@ -533,6 +541,7 @@
                 }
 
             }
+            </tbody>
 
         </table>
     }

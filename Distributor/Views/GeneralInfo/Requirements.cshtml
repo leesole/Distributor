@@ -14,8 +14,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
     <script type="text/javascript">
+
+        //Render tables
+        $(document).ready(function () {
+            $('#requestsTable').dataTable();
+        });
 
         $(function () {
             //show/hide offer details to edit
@@ -109,10 +115,10 @@
     }
     else
     {
-        <table class="table table-hover">
+        <table id="requestsTable" class="table table-hover">
             <thead>
                 <tr class="info">
-                    <th colspan="4">Actions</th>
+                    <th colspan="3">Actions</th>
                     <th>Description</th>
                     <th>Type</th>
                     <th>Qty reqd</th>
