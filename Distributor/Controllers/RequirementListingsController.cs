@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Distributor.Models;
 using Distributor.Helpers;
 using Distributor.ViewModels;
+using static Distributor.Enums.ItemEnums;
 
 namespace Distributor.Controllers
 {
@@ -91,7 +92,7 @@ namespace Distributor.Controllers
 
             ViewBag.CampaignList = ControlHelpers.AllActiveCampaignsForUserListDropDown(AppUserHelpers.GetAppUserIdFromUser(User), requirementListing.SelectedCampaignId);
             ViewBag.ShowHistory = showHistory;
-            
+
             return View(requirementListing);
         }
 

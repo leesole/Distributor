@@ -113,6 +113,19 @@ namespace Distributor.Helpers
             return new SelectList(itemTypeEnumList, "Id", "Name");
         }
 
+        public static SelectList ItemTypeEnumListForSpecificItemCategoryDropDown(ItemCategoryEnum itemCategoryEnum)
+        {
+            var itemTypeEnumList = (from ItemTypeEnum es in Enum.GetValues(typeof(ItemTypeEnum))
+                                    where (EnumHelpers.GetCategory((ItemTypeEnum)es) == itemCategoryEnum.ToString())
+                                    select new
+                                    {
+                                        Id = es,
+                                        Name = EnumHelpers.GetDescription((ItemTypeEnum)es)
+                                    });
+
+            return new SelectList(itemTypeEnumList, "Id", "Name");
+        }
+
         public static SelectList ItemConditionEnumListDropDown()
         {
             var itemConditionEnumList = (from ItemConditionEnum es in Enum.GetValues(typeof(ItemConditionEnum))

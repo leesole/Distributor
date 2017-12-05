@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Distributor.Extenstions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,12 @@ namespace Distributor.Enums
             [Description("Food")]
             [Display(Name = "Food")]
             Food = 0
+            //[Description("Drink")]
+            //[Display(Name = "Drink")]
+            //Drink = 1,
+            //[Description("Misc")]
+            //[Display(Name = "Misc")]
+            //Misc = 2
         }
 
         //The 'Category' relates to the above ItemCategoryEnum and will be use to group the list below
@@ -46,7 +53,11 @@ namespace Distributor.Enums
             [Category("Food")]
             [Description("Prepared / Microwave")]
             [Display(Name = "Prepared / Microwave")]
-            PreparedMicrowave = 6
+            PreparedMicrowave = 6,
+            [Category("Food")]
+            [Description("Bottled")]
+            [Display(Name = "Bottled")]
+            Bottled = 7
         }
 
         public enum ItemConditionEnum

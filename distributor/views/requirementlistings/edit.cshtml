@@ -185,6 +185,21 @@ else
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemCategory)</div>
+                            <div class="col-md-8">
+                                @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
+                                {
+                                    @Html.EnumDropDownListFor(model => model.ItemCategory, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ItemCategory, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.ItemCategory)
+                                    <p>@Model.ItemCategory.DisplayName()</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.ItemType)</div>
                             <div class="col-md-8">
                                 @if (Model.ListingStatus == ItemEnums.ItemRequiredListingStatusEnum.Open)
