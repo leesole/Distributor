@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<Distributor.ViewModels.CampaignManageView>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+    </script>
+}
+
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
         <div class="container">
@@ -12,10 +19,6 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -67,27 +70,31 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th>@Html.DisplayNameFor(model => model.Campaign.Name)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.StrapLine)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.Description)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.Website)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.CampaignStartDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.CampaignEndDateTime)</th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.Name)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.StrapLine)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.Description)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.Website)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignStartDateTime)</td>
-                    <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignEndDateTime)</td>
+        <table id="campaignTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th>Name</th>
+                    <th>StrapLine</th>
+                    <th>Description</th>
+                    <th>Website</th>
+                    <th>Start date/time</th>
+                    <th>End date/time</th>
                 </tr>
-            }
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.Name)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.StrapLine)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.Description)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.Website)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignStartDateTime)</td>
+                        <td onclick="location.href='@Url.Action("Edit", "Campaigns", new { id = item.Campaign.CampaignId, showHistory = false })'">@Html.DisplayFor(modelItem => item.Campaign.CampaignEndDateTime)</td>
+                    </tr>
+                }
+            </tbody>
 
         </table>
     }    

@@ -16,7 +16,7 @@
     <script type="text/javascript">
         $(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
-            $('.date-picker').datepicker();
+            $('.date-picker').datepicker({ dateFormat: 'dd/mm/yy' });
         })
 
         $(document).ready(function () {
@@ -40,16 +40,12 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -72,7 +68,7 @@
                     <li class="active">@Html.ActionLink("Orders", "Orders", "ManageListings")</li>
                 </ul>
             </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+        </div><!-- /.container -->
     </nav>
 </nav>
 
@@ -116,7 +112,6 @@ else
                 <tr class="info">
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemDescription)</th>
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.ItemType)</th>
-                    <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.QuantityOutstanding)</th>
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.UoM)</th>
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableFrom)</th>
                     <th>@Html.DisplayNameFor(model => model.AvailableListingDetails.AvailableTo)</th>
@@ -127,7 +122,6 @@ else
                 <tr>
                     <td>@Html.DisplayFor(model => model.AvailableListingDetails.ItemDescription)</td>
                     <td>@Model.AvailableListingDetails.ItemType.DisplayName()</td>
-                    <td>@Html.DisplayFor(model => model.AvailableListingDetails.QuantityOutstanding)</td>
                     <td>@Html.DisplayFor(model => model.AvailableListingDetails.UoM)</td>
                     <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableFrom)</td>
                     <td>@Html.DisplayFor(model => model.AvailableListingDetails.AvailableTo)</td>
@@ -149,7 +143,6 @@ else
                 <tr class="info">
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemDescription)</th>
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.ItemType)</th>
-                    <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.QuantityOutstanding)</th>
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.UoM)</th>
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredFrom)</th>
                     <th>@Html.DisplayNameFor(model => model.RequirementListingDetails.RequiredTo)</th>
@@ -160,7 +153,6 @@ else
                 <tr>
                     <td>@Html.DisplayFor(model => model.RequirementListingDetails.ItemDescription)</td>
                     <td>@Model.RequirementListingDetails.ItemType.DisplayName()</td>
-                    <td>@Html.DisplayFor(model => model.RequirementListingDetails.QuantityOutstanding)</td>
                     <td>@Html.DisplayFor(model => model.RequirementListingDetails.UoM)</td>
                     <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredFrom)</td>
                     <td>@Html.DisplayFor(model => model.RequirementListingDetails.RequiredTo)</td>
@@ -183,7 +175,6 @@ else
                     <th>@Html.DisplayNameFor(model => model.OfferDetails.CounterOfferQuantity)</th>
                     <th>@Html.DisplayNameFor(model => model.OfferDetails.PreviousOfferQuantity)</th>
                     <th>Unit of measure</th>
-                    <th>Description</th>
                 </tr>
                 <tr>
                     <td>@Model.OfferDetails.ListingType.DisplayName()</td>
@@ -192,7 +183,6 @@ else
                     <td>@Html.DisplayFor(model => model.OfferDetails.CounterOfferQuantity)</td>
                     <td>@Html.DisplayFor(model => model.OfferDetails.PreviousOfferQuantity)</td>
                     <td>@uoM</td>
-                    <td>@description</td>
                 </tr>
             </table>
         </div>
@@ -204,7 +194,7 @@ else
 
         <div class="row">
             <div class="col-md-6">
-                <div class="login-panel panel panel-primary">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Order details</h3>
                     </div>
@@ -227,223 +217,101 @@ else
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">@Html.LabelFor(model => model.OrderCreationDateTime)</div>
-                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderCreationDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderCreationDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">@Html.LabelFor(model => model.OrderDistributionDateTime)</div>
-                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderDistributionDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderDistributionDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">@Html.LabelFor(model => model.OrderDeliveredDateTime)</div>
-                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderDeliveredDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderDeliveredDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">@Html.LabelFor(model => model.OrderCollectedDateTime)</div>
                                 <div class="col-md-8">
-                                    @Html.DisplayFor(model => model.OrderCollectedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                    @Html.DisplayFor(model => model.OrderCollectedDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                     @Html.ValidationMessageFor(model => model.OrderCollectedDateTime, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">@Html.LabelFor(model => model.OrderReceivedDateTime)</div>
-                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderReceivedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderReceivedDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-4">@Html.LabelFor(model => model.OrderClosedDateTime)</div>
-                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderClosedDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
+                                <div class="col-md-8">@Html.DisplayFor(model => model.OrderClosedDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })</div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        @{
-                        var displayDespatchButton = true;
-                        var displayDeliveredButton = true;
-                        var displayCollectedButton = true;
-                        var displayReceivedButton = true;
-                        var displayClosedButton = true;
 
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DespatchedAuthorisationLevel)
+                        @if (Model.OrderOut) //our order
                         {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.DespatchedAuthorisationId)
-                                {
-                                    displayDespatchButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DeliveredAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.DeliveredAuthorisationId)
-                                {
-                                    displayDeliveredButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.CollectedAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.CollectedAuthorisationId)
-                                {
-                                    displayCollectedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-
-                        switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
-                        {
-                            case GeneralEnums.InternalSearchLevelEnum.Company:
-                                if (Model.OrderBranchDetails.CompanyId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                if (Model.OrderBranchDetails.BranchId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.User:
-                                if (Model.OrderAppUser.AppUserId != ViewBag.ClosedAuthorisationId)
-                                {
-                                    displayClosedButton = false;
-                                }
-                                break;
-                            case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                break;
-                        }
-                        }
-
-                        @if (ViewBag.AllowBranchTrading)
-                    {
-                        if (Model.OrderBranchDetails.BranchId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOrder = true;
-                        }
-                    }
-                    else
-                    {
-                        if (Model.OrderBranchDetails.CompanyId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOrder = true;
-                        }
-                    }
-
-                        @if (inhouseOrder) //our order
-                    {
-                        if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            if (displayDespatchButton)
+                            if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
                             {
-                    <button type="submit" class="btn btn-sm btn-success" name="despatchedbutton"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
+                                if (Model.DisplayDespatchButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="despatchedbutton"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
+                                }
+                                if (Model.DisplayDeliveredButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                }
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
-                            if (displayDeliveredButton)
+                            else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
                             {
-                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                if (Model.DisplayDeliveredButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                }
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
-                            if (displayClosedButton)
+                            else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Delivered)
                             {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
                         }
-                        else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
+                        else
                         {
-                            if (displayDeliveredButton)
+                            if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
                             {
-                    <button type="submit" class="btn btn-sm btn-success" name="delivereddbutton"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                if (Model.DisplayReceivedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
+                                }
+                                if (Model.DisplayCollectedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" name="collectedbutton"><span class="glyphicon glyphicon-ok"></span> Collected</button>
+                                }
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
-                            if (displayClosedButton)
+                            else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Received || Model.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
                             {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                if (Model.DisplayClosedButton.Value)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                }
                             }
                         }
-                        else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
-                        {
-                            if (displayClosedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (Model.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            if (displayCollectedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-success" name="collectedbutton"><span class="glyphicon glyphicon-ok"></span> Collected</button>
-                            }
-                            if (displayReceivedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
-                            }
-                            if (displayClosedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                            }
-                        }
-                        else if (Model.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
-                        {
-                            if (displayReceivedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-success" name="receivedbutton"><span class="glyphicon glyphicon-ok"></span> Received</button>
-                            }
-                            if (displayClosedButton)
-                            {
-                    <button type="submit" class="btn btn-sm btn-danger" name="closedbutton"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                            }
-                        }
-                    }
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="login-panel panel panel-info">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">Order created by</h3>
                     </div>
@@ -484,7 +352,7 @@ else
 
         <div class="row">
             <div class="col-md-6">
-                <div class="login-panel panel panel-info">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">Listing created by</h3>
                     </div>
@@ -522,7 +390,7 @@ else
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="login-panel panel panel-info">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">Offer created by</h3>
                     </div>

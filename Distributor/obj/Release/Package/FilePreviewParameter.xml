@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="IIS Web Application Name" description="" value="DistributorC" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\leesole\\Documents\\Visual\ Studio\ 2017\\Projects\\Distributor\\Distributor\\obj\\Release\\Package\\PackageTmp$" />
-    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\leesole\\Documents\\Visual\ Studio\ 2017\\Projects\\Distributor\\Distributor\\obj\\Release\\Package\\PackageTmp$" />
+  <parameter name="IIS Web Application Name" description="" value="DistributorOnline" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\leesole\\source\\repos\\Distributor\\Distributor\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\leesole\\source\\repos\\Distributor\\Distributor\\obj\\Release\\Package\\PackageTmp$" />
   </parameter>
-  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-Distributor-20170727045132.mdf;Initial Catalog=aspnet-Distributor-20170727045132;Integrated Security=True" tags="">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\leesole\\Documents\\Visual\ Studio\ 2017\\Projects\\Distributor\\Distributor\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" value="DistributorOnline/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\leesole\\source\\repos\\Distributor\\Distributor\\obj\\Release\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=tcp:distributoronlinedbserver.database.windows.net,1433;Initial Catalog=DistributorOnline_db;User Id=LeeSole@distributoronlinedbserver;Password=LolaLaurelle01" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\leesole\\source\\repos\\Distributor\\Distributor\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
   </parameter>
 </parameters>

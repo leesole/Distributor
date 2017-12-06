@@ -16,7 +16,7 @@
         function buttonClick(id) {
             if (window.confirm("Proceed?")) {
                 var url = "/Data/ProcessButton";
-
+        
                 $.ajax({
                     url: url,
                     data: { buttonName: id },
@@ -43,10 +43,6 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -90,7 +86,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <div class="login-panel panel panel-info">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Listing details</h3>
             </div>
@@ -101,6 +97,9 @@
                 
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemDescription)</div></div>
                 <div class="row"><div class="col-md-12">@Html.DisplayFor(model => model.ItemDescription)</div></div>
+                <br />
+                <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemCategory)</div></div>
+                <div class="row"><div class="col-md-12">@Model.ItemCategory.DisplayName()</div></div>
                 <br />
                 <div class="row"><div class="col-md-12">@Html.LabelFor(model => model.ItemType)</div></div>
                 <div class="row"><div class="col-md-12">@Model.ItemType.DisplayName()</div></div>
@@ -138,7 +137,7 @@
         </div>
     </div>
     <div class="col-md-8">
-        <div class="login-panel panel panel-info">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Listing created by</h3>
             </div>
@@ -256,7 +255,7 @@
                 </div>
             </div>
         </div>
-        <div class="login-panel panel panel-info">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Campaign details</h3>
             </div>

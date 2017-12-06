@@ -202,7 +202,6 @@ C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.Dependenc
 C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\leesole\source\repos\Distributor\Distributor\bin\Microsoft.AI.Web.xml
-C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.csprojResolveAssemblyReference.cache
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._1st.resources
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._2nd.resources
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._3rd.resources
@@ -221,3 +220,10 @@ C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.cs
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.csproj.CoreCompileInputs.cache
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.dll
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.pdb
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._16th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._17th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._18th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._19th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._20th.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.Migrations._21st.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Release\Distributor.csprojResolveAssemblyReference.cache

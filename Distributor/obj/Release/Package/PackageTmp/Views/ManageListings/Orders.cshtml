@@ -6,21 +6,16 @@
 @{
     var orderId = Guid.Empty;
     var despatchedButton = "";
-    var displayDespatchButton = true;
     var deliveredButton = "";
-    var displayDeliveredButton = true;
     var receivedButton = "";
-    var displayReceivedButton = true;
     var collectedButton = "";
-    var displayCollectedButton = true;
     var closedButton = "";
-    var displayClosedButton = true;
     var currentAppUserId = User.Identity.GetAppUserId();
-    var inhouseOrder = false;
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
     <script type="text/javascript">
 
@@ -55,10 +50,6 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -109,184 +100,93 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th style="min-width:150px">Actions</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
-            </tr>
-            @foreach (var item in Model)
-            {
-                inhouseOrder = false;
+        <table id="requiredOrdersTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th style="min-width:150px">Actions</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+                </tr>
+            </thead>
 
-                if (ViewBag.AllowBranchTrading)
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                    if (item.OrderOut)
                     {
-                        inhouseOrder = true;
+                        orderId = item.OrderDetails.OrderId;
+                        despatchedButton = "despatchedbutton" + orderId.ToString();
+                        deliveredButton = "deliveredbutton" + orderId.ToString();
+                        closedButton = "closedbutton" + orderId.ToString();
+
+                        <tr id=@orderId>
+                            @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayDespatchButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Despatched')"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
+                                        }
+                                        @if (item.DisplayDeliveredButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                        }
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayDeliveredButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
+                                        }
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Delivered)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                        </tr>
                     }
+
                 }
-                else
-                {
-                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-
-                //if (inhouseOrder)
-                if ((inhouseOrder && item.OrderDetails.ListingType == GeneralEnums.ListingTypeEnum.Available) || (inhouseOrder == false && item.OrderDetails.ListingType == GeneralEnums.ListingTypeEnum.Requirement))
-                {
-                    orderId = item.OrderDetails.OrderId;
-                    despatchedButton = "despatchedbutton" + orderId.ToString();
-                    deliveredButton = "deliveredbutton" + orderId.ToString();
-                    closedButton = "closedbutton" + orderId.ToString();
-
-                    <tr id=@orderId>
-                        @{
-                            displayDespatchButton = true;
-                            displayDeliveredButton = true;
-                            displayClosedButton = true;
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DespatchedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.DespatchedAuthorisationId && item.OrderDetails.OfferOriginatorCompanyId != ViewBag.DespatchedAuthorisationId)
-                                    {
-                                        displayDespatchButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.DespatchedAuthorisationId && item.OrderDetails.OfferOriginatorBranchId != ViewBag.DespatchedAuthorisationId)
-                                    {
-                                        displayDespatchButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.DespatchedAuthorisationId && item.OrderDetails.OfferOriginatorAppUserId != ViewBag.DespatchedAuthorisationId)
-                                    {
-                                        displayDespatchButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.DeliveredAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.DeliveredAuthorisationId && item.OrderDetails.OfferOriginatorCompanyId != ViewBag.DeliveredAuthorisationId)
-                                    {
-                                        displayDeliveredButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.DeliveredAuthorisationId && item.OrderDetails.OfferOriginatorBranchId != ViewBag.DeliveredAuthorisationId)
-                                    {
-                                        displayDeliveredButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.DeliveredAuthorisationId && item.OrderDetails.OfferOriginatorAppUserId != ViewBag.DeliveredAuthorisationId)
-                                    {
-                                        displayDeliveredButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OrderOriginatorCompanyId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OfferOriginatorCompanyId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OrderOriginatorBranchId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OfferOriginatorBranchId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OrderOriginatorAppUserId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OfferOriginatorAppUserId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-                        }
-                        
-                        @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (displayDespatchButton)
-                                    {
-                                        <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Despatched')"><span class="glyphicon glyphicon-ok"></span> Despatched</button>
-                                    }
-                                    @if (displayDeliveredButton)
-                                    {
-                                        <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
-                                    }
-                                    @if (displayClosedButton)
-                                    {
-                                        <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Despatched)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (displayDeliveredButton)
-                                    {
-                                        <button type="submit" class="btn btn-success" id=@orderId onclick="buttonClick(id, 'Delivered')"><span class="glyphicon glyphicon-ok"></span> Delivered</button>
-                                    }
-                                    @if (displayClosedButton)
-                                    {
-                                        <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Delivered)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (displayClosedButton)
-                                    {
-                                        <button type="submit" class="btn btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                        
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
-                    </tr>
-                }
-
-            }
+            </tbody>
         </table>
     }
 </div>
@@ -304,169 +204,78 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th style="min-width:150px">Actions</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
-            </tr>
-            @foreach (var item in Model)
-            {
-                inhouseOrder = false;
+        <table id="availableOrdersTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th style="min-width:150px">Actions</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderQuanity)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderStatus)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCreationDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDistributionDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderDeliveredDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderCollectedDateTime)</th>
+                    <th>@Html.DisplayNameFor(model => model.OrderDetails.OrderClosedDateTime)</th>
+                </tr>
+            </thead>
 
-                if (ViewBag.AllowBranchTrading)
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
+                    if (item.OrderOut == false)
                     {
-                        inhouseOrder = true;
+                        orderId = item.OrderDetails.OrderId;
+                        collectedButton = "collectedbutton" + orderId.ToString();
+                        receivedButton = "receivedbutton" + orderId.ToString();
+                        closedButton = "closedbutton" + orderId.ToString();
+
+                        <tr id=@orderId>
+                            @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayReceivedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button>
+                                        }
+                                        @if (item.DisplayCollectedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button>
+                                        }
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Received || item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
+                            {
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @if (item.DisplayClosedButton.Value)
+                                        {
+                                            <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
+                                        }
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
+                            <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
+                        </tr>
                     }
+
                 }
-                else
-                {
-                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-
-                //if (inhouseOrder == false)
-                if ((inhouseOrder && item.OrderDetails.ListingType == GeneralEnums.ListingTypeEnum.Requirement) || (inhouseOrder == false && item.OrderDetails.ListingType == GeneralEnums.ListingTypeEnum.Available))
-                {
-                    orderId = item.OrderDetails.OrderId;
-                    collectedButton = "collectedbutton" + orderId.ToString();
-                    receivedButton = "receivedbutton" + orderId.ToString();
-                    closedButton = "closedbutton" + orderId.ToString();
-
-                    <tr id=@orderId>
-                        @{
-                            displayCollectedButton = true;
-                            displayReceivedButton = true;
-                            displayClosedButton = true;
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.CollectedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OfferOriginatorCompanyId != ViewBag.CollectedAuthorisationId && item.OrderDetails.OrderOriginatorCompanyId != ViewBag.CollectedAuthorisationId)
-                                    {
-                                        displayCollectedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OfferOriginatorBranchId != ViewBag.CollectedAuthorisationId && item.OrderDetails.OrderOriginatorCompanyId != ViewBag.CollectedAuthorisationId)
-                                    {
-                                        displayCollectedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OfferOriginatorAppUserId != ViewBag.CollectedAuthorisationId && item.OrderDetails.OrderOriginatorAppUserId != ViewBag.CollectedAuthorisationId)
-                                    {
-                                        displayCollectedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ReceivedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OfferOriginatorCompanyId != ViewBag.ReceivedAuthorisationId && item.OrderDetails.OrderOriginatorCompanyId != ViewBag.ReceivedAuthorisationId)
-                                    {
-                                        displayReceivedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OfferOriginatorBranchId != ViewBag.ReceivedAuthorisationId && item.OrderDetails.OrderOriginatorBranchId != ViewBag.ReceivedAuthorisationId)
-                                    {
-                                        displayReceivedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OfferOriginatorAppUserId != ViewBag.ReceivedAuthorisationId && item.OrderDetails.OrderOriginatorAppUserId != ViewBag.ReceivedAuthorisationId)
-                                    {
-                                        displayReceivedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-
-                            switch ((GeneralEnums.InternalSearchLevelEnum)ViewBag.ClosedAuthorisationLevel)
-                            {
-                                case GeneralEnums.InternalSearchLevelEnum.Company:
-                                    if (item.OrderDetails.OfferOriginatorCompanyId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OrderOriginatorCompanyId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Branch:
-                                    if (item.OrderDetails.OfferOriginatorBranchId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OrderOriginatorBranchId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.User:
-                                    if (item.OrderDetails.OfferOriginatorAppUserId != ViewBag.ClosedAuthorisationId && item.OrderDetails.OrderOriginatorAppUserId != ViewBag.ClosedAuthorisationId)
-                                    {
-                                        displayClosedButton = false;
-                                    }
-                                    break;
-                                case GeneralEnums.InternalSearchLevelEnum.Group:  //LSLSLS  TO BE DONE WHEN GROUPS ADDED
-                                    break;
-                            }
-                        }
-
-                        @if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.New)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (displayReceivedButton)
-                                    {
-                                        <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Received')"><span class="glyphicon glyphicon-ok"></span> Received</button>
-                                    }
-                                    @if (displayCollectedButton)
-                                    {
-                                        <button type="submit" class="btn btn-xs btn-success" id=@orderId onclick="buttonClick(id, 'Collected')"><span class="glyphicon glyphicon-ok"></span> Collected</button>
-                                    }
-                                    @if (displayClosedButton)
-                                    {
-                                        <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else if (item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Received || item.OrderDetails.OrderStatus == OrderEnums.OrderStatusEnum.Collected)
-                        {
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    @if (displayClosedButton)
-                                    {
-                                        <button type="submit" class="btn btn-xs btn-danger" id=@orderId onclick="buttonClick(id, 'Closed')"><span class="glyphicon glyphicon-remove"></span> Closed</button>
-                                    }
-                                </div>
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderQuanity)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderStatus)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCreationDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDistributionDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderDeliveredDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderCollectedDateTime)</td>
-                        <td onclick="location.href='@Url.Action("Details", "Orders", new { id = item.OrderDetails.OrderId, showHistory = false })'">@Html.DisplayFor(modelItem => item.OrderDetails.OrderClosedDateTime)</td>
-                    </tr>
-                }
-
-            }
+            </tbody>
         </table>
     }
 </div>

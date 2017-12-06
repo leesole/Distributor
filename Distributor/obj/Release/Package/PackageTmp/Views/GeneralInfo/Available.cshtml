@@ -14,6 +14,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
     <script type="text/javascript">
 
@@ -61,17 +62,12 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <nav class="navbar navbar-default">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
@@ -79,10 +75,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @*<a class="navbar-brand" href="#">Brand</a>*@
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="disabled">@Html.ActionLink("GENERAL INFO", "General", "Home")</li>
@@ -90,8 +84,8 @@
                     <li class="active">@Html.ActionLink("Available", "Available", "GeneralInfo")</li>
                     <li>@Html.ActionLink("Campaigns", "Campaigns", "GeneralInfo")</li>
                 </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container -->
+            </div>
+        </div>
     </nav>
 </nav>
 
@@ -113,21 +107,23 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th colspan="3">Actions</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Qty left</th>
-                <th>UoM</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Condition</th>
-                <th>Use-by</th>
-                <th style="text-align:center">Delivery</th>
-            </tr>
+        <table id="availableTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th colspan="3">Actions</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Qty left</th>
+                    <th>UoM</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Condition</th>
+                    <th>Use-by</th>
+                    <th style="text-align:center">Delivery</th>
+                </tr>
+            </thead>
 
-            @foreach (var item in Model)
+            <tbody>@foreach (var item in Model)
             {
                 listingId = item.AvailableListing.ListingId;
                 offerButton = "offerbutton" + listingId.ToString();
@@ -375,11 +371,11 @@
                 {
                     <tr id=@listingId style="color:forestgreen">
                         @if (offerQuantity == 0)
-                                    {
-                                    if (item.AllowBranchTrading)
-                                    {
-                                        if (appUserId != currentAppUserId)
-                                        {
+                        {
+                            if (item.AllowBranchTrading)
+                            {
+                                if (appUserId != currentAppUserId)
+                                {
                                     <td><button type="submit" class="btn btn-xs btn-primary btn-block showhideofferdetails" id=@offerButton><span class="glyphicon glyphicon-usd"></span></button></td>
                                 }
                                 else
@@ -540,6 +536,7 @@
                 }
 
             }
+            </tbody>
 
         </table>
     }

@@ -16,7 +16,7 @@
     <script type="text/javascript">
         $(function () {
             // This will make every element with the class "date-picker" into a DatePicker element
-            $('.date-picker').datepicker();
+            $('.date-picker').datepicker({ dateFormat: 'dd/mm/yy' });
         })
 
         $(document).ready(function () {
@@ -40,10 +40,6 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -110,7 +106,7 @@ else
     @Html.AntiForgeryToken()
     <div class="row" id="setstyle">
         <div class="col-md-6">
-            <div class="login-panel panel panel-primary">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Listing details</h3>
                 </div>
@@ -151,14 +147,14 @@ else
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.CampaignStartDateTime)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.CampaignStartDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                @Html.EditorFor(model => model.CampaignStartDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                 @Html.ValidationMessageFor(model => model.CampaignStartDateTime, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-4 control-label">@Html.LabelFor(model => model.CampaignEndDateTime)</div>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.CampaignEndDateTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                                @Html.EditorFor(model => model.CampaignEndDateTime, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker" } })
                                 @Html.ValidationMessageFor(model => model.CampaignEndDateTime, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -244,7 +240,7 @@ else
             </div>
         </div>
         <div class="col-md-6">
-            <div class="login-panel panel panel-primary">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Campaign poster</h3>
                 </div>
@@ -267,7 +263,7 @@ else
                     </div>
                 </div>
             </div>
-            <div class="login-panel panel panel-info">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Campaign created by</h3>
                 </div>

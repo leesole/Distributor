@@ -446,7 +446,9 @@
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
     <None Include="Properties\PublishProfiles\DistributorC - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\DistributorOnline - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\DistributorOnline - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\DistributorTest - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

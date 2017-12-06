@@ -5,16 +5,6 @@
 
 @{
     var orderId = Guid.Empty;
-    var despatchedButton = "";
-    var displayDespatchButton = true;
-    var deliveredButton = "";
-    var displayDeliveredButton = true;
-    var receivedButton = "";
-    var displayReceivedButton = true;
-    var collectedButton = "";
-    var displayCollectedButton = true;
-    var closedButton = "";
-    var displayClosedButton = true;
     var currentAppUserId = User.Identity.GetAppUserId();
     var inhouseOrder = false;
 }
@@ -55,10 +45,6 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -122,24 +108,7 @@
             </tr>
             @foreach (var item in Model)
             {
-                inhouseOrder = false;
-
-                if (ViewBag.AllowBranchTrading)
-                {
-                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-                else
-                {
-                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-
-                if (inhouseOrder)
+                if (item.InhouseOrder)
                 {
                     orderId = item.OrderDetails.OrderId;
 
@@ -184,24 +153,7 @@
             </tr>
             @foreach (var item in Model)
             {
-                inhouseOrder = false;
-
-                if (ViewBag.AllowBranchTrading)
-                {
-                    if (item.OrderDetails.OrderOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-                else
-                {
-                    if (item.OrderDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                    {
-                        inhouseOrder = true;
-                    }
-                }
-
-                if (inhouseOrder == false)
+                if (item.InhouseOrder == false)
                 {
                     orderId = item.OrderDetails.OrderId;
 

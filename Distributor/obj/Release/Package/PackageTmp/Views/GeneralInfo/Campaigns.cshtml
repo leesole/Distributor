@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<Distributor.ViewModels.CampaignGeneralInfoView>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+}
+
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
         <div class="container">
@@ -12,10 +17,6 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -64,17 +65,19 @@
     }
     else
     {
-        <table class="table table-hover">
-            <tr class="info">
-                <th>@Html.DisplayNameFor(model => model.Campaign.Name)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.StrapLine)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.Description)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.Website)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.CampaignStartDateTime)</th>
-                <th>@Html.DisplayNameFor(model => model.Campaign.CampaignEndDateTime)</th>
-            </tr>
+        <table id="campaignTable" class="table table-hover">
+            <thead>
+                <tr class="info">
+                    <th>Name</th>
+                    <th>StrapLine</th>
+                    <th>Description</th>
+                    <th>Website</th>
+                    <th>Start date/time</th>
+                    <th>End date/time</th>
+                </tr>
+            </thead>
 
-            @foreach (var item in Model)
+            <tbody>@foreach (var item in Model)
             {
                 if (item.CompanyLevelBlock && item.DisplayBlocks)
                 {
@@ -170,6 +173,7 @@
                     </tr>
                 }
             }
+            </tbody>
 
         </table>
     }

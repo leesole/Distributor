@@ -5,18 +5,10 @@
 
 @{
     var offerId = Guid.Empty;
-    var acceptButton = "";
-    var displayAcceptButton = true;
-    var rejectButton = "";
-    var displayRejectButton = true;
-    var counterButton = "";
-    var displayCounterButton = true;
-    var displayOfferButton = true;
     var saveButton = "";
     var offerQuantityField = "";
     var counterOfferQuantityField = "";
     var currentAppUserId = User.Identity.GetAppUserId();
-    var inhouseOffer = false;
 }
 
 @section Scripts {
@@ -136,10 +128,6 @@
                 @Html.ActionLink("Distributor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -209,22 +197,7 @@
                 {
                     offerId = item.OfferDetails.OfferId;
 
-                    if (ViewBag.AllowBranchTrading)
-                    {
-                        if (item.OfferDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOffer = true;
-                        }
-                    }
-                    else
-                    {
-                        if (item.OfferDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOffer = true;
-                        }
-                    }
-
-                    if (inhouseOffer)
+                    if (item.InhouseOffer)
                     {
                         <tr id=@offerId class="warning">
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
@@ -303,22 +276,7 @@
                 {
                     offerId = item.OfferDetails.OfferId;
 
-                    if (ViewBag.AllowBranchTrading)
-                    {
-                        if (item.OfferDetails.ListingOriginatorBranchId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOffer = true;
-                        }
-                    }
-                    else
-                    {
-                        if (item.OfferDetails.OrderOriginatorCompanyId == ViewBag.CurrentBranchOrCompanyId)
-                        {
-                            inhouseOffer = true;
-                        }
-                    }
-
-                    if (inhouseOffer)
+                    if (item.InhouseOffer)
                     {
                         <tr id=@offerId class="warning">
                             <td onclick="location.href='@Url.Action("Details", "Offers", new { offerId = offerId, showHistory = true })'">@Html.DisplayFor(modelItem => item.OfferDetails.OfferStatus)</td>
