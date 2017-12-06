@@ -8,105 +8,107 @@
 
 @if (Request.IsAuthenticated)
 {
+    <ul class="nav navbar-nav"></ul>
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
-
-    <ul class="nav navbar-nav navbar-right" style="padding-right:30px">
-        @*<li>@Html.ActionLink("Dashboard", "Index", "Home")</li>*@
-        <li title="Dashboard"><a href='@Url.Action("Index", "Home")'><i class="fa fa-dashboard fa-fw"></i></a></li>
-        @*<li>@Html.ActionLink("General Info", "General", "Home")</li>*@
-        @*<li title="General info"><a href='@Url.Action("General", "Home")'><i class="fa fa-info fa-fw"></i></a></li>*@
-        <li class="dropdown" title="General info">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-info fa-fw"></i> <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li>
-                    <a href='@Url.Action("Requirements", "GeneralInfo")'><i class="fa fa-info fa-fw"></i> Requests</a>
-                </li>
-                <li>
-                    <a href='@Url.Action("Available", "GeneralInfo")'><i class="fa fa-info fa-fw"></i> Available</a>
-                </li>
-                <li>
-                    <a href='@Url.Action("Campaigns","GeneralInfo")'><i class="fa fa-info fa-fw"></i> Campaigns</a>
-                </li>
-            </ul>
-        </li>
-        @*<li>@Html.ActionLink("Manage Listings", "Manage", "Home")</li>*@
-        @*<li title="Manage listings"><a href='@Url.Action("Manage", "Home")'><i class="fa fa-th-list fa-fw"></i></a></li>*@
-        <li class="dropdown" title="Manage listings">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-th-list fa-fw"></i> <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li>
-                    <a href='@Url.Action("Requirements", "ManageListings")'><i class="fa fa-th-list fa-fw"></i> Requests</a>
-                </li>
-                <li>
-                    <a href='@Url.Action("Available", "ManageListings")'><i class="fa fa-th-list fa-fw"></i> Available</a>
-                </li>
-                <li>
-                    <a href='@Url.Action("Campaigns","ManageListings")'><i class="fa fa-th-list fa-fw"></i> Campaigns</a>
-                </li>
-                <li>
-                    <a href='@Url.Action("Offers", "ManageListings")'><i class="fa fa-th-list fa-fw"></i> Offers</a>
-                </li>
-                <li>
-                    <a href='@Url.Action("Orders","ManageListings")'><i class="fa fa-th-list fa-fw"></i> Orders</a>
-                </li>
-            </ul>
-        </li>
-        @*<li>@Html.ActionLink("Actions", "Index", "Action")</li>*@
-        <li title="Actions"><a href='@Url.Action("Index", "Action")'><i class="fa fa-exclamation fa-fw"></i></a></li>
-        @if (userRole == "Admin" || userRole == "SuperUser" || userRole == "Manager")
-        {
-            @*<li>@Html.ActionLink("Admin", "Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")</li>*@
-            <li title="Tasks"><a href='@Url.Action("Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")'><i class="fa fa-tasks fa-fw"></i></a></li>
-            <li class="dropdown" title="Admin">
+        @Html.AntiForgeryToken()
+        
+        <ul class="nav navbar-nav navbar-right" style="padding-right:30px">
+            @*<li>@Html.ActionLink("Dashboard", "Index", "Home")</li>*@
+            <li title="Dashboard"><a href='@Url.Action("Index", "Home")'><i class="fa fa-dashboard fa-fw"></i></a></li>
+            @*<li>@Html.ActionLink("General Info", "General", "Home")</li>*@
+            @*<li title="General info"><a href='@Url.Action("General", "Home")'><i class="fa fa-info fa-fw"></i></a></li>*@
+            <li class="dropdown" title="General info">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-edit fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    <i class="fa fa-info fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href='@Url.Action("UserAdmin", "Admin")'><i class="fa fa-user fa-fw"></i> User Admin</a>
+                        <a href='@Url.Action("Requirements", "GeneralInfo")'><i class="fa fa-info fa-fw"></i> Requests</a>
                     </li>
                     <li>
-                        <a href='@Url.Action("BranchAdmin", "Admin")'><i class="fa fa-home fa-fw"></i> Branch Admin</a>
+                        <a href='@Url.Action("Available", "GeneralInfo")'><i class="fa fa-info fa-fw"></i> Available</a>
                     </li>
-                    @if (userRole == "Admin" || userRole == "SuperUser")
-                        {
-                        <li>
-                            <a href='@Url.Action("CompanyAdmin", "Admin")'><i class="fa fa-institution fa-fw"></i> Company Admin</a>
-                        </li>
-                    }
+                    <li>
+                        <a href='@Url.Action("Campaigns","GeneralInfo")'><i class="fa fa-info fa-fw"></i> Campaigns</a>
+                    </li>
                 </ul>
             </li>
-        }
-        @*@if (userRole == "Manager")
-        {
-            <li>@Html.ActionLink("Manager", "Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")</li>
-        }*@
-        @*<li>@Html.ActionLink(User.Identity.GetFullName(), "Edit", "AppUsers", new { id = AppUserHelpers.GetAppUser(User).AppUserId }, "")</li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
-        <li class="dropdown" title="User info">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li>
-                    <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+            @*<li>@Html.ActionLink("Manage Listings", "Manage", "Home")</li>*@
+            @*<li title="Manage listings"><a href='@Url.Action("Manage", "Home")'><i class="fa fa-th-list fa-fw"></i></a></li>*@
+            <li class="dropdown" title="Manage listings">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-th-list fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href='@Url.Action("Requirements", "ManageListings")'><i class="fa fa-th-list fa-fw"></i> Requests</a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("Available", "ManageListings")'><i class="fa fa-th-list fa-fw"></i> Available</a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("Campaigns","ManageListings")'><i class="fa fa-th-list fa-fw"></i> Campaigns</a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("Offers", "ManageListings")'><i class="fa fa-th-list fa-fw"></i> Offers</a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("Orders","ManageListings")'><i class="fa fa-th-list fa-fw"></i> Orders</a>
+                    </li>
+                </ul>
+            </li>
+            @*<li>@Html.ActionLink("Actions", "Index", "Action")</li>*@
+            <li title="Actions"><a href='@Url.Action("Index", "Action")'><i class="fa fa-exclamation fa-fw"></i></a></li>
+            @if (userRole == "Admin" || userRole == "SuperUser" || userRole == "Manager")
+            {
+                @*<li>@Html.ActionLink("Admin", "Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")</li>*@
+                <li title="Tasks"><a href='@Url.Action("Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")'><i class="fa fa-tasks fa-fw"></i></a></li>
+                <li class="dropdown" title="Admin">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-edit fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href='@Url.Action("UserAdmin", "Admin")'><i class="fa fa-user fa-fw"></i> User Admin</a>
+                        </li>
+                        <li>
+                            <a href='@Url.Action("BranchAdmin", "Admin")'><i class="fa fa-home fa-fw"></i> Branch Admin</a>
+                        </li>
+                        @if (userRole == "Admin" || userRole == "SuperUser")
+                            {
+                            <li>
+                                <a href='@Url.Action("CompanyAdmin", "Admin")'><i class="fa fa-institution fa-fw"></i> Company Admin</a>
+                            </li>
+                        }
+                    </ul>
                 </li>
-                <li>
-                    <a href='@Url.Action("Edit", "AppUsers", new { id = AppUserHelpers.GetAppUser(User).AppUserId })'><i class="fa fa-gear fa-fw"></i> Settings</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
+            }
+            @*@if (userRole == "Manager")
+            {
+                <li>@Html.ActionLink("Manager", "Tasks", "Admin", new { redirect = Request.Url.ToString() }, "")</li>
+            }*@
+            @*<li>@Html.ActionLink(User.Identity.GetFullName(), "Edit", "AppUsers", new { id = AppUserHelpers.GetAppUser(User).AppUserId }, "")</li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
+            <li class="dropdown" title="User info">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("Edit", "AppUsers", new { id = AppUserHelpers.GetAppUser(User).AppUserId })'><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     }
 }
 else
