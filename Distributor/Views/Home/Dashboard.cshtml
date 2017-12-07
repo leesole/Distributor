@@ -75,12 +75,18 @@
     </script>
 }
 
-<div class="row">
+@*<div class="row">
     <div class="col-lg-12">
         <h1 class="page-header" style="margin: 10px 0px 10px">Dashboard <small>Home</small></h1>
         <ol class="breadcrumb">
             <li class="active">Home</li>
         </ol>
+    </div>
+</div>*@
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header" style="margin: 10px 0px 10px">Dashboard</h1>
     </div>
 </div>
 
@@ -248,7 +254,7 @@
 </div>
 
 <div class="row">
-    <div class="panel panel-default">
+    <div class="panel panel-default" onclick="location.href='@Url.Action("Requirements", "GeneralInfo")'">
         <div class="panel-heading">
             <h3 class="panel-title">Requests listing</h3>
         </div>
@@ -269,10 +275,10 @@
                                 <th>UoM</th>
                             </tr>
                         </thead>
-                        <tbody onclick="location.href='@Url.Action("Requirements", "GeneralInfo")'">
+                        <tbody>
                             @foreach (var item in Model.RequirementListingDashboardList)
                             {
-                                <tr id=@item.ListingId>
+                                <tr id=@item.ListingId onclick="location.href='@Url.Action("Details", "RequirementListings", new { id = item.ListingId })'">
                                     <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
                                     <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
                                     <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>
@@ -324,7 +330,7 @@
 </div>
 
 <div class="row">
-    <div class="panel panel-default">
+    <div class="panel panel-default" onclick="location.href='@Url.Action("Available", "GeneralInfo")'">
         <div class="panel-heading">
             <h3 class="panel-title">Available listing</h3>
         </div>
@@ -345,10 +351,10 @@
                                 <th>UoM</th>
                             </tr>
                         </thead>
-                        <tbody onclick="location.href='@Url.Action("Available", "GeneralInfo")'">
+                        <tbody>
                             @foreach (var item in Model.AvailableListingDashboardList)
                             {
-                                <tr id=@item.ListingId>
+                                <tr id=@item.ListingId onclick="location.href='@Url.Action("Details", "AvailableListings", new { id = item.ListingId })'">
                                     <td>@Html.DisplayFor(modelItem => item.ItemDescription)</td>
                                     <td>@Html.DisplayFor(modelItem => item.ItemType)</td>
                                     <td>@Html.DisplayFor(modelItem => item.QuantityOutstanding)</td>

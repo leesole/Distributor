@@ -12,7 +12,6 @@
 
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/css")
-    <link href="~/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     @*this is used for the campaign picture paging*@
     @*<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">*@  
     <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
@@ -44,14 +43,22 @@
     </div>
     <div class="container body-content" style="padding-top:50px">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Distributor</p>
-        </footer>
+    </div>
+    <div class="container-fluid" style="background-color:black; color:darkgrey">
+        <div class="container">
+            <footer>
+                <p></p>
+                <p>&copy; Distributor 2017 - @DateTime.Now.Year</p>
+                <p></p>
+                <p>Random text at the bottom of the page</p>
+            </footer>
+        </div>
     </div>
 
-    @Scripts.Render("~/css/vendor/jquery")
+    @*@Scripts.Render("~/css/vendor/jquery")*@
     @*@Scripts.Render("~/bundles/bootstrap")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
 </body>
 </html>

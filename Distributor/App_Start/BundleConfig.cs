@@ -13,7 +13,9 @@ namespace Distributor
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
-                        "~/Scripts/jquery-ui.min.js",
+                        "~/Scripts/jquery-ui.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquerydynatable").Include(
                         "~/Scripts/jquery.dynatable.js"));
 
             //// Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -26,11 +28,11 @@ namespace Distributor
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/css/vendor/jquery").Include(
-                      "~/css/vendor/jquery/jquery.min.js"));
+                      "~/css/vendor/jquery/jquery.min.js",
+                      "~/Scripts/jquery-ui.min.js"));
 
             bundles.Add(new ScriptBundle("~/css/vendor").Include(
                       "~/css/vendor/jquery/jquery.min.js",
-                      "~/Scripts/jquery-ui.min.js",
                       "~/css/vendor/bootstrap/js/bootstrap.min.js",
                       "~/css/vendor/metisMenu/metisMenu.min.js",
                       "~/css/vendor/datatables/js/jquery.dataTables.min.js",
@@ -39,11 +41,13 @@ namespace Distributor
                       "~/css/vendor/dist/js/sb-admin-2.js"));
 
             bundles.Add(new StyleBundle("~/css").Include(
+                      "~/css/jquery-ui.min.css",
                       "~/css/vendor/bootstrap/css/bootstrap.min.css",
                       "~/css/vendor/metisMenu/metisMenu.min.css",
+                      "~/css/vendor/sb-admin-2.css",
+                      "~/css/vendor/morrisjs/morris.css",
                       "~/css/vendor/datatables-plugins/dataTables.bootstrap.css",
                       "~/css/vendor/datatables-responsive/dataTables.responsive.css",
-                      "~/css/vendor/sb-admin-2.min.css",
                       "~/css/vendor/font-awesome/css/font-awesome.min.css"));
 
             //bundles.Add(new StyleBundle("~/css").Include(

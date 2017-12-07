@@ -347,3 +347,4 @@ C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migr
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._19th.resources
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._20th.resources
 C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.Migrations._21st.resources
+C:\Users\leesole\source\repos\Distributor\Distributor\obj\Debug\Distributor.csprojResolveAssemblyReference.cache
